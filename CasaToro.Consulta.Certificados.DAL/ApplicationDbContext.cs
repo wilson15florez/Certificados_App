@@ -38,6 +38,14 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<ProveedoresMaster> ProveedoresMasters { get; set; }
 
+    public virtual DbSet<ProveedoresJuridica> ProveedoresJuridicas { get; set; }
+
+    public virtual DbSet<ProveedoresNatural> ProveedoresNaturals { get; set; }
+
+    public virtual DbSet<AccionistContrPJ> AccionistContrPjs { get; set; }
+
+    public virtual DbSet<SucursalesPJuridica> SucursalesPJuridicas { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

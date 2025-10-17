@@ -131,11 +131,47 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        //Accion para actualizar persona natural
+        [HttpPost]
+        [Route("/Admin/UpdateProviderNatural")]
+        public IActionResult UpdateProviderNatural([FromBody] ProveedoresNatural providerData)
+        {
+            try
+            {
+                if (providerData == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                _providerService.UpdateNaturalInfo(providerData);
+                return Json(new { message = "Información de persona natural actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = "Error al actualizar la persona natural: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("/Admin/UpdateProviderJuridica")]
+        public IActionResult UpdateProviderJuridica([FromBody] ProveedoresJuridica providerData)
+        {
+            try
+            {
+                if (providerData == null) return Json(new { error = "Datos del proveedor no recibidos." });
+                _providerService.UpdateJuridicaInfo(providerData);
+                return Json(new { message = "Información de persona jurídica actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
+            }
+        }
+
         [HttpGet]
         public IActionResult RestoreProviderPassword(string nit)
         {
             try
             {
+                if (string.IsNullOrEmpty(nit)) return Json(new { error = "NIT del proveedor no recibido" });
+
                 // Verificar si el proveedor existe
                 var existingProvider = _providerService.getPoviderByNit(nit);
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });

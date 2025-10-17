@@ -86,6 +86,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+
+
         public void RestoreProviderPassword(string nit)
         {
             try
