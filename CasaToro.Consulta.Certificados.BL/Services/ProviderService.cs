@@ -86,7 +86,93 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        public void UpdateNaturalInfo(ProveedoresNatural providerData)
+        {
+            try
+            {
+                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerData.idNum);
+                if (existingProvider != null)
+                {
+                    // Actualizar los campos específicos para persona natural
+                    existingProvider.Nombre = providerData.pnNombreCompl.ToUpper();
+                    existingProvider.Direccion = providerData.pnDiResidencia;
+                    existingProvider.Correo = providerData.pnEmail;
+                    existingProvider.Telefono = providerData.pnTelefono;
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar la información de la persona natural", ex);
+            }
+        }
 
+        public void UpdateJuridicaInfo(ProveedoresJuridica providerData)
+        {
+            string providerNit = providerData.idNum;
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var existingJuridica = _context.ProveedoresJuridicas.FirstOrDefault(p => p.idNum == providerNit);
+
+                    if (existingJuridica != null)
+                    {
+                        existingJuridica.pjRazonSocial = providerData.pjRazonSocial;
+                        existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
+                        existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;
+                        existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
+                        existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
+                        _context.ProveedoresJuridicas.Update(existingJuridica);
+                    }
+                    else
+                    {
+                        throw new Exception($"Registro detallado para NIT {providerNit} no encontrado.");
+                    }
+                    _context.SaveChanges();
+
+                    var oldSucursales = _context.SucursalesPJuridicas.Where(s => s.NitProveedor == providerNit);
+                    _context.SucursalesPJuridicas.RemoveRange(oldSucursales);
+
+                    foreach (var sucursal in providerData.Sucursales)
+                    {
+                        var newSucursal = new SucursalesPJuridica
+                        {
+                            NitProveedor = providerNit,
+                            pjSucursalDir = sucursal.pjSucursalDir,
+                            pjSucursalCiudad = sucursal.pjSucursalCiudad,
+                            pjSucursalEmail = sucursal.pjSucursalEmail,
+                            pjSucursalTel = sucursal.pjSucursalTel
+                        };
+                        _context.SucursalesPJuridicas.Add(newSucursal);
+                    }
+
+                    var oldAccionistas = _context.AccionistContrPjs.Where(a => a.NitProveedor == providerNit);
+                    _context.AccionistContrPjs.RemoveRange(oldAccionistas);
+
+                    foreach (var accionista in providerData.ControlRow)
+                    {
+                        var newAccionista = new AccionistContrPJ
+                        {
+                            NitProveedor = providerNit,
+                            razonSocial = accionista.razonSocial,
+                            idType = accionista.idType,
+                            idNum = accionista.idNum,
+                            porcentaje = accionista.porcentaje
+                        };
+                        _context.AccionistContrPjs.Add(newAccionista);
+                    }
+                    _context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception("Error al actualizar la información de la persona jurídica", ex);
+                }
+            }
+        }
 
         public void RestoreProviderPassword(string nit)
         {
