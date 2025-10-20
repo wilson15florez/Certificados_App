@@ -134,7 +134,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         //Accion para actualizar persona natural
         [HttpPost]
         [Route("/Admin/UpdateProviderNatural")]
-        public IActionResult UpdateProviderNatural([FromBody] ProveedoresNatural providerData)
+        public IActionResult UpdateProviderNatural([FromBody] Proveedores_Natural providerData)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
         [HttpPost]
         [Route("/Admin/UpdateProviderJuridica")]
-        public IActionResult UpdateProviderJuridica([FromBody] ProveedoresJuridica providerData)
+        public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData)
         {
             try
             {

@@ -38,14 +38,13 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<ProveedoresMaster> ProveedoresMasters { get; set; }
 
-    public virtual DbSet<ProveedoresJuridica> ProveedoresJuridicas { get; set; }
+    public virtual DbSet<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; }
 
-    public virtual DbSet<ProveedoresNatural> ProveedoresNaturals { get; set; }
+    public virtual DbSet<Proveedores_Juridica> Proveedores_Juridica { get; set; }
 
-    public virtual DbSet<AccionistContrPJ> AccionistContrPjs { get; set; }
+    public virtual DbSet<Proveedores_Natural> Proveedores_Natural { get; set; }
 
-    public virtual DbSet<SucursalesPJuridica> SucursalesPJuridicas { get; set; }
-
+    public virtual DbSet<Sucursales_PJuridica> Sucursales_PJuridica { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -363,6 +362,85 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Direccion).HasMaxLength(100);
             entity.Property(e => e.Nombre).HasMaxLength(255);
             entity.Property(e => e.Telefono).HasMaxLength(20);
+        });
+
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        modelBuilder.Entity<AccionistasControlPJuridica>(entity =>
+        {
+            entity.HasKey(e => e.Id_Control);
+
+            entity.Property(e => e.NitProveedor).HasMaxLength(20);
+            entity.Property(e => e.idNum).HasMaxLength(50);
+            entity.Property(e => e.idType).HasMaxLength(50);
+            entity.Property(e => e.porcentaje).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.razonSocial).HasMaxLength(255);
+
+            entity.HasOne(d => d.NitProveedorNavigation).WithMany(p => p.AccionistasControlPJuridica)
+                .HasForeignKey(d => d.NitProveedor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Accionistas_PJ");
+        });
+
+        modelBuilder.Entity<Proveedores_Juridica>(entity =>
+        {
+            entity.HasKey(e => e.Nit).HasName("PK__Proveedo__C7D1D6DBA7B907E9");
+
+            entity.Property(e => e.Nit).HasMaxLength(20);
+            entity.Property(e => e.pjCiudadDirPrincipal).HasMaxLength(100);
+            entity.Property(e => e.pjDirPrincipal).HasMaxLength(255);
+            entity.Property(e => e.pjEmailDirPrincipal).HasMaxLength(100);
+            entity.Property(e => e.pjRazSocial).HasMaxLength(255);
+            entity.Property(e => e.pjTelDirPrincipal).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<Proveedores_Natural>(entity =>
+        {
+            entity.HasKey(e => e.Id_ProNatu);
+
+            entity.Property(e => e.Nit).HasMaxLength(20);
+            entity.Property(e => e.pnActividad).HasMaxLength(100);
+            entity.Property(e => e.pnCelular).HasMaxLength(20);
+            entity.Property(e => e.pnCiudad).HasMaxLength(100);
+            entity.Property(e => e.pnDiResidencia).HasMaxLength(255);
+            entity.Property(e => e.pnEmail).HasMaxLength(100);
+            entity.Property(e => e.pnExtDoc).HasMaxLength(50);
+            entity.Property(e => e.pnLugExpDoc).HasMaxLength(100);
+            entity.Property(e => e.pnLugNac).HasMaxLength(100);
+            entity.Property(e => e.pnManRePub)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pnNacDoc).HasMaxLength(50);
+            entity.Property(e => e.pnNacionalidad).HasMaxLength(100);
+            entity.Property(e => e.pnNombreCompl).HasMaxLength(255);
+            entity.Property(e => e.pnOficProfe).HasMaxLength(100);
+            entity.Property(e => e.pnPEP)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pnPEP_Entidad).HasMaxLength(255);
+            entity.Property(e => e.pnReconoPublic)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pnTelefono).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<Sucursales_PJuridica>(entity =>
+        {
+            entity.HasKey(e => e.Id_SucJuri);
+
+            entity.Property(e => e.Ciudad).HasMaxLength(100);
+            entity.Property(e => e.Direccion).HasMaxLength(255);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.NitProveedor).HasMaxLength(20);
+            entity.Property(e => e.Telefono).HasMaxLength(20);
+
+            entity.HasOne(d => d.NitProveedorNavigation).WithMany(p => p.Sucursales_PJuridica)
+                .HasForeignKey(d => d.NitProveedor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Sucursal_PJ");
         });
 
         OnModelCreatingPartial(modelBuilder);

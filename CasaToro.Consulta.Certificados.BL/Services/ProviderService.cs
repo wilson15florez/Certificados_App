@@ -86,11 +86,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        public void UpdateNaturalInfo(ProveedoresNatural providerData)
+        public void UpdateNaturalInfo(Proveedores_Natural providerData)
         {
             try
             {
-                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerData.idNum);
+                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerData.Nit);
                 if (existingProvider != null)
                 {
                     // Actualizar los campos específicos para persona natural
@@ -107,24 +107,24 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        public void UpdateJuridicaInfo(ProveedoresJuridica providerData)
+        public void UpdateJuridicaInfo(Proveedores_Juridica providerData)
         {
-            string providerNit = providerData.idNum;
+            string providerNit = providerData.Nit;
 
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var existingJuridica = _context.ProveedoresJuridicas.FirstOrDefault(p => p.idNum == providerNit);
+                    var existingJuridica = _context.Proveedores_Juridica.FirstOrDefault(p => p.Nit == providerNit);
 
                     if (existingJuridica != null)
                     {
-                        existingJuridica.pjRazonSocial = providerData.pjRazonSocial;
+                        existingJuridica.pjRazSocial = providerData.pjRazSocial;
                         existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
                         existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;
                         existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
                         existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
-                        _context.ProveedoresJuridicas.Update(existingJuridica);
+                        _context.Proveedores_Juridica.Update(existingJuridica);
                     }
                     else
                     {
@@ -132,28 +132,28 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     }
                     _context.SaveChanges();
 
-                    var oldSucursales = _context.SucursalesPJuridicas.Where(s => s.NitProveedor == providerNit);
-                    _context.SucursalesPJuridicas.RemoveRange(oldSucursales);
+                    var oldSucursales = _context.Sucursales_PJuridica.Where(s => s.NitProveedor == providerNit);
+                    _context.Sucursales_PJuridica.RemoveRange(oldSucursales);
 
-                    foreach (var sucursal in providerData.Sucursales)
+                    foreach (var sucursal in providerData.Sucursales_PJuridica)
                     {
-                        var newSucursal = new SucursalesPJuridica
+                        var newSucursal = new Sucursales_PJuridica
                         {
                             NitProveedor = providerNit,
-                            pjSucursalDir = sucursal.pjSucursalDir,
-                            pjSucursalCiudad = sucursal.pjSucursalCiudad,
-                            pjSucursalEmail = sucursal.pjSucursalEmail,
-                            pjSucursalTel = sucursal.pjSucursalTel
+                            Direccion = sucursal.Direccion,
+                            Ciudad = sucursal.Ciudad,
+                            Email = sucursal.Email,
+                            Telefono = sucursal.Telefono
                         };
-                        _context.SucursalesPJuridicas.Add(newSucursal);
+                        _context.Sucursales_PJuridica.Add(newSucursal);
                     }
 
-                    var oldAccionistas = _context.AccionistContrPjs.Where(a => a.NitProveedor == providerNit);
-                    _context.AccionistContrPjs.RemoveRange(oldAccionistas);
+                    var oldAccionistas = _context.AccionistasControlPJuridica.Where(a => a.NitProveedor == providerNit);
+                    _context.AccionistasControlPJuridica.RemoveRange(oldAccionistas);
 
-                    foreach (var accionista in providerData.ControlRow)
+                    foreach (var accionista in providerData.AccionistasControlPJuridica)
                     {
-                        var newAccionista = new AccionistContrPJ
+                        var newAccionista = new AccionistasControlPJuridica
                         {
                             NitProveedor = providerNit,
                             razonSocial = accionista.razonSocial,
@@ -161,7 +161,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             idNum = accionista.idNum,
                             porcentaje = accionista.porcentaje
                         };
-                        _context.AccionistContrPjs.Add(newAccionista);
+                        _context.AccionistasControlPJuridica.Add(newAccionista);
                     }
                     _context.SaveChanges();
                     transaction.Commit();
@@ -173,6 +173,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
+
 
         public void RestoreProviderPassword(string nit)
         {
