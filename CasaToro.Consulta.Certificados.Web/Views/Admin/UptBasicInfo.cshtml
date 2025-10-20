@@ -508,28 +508,58 @@
             form.querySelectorAll('input[id], select[id], textarea[id]').forEach(element => {
                 let value;
                 if (element.type === 'checkbox'){
-                    return;
-                }else if (element.type === 'radio'){
-                    if (element.name && form.querySelector(`input[name="${element.name}"]:checked`) === element){
-                        data[element.name] = element.value;
+                    if (element.checked && element.name){
+                        if (!data[element.name]){
+                            data[element.name] = [];
+						}
+						data[element.name].push(element.value);
                     }
                     return;
-                }else{
-                    value = element.value;
                 }
-                data[element.id] = value;
+
+                if (element.type === 'radio'){
+                    if (element.checked){
+                        data[element.name || element.id] = element.value;
+                    }
+                    return;
+				}
+
+                if (element.id){
+					value = element.value;
+					data[element.id] = value;
+                }
             });
 
             if (formId === 'persJuriForm') {
-                data.controlRows = [];
+				data.idNum = document.getElementById('pjNIT').value;
+				data.pjRazonSocial = document.getElementById('pjRazSocial').value;
+
+				data.Sucursales = [];
+				const sucursales = document.querySelectorAll('#sucursales-container .sucursal-item');
+
+                sucursales.forEach((sucursal, index) => {
+                    const i = index +1;
+                    data.Sucursales.push({
+                        pjSucursalDir: document.getElementById(`pjDirSucursal_${i}`).value,
+						pjSucursalCiudad: document.getElementById(`pjCiudadDirSucursal_${i}`).value,
+						pjSucursalEmail: document.getElementById(`pjEmailDirSucursal_${i}`).value,
+						pjSucursalTel: document.getElementById(`pjTelDirSucursal_${i}`).value
+                    });
+				});
+
+                data.ControlRow = [];
                 controlTableBody.querySelectorAll('.control-row').forEach(row => {
-                    data.controlRows.push({
+                    data.ControlRow.push({
                         razonSocial: row.querySelector('[name="controlRazonSocial[]"]').value,
                         idType: row.querySelector('[name="controlIdType[]"]').value,
                         idNum: row.querySelector('[name="controlIdNum[]"]').value,
                         porcentaje: row.querySelector('[name="controlPorcentaje[]"]').value,
                     });
                 });
+            }
+
+			if (formId === 'persNatuForm') {
+				data.idNum = document.getElementById('idNum').value;
             }
 
             return data;
