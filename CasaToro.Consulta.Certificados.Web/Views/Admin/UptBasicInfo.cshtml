@@ -30,11 +30,13 @@
 				</select>
             </div>
 
-            <div id="idSection" class="form-group hidden">
+            <div id="idSection" class="form-group">
                 <label for="idNum">Número de Identificación:</label>
 				<input type="text" id="idNum" placeholder="Número"/>
                 <button id="consultBtn" class="button-group">Consultar</button>
             </div>
+
+            <div id="alertContainer"></div>
 
             <div id="persNatuForm" class="form-section" style="display:none;">
 
@@ -307,6 +309,9 @@
 
 	<script>
 		const personTypeSelect = document.getElementById('personType');
+		const idNumInput = document.getElementById('idNum');
+		const consultBtn = document.getElementById('consultBtn');
+		const alertContainer = document.getElementById('alertContainer');
 		const idSection = document.getElementById('idSection');
 		const persNatuForm = document.getElementById('persNatuForm');
 		const persJuriForm = document.getElementById('persJuriForm');
@@ -328,18 +333,73 @@
 
         //logica para mostrar/ocultar los forms al cambiar el tipo de persona
 		personTypeSelect.addEventListener('change', function() {
-			const selectedType = this.value;
+
+			persNatuForm.style.display = 'none';
+			persJuriForm.style.display = 'none';
+			idNumInput.value = '';
+
+			idSection.style.display = 'flex';
+			alertContainer.innerHTML = '';
+		});
+
+        //funcion para crear alertas
+        function showAlert(message, type='warning'){
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+			`;
+		}
+
+        //funcion de consulta en el BACKEND
+        consultBtn.addEventListener('click', async function(){
+			const idNum = idNumInput.value.trim();
+			const personType = personTypeSelect.value;
+			alertContainer.innerHTML = '';
+
+            if (!personType || !idNum){
+                createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
+                return;
+            }
 
 			persNatuForm.style.display = 'none';
 			persJuriForm.style.display = 'none';
 
-			if (selectedType === 'natural') {
-				persNatuForm.style.display = 'block';
-			} 
-            else if (selectedType === 'juridica') {
-				persJuriForm.style.display = 'block';
+			const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
+
+			document.getElementById('loader-container').style.display = 'flex';
+
+            try{
+				const response = await fetch(url);
+				const result = await response.json();
+
+				if (!response.ok){
+					throw new Error(result.message || 'Error desconocido en el servidor.');
+                }
+
+                //proveedor no encontrado (o encontrado y vacio)
+                if (result.exists === false)
+                    createAlert('El proveedor con ID: ${idNUm} no se encontro en la base de datos.', 'success');
+                    
+                    if (personType === 'natural'){
+						persNatuForm.style.display = 'block';
+                        loadFormData({}, 'persNatuForm');
+					}else (personType === 'juridica'){
+						persJuriForm.style.display = 'block';
+						loadFormData({}, 'persJuriForm');
+                    }
+                    return;
+                }
+
+                //proveedor encontrado
+                //validacion tipo de persona
+                if (result.registeredType && result.registeredType !== personType){
+                    createAlert('El proveedor con ID: ${idNum} ya está registrado como ${registeredTypeText}. Para actualizarlo, debes seleccionar "${registeredTypeText}" en el despliegue.', 'warning');
+                    return;
+				}
             }
-		});
+        }
 
 		//logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
         function handlePEPChange(){
