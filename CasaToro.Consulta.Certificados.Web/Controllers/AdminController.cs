@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CasaToro.Consulta.Certificados.BL.Services;
 using CasaToro.Consulta.Certificados.Entities;
+using System.Threading.Tasks;
 
 namespace CasaToro.Consulta.Certificados.Web.Controllers
 {
@@ -162,6 +163,47 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             catch (Exception ex)
             {
                 return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CheckProvider(string idNum, string personType)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(idNum) || string.IsNullOrEmpty(personType))
+                    return Json(new { exists = false, message = "ID y Tipo de persona son requeridos." });
+
+                //verifica si el proveedor existe
+                var providerMaster = _providerService.getPoviderByNit(idNum);
+                if (providerMaster == null)
+                {
+                    return Json(new { exists = false });
+                }
+
+                //obtiene la informacion segun el tipo de persona
+                var providerData = await _providerService.getProviderDetails(idNum, personType);
+
+                string registeredType = null;
+                if (providerData != null)
+                {
+                    registeredType = providerData.GetType().Name.Contains("Natural") ? "natural" : "juridica";
+                }
+
+                if (providerData == null)
+                {
+                    return Json(new { exists = false });
+                }
+
+                return Json(new
+                {
+                    exists = true,
+                    registeredType = registeredType,
+                    data = providerData
+                });
+            }
+            catch (Exception ex) { 
+                return Json(new { error = "Error al consultar proveedor: " + ex.Message });
             }
         }
 

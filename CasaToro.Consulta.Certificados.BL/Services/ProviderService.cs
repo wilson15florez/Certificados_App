@@ -1,6 +1,9 @@
 ﻿using CasaToro.Consulta.Certificados.Entities;
 using Microsoft.EntityFrameworkCore;
 using CasaToro.Consulta.Certificados.DAL;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
@@ -86,25 +89,98 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica
+        public async Task<object> getProviderDetails(string nit, string personType)
+        {
+            if (personType.Equals("natural", StringComparison.OrdinalIgnoreCase))
+            {
+                var naturalData = await _context.Proveedores_Natural
+                                                    .FirstOrDefaultAsync(p => p.Nit == nit);
+                return naturalData;
+
+            }
+            else if (personType.Equals("juridica", StringComparison.OrdinalIgnoreCase))
+            {
+                var juridicaData = await _context.Proveedores_Juridica
+                                                    .FirstOrDefaultAsync(p => p.Nit == nit);
+                if (juridicaData != null)
+                {
+                    var sucursales = await _context.Sucursales_PJuridica
+                                                .Where(s => s.NitProveedor == nit)
+                                                .ToListAsync();
+                    var accionistas = await _context.AccionistasControlPJuridica
+                                                .Where(a => a.NitProveedor == nit)
+                                                .ToListAsync();
+
+                    //mapea los datos
+                    var mapJuridicaData = new Dictionary<string, object>
+                    {
+                        {"Nit",juridicaData.Nit},
+                        {"pjRazSocial",juridicaData.pjRazSocial},
+                        {"pjDirPrincipal",juridicaData.pjDirPrincipal},
+                        {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
+                        {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
+                        {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
+
+                        {"Sucursales", sucursales.Select(s => new
+                        {
+                            pjSucursalDir = s.Direccion,
+                            pjSucursalCiudad = s.Ciudad,
+                            pjSucursalEmail = s.Email,
+                            pjSucursalTel = s.Telefono
+                        }).ToList()},
+
+                        {"ControlRow", accionistas.Select(a => new
+                        {
+                            razonSocial = a.razonSocial,
+                            idType = a.idType,
+                            idNum = a.idNum,
+                            porcentaje = a.porcentaje
+                        }).ToList() }
+                    };
+                    return mapJuridicaData;
+                }
+                return null;
+            }
+            return null;
+        }
+
         public void UpdateNaturalInfo(Proveedores_Natural providerData)
         {
-            try
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerData.Nit);
-                if (existingProvider != null)
+                try
                 {
-                    // Actualizar los campos específicos para persona natural
-                    existingProvider.Nombre = providerData.pnNombreCompl.ToUpper();
-                    existingProvider.Direccion = providerData.pnDiResidencia;
-                    existingProvider.Correo = providerData.pnEmail;
-                    existingProvider.Telefono = providerData.pnTelefono;
+                    string providerNit = providerData.Nit;
+
+                    var existingMaster = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerNit);
+                    if (existingMaster != null)
+                    {
+                        existingMaster.Nombre = providerData.pnNombreCompl.ToUpper();
+                        existingMaster.Direccion = providerData.pnDiResidencia;
+                        existingMaster.Correo = providerData.pnEmail;
+                        existingMaster.Telefono = providerData.pnTelefono;
+                    }
+                    
+                    var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
+                    if (existingNatural != null) 
+                    {
+                        _context.Entry(existingNatural).CurrentValues.SetValues(providerData);
+                    }else
+                    {
+                        throw new Exception($"Registro detallado para Persona Natural con NIT {providerNit} no encontrado.");
+                    }
                     _context.SaveChanges();
+                    transaction.Commit();
                 }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception("Error al actualizar la información de la persona natural: " + ex.Message, ex);
+                }
+
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al actualizar la información de la persona natural", ex);
-            }
+
         }
 
         public void UpdateJuridicaInfo(Proveedores_Juridica providerData)

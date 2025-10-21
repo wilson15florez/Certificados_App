@@ -51,7 +51,7 @@
                 <h3 class="sub-header">Personas Nacionales</h3>
 				<div class="flex-container">
 					<div class="form-group half-width">
-                        <label>Tipo Doc:</label>
+                        <label>Tipo de Documento:</label>
                         <div class="checkbox-group">
 							<input type="checkbox" id="pnNac-CC" name="pnNacDoc" value="CC" /><label for="pnNac-CC">CC</label>
 							<input type="checkbox" id="pnNac-NIT" name="pnNacDoc" value="NIT" /><label for="pnNac-NIT">NIT</label>
@@ -66,7 +66,7 @@
 				<h3 class="sub-header">Personas Extranjeras</h3>
 				<div class="flex-container">
                     <div class="form-group half-width">
-                        <label>Tipo Doc:</label>
+                        <label>Tipo de Documento:</label>
 						<div class="checkbox-group">
 							<input type="checkbox" id="pnExt-CE" name="pnExtDoc" value="CE" /><label for="pnExt-CE">CE</label>
 							<input type="checkbox" id="pnExt-PAS" name="pnExtDoc" value="PAS" /><label for="pnExt-PAS">Pasaporte</label>
@@ -141,6 +141,7 @@
                     <div class="form-group half-width">
                         <label for="pnActividad">Actividad</label>
 						<select id="pnActividad">
+                            <option value="" disabled selected>-- Seleccione una opción --</option>
                             <option value="dependiente">Dependiente</option>
 							<option value="independiente">Independiente</option>
                         </select>
@@ -153,7 +154,7 @@
 						<label>Goza de Reconocimiento Público:</label>
                         <div class="radio-group">
 							<input type="radio" id="pnReconoPblSi" name="pnReconoPublic" value="Si" /><label for="pnReconoPblSi">Sí</label>
-							<input type="radio" id="pnReconoPblNo" name="pnRecomoPublic" value="No" /><label for="pnReconoPblNo">No</label>
+							<input type="radio" id="pnReconoPblNo" name="pnReconoPublic" value="No" /><label for="pnReconoPblNo">No</label>
                         </div>
                     </div>
 					<div class="form-group half-width">
@@ -261,7 +262,7 @@
                 <table id="control-table">
                     <thead>
                         <tr>
-                            <th>Razón Social o Nombres Completos</th>
+                            <th>Razón Social o Nombre Completo</th>
                             <th>Tipo de Identificación</th>
                             <th>Número de Identificación</th>
                             <th>Porcentaje de Participación (%)</th>
@@ -293,8 +294,21 @@
 
     </main>
 
-    <div class="loader-container" id="loader-container">
-        <span class="loader"></span>
+    <div id="loader-container" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        ">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
     </div>
 
     @Html.Partial("_Footer")
@@ -308,335 +322,444 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script>
-		const personTypeSelect = document.getElementById('personType');
-		const idNumInput = document.getElementById('idNum');
-		const consultBtn = document.getElementById('consultBtn');
-		const alertContainer = document.getElementById('alertContainer');
-		const idSection = document.getElementById('idSection');
-		const persNatuForm = document.getElementById('persNatuForm');
-		const persJuriForm = document.getElementById('persJuriForm');
+		document.addEventListener('DOMContentLoaded', function(){
+            const personTypeSelect = document.getElementById('personType');
+            const idNumInput = document.getElementById('idNum');
+            const consultBtn = document.getElementById('consultBtn');
+            const alertContainer = document.getElementById('alertContainer');
+            const idSection = document.getElementById('idSection');
+            const persNatuForm = document.getElementById('persNatuForm');
+            const persJuriForm = document.getElementById('persJuriForm');
 
-        //elementos del formulario de persona natural para PEP
-		const pnPEPYes = document.getElementById('pnPEPSi');
-		const pnPEPNo = document.getElementById('pnPEPNo');
-		const pnPEPtypeGroup = document.getElementById('pnPEPtypeGroup');
-        const pnPEP_Entidad = document.getElementById('pnPEP_Entidad');
-        const submitPnBtn = document.getElementById('submitPnBtn');
+            //elementos del formulario de persona natural para PEP
+            const pnPEPYes = document.getElementById('pnPEPSi');
+            const pnPEPNo = document.getElementById('pnPEPNo');
+            const pnPEPtypeGroup = document.getElementById('pnPEPtypeGroup');
+            const pnPEP_Entidad = document.getElementById('pnPEP_Entidad');
+            const submitPnBtn = document.getElementById('submitPnBtn');
 
-		//elementos del formulario de persona juridica para sucursales
-		const addSucursalBtn = document.getElementById('addSucursalBtn');
-		const sucursalesContainer = document.getElementById('sucursales-container');
-		const sucursalLimitMsg = document.getElementById('sucursal_limit_msg');
-		const addControlRowBtn = document.getElementById('addControlRowBtn');
-		const controlTableBody = document.querySelector('#control-table tbody');
-        const submitPjBtn = document.getElementById('submitPjBtn');
+            //elementos del formulario de persona juridica para sucursales
+            const addSucursalBtn = document.getElementById('addSucursalBtn');
+            const sucursalesContainer = document.getElementById('sucursales-container');
+            const sucursalLimitMsg = document.getElementById('sucursal_limit_msg');
+            const addControlRowBtn = document.getElementById('addControlRowBtn');
+            const controlTableBody = document.querySelector('#control-table tbody');
+            const submitPjBtn = document.getElementById('submitPjBtn');
 
-        //logica para mostrar/ocultar los forms al cambiar el tipo de persona
-		personTypeSelect.addEventListener('change', function() {
-
-			persNatuForm.style.display = 'none';
-			persJuriForm.style.display = 'none';
-			idNumInput.value = '';
-
-			idSection.style.display = 'flex';
-			alertContainer.innerHTML = '';
-		});
-
-        //funcion para crear alertas
-        function showAlert(message, type='warning'){
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-			`;
-		}
-
-        //funcion de consulta en el BACKEND
-        consultBtn.addEventListener('click', async function(){
-			const idNum = idNumInput.value.trim();
-			const personType = personTypeSelect.value;
-			alertContainer.innerHTML = '';
-
-            if (!personType || !idNum){
-                createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
-                return;
-            }
-
-			persNatuForm.style.display = 'none';
-			persJuriForm.style.display = 'none';
-
-			const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
-
-			document.getElementById('loader-container').style.display = 'flex';
-
-            try{
-				const response = await fetch(url);
-				const result = await response.json();
-
-				if (!response.ok){
-					throw new Error(result.message || 'Error desconocido en el servidor.');
-                }
-
-                //proveedor no encontrado (o encontrado y vacio)
-                if (result.exists === false)
-                    createAlert('El proveedor con ID: ${idNUm} no se encontro en la base de datos.', 'success');
-                    
-                    if (personType === 'natural'){
-						persNatuForm.style.display = 'block';
-                        loadFormData({}, 'persNatuForm');
-					}else (personType === 'juridica'){
-						persJuriForm.style.display = 'block';
-						loadFormData({}, 'persJuriForm');
-                    }
-                    return;
-                }
-
-                //proveedor encontrado
-                //validacion tipo de persona
-                if (result.registeredType && result.registeredType !== personType){
-                    createAlert('El proveedor con ID: ${idNum} ya está registrado como ${registeredTypeText}. Para actualizarlo, debes seleccionar "${registeredTypeText}" en el despliegue.', 'warning');
-                    return;
-				}
-            }
-        }
-
-		//logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
-        function handlePEPChange(){
-            if(pnPEPYes && pnPEPYes.checked){
-                pnPEPtypeGroup.style.display = 'flex';
-                pnPEP_Entidad.style.display = 'block';
-            } else {
-                pnPEPtypeGroup.style.display = 'none';
-                pnPEP_Entidad.style.display = 'none';
-            }
-		}
-
-        if(pnPEPYes){
-            pnPEPYes.addEventListener('change', handlePEPChange);
-		}
-        if(pnPEPNo){
-            pnPEPNo.addEventListener('change', handlePEPChange);
-		}
-		handlePEPChange();
-
-		//logica para agregar sucursales en el form de persona juridica
-		addSucursalBtn.addEventListener('click', function() {
-			const currentSucursales = sucursalesContainer.querySelectorAll('.sucursal-item').length;
-			const newIndex = currentSucursales + 1;
-
-            if (newIndex > 3) {
-                sucursalLimitMsg.style.display = 'block';
-                return;
-            }
-            sucursalLimitMsg.style.display = 'none';
-
-			const newSucursalDiv = document.createElement('div');
-			newSucursalDiv.className = 'sucursal-item';
-			newSucursalDiv.id = `sucursal_${newIndex}`;
-            newSucursalDiv.innerHTML = `
-                <h4>Dirección sucursal ${newIndex}</h4>
-				<div class="form-group
-                    <label for="pjDirSucursal_${newIndex}">Dirección Sucursal:</label>
-                    <input type="text" id="pjDirSucursal_${newIndex}" />
-				</div>
-                <div class="flex-container">
-					<div class="form-group half-width">
-                        <label for="pjCiudadDirSucursal_${newIndex}">Ciudad:</label>
-                        <input type="text" id="pjCiudadDirSucursal_${newIndex}" />
-					</div>
-                    <div class="form-group half-width">
-                        <label for="pjEmailDirSucursal_${newIndex}">E-mail:</label>
-						<input type="email" id="pjEmailDirSucursal_${newIndex}" />
-					</div>
-					<div class="form-group half-width">
-                        <label for="pjTelDirSucursal_${newIndex}">Teléfono:</label>
-						<input type="text" id="pjTelDirSucursal_${newIndex}" />
+            //funcion para crear alertas
+            function createAlert(message, type='warning'){
+                alertContainer.innerHTML = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </div>
-				<button type="button" class="remove-sucursal-btn button-group">Eliminar Sucursal</button>
-			`;
-
-			sucursalesContainer.appendChild(newSucursalDiv);
-            if (newIndex === 3) {
-                sucursalLimitMsg.style.display = 'block';
-			}
-		]);
-
-		//logica para eliminar sucursales en el form de persona juridica
-        sucursalesContainer.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-sucursal-btn')) {
-                const sucursalItem = e.target.closest('.sucursal-item');
-                if (sucursalItem) {
-                    sucursalItem.remove();
-
-					const sucursales = sucursalesContainer.querySelectorAll('.sucursal-item');
-                    sucursales.forEach((sucursal, index) => {
-                        const newIndex = index + 1;
-                        sucursal.id = `sucursal_${newIndex}`;
-                        sucursal.querySelector('h4').textContent = `Dirección sucursal ${newIndex}`;
-
-                        sucursal.querySelectorAll('label, input, select').forEach(element => {
-                            const oldId = element.id;
-                            const newId = oldId ? oldId.replace(/\d+/, newIndex) : null;
-                            if (newId) element.id = newId;
-
-                            const oldFor = element.getAttribute('for');
-                            const newFor = oldFor ? oldFor.replace(/\d+/, newIndex) : null;
-                            if (newFor) element.setAttribute('for', newFor);
-                        });
-                    });
-
-                    //oculta mensaje del limite si se elimino una sucursal y quedo menos del maximo
-                    if (sucursales.length < 3) {
-                        sucursalLimitMsg.style.display = 'none';
-                    }
-				}
-            }
-		});
-
-        //logica para agregar filas a la tabla de control Persona Juridica
-        function addControlRow(){
-            const newRow = document.createElement('tr');
-            newRow.className = 'control-row';
-            newRow.innerHTML = `
-                <td><input type="text" name="controlRazonSocial[]" style="width:100%;" /></td>
-                <td>
-                    <select name = "controlIdType[]">
-                        <option value="CC">CC</option>
-                        <option value="NIT">NIT</option>
-                    </select>
-                </td>
-                <td><input type="text" name="controlIdNum[]" style="width:100%" /></td>
-                <td><input type="number" name="controlporcentaje[]" style="width:100%" /></td>
-                <td><button type="button" class="remove-control-row">Eliminar</button></td>
             `;
-            controlTableBody.appendChild(newRow);
-        }
+            }
 
-        addControlRowBtn.addEventListener('click', addControlRow);
+            //funcion para precargar los datos del formulario
+            function loadFormData(data, formId){
+                const form = document.getElementById(formId);
 
-        //logica para eliminar filas de la tabla control Persona Juridica
-        controlTableBody.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-control-row')) {
-                if (controlTableBody.querySelectorAll('.control-row').length > 1) {
-                    e.target.closest('.control-row').remove();
+                //limpia los campos antes de cargar
+                form.querySelectorAll('input[type="text"], input[type="email"],input[type="date"], input[type="number"], select, textarea').forEach(element => {
+                    element.value = '';
+                });
+                form.querySelectorAll('input[type="checkbox"], input[type=radio]').forEach(element => {
+                element.checked = false;
+                });
+
+                //llenar los campos con los datos
+                for (const key in data){
+                    if(!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
+
+                    const element = document.getElementById(key);
+
+                    if (element){
+                        if (element.type === 'checkbox'){
+                            if (Array.isArray(data[key])){
+                                data[key].forEach(value => {
+                                    const checkboxId = `${key}-${value}`;
+                                    const checkbox = document.getElementById(checkboxId);
+                                    if (checkbox) checkbox.checked = true;
+                                });
+                            }
+                        }else if(element.type === 'radio'){
+                            const radio = form.querySelector(`input[name="${element.name}"][value="${data[key]}"]`);
+                            if (radio) radio.checked = true;
+                        }else {
+                            element.value = data[key];
+                        }
+                    }
+                }
+
+                //logica para persona juridica (sucursales y filas)
+                if (formId === 'persJuriForm'){
+                    //limpiar los campos
+                    document.querySelectorAll('.sucursal-item:not(#sucursal_1)').forEach(item => item.remove());
+                    while (controlTableBody.querySelectorAll('.control-row').length > 1){
+                        controlTableBody.lastElementChild.remove();
+                    }
+
+                    //precargar sucursales
+                    if (data.Sucursales && Array.isArray(data.Sucursales) && data.Sucursales.length > 0){
+                        //llenar la primera sucursal
+                        document.getElementById('pjDirSucursal_1').value = data.Sucursales[0].pjSucursalDir || '';
+                        document.getElementById('pjCiudadDirSucursal_1').value = data.Sucursales[0].pjSucursalCiudad || '';
+                        document.getElementById('pjEmailDirSucursal_1').value = data.Sucursales[0].pjSucursalEmail || '';
+                        document.getElementById('pjTelDirSucursal_1').value = data.Sucursales[0].pjSucursalTel || '';
+
+                        //agregar sucursales adicionales si existen
+                        for (let i = 1; i < data.Sucursales.length; i++){
+                            addSucursalBtn.click();
+                            const index = i + 1;
+                            const sucursalData = data.Sucursales[i];
+                            document.getElementById(`pjDirSucursal_${index}`).value = sucursalData.pjSucursalDir || '';
+                            document.getElementById(`pjCiudadDirSucursal_${index}`).value = sucursalData.pjSucursalCiudad || '';
+                            document.getElementById(`pjEmailDirSucursal_${index}`).value = sucursalData.pjSucursalEmail || '';
+                            document.getElementById(`pjTelDirSucursal_${index}`).value = sucursalData.pjSucursalTel || '';
+                        }
+                    }
+
+                    //precargar filas de control (si no hay datos solo deja la primera linea)
+                    if (data.ControlRow && Array.isArray(data.ControlRow) && data.ControlRow.length > 0){
+                        //limpiar la fila si hay mas de uno para evitar dupliados
+                        if (data.ControlRow.length > 1){
+                            controlTableBody.querySelector('.control-row').remove();
+                        }
+
+                        data.ControlRow.forEach((row, index) => {
+                            if (index > 0){
+                                addControlRow();
+                            }
+
+                            const currentRow = controlTableBody.querySelectorAll('.control-row')[index];
+                            if (currentRow){
+                                currentRow.querySelector('[name="controlRazonSocial[]"]').value = row.razonSocial || '';
+                                currentRow.querySelector('[name="controlIdType[]"]').value = row.idType || 'CC';
+                                currentRow.querySelector('[name="controlIdNum[]"]').value = row.idNum || '';
+                                currentRow.querySelector('[name="controlPorcentaje[]"]').value = row.porcentaje || '';
+                            }
+                        });
+                    }
+
+                }
+                handlePEPChange();
+            }
+
+            //funcion de consulta en el BACKEND
+            consultBtn.addEventListener('click', async function(){
+
+                const idNum = idNumInput.value.trim();
+                const personType = personTypeSelect.value;
+                alertContainer.innerHTML = '';
+
+                if (!personType || !idNum){
+                    createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
+                    return;
+                }
+
+                persNatuForm.style.display = 'none';
+                persJuriForm.style.display = 'none';
+
+                const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
+
+                document.getElementById('loader-container').style.display = 'flex';
+
+                try{
+                    const response = await fetch(url);
+                    const result = await response.json();
+
+                    if (!response.ok){
+                        throw new Error(result.message || 'Error desconocido en el servidor.');
+                    }
+
+                    //proveedor no encontrado (o encontrado y vacio)
+                    if (result.exists === false){
+                        createAlert(`El proveedor con ID: ${idNum} no se encontro en la base de datos.`, 'success');
+
+                        if (personType === 'natural'){
+                            persNatuForm.style.display = 'block';
+                            loadFormData({}, 'persNatuForm');
+                        }else if (personType === 'juridica'){
+                            persJuriForm.style.display = 'block';
+                            loadFormData({}, 'persJuriForm');
+                        }
+                        return;
+                    }
+
+                    //proveedor encontrado
+                    //validacion tipo de persona
+                    const registeredTypeText = result.registeredType === 'natural' ? 'Persona Natural' : 'Persona Jurídica';
+
+                    if (result.registeredType && result.registeredType !== personType){
+                        createAlert(`¡Advertencia! El proveedor con ID: ${idNum} ya está registrado como ${registeredTypeText}. Para actualizarlo, debes seleccionar "${registeredTypeText}" en el despliegue.`, 'warning');
+                        return;
+                    }
+
+                    createAlert('Informacion del proveedor cargada con exito. Puede actualizar los datos.', 'success');
+                    if (personType === 'natural'){
+                        persNatuForm.style.display = 'block';
+                        loadFormData(result.data, 'persNatuForm');
+                    }else if (personType === 'juridica'){
+                        persJuriForm.style.display = 'block';
+                        loadFormData(result.data, 'persJuriForm');
+                    }
+                } catch(error){
+                    createAlert("Error al consultar: " +error.message, 'danger');
+                    console.error('Error de Fetch:', error);
+                } finally {
+                    document.getElementById('loader-container').style.display = 'none';
+                }
+            });
+
+            //logica para mostrar/ocultar los forms al cambiar el tipo de persona
+            personTypeSelect.addEventListener('change', function() {
+
+                persNatuForm.style.display = 'none';
+                persJuriForm.style.display = 'none';
+                idNumInput.value = '';
+
+                idSection.style.display = 'flex';
+                alertContainer.innerHTML = '';
+            });
+
+            //logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
+            function handlePEPChange(){
+                if(pnPEPYes && pnPEPYes.checked){
+                    pnPEPtypeGroup.style.display = 'flex';
+                    pnPEP_Entidad.style.display = 'block';
                 } else {
-                    alert("Debe haber al menos una fila de control.");
+                    pnPEPtypeGroup.style.display = 'none';
+                    pnPEP_Entidad.style.display = 'none';
                 }
             }
-        });
 
-        //inicializa la vista
-        window.onload = function(){
-            personTypeSelect.value = '';
-            persNatuForm.style.display = 'none';
-            persJuriForm.style.display = 'none';
+            if(pnPEPYes){
+                pnPEPYes.addEventListener('change', handlePEPChange);
+            }
+            if(pnPEPNo){
+                pnPEPNo.addEventListener('change', handlePEPChange);
+            }
             handlePEPChange();
-        };
 
-        //logica de conexion al backend
-        function sendData(data, url){
-            console.log("Enviando datos a:", url, data);
+            //logica para agregar sucursales en el form de persona juridica
+            addSucursalBtn.addEventListener('click', function() {
+                const currentSucursales = sucursalesContainer.querySelectorAll('.sucursal-item').length;
+                const newIndex = currentSucursales + 1;
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok){
-                    return response.json().then(err => {throw new Error(err.message || 'Error desconocido en el servidor.')});
-                }
-                return response.json();
-            })
-            .then(result => {
-                alert("¡Exito! " + result.message);
-            })
-            .catch(error => {
-                alert("Error al guardar: " + error.message);
-                console.error('Error de Fetch:', error);
-            });
-        }
-
-        function collectFormData(formId){
-            const form = document.getElementById(formId);
-            const data = {};
-
-            form.querySelectorAll('input[id], select[id], textarea[id]').forEach(element => {
-                let value;
-                if (element.type === 'checkbox'){
-                    if (element.checked && element.name){
-                        if (!data[element.name]){
-                            data[element.name] = [];
-						}
-						data[element.name].push(element.value);
-                    }
+                if (newIndex > 3) {
+                    sucursalLimitMsg.style.display = 'block';
                     return;
                 }
+                sucursalLimitMsg.style.display = 'none';
 
-                if (element.type === 'radio'){
-                    if (element.checked){
-                        data[element.name || element.id] = element.value;
-                    }
-                    return;
-				}
+                const newSucursalDiv = document.createElement('div');
+                newSucursalDiv.className = 'sucursal-item';
+                newSucursalDiv.id = `sucursal_${newIndex}`;
+                newSucursalDiv.innerHTML = `
+                    <h4>Dirección sucursal ${newIndex}</h4>
+                    <div class="form-group
+                        <label for="pjDirSucursal_${newIndex}">Dirección Sucursal:</label>
+                        <input type="text" id="pjDirSucursal_${newIndex}" />
+                    </div>
+                    <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label for="pjCiudadDirSucursal_${newIndex}">Ciudad:</label>
+                            <input type="text" id="pjCiudadDirSucursal_${newIndex}" />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pjEmailDirSucursal_${newIndex}">E-mail:</label>
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pjTelDirSucursal_${newIndex}">Teléfono:</label>
+                            <input type="text" id="pjTelDirSucursal_${newIndex}" />
+                        </div>
+                    </div>
+                    <button type="button" class="remove-sucursal-btn button-group">Eliminar Sucursal</button>
+                `;
 
-                if (element.id){
-					value = element.value;
-					data[element.id] = value;
+                sucursalesContainer.appendChild(newSucursalDiv);
+                if (newIndex === 3) {
+                    sucursalLimitMsg.style.display = 'block';
                 }
             });
 
-            if (formId === 'persJuriForm') {
-				data.idNum = document.getElementById('pjNIT').value;
-				data.pjRazonSocial = document.getElementById('pjRazSocial').value;
+            //logica para eliminar sucursales en el form de persona juridica
+            sucursalesContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-sucursal-btn')) {
+                    const sucursalItem = e.target.closest('.sucursal-item');
+                    if (sucursalItem) {
+                        sucursalItem.remove();
 
-				data.Sucursales = [];
-				const sucursales = document.querySelectorAll('#sucursales-container .sucursal-item');
+                        const sucursales = sucursalesContainer.querySelectorAll('.sucursal-item');
+                        sucursales.forEach((sucursal, index) => {
+                            const newIndex = index + 1;
+                            sucursal.id = `sucursal_${newIndex}`;
+                            sucursal.querySelector('h4').textContent = `Dirección sucursal ${newIndex}`;
 
-                sucursales.forEach((sucursal, index) => {
-                    const i = index +1;
-                    data.Sucursales.push({
-                        pjSucursalDir: document.getElementById(`pjDirSucursal_${i}`).value,
-						pjSucursalCiudad: document.getElementById(`pjCiudadDirSucursal_${i}`).value,
-						pjSucursalEmail: document.getElementById(`pjEmailDirSucursal_${i}`).value,
-						pjSucursalTel: document.getElementById(`pjTelDirSucursal_${i}`).value
-                    });
-				});
+                            sucursal.querySelectorAll('label, input, select').forEach(element => {
+                                const oldId = element.id;
+                                const newId = oldId ? oldId.replace(/\d+/, newIndex) : null;
+                                if (newId) element.id = newId;
 
-                data.ControlRow = [];
-                controlTableBody.querySelectorAll('.control-row').forEach(row => {
-                    data.ControlRow.push({
-                        razonSocial: row.querySelector('[name="controlRazonSocial[]"]').value,
-                        idType: row.querySelector('[name="controlIdType[]"]').value,
-                        idNum: row.querySelector('[name="controlIdNum[]"]').value,
-                        porcentaje: row.querySelector('[name="controlPorcentaje[]"]').value,
-                    });
+                                const oldFor = element.getAttribute('for');
+                                const newFor = oldFor ? oldFor.replace(/\d+/, newIndex) : null;
+                                if (newFor) element.setAttribute('for', newFor);
+                            });
+                        });
+
+                        //oculta mensaje del limite si se elimino una sucursal y quedo menos del maximo
+                        if (sucursales.length < 3) {
+                        sucursalLimitMsg.style.display = 'none';
+                        }
+                    }
+                }
+            });
+
+            //logica para agregar filas a la tabla de control Persona Juridica
+            function addControlRow(){
+                const newRow = document.createElement('tr');
+                newRow.className = 'control-row';
+                newRow.innerHTML = `
+                    <td><input type="text" name="controlRazonSocial[]" style="width:100%;" /></td>
+                    <td>
+                        <select name = "controlIdType[]">
+                            <option value="CC">CC</option>
+                            <option value="NIT">NIT</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="controlIdNum[]" style="width:100%" /></td>
+                    <td><input type="number" name="controlporcentaje[]" style="width:100%" /></td>
+                    <td><button type="button" class="remove-control-row">Eliminar</button></td>
+                `;
+                controlTableBody.appendChild(newRow);
+            }
+
+            addControlRowBtn.addEventListener('click', addControlRow);
+
+            //logica para eliminar filas de la tabla control Persona Juridica
+            controlTableBody.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-control-row')) {
+                    if (controlTableBody.querySelectorAll('.control-row').length > 1) {
+                        e.target.closest('.control-row').remove();
+                    } else {
+                        alert("Debe haber al menos una fila de control.");
+                    }
+                }
+            });
+
+            //inicializa la vista
+            window.onload = function(){
+                personTypeSelect.value = '';
+                persNatuForm.style.display = 'none';
+                persJuriForm.style.display = 'none';
+                handlePEPChange();
+            };
+
+            //logica de conexion al backend
+            function sendData(data, url){
+                console.log("Enviando datos a:", url, data);
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok){
+                        return response.json().then(err => {throw new Error(err.message || 'Error desconocido en el servidor.')});
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    alert("¡Exito! " + result.message);
+                })
+                .catch(error => {
+                    alert("Error al guardar: " + error.message);
+                    console.error('Error de Fetch:', error);
                 });
             }
 
-			if (formId === 'persNatuForm') {
-				data.idNum = document.getElementById('idNum').value;
+            function collectFormData(formId){
+                const form = document.getElementById(formId);
+                const data = {};
+
+                form.querySelectorAll('input[id], select[id], textarea[id]').forEach(element => {
+                    let value;
+                    if (element.type === 'checkbox'){
+                        if (element.checked && element.name){
+                            if (!data[element.name]){
+                                data[element.name] = [];
+                            }
+                            data[element.name].push(element.value);
+                        }
+                        return;
+                    }
+
+                    if (element.type === 'radio'){
+                        if (element.checked){
+                            data[element.name || element.id] = element.value;
+                        }
+                        return;
+                    }
+
+                    if (element.id){
+                        value = element.value;
+                        data[element.id] = value;
+                    }
+                });
+
+                if (formId === 'persJuriForm') {
+                    data.idNum = document.getElementById('pjNIT').value;
+                    data.pjRazonSocial = document.getElementById('pjRazSocial').value;
+
+                    data.Sucursales = [];
+                    const sucursales = document.querySelectorAll('#sucursales-container .sucursal-item');
+
+                    sucursales.forEach((sucursal, index) => {
+                        const i = index +1;
+                        data.Sucursales.push({
+                            pjSucursalDir: document.getElementById(`pjDirSucursal_${i}`).value,
+                            pjSucursalCiudad: document.getElementById(`pjCiudadDirSucursal_${i}`).value,
+                            pjSucursalEmail: document.getElementById(`pjEmailDirSucursal_${i}`).value,
+                            pjSucursalTel: document.getElementById(`pjTelDirSucursal_${i}`).value
+                        });
+                    });
+
+                    data.ControlRow = [];
+                    controlTableBody.querySelectorAll('.control-row').forEach(row => {
+                        data.ControlRow.push({
+                            razonSocial: row.querySelector('[name="controlRazonSocial[]"]').value,
+                            idType: row.querySelector('[name="controlIdType[]"]').value,
+                            idNum: row.querySelector('[name="controlIdNum[]"]').value,
+                            porcentaje: row.querySelector('[name="controlPorcentaje[]"]').value,
+                        });
+                    });
+                }
+
+                if (formId === 'persNatuForm') {
+                    data.idNum = document.getElementById('idNum').value;
+                }
+
+                return data;
             }
 
-            return data;
-        }
+            //listener de submit
+            persNatuForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const data = collectFormData('persNatuForm');
+                sendData(data, '/Admin/UpdateProviderNatural');
+            });
 
-        persNatuForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const data = collectFormData('persNatuForm');
-            sendData(data, '/Admin/UpdateProviderNatural');
+            persJuriForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const data = collectFormData('persJuriForm');
+                sendData(data, '/Admin/UpdateProviderJuridica');
+            });
         });
-
-        persJuriForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const data = collectFormData('persJuriForm');
-            sendData(data, '/Admin/UpdateProviderJuridica');
-        });
-
 	</script>
 </body>
 </html>
