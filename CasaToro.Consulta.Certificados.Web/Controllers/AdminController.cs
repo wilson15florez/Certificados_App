@@ -172,38 +172,40 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             try
             {
                 if (string.IsNullOrEmpty(idNum) || string.IsNullOrEmpty(personType))
-                    return Json(new { exists = false, message = "ID y Tipo de persona son requeridos." });
+                    return Json(new { status = "error", message = "ID y Tipo de persona son requeridos." });
 
-                //verifica si el proveedor existe
+                //verifica si el proveedor existe en la tabla Proveedores_Master
                 var providerMaster = _providerService.getPoviderByNit(idNum);
-                if (providerMaster == null)
-                {
-                    return Json(new { exists = false });
-                }
 
-                //obtiene la informacion segun el tipo de persona
+                //intenta obtener los detalles de persona natural o juridica
                 var providerData = await _providerService.getProviderDetails(idNum, personType);
 
-                string registeredType = null;
+                //si no lo encuentra en proveedores_Master
+                if (providerMaster == null)
+                {
+                    return Json(new { status = "notFound", idNum = idNum });
+                }
+
+                //si se encuentra en proveedores_Master y en una de las tablas de tipo de persona
                 if (providerData != null)
                 {
-                    registeredType = providerData.GetType().Name.Contains("Natural") ? "natural" : "juridica";
+                    string registeredType = providerData.GetType().Name.Contains("Natural") ? "natural" : "juridica";
+
+                    //valida que el tipo de persona coincida con el registrado
+                    if (registeredType != personType)
+                    {
+                        return Json(new {status = "misMatch", registeredType = registeredType });
+                    }
+
+                    //encontrado y coinciden el tipo de persona 
+                    return Json(new { status = "foundDetail", data = providerData });
                 }
 
-                if (providerData == null)
-                {
-                    return Json(new { exists = false });
-                }
-
-                return Json(new
-                {
-                    exists = true,
-                    registeredType = registeredType,
-                    data = providerData
-                });
+                //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
+                return Json(new { status = "foundMasterOnly", data = providerMaster });
             }
             catch (Exception ex) { 
-                return Json(new { error = "Error al consultar proveedor: " + ex.Message });
+                return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
             }
         }
 

@@ -32,7 +32,7 @@
 
             <div id="idSection" class="form-group">
                 <label for="idNum">Número de Identificación:</label>
-				<input type="text" id="idNum" placeholder="Número"/>
+				<input type="text" id="idNum" name="idNum" placeholder="Número"/>
                 <button id="consultBtn" class="button-group">Consultar</button>
             </div>
 
@@ -44,103 +44,115 @@
 				<div class="flex-container">
 					<div class="form-group half-width">
                         <label for="pnNombreCompl">Nombre Completo:</label>
-						<input type="text" id="pnNombreCompl"/>
+                        <input type="text" id="pnNombreCompl" name="pnNombreCompl" />
                     </div>
                 </div>
 
-                <h3 class="sub-header">Personas Nacionales</h3>
-				<div class="flex-container">
-					<div class="form-group half-width">
-                        <label>Tipo de Documento:</label>
-                        <div class="checkbox-group">
-							<input type="checkbox" id="pnNac-CC" name="pnNacDoc" value="CC" /><label for="pnNac-CC">CC</label>
-							<input type="checkbox" id="pnNac-NIT" name="pnNacDoc" value="NIT" /><label for="pnNac-NIT">NIT</label>
-                        </div>
-                    </div>
-                    <div class="form-group half-width">
-						<label for="pnNac-Num">N°:</label>
-						<input type="text" id="pnNac-Num"/>
+                <div class="form-group flex-container">
+                    <label>Nacionalidad:</label>
+                    <div class="form-check form-check-inline">
+						<input type="radio" id="radNacional" name="pnRadNac" value="Nacional" /><label>Nacional</label>
+						<input type="radio" id="radExtranjero" name="pnRadNac" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
-				<h3 class="sub-header">Personas Extranjeras</h3>
-				<div class="flex-container">
-                    <div class="form-group half-width">
-                        <label>Tipo de Documento:</label>
-						<div class="checkbox-group">
-							<input type="checkbox" id="pnExt-CE" name="pnExtDoc" value="CE" /><label for="pnExt-CE">CE</label>
-							<input type="checkbox" id="pnExt-PAS" name="pnExtDoc" value="PAS" /><label for="pnExt-PAS">Pasaporte</label>
-							<input type="checkbox" id="pnExt-CAR" name="pnExtDoc" value="CAR" /><label for="pnExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                <div id="seccionNacional" style="display:none;">
+                    <h3 class="sub-header">Personas Nacionales</h3>
+                    <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label>Tipo de Documento:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="pnNac-CC" name="pnNacDoc" value="CC" /><label for="pnNac-CC">CC</label>
+                                <input type="radio" id="pnNac-NIT" name="pnNacDoc" value="NIT" /><label for="pnNac-NIT">NIT</label>
+                            </div>
                         </div>
-					</div>
-					<div class="form-group half-width">
-						<label for="pnExt-Num">N°:</label>
-						<input type="text" id="pnExt-Num" />
+                        <div class="form-group half-width">
+                            <label for="pnNac-Num">N°:</label>
+                            <input type="text" id="pnNacNum" name="pnDocNum" disabled />
+                        </div>
+                    </div>
+                </div>
+
+				<div id="seccionExtranjera" style="display:none;">
+                    <h3 class="sub-header">Personas Extranjeras</h3>
+                    <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label>Tipo de Documento:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="pnExt-CE" name="pnExtDoc" value="CE" /><label for="pnExt-CE">CE</label>
+                                <input type="radio" id="pnExt-PAS" name="pnExtDoc" value="PAS" /><label for="pnExt-PAS">Pasaporte</label>
+                                <input type="radio" id="pnExt-CAR" name="pnExtDoc" value="CAR" /><label for="pnExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pnExt-Num">N°:</label>
+                            <input type="text" id="pnExtNum" name="pnDocNum" disabled />
+                        </div>
                     </div>
                 </div>
 
 				<div class="flex-container">
 					<div class="form-group half-width">
                         <label for="pnFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-						<input type="date" id="pnFechaExpDoc" />
+                        <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" />
                     </div>
                     <div class="form-group half-width">
 						<label for="pnLugExpDoc">Lugar de Expedición de Documento de Identidad:</label>
-                        <input type="text" id="pnLugExpDoc" />
+                        <input type="text" id="pnLugExpDoc" name="pnLugExpDoc" />
 					</div>
                 </div>
 				<div class="flex-container">
                     <div class="form-group half-width">
 						<label for="pnFechaNac">Fecha de Nacimiento:</label>
-						<input type="date" id="pnFechaNac" />
+                        <input type="date" id="pnFechaNac" name="pnFechaNac" />
                     </div>
 					<div class="form-group half-weidth">
 						<label for="pnLugNac">Lugar de Nacimiento:</label>
-						<input type="text" id="pnLugNac" />
+                        <input type="text" id="pnLugNac" name="pnLugNac" />
                     </div>
                 </div>
 
 				<div class="flex-container">
                     <div class="form-group half-width">
 						<label for="pnNacionalidad">Nacionalidad:</label>
-                        <input type="text" id="pnNacionalidad" />
+                        <input type="text" id="pnNacionalidad" name="pnNacionalidad" />
 					</div>
 					<div class="form-group half-width">
                         <label for="pnDiResidencia">Dirección de Residencia:</label>
-						<input type="text" id="pnDiResidencia" />
+                        <input type="text" id="pnDiResidencia" name="pnDiResidencia" />
                     </div>
                 </div>
 
                 <div class="flex-container">
 					<div class="form-group half-width">
                         <label for="pnCiudad">Ciudad:</label>
-						<input type="text" id="pnCiudad" />
+                        <input type="text" id="pnCiudad" name="pnCiudad" />
                     </div>
                     <div class="form-group half-width">
 						<label for="pnTelefono">Teléfono Fijo:</label>
-                        <input type="text" id="pnTelefono" />
+                        <input type="text" id="pnTelefono" name="pnTelefono" />
 					</div>
                 </div>
 
                 <div class="flex-container">
 					<div class="form-group half-width">
 						<label for="pnCelular">Teléfono Celular:</label>
-						<input type="text" id="pnCelular" />
+                        <input type="text" id="pnCelular" name="pnCelular" />
                     </div>
                     <div class="form-group half-width">
 						<label for="pnEmail">Correo Electrónico:</label>
-						<input type="email" id="pnEmail" />
+                        <input type="email" id="pnEmail" name="pnEmail" />
                     </div>
                 </div>
 
                 <div class="flrex-container">
                     <div class="form-group half-width">
-                        <label for="pnOficProfe">Oficio o Profesión</label>
-						<input type="text" id="pnOficProfe" />
+                        <label for="pnOficProfe">Oficio o Profesión:</label>
+                        <input type="text" id="pnOficProfe" name="pnOficProfe" />
                     </div>
                     <div class="form-group half-width">
-                        <label for="pnActividad">Actividad</label>
-						<select id="pnActividad">
+                        <label for="pnActividad">Actividad:</label>
+                        <select id="pnActividad" name="pnActividad">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
                             <option value="dependiente">Dependiente</option>
 							<option value="independiente">Independiente</option>
@@ -185,7 +197,7 @@
                 </div>
                 <div class="form-group" id="pnPEP_Entidad" style="display:none;">
 					<label for="pnPEP_Entidad">En caso afirmativo señale la entidad:</label>
-					<input type="text" id="pnPEP_Entidad" />
+                    <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" />
                 </div>
 
                 <div class="button-group">
@@ -198,11 +210,11 @@
 				<div class="flex-container">
                     <div class="form-group half-width">
 						<label for="pjRazSocial">Razón Social:</label>
-                        <input type="text" id="pjRazSocial" />
+                        <input type="text" id="pjRazSocial" name="pjRazSocial" />
                     </div>
 					<div class="form-group half-width">
-                        <label for="pjNIT">NIT</label>
-						<input type="text" id="pjNIT" />
+                        <label for="pjNIT">NIT:</label>
+                        <input type="text" id="pjNIT" name="pjNIT" disabled />
                     </div>
 				</div>
 
@@ -210,20 +222,20 @@
                 <div id="direcPrincipal">
                     <div class="form-group">
 						<label for="pjDirPrincipal">Dirección Oficina Principal:</label>
-						<input type="text" id="pjDirPrincipal" />
+                        <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" />
                     </div>
                     <div class="flex-container">
 						<div class="form-group half-width">
 							<label for="pjCiudadDirPrincipal">Ciudad:</label>
-							<input type="text" id="pjCiudadDirPrincipal" />
+                            <input type="text" id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" />
                         </div>
                         <div class="form-group half-width">
                             <label for="pjEmailDirPrincipal">E-mail:</label>
-							<input type="email" id="pjEmailDirPrincipal" />
+                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" />
                         </div>
 						<div class="form-group half-width">
 							<label for="pjTelDirPrincipal">Teléfono:</label>
-							<input type="text" id="pjTelDirPrincipal" />
+                            <input type="text" id="pjTelDirPrincipal" name="pjTelDirPrincipal" />
                         </div>
                     </div>
                 </div>
@@ -233,20 +245,20 @@
 						<h4>Dirección sucursal 1</h4>
 						<div class="form-group">
 							<label for="pjDirSucursal_1">Dirección Sucursal:</label>
-                            <input type="text" id="pjDirSucursal_1" />
+                            <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" />
                         </div>
 						<div class="flex-container">
 							<div class="form-group half-width">
 								<label for="pjCiudadDirSucursal_1">Ciudad:</label>
-								<input type="text" id="pjCiudadDirSucursal_1" />
+                                <input type="text" id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" />
                             </div>
 							<div class="form-group half-width">
 								<label for="pjEmailDirSucursal_1">E-mail:</label>
-								<input type="email" id="pjEmailDirSucursal_1" />
+                                <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" />
                             </div>
 							<div class="form-group half-width">
 								<label for="pjTelDirSucursal_1">Teléfono:</label>
-								<input type="text" id="pjTelDirSucursal_1" />
+                                <input type="text" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" />
                             </div>
                         </div>
                     </div>
@@ -330,6 +342,7 @@
             const idSection = document.getElementById('idSection');
             const persNatuForm = document.getElementById('persNatuForm');
             const persJuriForm = document.getElementById('persJuriForm');
+			const loaderContainer = document.getElementById('loader-container');
 
             //elementos del formulario de persona natural para PEP
             const pnPEPYes = document.getElementById('pnPEPSi');
@@ -345,6 +358,38 @@
             const addControlRowBtn = document.getElementById('addControlRowBtn');
             const controlTableBody = document.querySelector('#control-table tbody');
             const submitPjBtn = document.getElementById('submitPjBtn');
+
+            const radNacional = document.getElementById('radNacional');
+            const radExtranjero = document.getElementById('radExtranjero');
+            const seccionNacional = document.getElementById('seccionNacional');
+            const seccionExtranjera = document.getElementById('seccionExtranjera');
+            const inputNacNum = document.getElementById('pnNacNum');
+            const inputExtNum = document.getElementById('pnExtNum');
+			const radiosNacDoc = document.querySelectorAll('input[name="pnNacDoc"');
+			const radiosExtDoc = document.querySelectorAll('input[name="pnExtDoc"');
+
+            function selecNacionalidad(){
+				const idNumValue = idNumInput.value;
+				if (radNacional.checked){
+					seccionNacional.style.display = 'block';
+					seccionExtranjera.style.display = 'none';
+					if (inputNacNum) inputNacNum.value = idNumValue;
+					clearRadios(radiosExtDoc);
+				}else if (radExtranjero.checked){
+                    seccionNacional.style.display = 'none';
+					seccionExtranjera.style.display = 'block';
+					if (inputExtNum) inputExtNum.value = idNumValue;
+					clearRadios(radiosNacDoc);
+				}else{
+					seccionNacional.style.display = 'none';
+					seccionExtranjera.style.display = 'none';
+					clearRadios(radiosNacDoc);
+					clearRadios(radiosExtDoc);
+                }
+            }
+			if (radNacional) radNacional.addEventListener('change', selecNacionalidad);
+			if (radExtranjero) radExtranjero.addEventListener('change', selecNacionalidad);
+			selecNacionalidad();
 
             //funcion para crear alertas
             function createAlert(message, type='warning'){
@@ -446,8 +491,58 @@
                 handlePEPChange();
             }
 
+            //funcion para limpiar los radioButtons de nacionalidad
+            function clearRadios(radioGroup){
+                radioGroup.forEach(radio  => radio.checked = false);
+            }
+
+            //funcion para precargar datos de proveedores_Master
+            function loadMasterData(masterData, formId, idNum){
+
+                if (formId === 'persNatuForm'){
+					document.getElementById('idNum').value = idNum;
+                }
+
+                //Precarga el resto de la data de proveedores_Master (si existe)
+                if (masterData){
+                    if (formId === 'persNatuForm'){
+                        //precarga los campos que coincida con la data de master
+						document.getElementById('pnNombreCompl').value = masterData.nombre || '';
+						document.getElementById('pnDiResidencia').value = masterData.direccion || '';
+						document.getElementById('pnEmail').value = masterData.correo || '';
+
+                        //logica para separar tel fijos de celular de master
+						const phone = masterData.telefono || '';
+						const pnTelefono = document.getElementById('pnTelefono');
+						const pnCelular = document.getElementById('pnCelular');
+
+						if (pnTelefono) pnTelefono.value = '';
+						if (pnCelular) pnCelular.value = '';
+
+                        if (phone.startsWith('6') && pnTelefono){
+							pnTelefono.value = phone;
+						}else if (phone.startsWith('3') && pnCelular){
+							pnCelular.value = phone;
+                        }
+                    }
+                    else if (formId === 'persJuriForm'){
+						//precarga los campos que coincida con la data de master
+						document.getElementById('pjRazSocial').value = masterData.nombre || '';
+                        document.getElementById('pjDirPrincipal').value = masterData.direccion || '';
+						document.getElementById('pjEmailDirPrincipal').value = masterData.correo || '';
+						document.getElementById('pjTelDirPrincipal').value = masterData.telefono || '';
+
+						const docInputPJ = document.getElementById('pjNIT');
+                        if (docInputPJ){
+							docInputPJ.value = idNum;
+                            docInputPJ.setAttribute('disabled', 'disabled');
+                        }
+                    }
+				}
+            }
+
             //funcion de consulta en el BACKEND
-            consultBtn.addEventListener('click', async function(){
+            consultBtn.addEventListener('click', async function(e){
 
                 const idNum = idNumInput.value.trim();
                 const personType = personTypeSelect.value;
@@ -470,40 +565,78 @@
                     const result = await response.json();
 
                     if (!response.ok){
-                        throw new Error(result.message || 'Error desconocido en el servidor.');
+                        throw new Error(result.message || 'Error desconocido en la respuesta del servidor.');
                     }
 
-                    //proveedor no encontrado (o encontrado y vacio)
-                    if (result.exists === false){
-                        createAlert(`El proveedor con ID: ${idNum} no se encontro en la base de datos.`, 'success');
+                    const personType = personTypeSelect.value;
+					const idNum = idNumInput.value.trim();
+                    const formId = personType === 'natural' ? 'persNatuForm' : 'persJuriForm';
+
+					persNatuForm.style.display = 'none';
+					persJuriForm.style.display = 'none';
+
+                    //ID no encontrado (nuevo resgistro)
+                    if (result.status === 'notFound'){
+                        createAlert(`Proveedor con ID: ${idNum} no encontrado. Ingrese la informacion para un nuevo registro.`, 'success');
 
                         if (personType === 'natural'){
                             persNatuForm.style.display = 'block';
-                            loadFormData({}, 'persNatuForm');
+                            loadFormData({}, formId);
+                            loadMasterData(null, formId, idNum);
                         }else if (personType === 'juridica'){
                             persJuriForm.style.display = 'block';
-                            loadFormData({}, 'persJuriForm');
+                            loadFormData({}, formId);
+                            loadMasterData(null, formId, idNum);
                         }
                         return;
                     }
 
-                    //proveedor encontrado
-                    //validacion tipo de persona
-                    const registeredTypeText = result.registeredType === 'natural' ? 'Persona Natural' : 'Persona Jurídica';
-
-                    if (result.registeredType && result.registeredType !== personType){
-                        createAlert(`¡Advertencia! El proveedor con ID: ${idNum} ya está registrado como ${registeredTypeText}. Para actualizarlo, debes seleccionar "${registeredTypeText}" en el despliegue.`, 'warning');
+                    //ID ya registrado con un tipo de persona diferente
+                    if (result.status === 'misMatch'){
+                        const registeredTypeText = result.registeredType === 'natural' ? 'Persona Natural' : 'Persona Juridica';
+                        createAlert(`¡Advertencia! El proveedor con ID: ${idNum} ya esta registrado como ${registeredTypeText}. Para actualizarlo debe seleccionar "${registeredTypeText}" en el desplegable.`, 'warning');
                         return;
                     }
 
-                    createAlert('Informacion del proveedor cargada con exito. Puede actualizar los datos.', 'success');
-                    if (personType === 'natural'){
-                        persNatuForm.style.display = 'block';
-                        loadFormData(result.data, 'persNatuForm');
-                    }else if (personType === 'juridica'){
-                        persJuriForm.style.display = 'block';
-                        loadFormData(result.data, 'persJuriForm');
+                    //ID solo registrado en proveedores_Master
+                    if (result.status === 'foundMasterOnly'){
+                        createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete o actualice si informacion.`, 'info');
+
+                        const masterData = result.data;
+
+                        if (personType === 'natural'){
+                            persNatuForm.style.display = 'block';
+                            loadFormData({}, formId);
+                            loadMasterData(masterData, formId, idNum);
+                        }else if (personType === 'juridica'){
+                            persJuriForm.style.display = 'block';
+                            loadFormData({}, formId);
+                            loadMasterData(masterData, formId, idNum);
+                        }
+                        return;
                     }
+
+                    //ID ya registrado en proveedores_Master y en una tabla de tipo de persona
+                    if (result.status === 'foundDetail'){
+                        createAlert(`Informacion del proveedor con ID: ${idNum} cargada con exito.`, 'success');
+
+                        const registeredType = personType;
+                        const formData = result.data;
+                        const formId = registeredType === 'natural' ? 'persNatuForm' : 'persJuriForm';
+
+                        if (registeredType === 'natural'){
+                            persNatuForm.style.display = 'block';
+                            loadFormData(formData, formId);
+                            loadMasterData(null, formId, idNum);
+                        }else if(registeredType === 'juridica'){
+                            persJuriForm.style.display = 'block';
+                            loadFormData(formData, formId);
+                            loadMasterData(null, formId, idNum);
+                        }
+                        return;
+                    }
+                        
+                    
                 } catch(error){
                     createAlert("Error al consultar: " +error.message, 'danger');
                     console.error('Error de Fetch:', error);
@@ -687,34 +820,26 @@
                 const form = document.getElementById(formId);
                 const data = {};
 
-                form.querySelectorAll('input[id], select[id], textarea[id]').forEach(element => {
-                    let value;
-                    if (element.type === 'checkbox'){
-                        if (element.checked && element.name){
-                            if (!data[element.name]){
-                                data[element.name] = [];
+                Array.from(form.elements).forEach(element => {
+
+                    if (element.name && element.type !== 'submit' && element.type !== 'button') {
+                        if (element.type === 'radio') {
+                            if (element.checked) {
+                                data[element.name] = element.value;
                             }
-                            data[element.name].push(element.value);
                         }
-                        return;
-                    }
-
-                    if (element.type === 'radio'){
-                        if (element.checked){
-                            data[element.name || element.id] = element.value;
+                        else {
+                            data[element.name] = element.value;
                         }
-                        return;
-                    }
-
-                    if (element.id){
-                        value = element.value;
-                        data[element.id] = value;
                     }
                 });
 
-                if (formId === 'persJuriForm') {
-                    data.idNum = document.getElementById('pjNIT').value;
-                    data.pjRazonSocial = document.getElementById('pjRazSocial').value;
+                if (formId === 'persNatuForm') {
+                    data.Nit = document.getElementById('pnDocNum').value;
+                }
+
+                if (formId === 'persJuriForm'){
+                    data.Nit = document.getElementById('pjNIT').value;
 
                     data.Sucursales = [];
                     const sucursales = document.querySelectorAll('#sucursales-container .sucursal-item');
@@ -739,24 +864,29 @@
                         });
                     });
                 }
-
-                if (formId === 'persNatuForm') {
-                    data.idNum = document.getElementById('idNum').value;
-                }
-
                 return data;
             }
 
             //listener de submit
             persNatuForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+				const pnNumDoc = document.getElementById('pnDocNum');
+				if (pnNumDoc) pnNumDoc.removeAttribute('disabled');
+
                 const data = collectFormData('persNatuForm');
+				if (pnNumDoc) pnNumDoc.setAttribute('disabled', 'disabled');
                 sendData(data, '/Admin/UpdateProviderNatural');
             });
 
             persJuriForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+				const pjNIT = document.getElementById('pjNIT');
+				if (pjNIT) pjNIT.removeAttribute('disabled');
+
                 const data = collectFormData('persJuriForm');
+				if (pjNIT) pjNIT.setAttribute('disabled', 'disabled');
                 sendData(data, '/Admin/UpdateProviderJuridica');
             });
         });
