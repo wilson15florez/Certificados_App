@@ -46,6 +46,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Sucursales_PJuridica> Sucursales_PJuridica { get; set; }
 
+    public virtual DbSet<PEPtipos> PEPtipos { get; set; }
+
+    public virtual DbSet<PEPtipos_ProveedoresNatural> PEPtipos_ProveedoresNatural { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Administradore>(entity =>
@@ -441,6 +445,27 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.NitProveedor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sucursal_PJ");
+        });
+
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        modelBuilder.Entity<PEPtipos>(entity =>
+        {
+            entity.HasKey(e => e.IdPEP).HasName("PK__PEPtipos__2ACD658375A46685");
+
+            entity.Property(e => e.Nombre).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<PEPtipos_ProveedoresNatural>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.NitProveedor).HasMaxLength(20);
+
+            entity.HasOne(d => d.TipoPEP).WithMany()
+                .HasForeignKey(d => d.TipoPEPid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__PEPtipos___TipoP__5BAD9CC8");
         });
 
         OnModelCreatingPartial(modelBuilder);

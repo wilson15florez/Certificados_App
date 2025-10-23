@@ -176,36 +176,88 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 //verifica si el proveedor existe en la tabla Proveedores_Master
                 var providerMaster = _providerService.getPoviderByNit(idNum);
-
-                //intenta obtener los detalles de persona natural o juridica
-                var providerData = await _providerService.getProviderDetails(idNum, personType);
-
+                
                 //si no lo encuentra en proveedores_Master
                 if (providerMaster == null)
                 {
                     return Json(new { status = "notFound", idNum = idNum });
                 }
 
-                //si se encuentra en proveedores_Master y en una de las tablas de tipo de persona
-                if (providerData != null)
-                {
-                    string registeredType = providerData.GetType().Name.Contains("Natural") ? "natural" : "juridica";
+                //intenta obtener los detalles de persona natural o juridica
+                var naturalData = await _providerService.getProviderDetails(idNum, "natural");
+                var juridicaData = await _providerService.getProviderDetails(idNum, "juridica");
 
-                    //valida que el tipo de persona coincida con el registrado
-                    if (registeredType != personType)
-                    {
-                        return Json(new {status = "misMatch", registeredType = registeredType });
-                    }
+                // Si existe registro como natural y se está consultando juridica
+                if (naturalData != null && personType == "juridica")
+                    return Json(new { status = "misMatch", registeredType = "natural" });
 
-                    //encontrado y coinciden el tipo de persona 
-                    return Json(new { status = "foundDetail", data = providerData });
-                }
+                // Si existe registro como juridica y se está consultando natural
+                if (juridicaData != null && personType == "natural")
+                    return Json(new { status = "misMatch", registeredType = "juridica" });
+
+                if (personType == "natural" && naturalData != null)
+                    return Json(new { status = "foundDetail", data = naturalData });
+
+                if (personType == "juridica" && juridicaData != null)
+                    return Json(new { status = "foundDetail", data = juridicaData });
 
                 //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
                 return Json(new { status = "foundMasterOnly", data = providerMaster });
             }
-            catch (Exception ex) { 
+            catch (Exception ex) {
                 return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("/Admin/AddProviderNatural")]
+        public IActionResult AddProviderNatural([FromBody] Proveedores_Natural provider)
+        {
+            try
+            {
+                if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getPoviderByNit(provider.Nit);
+                if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedor_natural
+                var existingNatural = _providerService.getProviderDetails(provider.Nit, "natural").Result;
+                if (existingNatural != null) return Json(new { error = "El proveedor ya tiene registrada su información como persona natural." });
+
+                //insertar registro de persona natural
+                _providerService.AddProveedorNatural(provider);
+                return Json(new { message = "Proveedor de persona natural registrado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("/Admin/AddProviderJuridica")]
+        public IActionResult AddProviderJuridica([FromBody] Proveedores_Juridica provider)
+        {
+            try
+            {
+                if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getPoviderByNit(provider.Nit);
+                if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedor_juridica
+                var existingJuridica = _providerService.getProviderDetails(provider.Nit, "juridica").Result;
+                if (existingJuridica != null) return Json(new { error = "El proveedor ya tiene registrada su información como persona jurídica." });
+
+                //insertar registro de persona juridica
+                _providerService.AddProveedorJuridica(provider);
+                return Json(new { message = "Proveedor de persona jurídica registrado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
             }
         }
 

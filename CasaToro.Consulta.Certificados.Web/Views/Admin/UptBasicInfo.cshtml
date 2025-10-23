@@ -38,7 +38,7 @@
 
             <div id="alertContainer"></div>
 
-            <div id="persNatuForm" class="form-section" style="display:none;">
+            <form id="persNatuForm" class="form-section" style="display:none;">
 
                 <h2>Persona Natural</h2>
 				<div class="flex-container">
@@ -203,9 +203,9 @@
                 <div class="button-group">
                     <button type="submit" id="submitPnBtn">Guardar Persona Natural</button>
                 </div>
-            </div>
+            </form>
 
-            <div id="persJuriForm" class="form-section" style="display:none;">
+            <form id="persJuriForm" class="form-section" style="display:none;">
 				<h2>Persona Jurídica</h2>
 				<div class="flex-container">
                     <div class="form-group half-width">
@@ -300,7 +300,7 @@
                 <div class="button-group">
                     <button type="submit" id="submitPjBtn">Guardar Persona Jurídica</button>
 				</div>
-            </div>
+            </form>
         </section>
 
 
@@ -367,6 +367,7 @@
             const inputExtNum = document.getElementById('pnExtNum');
 			const radiosNacDoc = document.querySelectorAll('input[name="pnNacDoc"');
 			const radiosExtDoc = document.querySelectorAll('input[name="pnExtDoc"');
+			let isNewDetail = false;
 
             function selecNacionalidad(){
 				const idNumValue = idNumInput.value;
@@ -575,20 +576,10 @@
 					persNatuForm.style.display = 'none';
 					persJuriForm.style.display = 'none';
 
-                    //ID no encontrado (nuevo resgistro)
+                    //ID no encontrado (proveedor no registrado)
                     if (result.status === 'notFound'){
-                        createAlert(`Proveedor con ID: ${idNum} no encontrado. Ingrese la informacion para un nuevo registro.`, 'success');
+                        createAlert(`Proveedor con ID: ${idNum} no encontrado. Verifique el ID o registre el nuevo proveedor.`, 'success');
 
-                        if (personType === 'natural'){
-                            persNatuForm.style.display = 'block';
-                            loadFormData({}, formId);
-                            loadMasterData(null, formId, idNum);
-                        }else if (personType === 'juridica'){
-                            persJuriForm.style.display = 'block';
-                            loadFormData({}, formId);
-                            loadMasterData(null, formId, idNum);
-                        }
-                        return;
                     }
 
                     //ID ya registrado con un tipo de persona diferente
@@ -600,7 +591,9 @@
 
                     //ID solo registrado en proveedores_Master
                     if (result.status === 'foundMasterOnly'){
-                        createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete o actualice si informacion.`, 'info');
+                        createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete y/o actualice la informacion.`, 'info');
+
+						isNewDetail = true;
 
                         const masterData = result.data;
 
@@ -619,6 +612,8 @@
                     //ID ya registrado en proveedores_Master y en una tabla de tipo de persona
                     if (result.status === 'foundDetail'){
                         createAlert(`Informacion del proveedor con ID: ${idNum} cargada con exito.`, 'success');
+
+						isNewDetail = false;
 
                         const registeredType = personType;
                         const formData = result.data;
@@ -835,7 +830,7 @@
                 });
 
                 if (formId === 'persNatuForm') {
-                    data.Nit = document.getElementById('pnDocNum').value;
+                    data.Nit = document.getElementById('idNum').value;
                 }
 
                 if (formId === 'persJuriForm'){
@@ -876,7 +871,9 @@
 
                 const data = collectFormData('persNatuForm');
 				if (pnNumDoc) pnNumDoc.setAttribute('disabled', 'disabled');
-                sendData(data, '/Admin/UpdateProviderNatural');
+
+				const url = isNewDetail ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural';
+                sendData(data, url);
             });
 
             persJuriForm.addEventListener('submit', function(e) {
@@ -887,7 +884,9 @@
 
                 const data = collectFormData('persJuriForm');
 				if (pjNIT) pjNIT.setAttribute('disabled', 'disabled');
-                sendData(data, '/Admin/UpdateProviderJuridica');
+
+				const url = isNewDetail ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica';
+                sendData(data, url);
             });
         });
 	</script>

@@ -161,12 +161,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = providerData.pnEmail;
                         existingMaster.Telefono = providerData.pnTelefono;
                     }
-                    
+
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
-                    if (existingNatural != null) 
+                    if (existingNatural != null)
                     {
                         _context.Entry(existingNatural).CurrentValues.SetValues(providerData);
-                    }else
+                    }
+                    else
                     {
                         throw new Exception($"Registro detallado para Persona Natural con NIT {providerNit} no encontrado.");
                     }
@@ -284,6 +285,46 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             catch (Exception ex)
             {
                 throw new Exception("Error al actualizar la contraseña del proveedor", ex);
+            }
+        }
+
+        /*public void AddProveedorMaster(ProveedoresMaster proveedor)
+        {
+            try
+            {
+                _context.ProveedoresMasters.Add(proveedor);
+                _context.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al agregar el proveedor", ex);
+            }
+        }*/
+
+        public void AddProveedorNatural(Proveedores_Natural proveedor)
+        {
+            try
+            {
+                _context.Proveedores_Natural.Add(proveedor);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al agregar el proveedor natural", ex);
+            }
+        }
+
+        public void AddProveedorJuridica(Proveedores_Juridica proveedor)
+        {
+            try
+            {
+                _context.Proveedores_Juridica.Add(proveedor);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al agregar el proveedor juridico", ex);
             }
         }
     }
