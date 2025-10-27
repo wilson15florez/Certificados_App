@@ -131,7 +131,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-
+        
         //Accion para actualizar persona natural
         [HttpPost]
         [Route("/Admin/UpdateProviderNatural")]
@@ -208,7 +208,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
             }
         }
-
+        
         [HttpPost]
         [Route("/Admin/AddProviderNatural")]
         public IActionResult AddProviderNatural([FromBody] Proveedores_Natural provider)

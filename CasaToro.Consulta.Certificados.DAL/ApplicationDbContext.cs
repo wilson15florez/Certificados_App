@@ -398,9 +398,15 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pjTelDirPrincipal).HasMaxLength(20);
         });
 
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         modelBuilder.Entity<Proveedores_Natural>(entity =>
         {
             entity.HasKey(e => e.Id_ProNatu);
+
+            entity.HasIndex(e => e.Nit, "IX_Proveedores_Natural_Nit").IsUnique();
+
+            entity.HasIndex(e => e.Nit, "UQ_Proveedores_Natural_Nit").IsUnique();
 
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.pnActividad).HasMaxLength(100);
@@ -429,6 +435,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pnTelefono).HasMaxLength(20);
+            entity.Property(e => e.pnTipoNacionalidad).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Sucursales_PJuridica>(entity =>

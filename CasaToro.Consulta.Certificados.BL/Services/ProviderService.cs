@@ -96,8 +96,45 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             {
                 var naturalData = await _context.Proveedores_Natural
                                                     .FirstOrDefaultAsync(p => p.Nit == nit);
-                return naturalData;
+                if (naturalData == null) 
+                    return null;
 
+                var pepTipos = await _context.PEPtipos_ProveedoresNatural
+                                                .Where(t => t.NitProveedor == nit)
+                                                .Select(t => t.TipoPEPid)
+                                                .ToListAsync();
+
+                var pepData = new Dictionary<string, object>
+                {
+                    {"Nit", naturalData.Nit },
+                    {"pnNombreCompl", naturalData.pnNombreCompl },
+
+                    {"pnTipoNacionalidad", naturalData.pnTipoNacionalidad },
+                    {"pnRadNac", naturalData.pnNacDoc },
+                    {"pnRadExt", naturalData.pnExtDoc },
+                    {"pnFechaExpDoc", naturalData.pnFechaExpDoc?.ToString("yyyy-MM-dd") },
+                    {"pnLugExpDoc", naturalData.pnLugExpDoc },
+
+                    {"pnFechaNac", naturalData.pnFechaNac?.ToString("yyyy-MM-dd") },
+                    {"pnLugNac", naturalData.pnLugNac },
+                    {"pnNacionalidad", naturalData.pnNacionalidad },
+                    {"pnDiResidencia", naturalData.pnDiResidencia },
+                    {"pnCiudad", naturalData.pnCiudad },
+
+                    {"pnTelefono", naturalData.pnTelefono },
+                    {"pnCelular", naturalData.pnCelular },
+                    {"pnEmail", naturalData.pnEmail },
+
+                    {"pnOficProfe", naturalData.pnOficProfe },
+                    {"pnActividad", naturalData.pnActividad },
+                    {"pnReconoPublic", naturalData.pnReconoPublic },
+                    {"pnManRePub", naturalData.pnManRePub },
+
+                    {"pnPEP", naturalData.pnPEP },
+                    {"PEPTypes", pepTipos },
+                    {"pnPEP_Entidad", naturalData.pnPEP_Entidad }
+                };
+                return pepData;
             }
             else if (personType.Equals("juridica", StringComparison.OrdinalIgnoreCase))
             {
@@ -159,17 +196,52 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Nombre = providerData.pnNombreCompl.ToUpper();
                         existingMaster.Direccion = providerData.pnDiResidencia;
                         existingMaster.Correo = providerData.pnEmail;
-                        existingMaster.Telefono = providerData.pnTelefono;
+                        existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnTelefono) ? providerData.pnTelefono : providerData.pnCelular;
                     }
 
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
                     if (existingNatural != null)
                     {
-                        _context.Entry(existingNatural).CurrentValues.SetValues(providerData);
+                        existingNatural.pnNombreCompl = providerData.pnNombreCompl;
+                        existingNatural.pnDiResidencia = providerData.pnDiResidencia;
+                        existingNatural.pnCiudad = providerData.pnCiudad;
+                        existingNatural.pnEmail = providerData.pnEmail;
+                        existingNatural.pnTelefono = providerData.pnTelefono;
+                        existingNatural.pnCelular = providerData.pnCelular;
+
+                        existingNatural.pnTipoNacionalidad = providerData.pnTipoNacionalidad;
+                        existingNatural.pnNacDoc = providerData.pnNacDoc;
+                        existingNatural.pnExtDoc = providerData.pnExtDoc;
+                        existingNatural.pnFechaExpDoc = providerData.pnFechaExpDoc;
+                        existingNatural.pnLugExpDoc = providerData.pnLugExpDoc;
+
+                        existingNatural.pnFechaNac = providerData.pnFechaNac;
+                        existingNatural.pnLugNac = providerData.pnLugNac;
+                        existingNatural.pnNacionalidad = providerData.pnNacionalidad;
+
+                        existingNatural.pnOficProfe = providerData.pnOficProfe;
+                        existingNatural.pnActividad = providerData.pnActividad;
+
+                        existingNatural.pnReconoPublic = providerData.pnReconoPublic;
+                        existingNatural.pnManRePub = providerData.pnManRePub;
+                        existingNatural.pnPEP = providerData.pnPEP;
+                        existingNatural.pnPEP_Entidad = providerData.pnPEP_Entidad;
                     }
                     else
                     {
                         throw new Exception($"Registro detallado para Persona Natural con NIT {providerNit} no encontrado.");
+                    }
+
+                    var oldPEP = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
+                    _context.PEPtipos_ProveedoresNatural.RemoveRange(oldPEP);
+
+                    foreach (var tipo in providerData.PEPTypes)
+                    {
+                        _context.PEPtipos_ProveedoresNatural.Add(new PEPtipos_ProveedoresNatural
+                        {
+                            NitProveedor = providerNit,
+                            TipoPEPid = tipo
+                        });
                     }
                     _context.SaveChanges();
                     transaction.Commit();
@@ -181,7 +253,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
 
             }
-
         }
 
         public void UpdateJuridicaInfo(Proveedores_Juridica providerData)
@@ -288,7 +359,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        /*public void AddProveedorMaster(ProveedoresMaster proveedor)
+        public void AddProveedorMaster(ProveedoresMaster proveedor)
         {
             try
             {
@@ -300,18 +371,38 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             {
                 throw new Exception("Error al agregar el proveedor", ex);
             }
-        }*/
+        }
 
         public void AddProveedorNatural(Proveedores_Natural proveedor)
         {
-            try
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                _context.Proveedores_Natural.Add(proveedor);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al agregar el proveedor natural", ex);
+                try
+                {
+                    _context.Proveedores_Natural.Add(proveedor);
+                    _context.SaveChanges();
+
+                    string providerNit = proveedor.Nit;
+
+                    var oldPEP = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
+                    _context.PEPtipos_ProveedoresNatural.RemoveRange(oldPEP);
+
+                    foreach (var tipo in proveedor.PEPTypes)
+                    {
+                        _context.PEPtipos_ProveedoresNatural.Add(new PEPtipos_ProveedoresNatural
+                        {
+                            NitProveedor = providerNit,
+                            TipoPEPid = tipo
+                        });
+                    }
+
+                    _context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al agregar el proveedor natural", ex);
+                }
             }
         }
 

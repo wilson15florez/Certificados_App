@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CasaToro.Consulta.Certificados.Entities;
 
@@ -9,17 +10,19 @@ public partial class Proveedores_Natural
 
     public string Nit { get; set; } = null!;
 
-    public string? pnNombreCompl { get; set; }
+    public string pnNombreCompl { get; set; } = null!;
+
+    public string? pnTipoNacionalidad { get; set; }
 
     public string? pnNacDoc { get; set; }
 
     public string? pnExtDoc { get; set; }
 
-    public DateOnly? pnFechaExpDoc { get; set; }
+    public DateTime? pnFechaExpDoc { get; set; }
 
     public string? pnLugExpDoc { get; set; }
 
-    public DateOnly? pnFechaNac { get; set; }
+    public DateTime? pnFechaNac { get; set; }
 
     public string? pnLugNac { get; set; }
 
@@ -46,4 +49,7 @@ public partial class Proveedores_Natural
     public string? pnPEP { get; set; }
 
     public string? pnPEP_Entidad { get; set; }
+
+    [NotMapped]
+    public List<int> PEPTypes { get; set; } = new List<int>();
 }

@@ -189,13 +189,13 @@
                     <div class="form-group half-width" id="pnPEPtypeGroup" style="display:none;">
 						<label>Tipo de PEP:</label>
                         <div class="checkbox-group">
-							<input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="Nacional" /><label for="pnPEP-Nac">PEP Nacional</label>
-							<input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="OrgInternacional" /><label for="pnPEP-OrgInt">PEP Org.Internacional</label>
-							<input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="Extranjero" /><label for="pnPEP-Ext">PEP Extranjero</label>
+							<input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" /><label for="pnPEP-Nac">PEP Nacional</label>
+							<input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="2" /><label for="pnPEP-OrgInt">PEP Org.Internacional</label>
+							<input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" /><label for="pnPEP-Ext">PEP Extranjero</label>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" id="pnPEP_Entidad" style="display:none;">
+                <div class="form-group" id="pnPEP_Entidad_Container" style="display:none;">
 					<label for="pnPEP_Entidad">En caso afirmativo señale la entidad:</label>
                     <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" />
                 </div>
@@ -348,7 +348,7 @@
             const pnPEPYes = document.getElementById('pnPEPSi');
             const pnPEPNo = document.getElementById('pnPEPNo');
             const pnPEPtypeGroup = document.getElementById('pnPEPtypeGroup');
-            const pnPEP_Entidad = document.getElementById('pnPEP_Entidad');
+            const pnPEP_Entidad = document.getElementById('pnPEP_Entidad_Container');
             const submitPnBtn = document.getElementById('submitPnBtn');
 
             //elementos del formulario de persona juridica para sucursales
@@ -403,93 +403,45 @@
             }
 
             //funcion para precargar los datos del formulario
-            function loadFormData(data, formId){
-                const form = document.getElementById(formId);
+            function loadFormData_Natural(data){
+                
+                $("#pnNombreCompl").val(data.pnNombreCompl);
+				$("#pnTipoNacionalidad").val(data.pnTipoNacionalidad);
 
-                //limpia los campos antes de cargar
-                form.querySelectorAll('input[type="text"], input[type="email"],input[type="date"], input[type="number"], select, textarea').forEach(element => {
-                    element.value = '';
+                if (data.pnNacDoc === "S") $("#pnRadNac").prop("checked", true);
+				if (data.pnExtDoc === "S") $("#pnRadExt").prop("checked", true);
+
+                $("#pnFechaExpDoc").val(data.pnFechaExpDoc);
+                $("#pnLugExpDoc").val(data.pnLugExpDoc);
+
+                $("#pnFechaNac").val(data.pnFechaNac);
+                $("#pnLugNac").val(data.pnLugNac);
+
+                $("#pnNacionalidad").val(data.pnNacionalidad);
+                $("#pnDiResidencia").val(data.pnDiResidencia);
+                $("#pnCiudad").val(data.pnCiudad);
+
+                $("#pnTelefono").val(data.pnTelefono);
+                $("#pnCelular").val(data.pnCelular);
+                $("#pnEmail").val(data.pnEmail);
+
+                $("#pnOficProfe").val(data.pnOficProfe);
+                $("#pnActividad").val(data.pnActividad);
+
+                $("#pnReconoPublic").val(data.pnReconoPublic);
+                $("#pnManRePub").val(data.pnManRePub);
+
+                if (data.pnPEP === "S") $("#pnPEP_Si").prop("checked", true);
+                else $("#pnPEP_No").prop("checked", true);
+
+                $("#pnPEP_Entidad").val(data.pnPEP_Entidad);
+
+                $("#input[name='PEPTypes']").each(function(){
+                    const value = parseInt($(this).val());
+                    if (data.PEPTypes.includes(value)){
+                        $(this).prop("checked", true);
+                    }
                 });
-                form.querySelectorAll('input[type="checkbox"], input[type=radio]').forEach(element => {
-                element.checked = false;
-                });
-
-                //llenar los campos con los datos
-                for (const key in data){
-                    if(!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
-
-                    const element = document.getElementById(key);
-
-                    if (element){
-                        if (element.type === 'checkbox'){
-                            if (Array.isArray(data[key])){
-                                data[key].forEach(value => {
-                                    const checkboxId = `${key}-${value}`;
-                                    const checkbox = document.getElementById(checkboxId);
-                                    if (checkbox) checkbox.checked = true;
-                                });
-                            }
-                        }else if(element.type === 'radio'){
-                            const radio = form.querySelector(`input[name="${element.name}"][value="${data[key]}"]`);
-                            if (radio) radio.checked = true;
-                        }else {
-                            element.value = data[key];
-                        }
-                    }
-                }
-
-                //logica para persona juridica (sucursales y filas)
-                if (formId === 'persJuriForm'){
-                    //limpiar los campos
-                    document.querySelectorAll('.sucursal-item:not(#sucursal_1)').forEach(item => item.remove());
-                    while (controlTableBody.querySelectorAll('.control-row').length > 1){
-                        controlTableBody.lastElementChild.remove();
-                    }
-
-                    //precargar sucursales
-                    if (data.Sucursales && Array.isArray(data.Sucursales) && data.Sucursales.length > 0){
-                        //llenar la primera sucursal
-                        document.getElementById('pjDirSucursal_1').value = data.Sucursales[0].pjSucursalDir || '';
-                        document.getElementById('pjCiudadDirSucursal_1').value = data.Sucursales[0].pjSucursalCiudad || '';
-                        document.getElementById('pjEmailDirSucursal_1').value = data.Sucursales[0].pjSucursalEmail || '';
-                        document.getElementById('pjTelDirSucursal_1').value = data.Sucursales[0].pjSucursalTel || '';
-
-                        //agregar sucursales adicionales si existen
-                        for (let i = 1; i < data.Sucursales.length; i++){
-                            addSucursalBtn.click();
-                            const index = i + 1;
-                            const sucursalData = data.Sucursales[i];
-                            document.getElementById(`pjDirSucursal_${index}`).value = sucursalData.pjSucursalDir || '';
-                            document.getElementById(`pjCiudadDirSucursal_${index}`).value = sucursalData.pjSucursalCiudad || '';
-                            document.getElementById(`pjEmailDirSucursal_${index}`).value = sucursalData.pjSucursalEmail || '';
-                            document.getElementById(`pjTelDirSucursal_${index}`).value = sucursalData.pjSucursalTel || '';
-                        }
-                    }
-
-                    //precargar filas de control (si no hay datos solo deja la primera linea)
-                    if (data.ControlRow && Array.isArray(data.ControlRow) && data.ControlRow.length > 0){
-                        //limpiar la fila si hay mas de uno para evitar dupliados
-                        if (data.ControlRow.length > 1){
-                            controlTableBody.querySelector('.control-row').remove();
-                        }
-
-                        data.ControlRow.forEach((row, index) => {
-                            if (index > 0){
-                                addControlRow();
-                            }
-
-                            const currentRow = controlTableBody.querySelectorAll('.control-row')[index];
-                            if (currentRow){
-                                currentRow.querySelector('[name="controlRazonSocial[]"]').value = row.razonSocial || '';
-                                currentRow.querySelector('[name="controlIdType[]"]').value = row.idType || 'CC';
-                                currentRow.querySelector('[name="controlIdNum[]"]').value = row.idNum || '';
-                                currentRow.querySelector('[name="controlPorcentaje[]"]').value = row.porcentaje || '';
-                            }
-                        });
-                    }
-
-                }
-                handlePEPChange();
             }
 
             //funcion para limpiar los radioButtons de nacionalidad
@@ -822,15 +774,39 @@
                             if (element.checked) {
                                 data[element.name] = element.value;
                             }
+                            else if (!(element.name in data)) {
+                                data[element.name] = null;
+                            }
+                        }
+                        else if (element.type === 'checkbox') {
+                            if (!data[element.name]) {
+                                data[element.name] = [];
+							}
+                            if (element.checked) {
+                                data[element.name].push(parseInt(element.value));
+                            }
                         }
                         else {
-                            data[element.name] = element.value;
+							data[element.name] = element.value.trim() !== "" ? element.value.trim() : null;
                         }
                     }
                 });
 
                 if (formId === 'persNatuForm') {
                     data.Nit = document.getElementById('idNum').value;
+
+                    if (document.getElementById('radNacional').checked){
+                        data.pnTipoNacionalidad = "Nacional";
+                    } else if (document.getElementById('radExtranjero').checked){
+                        data.pnTipoNacionalidad = "Extranjero";
+					} else {
+						data.pnTipoNacionalidad = null;
+                    }
+
+                    if (!data["pnPEPType"]) data["pnPEPType"] = [];
+
+                    data.PEPTypes = data["pnPEPType"];
+					delete data["pnPEPType"];
                 }
 
                 if (formId === 'persJuriForm'){
@@ -866,11 +842,10 @@
             persNatuForm.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-				const pnNumDoc = document.getElementById('pnDocNum');
-				if (pnNumDoc) pnNumDoc.removeAttribute('disabled');
+				document.querySelectorAll('#pnNacNum, #pnExtNum').forEach(i => i.removeAttribute('disabled'));
 
                 const data = collectFormData('persNatuForm');
-				if (pnNumDoc) pnNumDoc.setAttribute('disabled', 'disabled');
+                document.querySelectorAll('#pnNacNum, #pnExtNum').forEach(i => i.setAttribute('disabled', 'disabled'));
 
 				const url = isNewDetail ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural';
                 sendData(data, url);
