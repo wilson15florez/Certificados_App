@@ -235,13 +235,27 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     var oldPEP = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
                     _context.PEPtipos_ProveedoresNatural.RemoveRange(oldPEP);
 
-                    foreach (var tipo in providerData.PEPTypes)
+                    if (providerData.PEPTypes != null && providerData.PEPTypes.Any())
                     {
-                        _context.PEPtipos_ProveedoresNatural.Add(new PEPtipos_ProveedoresNatural
+                        var validPEPIds = _context.PEPtipos.Where(t => providerData.PEPTypes.Contains(t.IdPEP))
+                                                             .Select(t => t.IdPEP)
+                                                             .ToList();
+                        var old = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
+                        _context.PEPtipos_ProveedoresNatural.RemoveRange(old);
+
+                        foreach (var id in validPEPIds)
                         {
-                            NitProveedor = providerNit,
-                            TipoPEPid = tipo
-                        });
+                            _context.PEPtipos_ProveedoresNatural.Add(new PEPtipos_ProveedoresNatural
+                            {
+                                NitProveedor = providerNit,
+                                TipoPEPid = id
+                            });
+                        }
+                    }
+                    else
+                    { 
+                        var old = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
+                        _context.PEPtipos_ProveedoresNatural.RemoveRange(old);
                     }
                     _context.SaveChanges();
                     transaction.Commit();
@@ -265,53 +279,68 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 {
                     var existingJuridica = _context.Proveedores_Juridica.FirstOrDefault(p => p.Nit == providerNit);
 
-                    if (existingJuridica != null)
-                    {
-                        existingJuridica.pjRazSocial = providerData.pjRazSocial;
-                        existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
-                        existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;
-                        existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
-                        existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
-                        _context.Proveedores_Juridica.Update(existingJuridica);
-                    }
-                    else
-                    {
+                    if (existingJuridica == null)
                         throw new Exception($"Registro detallado para NIT {providerNit} no encontrado.");
-                    }
+                    
+                    existingJuridica.pjRazSocial = providerData.pjRazSocial;
+                    existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
+                    existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;
+                    existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
+                    existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
+
+                    _context.Proveedores_Juridica.Update(existingJuridica);
                     _context.SaveChanges();
 
-                    var oldSucursales = _context.Sucursales_PJuridica.Where(s => s.NitProveedor == providerNit);
-                    _context.Sucursales_PJuridica.RemoveRange(oldSucursales);
-
-                    foreach (var sucursal in providerData.Sucursales_PJuridica)
+                    var oldSucursales = _context.Sucursales_PJuridica.Where(s => s.NitProveedor == providerNit).ToList();
+                    if (oldSucursales.Any())
                     {
-                        var newSucursal = new Sucursales_PJuridica
+                        _context.Sucursales_PJuridica.RemoveRange(oldSucursales);
+                        _context.SaveChanges();
+                    }
+                    if (providerData.Sucursales_PJuridica != null && providerData.Sucursales_PJuridica.Any())
+                    {
+                        providerData.Sucursales_PJuridica = providerData.Sucursales_PJuridica.Select(s => new Sucursales_PJuridica
                         {
                             NitProveedor = providerNit,
-                            Direccion = sucursal.Direccion,
-                            Ciudad = sucursal.Ciudad,
-                            Email = sucursal.Email,
-                            Telefono = sucursal.Telefono
-                        };
-                        _context.Sucursales_PJuridica.Add(newSucursal);
+                            Direccion = s.Direccion,
+                            Ciudad = s.Ciudad,
+                            Email = s.Email,
+                            Telefono = s.Telefono
+                        }).ToList();
                     }
-
-                    var oldAccionistas = _context.AccionistasControlPJuridica.Where(a => a.NitProveedor == providerNit);
-                    _context.AccionistasControlPJuridica.RemoveRange(oldAccionistas);
-
-                    foreach (var accionista in providerData.AccionistasControlPJuridica)
+                    if(providerData.Sucursales_PJuridica != null && providerData.Sucursales_PJuridica.Any())
                     {
-                        var newAccionista = new AccionistasControlPJuridica
+                        foreach (var sucursal in providerData.Sucursales_PJuridica)
                         {
-                            NitProveedor = providerNit,
-                            razonSocial = accionista.razonSocial,
-                            idType = accionista.idType,
-                            idNum = accionista.idNum,
-                            porcentaje = accionista.porcentaje
-                        };
-                        _context.AccionistasControlPJuridica.Add(newAccionista);
+                            sucursal.NitProveedor = providerNit;
+                            _context.Sucursales_PJuridica.Add(sucursal);
+                        }
+                        _context.SaveChanges();
                     }
-                    _context.SaveChanges();
+
+                    var oldAccionistas = _context.AccionistasControlPJuridica.Where(a => a.NitProveedor == providerNit).ToList();
+                    if (oldAccionistas.Any())
+                    {
+                        _context.AccionistasControlPJuridica.RemoveRange(oldAccionistas);
+                        _context.SaveChanges();
+                    }
+
+                    if (providerData.AccionistasControlPJuridica != null && providerData.AccionistasControlPJuridica.Any())
+                    {
+                        foreach (var accionista in providerData.AccionistasControlPJuridica)
+                        {
+                            var newAccionista = new AccionistasControlPJuridica
+                            {
+                                NitProveedor = providerNit,
+                                razonSocial = accionista.razonSocial,
+                                idType = accionista.idType,
+                                idNum = accionista.idNum,
+                                porcentaje = accionista.porcentaje
+                            };
+                            _context.AccionistasControlPJuridica.Add(newAccionista);
+                        }
+                        _context.SaveChanges();
+                    }
                     transaction.Commit();
                 }
                 catch (Exception ex)

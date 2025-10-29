@@ -26,7 +26,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         }
 
         // Acción que muestra la vista para actualizar la información básica
-        public ActionResult UptBasicInfo()
+        public ActionResult FormUnicProv()
         {
             return View();
         }
@@ -139,13 +139,18 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         {
             try
             {
-                if (providerData == null) return Json(new { error = "Datos del proveedor no recibidos." });
-
+                if (providerData == null)
+                {
+                    Console.WriteLine("UpdateProviderNatural: Provider data is null");
+                    return Json(new { error = "Datos del proveedor no recibidos." });
+                }
+                Console.WriteLine("UpdateProviderNatural payload: " + Newtonsoft.Json.JsonConvert.SerializeObject(providerData));
                 _providerService.UpdateNaturalInfo(providerData);
                 return Json(new { message = "Información de persona natural actualizada correctamente." });
             }
             catch (Exception ex)
             {
+                return StatusCode(500, new { success = false, message = ex.Message });
                 return Json(new { error = "Error al actualizar la persona natural: " + ex.Message });
             }
         }
@@ -156,7 +161,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         {
             try
             {
-                if (providerData == null) return Json(new { error = "Datos del proveedor no recibidos." });
+                if (providerData == null) 
+                    return Json(new { error = "Datos del proveedor no recibidos." });
+
+                var pmaster = _providerService.getPoviderByNit(providerData.Nit);
+                if (pmaster == null) 
+                    return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
                 _providerService.UpdateJuridicaInfo(providerData);
                 return Json(new { message = "Información de persona jurídica actualizada correctamente." });
             }

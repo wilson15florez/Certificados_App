@@ -463,16 +463,13 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         modelBuilder.Entity<PEPtipos_ProveedoresNatural>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => new { e.NitProveedor, e.TipoPEPid });
 
             entity.Property(e => e.NitProveedor).HasMaxLength(20);
-
-            entity.HasOne(d => d.TipoPEP).WithMany()
-                .HasForeignKey(d => d.TipoPEPid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PEPtipos___TipoP__5BAD9CC8");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -8,6 +8,4 @@ public partial class PEPtipos_ProveedoresNatural
     public string NitProveedor { get; set; } = null!;
 
     public int TipoPEPid { get; set; }
-
-    public virtual PEPtipos TipoPEP { get; set; } = null!;
 }
