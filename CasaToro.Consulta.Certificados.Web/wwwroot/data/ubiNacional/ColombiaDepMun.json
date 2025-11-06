@@ -1,0 +1,7856 @@
+[
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5001,
+    " Nombre ":"MEDELLÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5002,
+    " Nombre ":"ABEJORRAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5004,
+    " Nombre ":"ABRIAQUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5021,
+    " Nombre ":"ALEJANDRÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5030,
+    " Nombre ":"AMAGÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5031,
+    " Nombre ":"AMALFI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5034,
+    " Nombre ":"ANDES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5036,
+    " Nombre ":"ANGELÓPOLIS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5038,
+    " Nombre ":"ANGOSTURA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5040,
+    " Nombre ":"ANORÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5042,
+    " Nombre ":"SANTA FÉ DE ANTIOQUIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5044,
+    " Nombre ":"ANZÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5045,
+    " Nombre ":"APARTADÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5051,
+    " Nombre ":"ARBOLETES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5055,
+    " Nombre ":"ARGELIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5059,
+    " Nombre ":"ARMENIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5079,
+    " Nombre ":"BARBOSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5086,
+    " Nombre ":"BELMIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5088,
+    " Nombre ":"BELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5091,
+    " Nombre ":"BETANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5093,
+    " Nombre ":"BETULIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5101,
+    " Nombre ":"CIUDAD BOLÍVAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5107,
+    " Nombre ":"BRICEÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5113,
+    " Nombre ":"BURITICÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5120,
+    " Nombre ":"CÁCERES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5125,
+    " Nombre ":"CAICEDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5129,
+    " Nombre ":"CALDAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5134,
+    " Nombre ":"CAMPAMENTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5138,
+    " Nombre ":"CAÑASGORDAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5142,
+    " Nombre ":"CARACOLÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5145,
+    " Nombre ":"CARAMANTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5147,
+    " Nombre ":"CAREPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5148,
+    " Nombre ":"EL CARMEN DE VIBORAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5150,
+    " Nombre ":"CAROLINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5154,
+    " Nombre ":"CAUCASIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5172,
+    " Nombre ":"CHIGORODÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5190,
+    " Nombre ":"CISNEROS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5197,
+    " Nombre ":"COCORNÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5206,
+    " Nombre ":"CONCEPCIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5209,
+    " Nombre ":"CONCORDIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5212,
+    " Nombre ":"COPACABANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5234,
+    " Nombre ":"DABEIBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5237,
+    " Nombre ":"DONMATÍAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5240,
+    " Nombre ":"EBÉJICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5250,
+    " Nombre ":"EL BAGRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5264,
+    " Nombre ":"ENTRERRÍOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5266,
+    " Nombre ":"ENVIGADO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5282,
+    " Nombre ":"FREDONIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5284,
+    " Nombre ":"FRONTINO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5306,
+    " Nombre ":"GIRALDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5308,
+    " Nombre ":"GIRARDOTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5310,
+    " Nombre ":"GÓMEZ PLATA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5313,
+    " Nombre ":"GRANADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5315,
+    " Nombre ":"GUADALUPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5318,
+    " Nombre ":"GUARNE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5321,
+    " Nombre ":"GUATAPÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5347,
+    " Nombre ":"HELICONIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5353,
+    " Nombre ":"HISPANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5360,
+    " Nombre ":"ITAGÜÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5361,
+    " Nombre ":"ITUANGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5364,
+    " Nombre ":"JARDÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5368,
+    " Nombre ":"JERICÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5376,
+    " Nombre ":"LA CEJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5380,
+    " Nombre ":"LA ESTRELLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5390,
+    " Nombre ":"LA PINTADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5400,
+    " Nombre ":"LA UNIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5411,
+    " Nombre ":"LIBORINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5425,
+    " Nombre ":"MACEO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5440,
+    " Nombre ":"MARINILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5467,
+    " Nombre ":"MONTEBELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5475,
+    " Nombre ":"MURINDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5480,
+    " Nombre ":"MUTATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5483,
+    " Nombre ":"NARIÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5490,
+    " Nombre ":"NECOCLÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5495,
+    " Nombre ":"NECHÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5501,
+    " Nombre ":"OLAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5541,
+    " Nombre ":"PEÑOL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5543,
+    " Nombre ":"PEQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5576,
+    " Nombre ":"PUEBLORRICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5579,
+    " Nombre ":"PUERTO BERRÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5585,
+    " Nombre ":"PUERTO NARE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5591,
+    " Nombre ":"PUERTO TRIUNFO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5604,
+    " Nombre ":"REMEDIOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5607,
+    " Nombre ":"RETIRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5615,
+    " Nombre ":"RIONEGRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5628,
+    " Nombre ":"SABANALARGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5631,
+    " Nombre ":"SABANETA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5642,
+    " Nombre ":"SALGAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5647,
+    " Nombre ":"SAN ANDRÉS DE CUERQUÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5649,
+    " Nombre ":"SAN CARLOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5652,
+    " Nombre ":"SAN FRANCISCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5656,
+    " Nombre ":"SAN JERÓNIMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5658,
+    " Nombre ":"SAN JOSÉ DE LA MONTAÑA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5659,
+    " Nombre ":"SAN JUAN DE URABÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5660,
+    " Nombre ":"SAN LUIS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5664,
+    " Nombre ":"SAN PEDRO DE LOS MILAGROS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5665,
+    " Nombre ":"SAN PEDRO DE URABÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5667,
+    " Nombre ":"SAN RAFAEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5670,
+    " Nombre ":"SAN ROQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5674,
+    " Nombre ":"SAN VICENTE FERRER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5679,
+    " Nombre ":"SANTA BÁRBARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5686,
+    " Nombre ":"SANTA ROSA DE OSOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5690,
+    " Nombre ":"SANTO DOMINGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5697,
+    " Nombre ":"EL SANTUARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5736,
+    " Nombre ":"SEGOVIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5756,
+    " Nombre ":"SONSÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5761,
+    " Nombre ":"SOPETRÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5789,
+    " Nombre ":"TÁMESIS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5790,
+    " Nombre ":"TARAZÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5792,
+    " Nombre ":"TARSO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5809,
+    " Nombre ":"TITIRIBÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5819,
+    " Nombre ":"TOLEDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5837,
+    " Nombre ":"TURBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5842,
+    " Nombre ":"URAMITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5847,
+    " Nombre ":"URRAO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5854,
+    " Nombre ":"VALDIVIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5856,
+    " Nombre ":"VALPARAÍSO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5858,
+    " Nombre ":"VEGACHÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5861,
+    " Nombre ":"VENECIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5873,
+    " Nombre ":"VIGÍA DEL FUERTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5885,
+    " Nombre ":"YALÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5887,
+    " Nombre ":"YARUMAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5890,
+    " Nombre ":"YOLOMBÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5893,
+    " Nombre ":"YONDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":5,
+    "Nombre":"ANTIOQUIA",
+    " Código ":5895,
+    " Nombre ":"ZARAGOZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8001,
+    " Nombre ":"BARRANQUILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8078,
+    " Nombre ":"BARANOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8137,
+    " Nombre ":"CAMPO DE LA CRUZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8141,
+    " Nombre ":"CANDELARIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8296,
+    " Nombre ":"GALAPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8372,
+    " Nombre ":"JUAN DE ACOSTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8421,
+    " Nombre ":"LURUACO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8433,
+    " Nombre ":"MALAMBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8436,
+    " Nombre ":"MANATÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8520,
+    " Nombre ":"PALMAR DE VARELA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8549,
+    " Nombre ":"PIOJÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8558,
+    " Nombre ":"POLONUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8560,
+    " Nombre ":"PONEDERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8573,
+    " Nombre ":"PUERTO COLOMBIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8606,
+    " Nombre ":"REPELÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8634,
+    " Nombre ":"SABANAGRANDE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8638,
+    " Nombre ":"SABANALARGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8675,
+    " Nombre ":"SANTA LUCÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8685,
+    " Nombre ":"SANTO TOMÁS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8758,
+    " Nombre ":"SOLEDAD",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8770,
+    " Nombre ":"SUAN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8832,
+    " Nombre ":"TUBARÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":8,
+    "Nombre":"ATLÁNTICO",
+    " Código ":8849,
+    " Nombre ":"USIACURÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":11,
+    "Nombre":"BOGOTÁ, D.C.",
+    " Código ":11001,
+    " Nombre ":"BOGOTÁ, D.C.",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13001,
+    " Nombre ":"CARTAGENA DE INDIAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13006,
+    " Nombre ":"ACHÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13030,
+    " Nombre ":"ALTOS DEL ROSARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13042,
+    " Nombre ":"ARENAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13052,
+    " Nombre ":"ARJONA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13062,
+    " Nombre ":"ARROYOHONDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13074,
+    " Nombre ":"BARRANCO DE LOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13140,
+    " Nombre ":"CALAMAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13160,
+    " Nombre ":"CANTAGALLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13188,
+    " Nombre ":"CICUCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13212,
+    " Nombre ":"CÓRDOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13222,
+    " Nombre ":"CLEMENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13244,
+    " Nombre ":"EL CARMEN DE BOLÍVAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13248,
+    " Nombre ":"EL GUAMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13268,
+    " Nombre ":"EL PEÑÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13300,
+    " Nombre ":"HATILLO DE LOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13430,
+    " Nombre ":"MAGANGUÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13433,
+    " Nombre ":"MAHATES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13440,
+    " Nombre ":"MARGARITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13442,
+    " Nombre ":"MARÍA LA BAJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13458,
+    " Nombre ":"MONTECRISTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13468,
+    " Nombre ":"SANTA CRUZ DE MOMPOX",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13473,
+    " Nombre ":"MORALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13490,
+    " Nombre ":"NOROSÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13549,
+    " Nombre ":"PINILLOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13580,
+    " Nombre ":"REGIDOR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13600,
+    " Nombre ":"RÍO VIEJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13620,
+    " Nombre ":"SAN CRISTÓBAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13647,
+    " Nombre ":"SAN ESTANISLAO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13650,
+    " Nombre ":"SAN FERNANDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13654,
+    " Nombre ":"SAN JACINTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13655,
+    " Nombre ":"SAN JACINTO DEL CAUCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13657,
+    " Nombre ":"SAN JUAN NEPOMUCENO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13667,
+    " Nombre ":"SAN MARTÍN DE LOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13670,
+    " Nombre ":"SAN PABLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13673,
+    " Nombre ":"SANTA CATALINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13683,
+    " Nombre ":"SANTA ROSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13688,
+    " Nombre ":"SANTA ROSA DEL SUR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13744,
+    " Nombre ":"SIMITÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13760,
+    " Nombre ":"SOPLAVIENTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13780,
+    " Nombre ":"TALAIGUA NUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13810,
+    " Nombre ":"TIQUISIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13836,
+    " Nombre ":"TURBACO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13838,
+    " Nombre ":"TURBANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13873,
+    " Nombre ":"VILLANUEVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":13,
+    "Nombre":"BOLÍVAR",
+    " Código ":13894,
+    " Nombre ":"ZAMBRANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15001,
+    " Nombre ":"TUNJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15022,
+    " Nombre ":"ALMEIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15047,
+    " Nombre ":"AQUITANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15051,
+    " Nombre ":"ARCABUCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15087,
+    " Nombre ":"BELÉN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15090,
+    " Nombre ":"BERBEO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15092,
+    " Nombre ":"BETÉITIVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15097,
+    " Nombre ":"BOAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15104,
+    " Nombre ":"BOYACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15106,
+    " Nombre ":"BRICEÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15109,
+    " Nombre ":"BUENAVISTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15114,
+    " Nombre ":"BUSBANZÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15131,
+    " Nombre ":"CALDAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15135,
+    " Nombre ":"CAMPOHERMOSO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15162,
+    " Nombre ":"CERINZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15172,
+    " Nombre ":"CHINAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15176,
+    " Nombre ":"CHIQUINQUIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15180,
+    " Nombre ":"CHISCAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15183,
+    " Nombre ":"CHITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15185,
+    " Nombre ":"CHITARAQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15187,
+    " Nombre ":"CHIVATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15189,
+    " Nombre ":"CIÉNEGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15204,
+    " Nombre ":"CÓMBITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15212,
+    " Nombre ":"COPER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15215,
+    " Nombre ":"CORRALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15218,
+    " Nombre ":"COVARACHÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15223,
+    " Nombre ":"CUBARÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15224,
+    " Nombre ":"CUCAITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15226,
+    " Nombre ":"CUÍTIVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15232,
+    " Nombre ":"CHÍQUIZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15236,
+    " Nombre ":"CHIVOR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15238,
+    " Nombre ":"DUITAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15244,
+    " Nombre ":"EL COCUY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15248,
+    " Nombre ":"EL ESPINO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15272,
+    " Nombre ":"FIRAVITOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15276,
+    " Nombre ":"FLORESTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15293,
+    " Nombre ":"GACHANTIVÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15296,
+    " Nombre ":"GÁMEZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15299,
+    " Nombre ":"GARAGOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15317,
+    " Nombre ":"GUACAMAYAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15322,
+    " Nombre ":"GUATEQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15325,
+    " Nombre ":"GUAYATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15332,
+    " Nombre ":"GÜICÁN DE LA SIERRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15362,
+    " Nombre ":"IZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15367,
+    " Nombre ":"JENESANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15368,
+    " Nombre ":"JERICÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15377,
+    " Nombre ":"LABRANZAGRANDE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15380,
+    " Nombre ":"LA CAPILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15401,
+    " Nombre ":"LA VICTORIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15403,
+    " Nombre ":"LA UVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15407,
+    " Nombre ":"VILLA DE LEYVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15425,
+    " Nombre ":"MACANAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15442,
+    " Nombre ":"MARIPÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15455,
+    " Nombre ":"MIRAFLORES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15464,
+    " Nombre ":"MONGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15466,
+    " Nombre ":"MONGUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15469,
+    " Nombre ":"MONIQUIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15476,
+    " Nombre ":"MOTAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15480,
+    " Nombre ":"MUZO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15491,
+    " Nombre ":"NOBSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15494,
+    " Nombre ":"NUEVO COLÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15500,
+    " Nombre ":"OICATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15507,
+    " Nombre ":"OTANCHE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15511,
+    " Nombre ":"PACHAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15514,
+    " Nombre ":"PÁEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15516,
+    " Nombre ":"PAIPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15518,
+    " Nombre ":"PAJARITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15522,
+    " Nombre ":"PANQUEBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15531,
+    " Nombre ":"PAUNA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15533,
+    " Nombre ":"PAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15537,
+    " Nombre ":"PAZ DE RÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15542,
+    " Nombre ":"PESCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15550,
+    " Nombre ":"PISBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15572,
+    " Nombre ":"PUERTO BOYACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15580,
+    " Nombre ":"QUÍPAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15599,
+    " Nombre ":"RAMIRIQUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15600,
+    " Nombre ":"RÁQUIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15621,
+    " Nombre ":"RONDÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15632,
+    " Nombre ":"SABOYÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15638,
+    " Nombre ":"SÁCHICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15646,
+    " Nombre ":"SAMACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15660,
+    " Nombre ":"SAN EDUARDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15664,
+    " Nombre ":"SAN JOSÉ DE PARE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15667,
+    " Nombre ":"SAN LUIS DE GACENO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15673,
+    " Nombre ":"SAN MATEO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15676,
+    " Nombre ":"SAN MIGUEL DE SEMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15681,
+    " Nombre ":"SAN PABLO DE BORBUR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15686,
+    " Nombre ":"SANTANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15690,
+    " Nombre ":"SANTA MARÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15693,
+    " Nombre ":"SANTA ROSA DE VITERBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15696,
+    " Nombre ":"SANTA SOFÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15720,
+    " Nombre ":"SATIVANORTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15723,
+    " Nombre ":"SATIVASUR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15740,
+    " Nombre ":"SIACHOQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15753,
+    " Nombre ":"SOATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15755,
+    " Nombre ":"SOCOTÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15757,
+    " Nombre ":"SOCHA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15759,
+    " Nombre ":"SOGAMOSO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15761,
+    " Nombre ":"SOMONDOCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15762,
+    " Nombre ":"SORA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15763,
+    " Nombre ":"SOTAQUIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15764,
+    " Nombre ":"SORACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15774,
+    " Nombre ":"SUSACÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15776,
+    " Nombre ":"SUTAMARCHÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15778,
+    " Nombre ":"SUTATENZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15790,
+    " Nombre ":"TASCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15798,
+    " Nombre ":"TENZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15804,
+    " Nombre ":"TIBANÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15806,
+    " Nombre ":"TIBASOSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15808,
+    " Nombre ":"TINJACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15810,
+    " Nombre ":"TIPACOQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15814,
+    " Nombre ":"TOCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15816,
+    " Nombre ":"TOGÜÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15820,
+    " Nombre ":"TÓPAGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15822,
+    " Nombre ":"TOTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15832,
+    " Nombre ":"TUNUNGUÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15835,
+    " Nombre ":"TURMEQUÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15837,
+    " Nombre ":"TUTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15839,
+    " Nombre ":"TUTAZÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15842,
+    " Nombre ":"ÚMBITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15861,
+    " Nombre ":"VENTAQUEMADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15879,
+    " Nombre ":"VIRACACHÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":15,
+    "Nombre":"BOYACÁ",
+    " Código ":15897,
+    " Nombre ":"ZETAQUIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17001,
+    " Nombre ":"MANIZALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17013,
+    " Nombre ":"AGUADAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17042,
+    " Nombre ":"ANSERMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17050,
+    " Nombre ":"ARANZAZU",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17088,
+    " Nombre ":"BELALCÁZAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17174,
+    " Nombre ":"CHINCHINÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17272,
+    " Nombre ":"FILADELFIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17380,
+    " Nombre ":"LA DORADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17388,
+    " Nombre ":"LA MERCED",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17433,
+    " Nombre ":"MANZANARES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17442,
+    " Nombre ":"MARMATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17444,
+    " Nombre ":"MARQUETALIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17446,
+    " Nombre ":"MARULANDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17486,
+    " Nombre ":"NEIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17495,
+    " Nombre ":"NORCASIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17513,
+    " Nombre ":"PÁCORA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17524,
+    " Nombre ":"PALESTINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17541,
+    " Nombre ":"PENSILVANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17614,
+    " Nombre ":"RIOSUCIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17616,
+    " Nombre ":"RISARALDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17653,
+    " Nombre ":"SALAMINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17662,
+    " Nombre ":"SAMANÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17665,
+    " Nombre ":"SAN JOSÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17777,
+    " Nombre ":"SUPÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17867,
+    " Nombre ":"VICTORIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17873,
+    " Nombre ":"VILLAMARÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":17,
+    "Nombre":"CALDAS",
+    " Código ":17877,
+    " Nombre ":"VITERBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18001,
+    " Nombre ":"FLORENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18029,
+    " Nombre ":"ALBANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18094,
+    " Nombre ":"BELÉN DE LOS ANDAQUÍES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18150,
+    " Nombre ":"CARTAGENA DEL CHAIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18205,
+    " Nombre ":"CURILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18247,
+    " Nombre ":"EL DONCELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18256,
+    " Nombre ":"EL PAUJÍL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18410,
+    " Nombre ":"LA MONTAÑITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18460,
+    " Nombre ":"MILÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18479,
+    " Nombre ":"MORELIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18592,
+    " Nombre ":"PUERTO RICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18610,
+    " Nombre ":"SAN JOSÉ DEL FRAGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18753,
+    " Nombre ":"SAN VICENTE DEL CAGUÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18756,
+    " Nombre ":"SOLANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18785,
+    " Nombre ":"SOLITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":18,
+    "Nombre":"CAQUETÁ",
+    " Código ":18860,
+    " Nombre ":"VALPARAÍSO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19001,
+    " Nombre ":"POPAYÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19022,
+    " Nombre ":"ALMAGUER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19050,
+    " Nombre ":"ARGELIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19075,
+    " Nombre ":"BALBOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19100,
+    " Nombre ":"BOLÍVAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19110,
+    " Nombre ":"BUENOS AIRES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19130,
+    " Nombre ":"CAJIBÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19137,
+    " Nombre ":"CALDONO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19142,
+    " Nombre ":"CALOTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19212,
+    " Nombre ":"CORINTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19256,
+    " Nombre ":"EL TAMBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19290,
+    " Nombre ":"FLORENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19300,
+    " Nombre ":"GUACHENÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19318,
+    " Nombre ":"GUAPI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19355,
+    " Nombre ":"INZÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19364,
+    " Nombre ":"JAMBALÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19392,
+    " Nombre ":"LA SIERRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19397,
+    " Nombre ":"LA VEGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19418,
+    " Nombre ":"LÓPEZ DE MICAY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19450,
+    " Nombre ":"MERCADERES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19455,
+    " Nombre ":"MIRANDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19473,
+    " Nombre ":"MORALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19513,
+    " Nombre ":"PADILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19517,
+    " Nombre ":"PÁEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19532,
+    " Nombre ":"PATÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19533,
+    " Nombre ":"PIAMONTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19548,
+    " Nombre ":"PIENDAMÓ - TUNÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19573,
+    " Nombre ":"PUERTO TEJADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19585,
+    " Nombre ":"PURACÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19622,
+    " Nombre ":"ROSAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19693,
+    " Nombre ":"SAN SEBASTIÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19698,
+    " Nombre ":"SANTANDER DE QUILICHAO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19701,
+    " Nombre ":"SANTA ROSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19743,
+    " Nombre ":"SILVIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19760,
+    " Nombre ":"SOTARÁ PAISPAMBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19780,
+    " Nombre ":"SUÁREZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19785,
+    " Nombre ":"SUCRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19807,
+    " Nombre ":"TIMBÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19809,
+    " Nombre ":"TIMBIQUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19821,
+    " Nombre ":"TORIBÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19824,
+    " Nombre ":"TOTORÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":19,
+    "Nombre":"CAUCA",
+    " Código ":19845,
+    " Nombre ":"VILLA RICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20001,
+    " Nombre ":"VALLEDUPAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20011,
+    " Nombre ":"AGUACHICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20013,
+    " Nombre ":"AGUSTÍN CODAZZI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20032,
+    " Nombre ":"ASTREA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20045,
+    " Nombre ":"BECERRIL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20060,
+    " Nombre ":"BOSCONIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20175,
+    " Nombre ":"CHIMICHAGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20178,
+    " Nombre ":"CHIRIGUANÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20228,
+    " Nombre ":"CURUMANÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20238,
+    " Nombre ":"EL COPEY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20250,
+    " Nombre ":"EL PASO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20295,
+    " Nombre ":"GAMARRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20310,
+    " Nombre ":"GONZÁLEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20383,
+    " Nombre ":"LA GLORIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20400,
+    " Nombre ":"LA JAGUA DE IBIRICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20443,
+    " Nombre ":"MANAURE BALCÓN DEL CESAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20517,
+    " Nombre ":"PAILITAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20550,
+    " Nombre ":"PELAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20570,
+    " Nombre ":"PUEBLO BELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20614,
+    " Nombre ":"RÍO DE ORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20621,
+    " Nombre ":"LA PAZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20710,
+    " Nombre ":"SAN ALBERTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20750,
+    " Nombre ":"SAN DIEGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20770,
+    " Nombre ":"SAN MARTÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":20,
+    "Nombre":"CESAR",
+    " Código ":20787,
+    " Nombre ":"TAMALAMEQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23001,
+    " Nombre ":"MONTERÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23068,
+    " Nombre ":"AYAPEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23079,
+    " Nombre ":"BUENAVISTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23090,
+    " Nombre ":"CANALETE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23162,
+    " Nombre ":"CERETÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23168,
+    " Nombre ":"CHIMÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23182,
+    " Nombre ":"CHINÚ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23189,
+    " Nombre ":"CIÉNAGA DE ORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23300,
+    " Nombre ":"COTORRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23350,
+    " Nombre ":"LA APARTADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23417,
+    " Nombre ":"LORICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23419,
+    " Nombre ":"LOS CÓRDOBAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23464,
+    " Nombre ":"MOMIL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23466,
+    " Nombre ":"MONTELÍBANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23500,
+    " Nombre ":"MOÑITOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23555,
+    " Nombre ":"PLANETA RICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23570,
+    " Nombre ":"PUEBLO NUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23574,
+    " Nombre ":"PUERTO ESCONDIDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23580,
+    " Nombre ":"PUERTO LIBERTADOR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23586,
+    " Nombre ":"PURÍSIMA DE LA CONCEPCIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23660,
+    " Nombre ":"SAHAGÚN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23670,
+    " Nombre ":"SAN ANDRÉS DE SOTAVENTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23672,
+    " Nombre ":"SAN ANTERO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23675,
+    " Nombre ":"SAN BERNARDO DEL VIENTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23678,
+    " Nombre ":"SAN CARLOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23682,
+    " Nombre ":"SAN JOSÉ DE URÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23686,
+    " Nombre ":"SAN PELAYO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23807,
+    " Nombre ":"TIERRALTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23815,
+    " Nombre ":"TUCHÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":23,
+    "Nombre":"CÓRDOBA",
+    " Código ":23855,
+    " Nombre ":"VALENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25001,
+    " Nombre ":"AGUA DE DIOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25019,
+    " Nombre ":"ALBÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25035,
+    " Nombre ":"ANAPOIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25040,
+    " Nombre ":"ANOLAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25053,
+    " Nombre ":"ARBELÁEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25086,
+    " Nombre ":"BELTRÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25095,
+    " Nombre ":"BITUIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25099,
+    " Nombre ":"BOJACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25120,
+    " Nombre ":"CABRERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25123,
+    " Nombre ":"CACHIPAY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25126,
+    " Nombre ":"CAJICÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25148,
+    " Nombre ":"CAPARRAPÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25151,
+    " Nombre ":"CÁQUEZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25154,
+    " Nombre ":"CARMEN DE CARUPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25168,
+    " Nombre ":"CHAGUANÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25175,
+    " Nombre ":"CHÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25178,
+    " Nombre ":"CHIPAQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25181,
+    " Nombre ":"CHOACHÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25183,
+    " Nombre ":"CHOCONTÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25200,
+    " Nombre ":"COGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25214,
+    " Nombre ":"COTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25224,
+    " Nombre ":"CUCUNUBÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25245,
+    " Nombre ":"EL COLEGIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25258,
+    " Nombre ":"EL PEÑÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25260,
+    " Nombre ":"EL ROSAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25269,
+    " Nombre ":"FACATATIVÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25279,
+    " Nombre ":"FÓMEQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25281,
+    " Nombre ":"FOSCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25286,
+    " Nombre ":"FUNZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25288,
+    " Nombre ":"FÚQUENE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25290,
+    " Nombre ":"FUSAGASUGÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25293,
+    " Nombre ":"GACHALÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25295,
+    " Nombre ":"GACHANCIPÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25297,
+    " Nombre ":"GACHETÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25299,
+    " Nombre ":"GAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25307,
+    " Nombre ":"GIRARDOT",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25312,
+    " Nombre ":"GRANADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25317,
+    " Nombre ":"GUACHETÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25320,
+    " Nombre ":"GUADUAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25322,
+    " Nombre ":"GUASCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25324,
+    " Nombre ":"GUATAQUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25326,
+    " Nombre ":"GUATAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25328,
+    " Nombre ":"GUAYABAL DE SÍQUIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25335,
+    " Nombre ":"GUAYABETAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25339,
+    " Nombre ":"GUTIÉRREZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25368,
+    " Nombre ":"JERUSALÉN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25372,
+    " Nombre ":"JUNÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25377,
+    " Nombre ":"LA CALERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25386,
+    " Nombre ":"LA MESA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25394,
+    " Nombre ":"LA PALMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25398,
+    " Nombre ":"LA PEÑA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25402,
+    " Nombre ":"LA VEGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25407,
+    " Nombre ":"LENGUAZAQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25426,
+    " Nombre ":"MACHETÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25430,
+    " Nombre ":"MADRID",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25436,
+    " Nombre ":"MANTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25438,
+    " Nombre ":"MEDINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25473,
+    " Nombre ":"MOSQUERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25483,
+    " Nombre ":"NARIÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25486,
+    " Nombre ":"NEMOCÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25488,
+    " Nombre ":"NILO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25489,
+    " Nombre ":"NIMAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25491,
+    " Nombre ":"NOCAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25506,
+    " Nombre ":"VENECIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25513,
+    " Nombre ":"PACHO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25518,
+    " Nombre ":"PAIME",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25524,
+    " Nombre ":"PANDI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25530,
+    " Nombre ":"PARATEBUENO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25535,
+    " Nombre ":"PASCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25572,
+    " Nombre ":"PUERTO SALGAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25580,
+    " Nombre ":"PULÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25592,
+    " Nombre ":"QUEBRADANEGRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25594,
+    " Nombre ":"QUETAME",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25596,
+    " Nombre ":"QUIPILE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25599,
+    " Nombre ":"APULO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25612,
+    " Nombre ":"RICAURTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25645,
+    " Nombre ":"SAN ANTONIO DEL TEQUENDAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25649,
+    " Nombre ":"SAN BERNARDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25653,
+    " Nombre ":"SAN CAYETANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25658,
+    " Nombre ":"SAN FRANCISCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25662,
+    " Nombre ":"SAN JUAN DE RIOSECO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25718,
+    " Nombre ":"SASAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25736,
+    " Nombre ":"SESQUILÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25740,
+    " Nombre ":"SIBATÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25743,
+    " Nombre ":"SILVANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25745,
+    " Nombre ":"SIMIJACA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25754,
+    " Nombre ":"SOACHA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25758,
+    " Nombre ":"SOPÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25769,
+    " Nombre ":"SUBACHOQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25772,
+    " Nombre ":"SUESCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25777,
+    " Nombre ":"SUPATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25779,
+    " Nombre ":"SUSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25781,
+    " Nombre ":"SUTATAUSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25785,
+    " Nombre ":"TABIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25793,
+    " Nombre ":"TAUSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25797,
+    " Nombre ":"TENA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25799,
+    " Nombre ":"TENJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25805,
+    " Nombre ":"TIBACUY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25807,
+    " Nombre ":"TIBIRITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25815,
+    " Nombre ":"TOCAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25817,
+    " Nombre ":"TOCANCIPÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25823,
+    " Nombre ":"TOPAIPÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25839,
+    " Nombre ":"UBALÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25841,
+    " Nombre ":"UBAQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25843,
+    " Nombre ":"VILLA DE SAN DIEGO DE UBATÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25845,
+    " Nombre ":"UNE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25851,
+    " Nombre ":"ÚTICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25862,
+    " Nombre ":"VERGARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25867,
+    " Nombre ":"VIANÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25871,
+    " Nombre ":"VILLAGÓMEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25873,
+    " Nombre ":"VILLAPINZÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25875,
+    " Nombre ":"VILLETA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25878,
+    " Nombre ":"VIOTÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25885,
+    " Nombre ":"YACOPÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25898,
+    " Nombre ":"ZIPACÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":25,
+    "Nombre":"CUNDINAMARCA",
+    " Código ":25899,
+    " Nombre ":"ZIPAQUIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27001,
+    " Nombre ":"QUIBDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27006,
+    " Nombre ":"ACANDÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27025,
+    " Nombre ":"ALTO BAUDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27050,
+    " Nombre ":"ATRATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27073,
+    " Nombre ":"BAGADÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27075,
+    " Nombre ":"BAHÍA SOLANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27077,
+    " Nombre ":"BAJO BAUDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27099,
+    " Nombre ":"BOJAYÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27135,
+    " Nombre ":"EL CANTÓN DEL SAN PABLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27150,
+    " Nombre ":"CARMEN DEL DARIÉN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27160,
+    " Nombre ":"CÉRTEGUI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27205,
+    " Nombre ":"CONDOTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27245,
+    " Nombre ":"EL CARMEN DE ATRATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27250,
+    " Nombre ":"EL LITORAL DEL SAN JUAN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27361,
+    " Nombre ":"ISTMINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27372,
+    " Nombre ":"JURADÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27413,
+    " Nombre ":"LLORÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27425,
+    " Nombre ":"MEDIO ATRATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27430,
+    " Nombre ":"MEDIO BAUDÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27450,
+    " Nombre ":"MEDIO SAN JUAN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27491,
+    " Nombre ":"NÓVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27493,
+    " Nombre ":"NUEVO BELÉN DE BAJIRÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27495,
+    " Nombre ":"NUQUÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27580,
+    " Nombre ":"RÍO IRÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27600,
+    " Nombre ":"RÍO QUITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27615,
+    " Nombre ":"RIOSUCIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27660,
+    " Nombre ":"SAN JOSÉ DEL PALMAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27745,
+    " Nombre ":"SIPÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27787,
+    " Nombre ":"TADÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27800,
+    " Nombre ":"UNGUÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":27,
+    "Nombre":"CHOCÓ",
+    " Código ":27810,
+    " Nombre ":"UNIÓN PANAMERICANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41001,
+    " Nombre ":"NEIVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41006,
+    " Nombre ":"ACEVEDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41013,
+    " Nombre ":"AGRADO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41016,
+    " Nombre ":"AIPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41020,
+    " Nombre ":"ALGECIRAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41026,
+    " Nombre ":"ALTAMIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41078,
+    " Nombre ":"BARAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41132,
+    " Nombre ":"CAMPOALEGRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41206,
+    " Nombre ":"COLOMBIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41244,
+    " Nombre ":"ELÍAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41298,
+    " Nombre ":"GARZÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41306,
+    " Nombre ":"GIGANTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41319,
+    " Nombre ":"GUADALUPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41349,
+    " Nombre ":"HOBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41357,
+    " Nombre ":"ÍQUIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41359,
+    " Nombre ":"ISNOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41378,
+    " Nombre ":"LA ARGENTINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41396,
+    " Nombre ":"LA PLATA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41483,
+    " Nombre ":"NÁTAGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41503,
+    " Nombre ":"OPORAPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41518,
+    " Nombre ":"PAICOL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41524,
+    " Nombre ":"PALERMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41530,
+    " Nombre ":"PALESTINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41548,
+    " Nombre ":"PITAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41551,
+    " Nombre ":"PITALITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41615,
+    " Nombre ":"RIVERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41660,
+    " Nombre ":"SALADOBLANCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41668,
+    " Nombre ":"SAN AGUSTÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41676,
+    " Nombre ":"SANTA MARÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41770,
+    " Nombre ":"SUAZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41791,
+    " Nombre ":"TARQUI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41797,
+    " Nombre ":"TESALIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41799,
+    " Nombre ":"TELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41801,
+    " Nombre ":"TERUEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41807,
+    " Nombre ":"TIMANÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41872,
+    " Nombre ":"VILLAVIEJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":41,
+    "Nombre":"HUILA",
+    " Código ":41885,
+    " Nombre ":"YAGUARÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44001,
+    " Nombre ":"RIOHACHA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44035,
+    " Nombre ":"ALBANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44078,
+    " Nombre ":"BARRANCAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44090,
+    " Nombre ":"DIBULLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44098,
+    " Nombre ":"DISTRACCIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44110,
+    " Nombre ":"EL MOLINO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44279,
+    " Nombre ":"FONSECA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44378,
+    " Nombre ":"HATONUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44420,
+    " Nombre ":"LA JAGUA DEL PILAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44430,
+    " Nombre ":"MAICAO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44560,
+    " Nombre ":"MANAURE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44650,
+    " Nombre ":"SAN JUAN DEL CESAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44847,
+    " Nombre ":"URIBIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44855,
+    " Nombre ":"URUMITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":44,
+    "Nombre":"LA GUAJIRA",
+    " Código ":44874,
+    " Nombre ":"VILLANUEVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47001,
+    " Nombre ":"SANTA MARTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47030,
+    " Nombre ":"ALGARROBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47053,
+    " Nombre ":"ARACATACA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47058,
+    " Nombre ":"ARIGUANÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47161,
+    " Nombre ":"CERRO DE SAN ANTONIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47170,
+    " Nombre ":"CHIVOLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47189,
+    " Nombre ":"CIÉNAGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47205,
+    " Nombre ":"CONCORDIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47245,
+    " Nombre ":"EL BANCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47258,
+    " Nombre ":"EL PIÑÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47268,
+    " Nombre ":"EL RETÉN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47288,
+    " Nombre ":"FUNDACIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47318,
+    " Nombre ":"GUAMAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47460,
+    " Nombre ":"NUEVA GRANADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47541,
+    " Nombre ":"PEDRAZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47545,
+    " Nombre ":"PIJIÑO DEL CARMEN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47551,
+    " Nombre ":"PIVIJAY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47555,
+    " Nombre ":"PLATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47570,
+    " Nombre ":"PUEBLOVIEJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47605,
+    " Nombre ":"REMOLINO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47660,
+    " Nombre ":"SABANAS DE SAN ÁNGEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47675,
+    " Nombre ":"SALAMINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47692,
+    " Nombre ":"SAN SEBASTIÁN DE BUENAVISTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47703,
+    " Nombre ":"SAN ZENÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47707,
+    " Nombre ":"SANTA ANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47720,
+    " Nombre ":"SANTA BÁRBARA DE PINTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47745,
+    " Nombre ":"SITIONUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47798,
+    " Nombre ":"TENERIFE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47960,
+    " Nombre ":"ZAPAYÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":47,
+    "Nombre":"MAGDALENA",
+    " Código ":47980,
+    " Nombre ":"ZONA BANANERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50001,
+    " Nombre ":"VILLAVICENCIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50006,
+    " Nombre ":"ACACÍAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50110,
+    " Nombre ":"BARRANCA DE UPÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50124,
+    " Nombre ":"CABUYARO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50150,
+    " Nombre ":"CASTILLA LA NUEVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50223,
+    " Nombre ":"CUBARRAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50226,
+    " Nombre ":"CUMARAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50245,
+    " Nombre ":"EL CALVARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50251,
+    " Nombre ":"EL CASTILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50270,
+    " Nombre ":"EL DORADO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50287,
+    " Nombre ":"FUENTE DE ORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50313,
+    " Nombre ":"GRANADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50318,
+    " Nombre ":"GUAMAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50325,
+    " Nombre ":"MAPIRIPÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50330,
+    " Nombre ":"MESETAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50350,
+    " Nombre ":"LA MACARENA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50370,
+    " Nombre ":"URIBE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50400,
+    " Nombre ":"LEJANÍAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50450,
+    " Nombre ":"PUERTO CONCORDIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50568,
+    " Nombre ":"PUERTO GAITÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50573,
+    " Nombre ":"PUERTO LÓPEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50577,
+    " Nombre ":"PUERTO LLERAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50590,
+    " Nombre ":"PUERTO RICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50606,
+    " Nombre ":"RESTREPO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50680,
+    " Nombre ":"SAN CARLOS DE GUAROA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50683,
+    " Nombre ":"SAN JUAN DE ARAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50686,
+    " Nombre ":"SAN JUANITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50689,
+    " Nombre ":"SAN MARTÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":50,
+    "Nombre":"META",
+    " Código ":50711,
+    " Nombre ":"VISTAHERMOSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52001,
+    " Nombre ":"PASTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52019,
+    " Nombre ":"ALBÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52022,
+    " Nombre ":"ALDANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52036,
+    " Nombre ":"ANCUYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52051,
+    " Nombre ":"ARBOLEDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52079,
+    " Nombre ":"BARBACOAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52083,
+    " Nombre ":"BELÉN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52110,
+    " Nombre ":"BUESACO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52203,
+    " Nombre ":"COLÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52207,
+    " Nombre ":"CONSACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52210,
+    " Nombre ":"CONTADERO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52215,
+    " Nombre ":"CÓRDOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52224,
+    " Nombre ":"CUASPUD CARLOSAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52227,
+    " Nombre ":"CUMBAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52233,
+    " Nombre ":"CUMBITARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52240,
+    " Nombre ":"CHACHAGÜÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52250,
+    " Nombre ":"EL CHARCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52254,
+    " Nombre ":"EL PEÑOL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52256,
+    " Nombre ":"EL ROSARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52258,
+    " Nombre ":"EL TABLÓN DE GÓMEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52260,
+    " Nombre ":"EL TAMBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52287,
+    " Nombre ":"FUNES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52317,
+    " Nombre ":"GUACHUCAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52320,
+    " Nombre ":"GUAITARILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52323,
+    " Nombre ":"GUALMATÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52352,
+    " Nombre ":"ILES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52354,
+    " Nombre ":"IMUÉS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52356,
+    " Nombre ":"IPIALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52378,
+    " Nombre ":"LA CRUZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52381,
+    " Nombre ":"LA FLORIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52385,
+    " Nombre ":"LA LLANADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52390,
+    " Nombre ":"LA TOLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52399,
+    " Nombre ":"LA UNIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52405,
+    " Nombre ":"LEIVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52411,
+    " Nombre ":"LINARES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52418,
+    " Nombre ":"LOS ANDES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52427,
+    " Nombre ":"MAGÜÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52435,
+    " Nombre ":"MALLAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52473,
+    " Nombre ":"MOSQUERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52480,
+    " Nombre ":"NARIÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52490,
+    " Nombre ":"OLAYA HERRERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52506,
+    " Nombre ":"OSPINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52520,
+    " Nombre ":"FRANCISCO PIZARRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52540,
+    " Nombre ":"POLICARPA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52560,
+    " Nombre ":"POTOSÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52565,
+    " Nombre ":"PROVIDENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52573,
+    " Nombre ":"PUERRES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52585,
+    " Nombre ":"PUPIALES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52612,
+    " Nombre ":"RICAURTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52621,
+    " Nombre ":"ROBERTO PAYÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52678,
+    " Nombre ":"SAMANIEGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52683,
+    " Nombre ":"SANDONÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52685,
+    " Nombre ":"SAN BERNARDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52687,
+    " Nombre ":"SAN LORENZO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52693,
+    " Nombre ":"SAN PABLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52694,
+    " Nombre ":"SAN PEDRO DE CARTAGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52696,
+    " Nombre ":"SANTA BÁRBARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52699,
+    " Nombre ":"SANTACRUZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52720,
+    " Nombre ":"SAPUYES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52786,
+    " Nombre ":"TAMINANGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52788,
+    " Nombre ":"TANGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52835,
+    " Nombre ":"SAN ANDRÉS DE TUMACO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52838,
+    " Nombre ":"TÚQUERRES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":52,
+    "Nombre":"NARIÑO",
+    " Código ":52885,
+    " Nombre ":"YACUANQUER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54001,
+    " Nombre ":"SAN JOSÉ DE CÚCUTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54003,
+    " Nombre ":"ÁBREGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54051,
+    " Nombre ":"ARBOLEDAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54099,
+    " Nombre ":"BOCHALEMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54109,
+    " Nombre ":"BUCARASICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54125,
+    " Nombre ":"CÁCOTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54128,
+    " Nombre ":"CÁCHIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54172,
+    " Nombre ":"CHINÁCOTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54174,
+    " Nombre ":"CHITAGÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54206,
+    " Nombre ":"CONVENCIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54223,
+    " Nombre ":"CUCUTILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54239,
+    " Nombre ":"DURANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54245,
+    " Nombre ":"EL CARMEN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54250,
+    " Nombre ":"EL TARRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54261,
+    " Nombre ":"EL ZULIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54313,
+    " Nombre ":"GRAMALOTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54344,
+    " Nombre ":"HACARÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54347,
+    " Nombre ":"HERRÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54377,
+    " Nombre ":"LABATECA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54385,
+    " Nombre ":"LA ESPERANZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54398,
+    " Nombre ":"LA PLAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54405,
+    " Nombre ":"LOS PATIOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54418,
+    " Nombre ":"LOURDES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54480,
+    " Nombre ":"MUTISCUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54498,
+    " Nombre ":"OCAÑA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54518,
+    " Nombre ":"PAMPLONA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54520,
+    " Nombre ":"PAMPLONITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54553,
+    " Nombre ":"PUERTO SANTANDER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54599,
+    " Nombre ":"RAGONVALIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54660,
+    " Nombre ":"SALAZAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54670,
+    " Nombre ":"SAN CALIXTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54673,
+    " Nombre ":"SAN CAYETANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54680,
+    " Nombre ":"SANTIAGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54720,
+    " Nombre ":"SARDINATA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54743,
+    " Nombre ":"SILOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54800,
+    " Nombre ":"TEORAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54810,
+    " Nombre ":"TIBÚ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54820,
+    " Nombre ":"TOLEDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54871,
+    " Nombre ":"VILLA CARO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":54,
+    "Nombre":"NORTE DE SANTANDER",
+    " Código ":54874,
+    " Nombre ":"VILLA DEL ROSARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63001,
+    " Nombre ":"ARMENIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63111,
+    " Nombre ":"BUENAVISTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63130,
+    " Nombre ":"CALARCÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63190,
+    " Nombre ":"CIRCASIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63212,
+    " Nombre ":"CÓRDOBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63272,
+    " Nombre ":"FILANDIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63302,
+    " Nombre ":"GÉNOVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63401,
+    " Nombre ":"LA TEBAIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63470,
+    " Nombre ":"MONTENEGRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63548,
+    " Nombre ":"PIJAO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63594,
+    " Nombre ":"QUIMBAYA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":63,
+    "Nombre":"QUINDÍO",
+    " Código ":63690,
+    " Nombre ":"SALENTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66001,
+    " Nombre ":"PEREIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66045,
+    " Nombre ":"APÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66075,
+    " Nombre ":"BALBOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66088,
+    " Nombre ":"BELÉN DE UMBRÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66170,
+    " Nombre ":"DOSQUEBRADAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66318,
+    " Nombre ":"GUÁTICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66383,
+    " Nombre ":"LA CELIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66400,
+    " Nombre ":"LA VIRGINIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66440,
+    " Nombre ":"MARSELLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66456,
+    " Nombre ":"MISTRATÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66572,
+    " Nombre ":"PUEBLO RICO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66594,
+    " Nombre ":"QUINCHÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66682,
+    " Nombre ":"SANTA ROSA DE CABAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":66,
+    "Nombre":"RISARALDA",
+    " Código ":66687,
+    " Nombre ":"SANTUARIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68001,
+    " Nombre ":"BUCARAMANGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68013,
+    " Nombre ":"AGUADA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68020,
+    " Nombre ":"ALBANIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68051,
+    " Nombre ":"ARATOCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68077,
+    " Nombre ":"BARBOSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68079,
+    " Nombre ":"BARICHARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68081,
+    " Nombre ":"BARRANCABERMEJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68092,
+    " Nombre ":"BETULIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68101,
+    " Nombre ":"BOLÍVAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68121,
+    " Nombre ":"CABRERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68132,
+    " Nombre ":"CALIFORNIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68147,
+    " Nombre ":"CAPITANEJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68152,
+    " Nombre ":"CARCASÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68160,
+    " Nombre ":"CEPITÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68162,
+    " Nombre ":"CERRITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68167,
+    " Nombre ":"CHARALÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68169,
+    " Nombre ":"CHARTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68176,
+    " Nombre ":"CHIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68179,
+    " Nombre ":"CHIPATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68190,
+    " Nombre ":"CIMITARRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68207,
+    " Nombre ":"CONCEPCIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68209,
+    " Nombre ":"CONFINES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68211,
+    " Nombre ":"CONTRATACIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68217,
+    " Nombre ":"COROMORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68229,
+    " Nombre ":"CURITÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68235,
+    " Nombre ":"EL CARMEN DE CHUCURÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68245,
+    " Nombre ":"EL GUACAMAYO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68250,
+    " Nombre ":"EL PEÑÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68255,
+    " Nombre ":"EL PLAYÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68264,
+    " Nombre ":"ENCINO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68266,
+    " Nombre ":"ENCISO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68271,
+    " Nombre ":"FLORIÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68276,
+    " Nombre ":"FLORIDABLANCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68296,
+    " Nombre ":"GALÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68298,
+    " Nombre ":"GÁMBITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68307,
+    " Nombre ":"GIRÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68318,
+    " Nombre ":"GUACA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68320,
+    " Nombre ":"GUADALUPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68322,
+    " Nombre ":"GUAPOTÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68324,
+    " Nombre ":"GUAVATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68327,
+    " Nombre ":"GÜEPSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68344,
+    " Nombre ":"HATO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68368,
+    " Nombre ":"JESÚS MARÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68370,
+    " Nombre ":"JORDÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68377,
+    " Nombre ":"LA BELLEZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68385,
+    " Nombre ":"LANDÁZURI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68397,
+    " Nombre ":"LA PAZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68406,
+    " Nombre ":"LEBRIJA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68418,
+    " Nombre ":"LOS SANTOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68425,
+    " Nombre ":"MACARAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68432,
+    " Nombre ":"MÁLAGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68444,
+    " Nombre ":"MATANZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68464,
+    " Nombre ":"MOGOTES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68468,
+    " Nombre ":"MOLAGAVITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68498,
+    " Nombre ":"OCAMONTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68500,
+    " Nombre ":"OIBA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68502,
+    " Nombre ":"ONZAGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68522,
+    " Nombre ":"PALMAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68524,
+    " Nombre ":"PALMAS DEL SOCORRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68533,
+    " Nombre ":"PÁRAMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68547,
+    " Nombre ":"PIEDECUESTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68549,
+    " Nombre ":"PINCHOTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68572,
+    " Nombre ":"PUENTE NACIONAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68573,
+    " Nombre ":"PUERTO PARRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68575,
+    " Nombre ":"PUERTO WILCHES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68615,
+    " Nombre ":"RIONEGRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68655,
+    " Nombre ":"SABANA DE TORRES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68669,
+    " Nombre ":"SAN ANDRÉS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68673,
+    " Nombre ":"SAN BENITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68679,
+    " Nombre ":"SAN GIL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68682,
+    " Nombre ":"SAN JOAQUÍN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68684,
+    " Nombre ":"SAN JOSÉ DE MIRANDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68686,
+    " Nombre ":"SAN MIGUEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68689,
+    " Nombre ":"SAN VICENTE DE CHUCURÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68705,
+    " Nombre ":"SANTA BÁRBARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68720,
+    " Nombre ":"SANTA HELENA DEL OPÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68745,
+    " Nombre ":"SIMACOTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68755,
+    " Nombre ":"SOCORRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68770,
+    " Nombre ":"SUAITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68773,
+    " Nombre ":"SUCRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68780,
+    " Nombre ":"SURATÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68820,
+    " Nombre ":"TONA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68855,
+    " Nombre ":"VALLE DE SAN JOSÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68861,
+    " Nombre ":"VÉLEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68867,
+    " Nombre ":"VETAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68872,
+    " Nombre ":"VILLANUEVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":68,
+    "Nombre":"SANTANDER",
+    " Código ":68895,
+    " Nombre ":"ZAPATOCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70001,
+    " Nombre ":"SINCELEJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70110,
+    " Nombre ":"BUENAVISTA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70124,
+    " Nombre ":"CAIMITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70204,
+    " Nombre ":"COLOSÓ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70215,
+    " Nombre ":"COROZAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70221,
+    " Nombre ":"COVEÑAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70230,
+    " Nombre ":"CHALÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70233,
+    " Nombre ":"EL ROBLE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70235,
+    " Nombre ":"GALERAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70265,
+    " Nombre ":"GUARANDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70400,
+    " Nombre ":"LA UNIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70418,
+    " Nombre ":"LOS PALMITOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70429,
+    " Nombre ":"MAJAGUAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70473,
+    " Nombre ":"MORROA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70508,
+    " Nombre ":"OVEJAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70523,
+    " Nombre ":"PALMITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70670,
+    " Nombre ":"SAMPUÉS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70678,
+    " Nombre ":"SAN BENITO ABAD",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70702,
+    " Nombre ":"SAN JUAN DE BETULIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70708,
+    " Nombre ":"SAN MARCOS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70713,
+    " Nombre ":"SAN ONOFRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70717,
+    " Nombre ":"SAN PEDRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70742,
+    " Nombre ":"SAN LUIS DE SINCÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70771,
+    " Nombre ":"SUCRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70820,
+    " Nombre ":"SANTIAGO DE TOLÚ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":70,
+    "Nombre":"SUCRE",
+    " Código ":70823,
+    " Nombre ":"SAN JOSÉ DE TOLUVIEJO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73001,
+    " Nombre ":"IBAGUÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73024,
+    " Nombre ":"ALPUJARRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73026,
+    " Nombre ":"ALVARADO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73030,
+    " Nombre ":"AMBALEMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73043,
+    " Nombre ":"ANZOÁTEGUI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73055,
+    " Nombre ":"ARMERO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73067,
+    " Nombre ":"ATACO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73124,
+    " Nombre ":"CAJAMARCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73148,
+    " Nombre ":"CARMEN DE APICALÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73152,
+    " Nombre ":"CASABIANCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73168,
+    " Nombre ":"CHAPARRAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73200,
+    " Nombre ":"COELLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73217,
+    " Nombre ":"COYAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73226,
+    " Nombre ":"CUNDAY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73236,
+    " Nombre ":"DOLORES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73268,
+    " Nombre ":"ESPINAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73270,
+    " Nombre ":"FALAN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73275,
+    " Nombre ":"FLANDES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73283,
+    " Nombre ":"FRESNO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73319,
+    " Nombre ":"GUAMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73347,
+    " Nombre ":"HERVEO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73349,
+    " Nombre ":"HONDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73352,
+    " Nombre ":"ICONONZO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73408,
+    " Nombre ":"LÉRIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73411,
+    " Nombre ":"LÍBANO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73443,
+    " Nombre ":"SAN SEBASTIÁN DE MARIQUITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73449,
+    " Nombre ":"MELGAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73461,
+    " Nombre ":"MURILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73483,
+    " Nombre ":"NATAGAIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73504,
+    " Nombre ":"ORTEGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73520,
+    " Nombre ":"PALOCABILDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73547,
+    " Nombre ":"PIEDRAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73555,
+    " Nombre ":"PLANADAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73563,
+    " Nombre ":"PRADO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73585,
+    " Nombre ":"PURIFICACIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73616,
+    " Nombre ":"RIOBLANCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73622,
+    " Nombre ":"RONCESVALLES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73624,
+    " Nombre ":"ROVIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73671,
+    " Nombre ":"SALDAÑA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73675,
+    " Nombre ":"SAN ANTONIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73678,
+    " Nombre ":"SAN LUIS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73686,
+    " Nombre ":"SANTA ISABEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73770,
+    " Nombre ":"SUÁREZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73854,
+    " Nombre ":"VALLE DE SAN JUAN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73861,
+    " Nombre ":"VENADILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73870,
+    " Nombre ":"VILLAHERMOSA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":73,
+    "Nombre":"TOLIMA",
+    " Código ":73873,
+    " Nombre ":"VILLARRICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76001,
+    " Nombre ":"SANTIAGO DE CALI",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76020,
+    " Nombre ":"ALCALÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76036,
+    " Nombre ":"ANDALUCÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76041,
+    " Nombre ":"ANSERMANUEVO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76054,
+    " Nombre ":"ARGELIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76100,
+    " Nombre ":"BOLÍVAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76109,
+    " Nombre ":"BUENAVENTURA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76111,
+    " Nombre ":"GUADALAJARA DE BUGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76113,
+    " Nombre ":"BUGALAGRANDE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76122,
+    " Nombre ":"CAICEDONIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76126,
+    " Nombre ":"CALIMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76130,
+    " Nombre ":"CANDELARIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76147,
+    " Nombre ":"CARTAGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76233,
+    " Nombre ":"DAGUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76243,
+    " Nombre ":"EL ÁGUILA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76246,
+    " Nombre ":"EL CAIRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76248,
+    " Nombre ":"EL CERRITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76250,
+    " Nombre ":"EL DOVIO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76275,
+    " Nombre ":"FLORIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76306,
+    " Nombre ":"GINEBRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76318,
+    " Nombre ":"GUACARÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76364,
+    " Nombre ":"JAMUNDÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76377,
+    " Nombre ":"LA CUMBRE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76400,
+    " Nombre ":"LA UNIÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76403,
+    " Nombre ":"LA VICTORIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76497,
+    " Nombre ":"OBANDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76520,
+    " Nombre ":"PALMIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76563,
+    " Nombre ":"PRADERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76606,
+    " Nombre ":"RESTREPO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76616,
+    " Nombre ":"RIOFRÍO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76622,
+    " Nombre ":"ROLDANILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76670,
+    " Nombre ":"SAN PEDRO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76736,
+    " Nombre ":"SEVILLA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76823,
+    " Nombre ":"TORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76828,
+    " Nombre ":"TRUJILLO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76834,
+    " Nombre ":"TULUÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76845,
+    " Nombre ":"ULLOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76863,
+    " Nombre ":"VERSALLES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76869,
+    " Nombre ":"VIJES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76890,
+    " Nombre ":"YOTOCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76892,
+    " Nombre ":"YUMBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":76,
+    "Nombre":"VALLE DEL CAUCA",
+    " Código ":76895,
+    " Nombre ":"ZARZAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81001,
+    " Nombre ":"ARAUCA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81065,
+    " Nombre ":"ARAUQUITA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81220,
+    " Nombre ":"CRAVO NORTE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81300,
+    " Nombre ":"FORTUL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81591,
+    " Nombre ":"PUERTO RONDÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81736,
+    " Nombre ":"SARAVENA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":81,
+    "Nombre":"ARAUCA",
+    " Código ":81794,
+    " Nombre ":"TAME",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85001,
+    " Nombre ":"YOPAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85010,
+    " Nombre ":"AGUAZUL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85015,
+    " Nombre ":"CHÁMEZA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85125,
+    " Nombre ":"HATO COROZAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85136,
+    " Nombre ":"LA SALINA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85139,
+    " Nombre ":"MANÍ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85162,
+    " Nombre ":"MONTERREY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85225,
+    " Nombre ":"NUNCHÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85230,
+    " Nombre ":"OROCUÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85250,
+    " Nombre ":"PAZ DE ARIPORO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85263,
+    " Nombre ":"PORE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85279,
+    " Nombre ":"RECETOR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85300,
+    " Nombre ":"SABANALARGA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85315,
+    " Nombre ":"SÁCAMA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85325,
+    " Nombre ":"SAN LUIS DE PALENQUE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85400,
+    " Nombre ":"TÁMARA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85410,
+    " Nombre ":"TAURAMENA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85430,
+    " Nombre ":"TRINIDAD",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":85,
+    "Nombre":"CASANARE",
+    " Código ":85440,
+    " Nombre ":"VILLANUEVA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86001,
+    " Nombre ":"MOCOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86219,
+    " Nombre ":"COLÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86320,
+    " Nombre ":"ORITO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86568,
+    " Nombre ":"PUERTO ASÍS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86569,
+    " Nombre ":"PUERTO CAICEDO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86571,
+    " Nombre ":"PUERTO GUZMÁN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86573,
+    " Nombre ":"PUERTO LEGUÍZAMO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86749,
+    " Nombre ":"SIBUNDOY",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86755,
+    " Nombre ":"SAN FRANCISCO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86757,
+    " Nombre ":"SAN MIGUEL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86760,
+    " Nombre ":"SANTIAGO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86865,
+    " Nombre ":"VALLE DEL GUAMUEZ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":86,
+    "Nombre":"PUTUMAYO",
+    " Código ":86885,
+    " Nombre ":"VILLAGARZÓN",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":88,
+    "Nombre":"ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA",
+    " Código ":88001,
+    " Nombre ":"SAN ANDRÉS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Isla"
+  },
+  {
+    "Código":88,
+    "Nombre":"ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA",
+    " Código ":88564,
+    " Nombre ":"PROVIDENCIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91001,
+    " Nombre ":"LETICIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91263,
+    " Nombre ":"EL ENCANTO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91405,
+    " Nombre ":"LA CHORRERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91407,
+    " Nombre ":"LA PEDRERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91430,
+    " Nombre ":"LA VICTORIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91460,
+    " Nombre ":"MIRITÍ - PARANÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91530,
+    " Nombre ":"PUERTO ALEGRÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91536,
+    " Nombre ":"PUERTO ARICA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91540,
+    " Nombre ":"PUERTO NARIÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91669,
+    " Nombre ":"PUERTO SANTANDER",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":91,
+    "Nombre":"AMAZONAS",
+    " Código ":91798,
+    " Nombre ":"TARAPACÁ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94001,
+    " Nombre ":"INÍRIDA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94343,
+    " Nombre ":"BARRANCOMINAS",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94883,
+    " Nombre ":"SAN FELIPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94884,
+    " Nombre ":"PUERTO COLOMBIA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94885,
+    " Nombre ":"LA GUADALUPE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94886,
+    " Nombre ":"CACAHUAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94887,
+    " Nombre ":"PANA PANA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":94,
+    "Nombre":"GUAINÍA",
+    " Código ":94888,
+    " Nombre ":"MORICHAL",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":95,
+    "Nombre":"GUAVIARE",
+    " Código ":95001,
+    " Nombre ":"SAN JOSÉ DEL GUAVIARE",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":95,
+    "Nombre":"GUAVIARE",
+    " Código ":95015,
+    " Nombre ":"CALAMAR",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":95,
+    "Nombre":"GUAVIARE",
+    " Código ":95025,
+    " Nombre ":"EL RETORNO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":95,
+    "Nombre":"GUAVIARE",
+    " Código ":95200,
+    " Nombre ":"MIRAFLORES",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97001,
+    " Nombre ":"MITÚ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97161,
+    " Nombre ":"CARURÚ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97511,
+    " Nombre ":"PACOA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97666,
+    " Nombre ":"TARAIRA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97777,
+    " Nombre ":"PAPUNAHUA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":97,
+    "Nombre":"VAUPÉS",
+    " Código ":97889,
+    " Nombre ":"YAVARATÉ",
+    "Municipio\nIsla\nÁrea no municipalizada":"Área no municipalizada"
+  },
+  {
+    "Código":99,
+    "Nombre":"VICHADA",
+    " Código ":99001,
+    " Nombre ":"PUERTO CARREÑO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":99,
+    "Nombre":"VICHADA",
+    " Código ":99524,
+    " Nombre ":"LA PRIMAVERA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":99,
+    "Nombre":"VICHADA",
+    " Código ":99624,
+    " Nombre ":"SANTA ROSALÍA",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  },
+  {
+    "Código":99,
+    "Nombre":"VICHADA",
+    " Código ":99773,
+    " Nombre ":"CUMARIBO",
+    "Municipio\nIsla\nÁrea no municipalizada":"Municipio"
+  }
+]

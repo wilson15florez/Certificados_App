@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/alerts.css" rel="stylesheet" />
-    <link href="~/css/adminActInfoBasica.css" rel="stylesheet" />
+    <link href="~/css/styleFormUnicProv.css" rel="stylesheet" />
     <link href="~/images/icono-web.webp" rel="icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <title>Proveedores USC</title>
+
+    <!-- jQuery (obligatorio para Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 </head>
 <body>
     <main class="main-page-container">
@@ -44,7 +53,7 @@
 				<div class="flex-container">
 					<div class="form-group half-width">
                         <label for="pnNombreCompl">Nombre Completo:</label>
-                        <input type="text" id="pnNombreCompl" name="pnNombreCompl" />
+                        <input type="text" id="pnNombreCompl" name="pnNombreCompl" required/>
                     </div>
                 </div>
 
@@ -68,7 +77,7 @@
                         </div>
                         <div class="form-group half-width">
                             <label for="pnNac-Num">N°:</label>
-                            <input type="number" id="pnNacNum" name="pnDocNum" disabled />
+                            <input type="number" id="pnNacNum" name="pnDocNum" disabled required/>
                         </div>
                     </div>
                 </div>
@@ -86,7 +95,7 @@
                         </div>
                         <div class="form-group half-width">
                             <label for="pnExt-Num">N°:</label>
-                            <input type="number" id="pnExtNum" name="pnDocNum" disabled />
+                            <input type="number" id="pnExtNum" name="pnDocNum" disabled required/>
                         </div>
                     </div>
                 </div>
@@ -94,47 +103,59 @@
 				<div class="flex-container">
 					<div class="form-group half-width">
                         <label for="pnFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-                        <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" />
+                        <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" required/>
                     </div>
                     <div class="form-group half-width">
-						<label for="pnLugExpDoc">Lugar de Expedición de Documento de Identidad:</label>
-                        <input type="text" id="pnLugExpDoc" name="pnLugExpDoc" />
+						<label for="pnDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
+                        <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
+					</div>
+                    <div class="form-group half-width">
+                        <label for="pnCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
+                        <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
+                    </div>
+                </div>
+                <div class="flex-container">
+					<div class="form-group half-width">
+						<label for="pnNacionalidad">Nacionalidad/Pais:</label>
+						<select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
 					</div>
                 </div>
+
 				<div class="flex-container">
+                    <div class="form-group half-weidth">
+                        <label for="pnDepartNac">Departamento de nacimiento::</label>
+                        <select id="pnDepartNac" name="pnDepartNac" class="form-control" required></select>
+                    </div>
                     <div class="form-group half-width">
+                        <label for="pnCiudadNac">Ciudad de nacimiento:</label>
+                        <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
+                    </div>
+                </div>
+
+				<div class="flex-container">
+					<div class="form-group half-width">
 						<label for="pnFechaNac">Fecha de Nacimiento:</label>
-                        <input type="date" id="pnFechaNac" name="pnFechaNac" />
-                    </div>
-					<div class="form-group half-weidth">
-						<label for="pnLugNac">Lugar de Nacimiento:</label>
-                        <input type="text" id="pnLugNac" name="pnLugNac" />
-                    </div>
-                </div>
-
-				<div class="flex-container">
-                    <div class="form-group half-width">
-						<label for="pnNacionalidad">Nacionalidad:</label>
-                        <input type="text" id="pnNacionalidad" name="pnNacionalidad" />
+						<input type="date" id="pnFechaNac" name="pnFechaNac" required />
 					</div>
-					<div class="form-group half-width">
+                    <div class="form-group half-width">
                         <label for="pnDiResidencia">Dirección de Residencia:</label>
-                        <input type="text" id="pnDiResidencia" name="pnDiResidencia" />
-                    </div>
-                </div>
-
-                <div class="flex-container">
-					<div class="form-group half-width">
-                        <label for="pnCiudad">Ciudad:</label>
-                        <input type="text" id="pnCiudad" name="pnCiudad" />
+                        <input type="text" id="pnDiResidencia" name="pnDiResidencia" required />
                     </div>
                     <div class="form-group half-width">
-						<label for="pnTelefono">Teléfono Fijo:</label>
-                        <input type="number" id="pnTelefono" name="pnTelefono" />
-					</div>
+                        <label for="pnDepRes">Departamento de Residencia:</label>
+                        <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
+                    </div>
+					<div class="form-group half-width">
+                        <label for="pnCiudadRes">Ciudad de Residencia:</label>
+                        <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
+                    </div>
                 </div>
 
                 <div class="flex-container">
+                    <div class="form-group half-width">
+                        <label for="pnTelefono">Teléfono Fijo:</label>
+                        <input type="number" id="pnTelefono" name="pnTelefono" />
+                    </div>
 					<div class="form-group half-width">
 						<label for="pnCelular">Teléfono Celular:</label>
                         <input type="number" id="pnCelular" name="pnCelular" />
@@ -285,6 +306,7 @@
                             <td><input type="text" name="controlRazonSocial[]" style="width:100%;" /></td>
                             <td>
                                 <select name="controlIdType[]">
+									<option value="" disabled selected>-- Seleccione --</option>
                                     <option value="CC">CC</option>
                                     <option value="NIT">NIT</option>
                                 </select>
@@ -306,6 +328,55 @@
 
     </main>
 
+    <!--subform de direccion estructurada estandar-->
+    <div id="directionStructure" class="direction-structure">
+        <div class="direction-structure-content">
+            <h4>Ingrese la Dirección siguiendo el estandar del DANE:</h4>
+            <div class="structure-field">
+                <label for="tipoVia">Tipo de vía:</label>
+                <select id="tipoVia">
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    <option value="Autopista">Autopista</option>
+                    <option value="Avenida">Avenida</option>
+					<option value="Calle">Calle</option>
+					<option value="Carrera">Carrera</option>
+					<option value="Carretera">Carretera</option>
+					<option value="Diagonal">Diagonal</option>
+					<option value="Transversal">Transversal</option>
+                    <option value="Troncal">Troncal</option>
+                </select>
+            </div>
+            <div class="structure-field">
+                <label for="vPrincipal">Nom. o N° de la vía principal:</label>
+				<input type="text" id="vPrincipal" name="vPrincipal"/>
+            </div>
+            <div class="structure-field">
+				<label for="sufPrincipal">Letra/sufijo principal:</label>
+                <input type="text" id="sufPrincipal" name="sufPrincipal" maxlength="2"/>
+            </div>
+			<div class="structure-field">
+				<label for="vSecundaria">Nom. o N° de la vía secundaria:</label>
+                <input type="text" id="vSecundaria" name="vSecundaria"/>
+			</div>
+			<div class="structure-field">
+                <label for="sufSecundaria">Letra/sufijo secundaria:</label>
+				<input type="text" id="sufSecundaria" name="sufSecundaria" maxlength="2"/>
+            </div>
+			<div class="structure-field">
+                <label for="numPlaca">N° de placa:</label>
+				<input type="number" id="numPlaca" name="numPlaca" />
+            </div>
+            <div class="structure-field">
+                <label for="compleDir">Complemento (opcional):</label>
+				<input type="text" id="compleDir" name="compleDir" />
+            </div>
+            <div class="structure-actions">
+                <button id="cancelDirBtn" type="button" class="btn btn-secondary">Cancelar</button>
+				<button id="saveDirBtn" type="button" class="btn btn-primary">Guardar Dirección</button>
+            </div>
+        </div>
+    </div>
+
     <div id="loader-container" style="
         display: none;
         position: fixed;
@@ -326,13 +397,9 @@
     @Html.Partial("_Footer")
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', function(){
+		document.addEventListener('DOMContentLoaded', async function(){
             const personTypeSelect = document.getElementById('personType');
             const idNumInput = document.getElementById('idNum');
             const consultBtn = document.getElementById('consultBtn');
@@ -359,6 +426,7 @@
             const controlTableBody = document.querySelector('#control-table tbody');
             const submitPjBtn = document.getElementById('submitPjBtn');
 
+            //elementos de persona nacional o extranjera
             const radNacional = document.getElementById('radNacional');
             const radExtranjero = document.getElementById('radExtranjero');
             const seccionNacional = document.getElementById('seccionNacional');
@@ -367,9 +435,64 @@
             const inputExtNum = document.getElementById('pnExtNum');
 			const radiosNacDoc = document.querySelectorAll('input[name="pnNacDoc"]');
 			const radiosExtDoc = document.querySelectorAll('input[name="pnExtDoc"]');
+
+            const pnNacionalidad = document.getElementById('pnNacionalidad');
+            const pnDepartNac = document.getElementById('pnDepartNac');
+            const pnCiudadNac = document.getElementById('pnCiudadNac');
+            const pnDepExpDoc = document.getElementById('pnDepExpDoc');
+            const pnCiuExpDoc = document.getElementById('pnCiuExpDoc');
+            const pnDepRes = document.getElementById('pnDepRes');
+            const pnCiudadRes = document.getElementById('pnCiudadRes');
+			const UbiNacional = document.getElementById('UbiNacional');
+			const UbiExtranjero = document.getElementById('UbiExtranjero');
+
+            //JSON local Colombia
+            const colDMJSON = '/data/ubiNacional/ColombiaDepMun.json'
+
+            //URLs JSON externos de paises(Repositorio GitHub)
+            const url_COUNTRIES = '/data/ubiExterior/countries.json';
+            const url_STATES = '/data/ubiExterior/states.json';
+            const url_CITIES = '/data/ubiExterior/cities.json';
+
+            //elemento para validacion con parametros
+			const regexTelFijo = /^60[1-9]\d{7}$/;
+			const regexTelCelular = /^3\d{9}$/;
+            const regexEmail = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+
 			let isNewDetail = false;
             let originalPEPTypes = [];
             let originalPEPEntidad = '';
+			let activeDirecform = null;
+
+
+            function fillSelect2(select, items, placeholder, valueField = null, textField = null, preselectedValue = '') {
+                const data = [{ id: '', text: placeholder }].concat(
+                    items.map(i => ({
+                        id: valueField ? i[valueField] : i,
+                        text: textField ? i[textField] : i
+                    }))
+                );
+
+                $(select)
+                    .empty()
+                    .select2({
+                        width: '100%',
+                        placeholder: placeholder,
+                        allowClear: true,
+                        data: data
+                    });
+
+                if (preselectedValue) {
+                    $(select).val(preselectedValue).trigger('change.select2');
+                }
+            }
+
+            //bloqueo inicial
+            pnNacionalidad.disabled = true;
+            pnDepartNac.disabled = true;
+            pnCiudadNac.disabled = true;
+
 
             idNumInput.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") {
@@ -410,6 +533,153 @@
                     </div>
             `;
             }
+
+            //funcion para cargar departamentos y municipios colombianos
+            async function loadUbiNac(){
+                const res = await fetch(colDMJSON);
+				const data = await res.json();
+
+                const departamentos = [...new Set(data.map(d => d["Nombre"].trim()))];
+                const ciudadByDep = {};
+
+                data.forEach(item => {
+                    const depto = item["Nombre"].trim();
+                    const ciud = (item[" Nombre "] || item["Nombre"] || '').trim();
+
+                    if (!ciudadByDep[depto]) ciudadByDep[depto] = [];
+
+                    if (ciud) ciudadByDep[depto].push(ciud);
+                });
+                return {departamentos, ciudadByDep};
+            }
+
+            //funcion para cargar paises
+            async function loadUbiExt(){
+                const res = await fetch(url_COUNTRIES);
+				const data = await res.json();
+                const countries = data.countries || [];
+                return countries.filter(c => c.name.toLowerCase() !== "colombia");
+            }
+
+            //funcion para cargar los estados segun el pais
+			async function loadStates(countryId){
+				const res = await fetch(url_STATES);
+                const data = await res.json();
+                return (data.states || []).filter(s => s.id_country === parseInt(countryId));
+			}
+
+            //funcion para cargar ciudades segun el estado
+			async function loadCities(stateId){
+				const res = await fetch(url_CITIES);
+				const data = await res.json();
+                return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
+            }
+
+            function fillSelect2(select, items, placeholder, valueField = null, textField = null){
+                const data = [{ id: '', text: placeholder}].concat(
+                    items.map(i => ({
+                        id: valueField ? i[valueField] : i,
+                        text: textField ? i[textField] : i
+                    }))
+                );
+                $(select).empty().select2({
+                    width: '100%',
+                    placeholder: placeholder,
+                    allowClear: true,
+                    data: data
+                });
+                $(select).val('').trigger('change');
+            }
+
+            //lister principal para nacionalidad
+            async function ubicacionHandler(){
+
+				//limpia los selects
+                [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes, pnNacionalidad].forEach(sel => {
+                    $(sel).empty().prop('disabled', false);
+                });
+
+                if (radNacional.checked){
+                    fillSelect2(pnNacionalidad, [{ id: 'CO', text: 'Colombia'}], '-- Seleccione país --', null, null, 'CO');
+                    $(pnNacionalidad).val('CO').trigger('change.select2');
+                    $(pnNacionalidad).prop('disabled', true);
+
+                    const {departamentos, ciudadByDep} = await loadUbiNac();
+
+                    //llena los 3 select de departamentos/estados
+                    [pnDepartNac,pnDepExpDoc,pnDepRes].forEach(depSelect => {
+                        fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                    });
+
+                    //Cascada departamento -> ciudad
+                    const handleDeptChange = (depSelect,citySelect) => {
+                        $(depSelect).off('change').on('change', function(){
+                            const selectedDep = $(this).val();
+                            const municipios = ciudadByDep[selectedDep] || [];
+                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                            $(citySelect).prop('disabled', municipios.length === 0);
+                            if (municipios.length > 0) {
+                                $(citySelect).prop('disabled', false);
+                            }
+                        });
+                    };
+
+                    handleDeptChange(pnDepartNac, pnCiudadNac);
+                    handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
+                    handleDeptChange(pnDepRes, pnCiudadRes);
+
+                }else if (radExtranjero.checked){
+                    pnNacionalidad.disabled = false;
+
+                    const countries = await loadUbiExt();
+                    fillSelect2(pnNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
+
+                    //Departamentos y ciudades colombianas para expedicion y residencia
+                    const {departamentos, ciudadByDep} = await loadUbiNac();
+                    [pnDepExpDoc, pnDepRes].forEach(depSelect => {
+                        fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                    });
+                    const handleDeptChange = (depSelect, citySelect) => {
+                        $(depSelect).off('change').on('change', function(){
+                            const selectedDep = $(this).val();
+                            const municipios = ciudadByDep[selectedDep] || [];
+                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                        });
+                    };
+                    handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
+                    handleDeptChange(pnDepRes, pnCiudadRes);
+
+                    //Estados y ciudades para país seleccionado
+                    $(pnNacionalidad).off('change').on('change', async function(){
+                        const countryId = $(this).val();
+                        if (!countryId){
+                            fillSelect2(pnDepartNac, [], '-- Seleccione estado --');
+                            fillSelect2(pnCiudadNac, [], '-- Seleccione ciudad --');
+                            $(pnDepartNac).prop('disabled', true);
+                            $(pnCiudadNac).prop('disabled', true);
+                            return;
+                        }
+                        $(pnDepartNac).prop('disabled', false);
+                        $(pnCiudadNac).prop('disabled', false);
+
+                        const states = await loadStates(countryId);
+                        fillSelect2(pnDepartNac, states, '-- Seleccione estado --', 'id', 'name');
+                        $(pnDepartNac).off('change').on('change', async function(){
+                            const stateId = $(this).val();
+                            const cities = await loadCities(stateId);
+                            fillSelect2(pnCiudadNac, cities, '-- Seleccione ciudad --', 'id', 'name');
+                            $(pnCiudadNac).prop('disabled', false);
+                        });
+                    });
+                }
+            }
+            //eventos
+            radNacional.addEventListener('change', ubicacionHandler);
+            radExtranjero.addEventListener('change', ubicacionHandler);
+
+            //carga por defecto como nacional al iniciar
+            radNacional.checked = true;
+            await ubicacionHandler();
 
             //funcion para precargar los datos del formulario
             function loadFormData_Natural(data){
@@ -896,7 +1166,7 @@
 				const form = document.getElementById('persNatuForm');
                 const data = {};
 
-                form.querySelectorAll('input[type="text"], input[type="email"], input[type="date"], select, textarea')
+                form.querySelectorAll('input[type="text"], input[type="email"],input[type="number"], input[type="date"], select, textarea')
                     .forEach(el => {
 						if (!el.name) return;
 						data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
@@ -967,9 +1237,213 @@
 				return data;
             }
 
+            //Validacion de campos de los forms
+            function validateNaturalForm(){
+				const form = document.getElementById('persNatuForm');
+				alertContainer.innerHTML = '';
+
+                //verifica que sea nacional o extranjero
+				const isNacional = document.getElementById('radNacional')?.checked;
+				const isExtranjero = document.getElementById('radExtranjero')?.checked;
+				if (!isNacional && !isExtranjero){
+					createAlert('Por favor seleccione si es Nacional o Extranjero.', 'danger');
+					return false;
+                }
+
+                //verifica que tipo de documento este seleccionado
+                const tipoDoc = isNacional
+					? form.querySelector('input[name="pnNacDoc"]:checked')
+					: form.querySelector('input[name="pnExtDoc"]:checked');
+				if (!tipoDoc){
+					createAlert('Por favor seleccione el tipo de documento correspondiente.', 'danger');
+                    return false;
+				}
+
+                //verifica que los demas campos esten diligenciados
+                const requiredFields = [
+					'pnNombreCompl','pnFechaExpDoc','pnDepExpDoc',
+                    'pnFechaNac','pnNacionalidad','pnLugNac',
+                    'pnDiResidencia','pnCiudadRes','pnEmail',
+                    'pnOficProfe','pnActividad'
+                ];
+
+				for (const id of requiredFields){
+					const el = document.getElementById(id);
+					if (!el || !el.value.trim()){
+						const label = document.querySelector(`label[for="${id}"]`);
+						const labelText = label ? label.textContent.replace(':', '').trim() : id;
+                        createAlert(`El campo "${labelText}" es obligatorio.`, 'danger');
+						el.focus();
+						return false;
+                    }
+                }
+
+				//verifica telefono fijo o celular (al menos uno diligenciado)
+				const tel = document.getElementById('pnTelefono').value.trim();
+				const cel = document.getElementById('pnCelular').value.trim();
+				if (!tel && !cel){
+					createAlert('Por favor ingrese al menos un número de teléfono fijo o celular.', 'danger');
+					return false;
+                }
+
+                if (tel && !regexTelFijo.test(tel)){
+					createAlert('El número de teléfono fijo debe contener 10 dígitos y comenzar con el indicativo. (Ej: 601 para Bogotá)', 'danger');
+                    return false;
+				}
+
+				if (cel && !regexTelCelular.test(cel)){
+                    createAlert('El número de celular debe contener 10 dígitos y comenzar con 3.', 'danger');
+					return false;
+                }
+
+                // verifica email
+				const email = document.getElementById('pnEmail').value.trim();
+				if (email && !regexEmail.test(email)){
+					createAlert('Por favor ingrese un correo electrónico válido.', 'danger');
+					return false;
+                }
+
+                //verifica actividad
+				const acti = document.getElementById('pnActividad');
+				if ( !acti || !acti.value.trim()){
+					createAlert('Por favor ingrese el tipo de actividad.', 'danger');
+                    return false;
+                }
+
+                //verificacion reconocimiento publico
+				if (!form.querySelector('input[name="pnReconoPublic"]:checked')){
+					createAlert('Por favor seleccione si tiene reconocimiento publico.', 'danger');
+                    return false;
+				}
+				//verificacion manejo de recursos publico
+				if (!form.querySelector('input[name="pnManRePub"]:checked')){
+                    createAlert('Por favor seleccione si maneja recursos de origen publico.', 'danger');
+					return false;
+                }
+
+				//verifica PEP y de ser si, valida el check y entidad
+				const pepSi = document.getElementById('pnPEPSi').checked;
+				const pepNo = document.getElementById('pnPEPNo').checked;
+				if (!pepSi && !pepNo){
+                    createAlert('Por favor seleccione si es PEP.', 'danger');
+					return false;
+                }
+
+				if (pepSi){
+					const pepChecks = form.querySelectorAll('input[name="pnPEPType"]:checked');
+					const penEntidad = document.getElementById('pnPEP_Entidad').value.trim();
+
+					if (pepChecks.length === 0){
+						createAlert('Por favor seleccione al menos un tipo de PEP.', 'danger');
+                        return false;
+					}
+					if (!penEntidad){
+                        createAlert('Por favor ingrese la entidad relacionada con el PEP.', 'danger');
+						return false;
+                    }
+                }
+
+                return true;
+			}
+
+            function validateJuridicaForm(){
+				const form = document.getElementById('persJuriForm');
+                alertContainer.innerHTML = '';
+
+				//verifica que los demas campos esten diligenciados
+                const requiredFields = [
+                    'pjRazSocial','pjDirPrincipal','pjCiudadDirPrincipal',
+					'pjEmailDirPrincipal','pjTelDirPrincipal'
+                ];
+
+				for (const id of requiredFields){
+					const el = document.getElementById(id);
+                    if (!el || !el.value.trim()){
+                        const label = document.querySelector(`label[for="${id}"]`);
+						const labelText = label ? label.textContent.replace(':', '').trim() : id;
+						createAlert(`El campo "${labelText}" es obligatorio.`, 'danger');
+                        el.focus();
+						return false;
+                    }
+                }
+
+                //valida telefono principal (fijo o celular)
+				const telPrincipal = document.getElementById('pjTelDirPrincipal').value.trim();
+                if (!regexTelFijo.test(telPrincipal) && !regexTelCelular.test(telPrincipal)){
+					createAlert('El número de teléfono principal debe ser un número fijo válido (10 dígitos con indicativo) o un número celular válido (10 dígitos comenzando con 3).', 'danger');
+					return false;
+                }
+
+                //validar email
+				const emailPrincipal = document.getElementById('pjEmailDirPrincipal').value.trim();
+				if (emailPrincipal && !regexEmail.test(emailPrincipal)){
+                    createAlert('Por favor ingrese un correo electrónico válido para la dirección principal.', 'danger');
+                    return false;
+				}
+
+                //valida las sucursales
+				const sucursales = document.querySelectorAll('#sucursales-container .sucursal-item');
+				for (let i = 0; i < sucursales.length; i++){
+					const idx = i + 1;
+					const dir = document.getElementById(`pjDirSucursal_${idx}`).value.trim();
+					const ciudad = document.getElementById(`pjCiudadDirSucursal_${idx}`).value.trim();
+					const email = document.getElementById(`pjEmailDirSucursal_${idx}`).value.trim();
+					const tel = document.getElementById(`pjTelDirSucursal_${idx}`).value.trim();
+
+					if (!dir || !ciudad || !email || !tel){
+						createAlert(`Por favor complete todos los campos de la sucursal ${idx}.`, 'danger');
+                        return false;
+                    }
+
+                    if (!regexEmail.test(email)){
+                        createAlert(`Por favor ingrese un correo electrónico válido para la sucursal ${idx}.`, 'danger');
+                        return false;
+					}
+
+                    if (!regexTelFijo.test(tel) && !regexTelCelular.test(tel)){
+                        createAlert(`El número de teléfono de la sucursal ${idx} debe ser un número fijo válido (10 dígitos con indicativo) o un número celular válido (10 dígitos comenzando con 3).`, 'danger');
+						return false;
+                    }
+                }
+
+                //valida tabla de accionistas
+				const controlRows = document.querySelectorAll('#control-table tbody .control-row');
+				let totalPorc = 0;
+
+				for (let i = 0; i < controlRows.length; i++){
+					const row = controlRows[i];
+					const razSocial = row.querySelector('[name="controlRazonSocial[]"]').value.trim();
+					const idType = row.querySelector('[name="controlIdType[]"]').value.trim();
+					const idNum = row.querySelector('[name="controlIdNum[]"]').value.trim();
+					const porcentaje = parseFloat(row.querySelector('[name="controlPorcentaje[]"]').value.trim() || 0);
+
+					if (!razSocial || !idType || !idNum || isNaN(porcentaje) || porcentaje <= 0){
+                        createAlert(`Por favor complete todos los campos de la fila ${i + 1} en la tabla de accionistas.`, 'danger');
+                        return false;
+					}
+
+                    if (isNaN(porcentaje) || porcentaje < 5){
+                        createAlert(`Porcentaje inválido en la fila ${i + 1}.`, 'danger');
+                        return false;
+					}
+
+					totalPorc += porcentaje;
+                }
+
+                if (totalPorc > 100){
+                    createAlert(`La suma total de los porcentajes de participación es: (${totalPorc.toFixed(2)}%), supera el 100%.
+                    Por favor ajuste los valores antes de guardar.`, 'danger');
+                    return false;
+                }
+
+				return true;
+
+            }
+
             //listener de submit
             document.getElementById('persNatuForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+				if (!validateNaturalForm()) return;
 
 				document.querySelectorAll('#pnNacNum', '#pnExtNum').forEach(i => i.removeAttribute('disabled'));
                 const data = collectFormData_Natural();
@@ -980,12 +1454,59 @@
 
             document.getElementById('persJuriForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+				if (!validateJuridicaForm()) return;
+
+                //si pasa la validacion
 				const pjNit = document.getElementById('pjNIT');
 				if (pjNit) pjNit.removeAttribute('disabled');
                 const data = collectFormData_Juridica();
 				if (pjNit) pjNit.setAttribute('disabled', 'disabled');
                 console.log('payload jurídica', data);
                 sendData(data, isNewDetail ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
+            });
+
+            //muestra el subform al oprimir el input de direccion
+
+            document.addEventListener('focusin', (e) =>{
+                if (e.target.matches('input[id^="pnDiResidencia"], input[id^="pjDirPrincipal"],input[id^="pjDirSucursal_"]')) {
+                    activeDirecform = e.target;
+					document.getElementById('directionStructure').style.display = 'flex';
+                }
+            });
+
+            //boton de cancelar
+			document.getElementById('cancelDirBtn').addEventListener('click', () => {
+				document.getElementById('directionStructure').style.display = 'none';
+				activeDirecform = null;
+            });
+
+            //boton listo (arma la direccion)
+            document.getElementById('saveDirBtn').addEventListener('click', () => {
+				const tipoVia = document.getElementById('tipoVia').value.trim();
+				const vPrincipal = document.getElementById('vPrincipal').value.trim();
+				const sufPrincipal = document.getElementById('sufPrincipal').value.trim();
+				const vSecundaria = document.getElementById('vSecundaria').value.trim();
+				const sufSecundaria = document.getElementById('sufSecundaria').value.trim();
+				const numPlaca = document.getElementById('numPlaca').value.trim();
+				const compleDir = document.getElementById('compleDir').value.trim();
+
+                if (!tipoVia || !vPrincipal || !vSecundaria || !numPlaca){
+					createAlert('Por favor complete los campos obligatorios de la dirección.', 'danger');
+					return;
+                }
+
+                //construye la direccion
+				let direcc = `${tipoVia} ${vPrincipal}${sufPrincipal ? sufPrincipal : ''}  # ${vSecundaria}${sufSecundaria ? sufSecundaria : ''} - ${numPlaca}`;
+                if (compleDir) direcc = ` ${compleDir}`;
+
+                //asigna la direccion al input
+				if (activeDirecform){
+					activeDirecform.value = direcc;
+                }
+
+                //cierre
+				document.getElementById('directionStructure').style.display = 'none';
+				activeDirecform = null;
             });
         });
 	</script>

@@ -411,12 +411,15 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.pnActividad).HasMaxLength(100);
             entity.Property(e => e.pnCelular).HasMaxLength(20);
-            entity.Property(e => e.pnCiudad).HasMaxLength(100);
+            entity.Property(e => e.pnCiuExpDoc).HasMaxLength(100);
+            entity.Property(e => e.pnCiudadNac).HasMaxLength(100);
+            entity.Property(e => e.pnCiudadRes).HasMaxLength(100);
+            entity.Property(e => e.pnDepExpDoc).HasMaxLength(100);
+            entity.Property(e => e.pnDepRes).HasMaxLength(100);
             entity.Property(e => e.pnDiResidencia).HasMaxLength(255);
             entity.Property(e => e.pnEmail).HasMaxLength(100);
+            entity.Property(e => e.pnEstadoNac).HasMaxLength(100);
             entity.Property(e => e.pnExtDoc).HasMaxLength(50);
-            entity.Property(e => e.pnLugExpDoc).HasMaxLength(100);
-            entity.Property(e => e.pnLugNac).HasMaxLength(100);
             entity.Property(e => e.pnManRePub)
                 .HasMaxLength(2)
                 .IsUnicode(false)

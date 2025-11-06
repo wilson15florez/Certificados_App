@@ -18,19 +18,25 @@ public partial class Proveedores_Natural
 
     public string? pnExtDoc { get; set; }
 
-    public DateTime? pnFechaExpDoc { get; set; }
+    public DateOnly? pnFechaExpDoc { get; set; }
 
-    public string? pnLugExpDoc { get; set; }
+    public string? pnDepExpDoc { get; set; }
 
-    public DateTime? pnFechaNac { get; set; }
+    public string? pnCiuExpDoc { get; set; }
 
-    public string? pnLugNac { get; set; }
+    public DateOnly? pnFechaNac { get; set; }
 
     public string? pnNacionalidad { get; set; }
 
+    public string? pnEstadoNac { get; set; }
+
+    public string? pnCiudadNac { get; set; }
+
     public string? pnDiResidencia { get; set; }
 
-    public string? pnCiudad { get; set; }
+    public string? pnDepRes { get; set; }
+
+    public string? pnCiudadRes { get; set; }
 
     public string? pnTelefono { get; set; }
 

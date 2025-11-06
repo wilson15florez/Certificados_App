@@ -113,13 +113,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {"pnRadNac", naturalData.pnNacDoc },
                     {"pnRadExt", naturalData.pnExtDoc },
                     {"pnFechaExpDoc", naturalData.pnFechaExpDoc?.ToString("yyyy-MM-dd") },
-                    {"pnLugExpDoc", naturalData.pnLugExpDoc },
+                    {"pnDepExpDoc", naturalData.pnDepExpDoc },
+                    {"pnCiuExpDoc", naturalData.pnCiuExpDoc },
 
                     {"pnFechaNac", naturalData.pnFechaNac?.ToString("yyyy-MM-dd") },
-                    {"pnLugNac", naturalData.pnLugNac },
+                    {"pnNaDepartNac", naturalData.pnEstadoNac },
+                    {"pnExEstadoNac", naturalData.pnEstadoNac },
+                    {"pnNaCiudadNac", naturalData.pnCiudadNac },
+                    {"pnExCiudadNac", naturalData.pnCiudadNac },
                     {"pnNacionalidad", naturalData.pnNacionalidad },
                     {"pnDiResidencia", naturalData.pnDiResidencia },
-                    {"pnCiudad", naturalData.pnCiudad },
+                    {"pnDepRes", naturalData.pnDepRes },
+                    {"pnCiudadRes", naturalData.pnCiudadRes },
 
                     {"pnTelefono", naturalData.pnTelefono },
                     {"pnCelular", naturalData.pnCelular },
@@ -204,7 +209,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {
                         existingNatural.pnNombreCompl = providerData.pnNombreCompl;
                         existingNatural.pnDiResidencia = providerData.pnDiResidencia;
-                        existingNatural.pnCiudad = providerData.pnCiudad;
+                        existingNatural.pnDepRes = providerData.pnDepRes;
+                        existingNatural.pnCiudadRes = providerData.pnCiudadRes;
                         existingNatural.pnEmail = providerData.pnEmail;
                         existingNatural.pnTelefono = providerData.pnTelefono;
                         existingNatural.pnCelular = providerData.pnCelular;
@@ -213,10 +219,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingNatural.pnNacDoc = providerData.pnNacDoc;
                         existingNatural.pnExtDoc = providerData.pnExtDoc;
                         existingNatural.pnFechaExpDoc = providerData.pnFechaExpDoc;
-                        existingNatural.pnLugExpDoc = providerData.pnLugExpDoc;
+                        existingNatural.pnDepExpDoc = providerData.pnDepExpDoc;
+                        existingNatural.pnCiuExpDoc = providerData.pnCiuExpDoc;
 
                         existingNatural.pnFechaNac = providerData.pnFechaNac;
-                        existingNatural.pnLugNac = providerData.pnLugNac;
+                        existingNatural.pnEstadoNac = providerData.pnEstadoNac;
+                        existingNatural.pnCiudadNac = providerData.pnCiudadNac;
                         existingNatural.pnNacionalidad = providerData.pnNacionalidad;
 
                         existingNatural.pnOficProfe = providerData.pnOficProfe;
