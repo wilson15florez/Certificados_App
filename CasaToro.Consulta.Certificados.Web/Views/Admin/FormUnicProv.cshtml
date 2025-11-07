@@ -466,26 +466,35 @@
 			let activeDirecform = null;
 
 
-            function fillSelect2(select, items, placeholder, valueField = null, textField = null, preselectedValue = '') {
-                const data = [{ id: '', text: placeholder }].concat(
-                    items.map(i => ({
-                        id: valueField ? i[valueField] : i,
-                        text: textField ? i[textField] : i
-                    }))
-                );
+            function fillSelect2(select, data, placeholder, valueField = 'Código', textField = 'Nombre') {
+                const $select = $(select);
 
-                $(select)
-                    .empty()
-                    .select2({
-                        width: '100%',
-                        placeholder: placeholder,
-                        allowClear: true,
-                        data: data
+                //limpia opciones previas
+                $select.empty();
+                
+                //agrega el placeholder
+                $select.append(new Option(placeholder, '', true, false));
+
+                //llena las opciones
+                if (typeof data[0] === 'string'){
+                    data.forEach(item => {
+                        $select.append(new Option(item, item, false, false));
                     });
-
-                if (preselectedValue) {
-                    $(select).val(preselectedValue).trigger('change.select2');
+                }else {
+                    data.forEach(item => {
+                        const value = item[valueField] ?? item.id;
+                        const text = item[textField] ?? item.name;
+                        $select.append(new Option(text, value, false, false));
+                    });
                 }
+
+                //reinicia select2
+                $select.select2({
+                    placeholder,
+                    allowClear: true,
+                    width: '100%',
+                    language: {noResults: () => "No se encontraron resultados"}
+                });
             }
 
             //bloqueo inicial
@@ -543,7 +552,7 @@
                 const ciudadByDep = {};
 
                 data.forEach(item => {
-                    const depto = item["Nombre"].trim();
+                    const depto = (item["Nombre"] || "").trim();
                     const ciud = (item[" Nombre "] || item["Nombre"] || '').trim();
 
                     if (!ciudadByDep[depto]) ciudadByDep[depto] = [];
@@ -575,58 +584,45 @@
                 return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
             }
 
-            function fillSelect2(select, items, placeholder, valueField = null, textField = null){
-                const data = [{ id: '', text: placeholder}].concat(
-                    items.map(i => ({
-                        id: valueField ? i[valueField] : i,
-                        text: textField ? i[textField] : i
-                    }))
-                );
-                $(select).empty().select2({
-                    width: '100%',
-                    placeholder: placeholder,
-                    allowClear: true,
-                    data: data
-                });
-                $(select).val('').trigger('change');
-            }
-
             //lister principal para nacionalidad
             async function ubicacionHandler(){
 
 				//limpia los selects
-                [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes, pnNacionalidad].forEach(sel => {
-                    $(sel).empty().prop('disabled', false);
+                [pnNacionalidad, pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                    $(sel).empty().prop('disabled', true);
                 });
 
                 if (radNacional.checked){
-                    fillSelect2(pnNacionalidad, [{ id: 'CO', text: 'Colombia'}], '-- Seleccione país --', null, null, 'CO');
-                    $(pnNacionalidad).val('CO').trigger('change.select2');
+                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
+                    
+                    const option = new Option('COLOMBIA', 'CO', true,true);
+                    $(pnNacionalidad).append(option).trigger('change.select2');
                     $(pnNacionalidad).prop('disabled', true);
+                    
 
                     const {departamentos, ciudadByDep} = await loadUbiNac();
 
                     //llena los 3 select de departamentos/estados
                     [pnDepartNac,pnDepExpDoc,pnDepRes].forEach(depSelect => {
                         fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                        $(depSelect).prop('disabled', false);
                     });
 
                     //Cascada departamento -> ciudad
                     const handleDeptChange = (depSelect,citySelect) => {
                         $(depSelect).off('change').on('change', function(){
                             const selectedDep = $(this).val();
+
                             const municipios = ciudadByDep[selectedDep] || [];
                             fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
                             $(citySelect).prop('disabled', municipios.length === 0);
-                            if (municipios.length > 0) {
-                                $(citySelect).prop('disabled', false);
-                            }
                         });
                     };
 
                     handleDeptChange(pnDepartNac, pnCiudadNac);
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
+
 
                 }else if (radExtranjero.checked){
                     pnNacionalidad.disabled = false;
@@ -638,12 +634,14 @@
                     const {departamentos, ciudadByDep} = await loadUbiNac();
                     [pnDepExpDoc, pnDepRes].forEach(depSelect => {
                         fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                        $(depSelect).prop('disabled', false);
                     });
                     const handleDeptChange = (depSelect, citySelect) => {
                         $(depSelect).off('change').on('change', function(){
                             const selectedDep = $(this).val();
                             const municipios = ciudadByDep[selectedDep] || [];
                             fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                            $(citySelect).prop('disabled', municipios.length === 0);
                         });
                     };
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
@@ -672,14 +670,23 @@
                         });
                     });
                 }
+                else {
+                    fillSelect2(pnNacionalidad, [], '--Seleccion país--');
+                    [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                        $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
+                    });
+                }
             }
-            //eventos
             radNacional.addEventListener('change', ubicacionHandler);
             radExtranjero.addEventListener('change', ubicacionHandler);
 
-            //carga por defecto como nacional al iniciar
-            radNacional.checked = true;
-            await ubicacionHandler();
+            // Estado inicial: nada seleccionado
+            radNacional.checked = false;
+            radExtranjero.checked = false;
+            fillSelect2(pnNacionalidad, [], '-- Seleccione país --');
+            [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
+            });
 
             //funcion para precargar los datos del formulario
             function loadFormData_Natural(data){
