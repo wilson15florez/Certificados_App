@@ -218,7 +218,7 @@
                 </div>
                 <div class="form-group" id="pnPEP_Entidad_Container" style="display:none;">
 					<label for="pnPEP_Entidad">En caso afirmativo señale la entidad:</label>
-                    <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" />
+                    <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" required/>
                 </div>
 
                 <div class="button-group">
@@ -231,7 +231,7 @@
 				<div class="flex-container">
                     <div class="form-group half-width">
 						<label for="pjRazSocial">Razón Social:</label>
-                        <input type="text" id="pjRazSocial" name="pjRazSocial" />
+                        <input type="text" id="pjRazSocial" name="pjRazSocial" required/>
                     </div>
 					<div class="form-group half-width">
                         <label for="pjNIT">NIT:</label>
@@ -243,20 +243,24 @@
                 <div id="direcPrincipal">
                     <div class="form-group">
 						<label for="pjDirPrincipal">Dirección Oficina Principal:</label>
-                        <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" />
+                        <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" required/>
                     </div>
                     <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label for="pjDepartDirPrincipal">Departamento:</label>
+                            <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
+                        </div>
 						<div class="form-group half-width">
 							<label for="pjCiudadDirPrincipal">Ciudad:</label>
-                            <input type="text" id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" />
+                            <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
                         </div>
                         <div class="form-group half-width">
                             <label for="pjEmailDirPrincipal">E-mail:</label>
-                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" />
+                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" required/>
                         </div>
 						<div class="form-group half-width">
 							<label for="pjTelDirPrincipal">Teléfono:</label>
-                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" />
+                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" required/>
                         </div>
                     </div>
                 </div>
@@ -266,20 +270,24 @@
 						<h4>Dirección sucursal 1</h4>
 						<div class="form-group">
 							<label for="pjDirSucursal_1">Dirección Sucursal:</label>
-                            <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" />
+                            <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" required/>
                         </div>
 						<div class="flex-container">
+                            <div class="form-group half-width">
+                                <label for="pjDepartDirSucursal_1">Departamento:</label>
+                                <select id="pjDepartDirSucursal_1" name="pjDepartDirSucursal_1" class="form-control" required></select>
+                            </div>
 							<div class="form-group half-width">
 								<label for="pjCiudadDirSucursal_1">Ciudad:</label>
-                                <input type="text" id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" />
+                                <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
                             </div>
 							<div class="form-group half-width">
 								<label for="pjEmailDirSucursal_1">E-mail:</label>
-                                <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" />
+                                <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" required/>
                             </div>
 							<div class="form-group half-width">
 								<label for="pjTelDirSucursal_1">Teléfono:</label>
-                                <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" />
+                                <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" required/>
                             </div>
                         </div>
                     </div>
@@ -319,10 +327,249 @@
                 </table>
 				<button id="addControlRowBtn" type="button" class="button-group">Agregar Fila</button>
 
+                <!-- Subform de representante legal-->
+                <h2>Información del Representante Legal</h2>
+                <div class="flex-container">
+                    <div class="form-group half-width">
+                        <label for="pjNomReLeg">Nombre:</label>
+                        <input type="text" id="pjNomReLeg" name="pjNomReLeg" />
+                    </div>
+                </div>
+
+                <div class="form-group flex-container">
+                    <label>Nacionalidad:</label>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="radNacional" name="pjRadNac" value="Nacional" /><label>Nacional</label>
+                        <input type="radio" id="radExtranjero" name="pjRadNac" value="Extranjero" /><label>Extranjero</label>
+                    </div>
+                </div>
+
+                <div id="seccionNacional" style="display:none;">
+                    <h3 class="sub-header">Personas Nacionales</h3>
+                    <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label>Tipo de Documento:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="pjNac-CC" name="pjNacDoc" value="CC" /><label for="pjNac-CC">CC</label>
+                                <input type="radio" id="pjNac-NIT" name="pjNacDoc" value="NIT" /><label for="pjNac-NIT">NIT</label>
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pjNac-Num">N°:</label>
+                            <input type="number" id="pjNacNum" name="pjDocNum" disabled required />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="seccionExtranjera" style="display:none;">
+                    <h3 class="sub-header">Personas Extranjeras</h3>
+                    <div class="flex-container">
+                        <div class="form-group half-width">
+                            <label>Tipo de Documento:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="pjExt-CE" name="pjExtDoc" value="CE" /><label for="pjExt-CE">CE</label>
+                                <input type="radio" id="pjExt-PAS" name="pjExtDoc" value="PAS" /><label for="pjExt-PAS">Pasaporte</label>
+                                <input type="radio" id="pjExt-CAR" name="pjExtDoc" value="CAR" /><label for="pjExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pjExt-Num">N°:</label>
+                            <input type="number" id="pjExtNum" name="pjDocNum" disabled required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-container">
+                    <div class="form-group half-width">
+                        <label for="pjFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
+                        <input type="date" id="pjFechaExpDoc" name="pjFechaExpDoc" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pjDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
+                        <select id="pjDepExpDoc" name="pjDepExpDoc" class="form-control" required></select>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pjCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
+                        <select id="pjCiuExpDoc" name="pjCiuExpDoc" class="form-control" required></select>
+                    </div>
+                </div>
+
+                <div class="flex-container">
+                    <div class="form-group half-width">
+                        <label for="pjFechaNac">Fecha de Nacimiento:</label>
+                        <input type="date" id="pjFechaNac" name="pjFechaNac" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pjNacionalidad">Nacionalidad/Pais:</label>
+                        <select id="pjNacionalidad" name="pjNacionalidad" class="form-control" required></select>
+                    </div>
+                    <div class="form-group half-weidth">
+                        <label for="pjDepartNac">Departamento de nacimiento::</label>
+                        <select id="jnDepartNac" name="pjDepartNac" class="form-control" required></select>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pjCiudadNac">Ciudad de nacimiento:</label>
+                        <select id="pjCiudadNac" name="pjCiudadNac" class="form-control" required></select>
+                    </div>
+                </div>
+
                 <div class="button-group">
                     <button type="submit" id="submitPjBtn">Guardar Persona Jurídica</button>
 				</div>
             </form>
+
+
+            <!--form conocimiento proveedores (tanto para persona natural como juridica)-->
+            <form id="provForm" class="form-section" style="display: none;">
+                <h2>Información Financiera y Tributaria (Persona Natural / Jurídica)</h2>
+                <div class="flex-container">
+                    <div class="form-group half-width">
+                        <label for="pvIngrMens">Ingresos Mensuales $:</label>
+                        <input type="number" id="pvIngrMens" name="pvIngrMens" class="form-control" required/>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pvEgrMens">Egresos Mensuales $:</label>
+                        <input type="number" id="pvEgrMens" name="pvEgrMens" class="form-control" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pvActivos">Activos $:</label>
+                        <input type="number" id="pvActivos" name="pvActivos" class="form-control" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pvPasivos">Pasivos $:</label>
+                        <input type="number" id="pvPasivos" name="pvPasivos" class="form-control" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pvPatrimonio">Patrimonio $:</label>
+                        <input type="number" id="pvPatrimonio" name="pvPatrimonio" class="form-control" required />
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="pvOtrIngr">Otros Ingresos $:</label>
+                        <input type="number" id="pvOtrIngr" name="pvOtrIngr" class="form-control" required />
+                    </div>
+                    <div class="capital-container">
+                        <h3>Origen de capital:</h3>
+                        <div class="form-group half-width">
+                            <label for="pvPorNacional">Porcentaje Nacional (%):</label>
+                            <input type="number" id="pvPorNacional" name="pvPorNacional" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvPorExtranjero">Porcentaje Extranjero (%):</label>
+                            <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" required />
+                        </div>
+						<div class="form-group half-width" style="display:none;">
+                            <label for="pvPorPais">País:</label>
+                            <input type="number" id="pvPorPais" name="pvPorPais" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="infEmpre-container">
+                        <div class="form-group half-width">
+                            <h3>Tipo de Empresa:</h3>
+                            <div class="radio-group">
+								<label for="pvEmPublica">Pública</label><input type="radio" id="pvEmPublica" name="pvEmPublica" value="EmPublica" />
+                                <label for="pvEmPrivada">Privada</label><input type="radio" id="pvEmPrivada" name="pvEmPrivada" value="EmPrivada" />
+                                <label for="pvEmMixta">Mixta</label><input type="radio" id="pvEmMixta" name="pvEmMixta" value="EmMixta" />
+                                <label for="pvEmOtra">Otra</label><input type="radio" id="pvEmOtra" name="pvEmOtra" value="pvEmOtra" />
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvAcEconomica">Actividad Económica:</label>
+                            <input type="text" id="pvAcEconomica" name="pvAcEconomica" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvCodCIIU">Código CIIU:</label>
+                            <input type="number" id="pvCodCIIU" name="pvCodCIIU" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvCapSocReg">Capital social registrado:</label>
+                            <input type="number" id="pvCapSocReg" name="pvCapSocReg" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvFechConst">Fecha de Constitución:</label>
+                            <input type="date" id="pvFechConst" name="pvFechConst" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvFechVen">Fecha Vencimiento:</label>
+                            <input type="date" id="pvFechVen" name="pvFechVen" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="inFinan-container">
+                        <div class="form-group half-width">
+                            <label>Gran Contribuyente:</label>
+                            <div class="radio-group">
+                                <label for="pvGrConSi">Si</label><input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" />
+                                <label for="pvGrConNo">No</label><input type="radio" id="pvGrConNo" name="pvGrCon" value="No" />
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label>Declarante Industria y Comercio:</label>
+                            <div class="radio-group">
+                                <label for="pvDeclIndComSi">Si</label><input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" />
+                                <label for="pvDeclIndComNo">No</label><input type="radio" id="pvDeclIndComNo" name="pvDeclIndCom" value="No" />
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label>Auto Retenedor:</label>
+                            <div class="radio-group">
+                                <label for="pvAutRetSi">Si</label><input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" />
+                                <label for="pvAutRetNo">No</label><input type="radio" id="pvAutRetNo" name="pvAutRet" value="No" />
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvFechResolucion">Fecha y N° de Resolución:</label>
+                            <input type="date" id="pvFechResolucion" name="pvFechResolucion" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvCiuResolucion">Ciudad:</label>
+                            <input type="text" id="pvCiuResolucion" name="pvCiuResolucion" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvNumResolucionDIAN">N° Resolución DIAN:</label>
+                            <input type="text" id="pvNumResolucionDIAN" name="pvNumResolucionDIAN" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="mer_comExt-conteiner">
+                        <div class="form-group half-width">
+                            <label for="pvForPag">Forma de pago de operaciones comercio exterior:</label>
+                            <input type="text" id="pvForPag" name="pvForPag" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvEntBenef">Personas o empresas beneficiarias de operaciones de comercio exterior:</label>
+                            <input type="text" id="pvEntBenef" name="pvEntBenef" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="infCuenPag-container">
+                        <div class="form-group half-width">
+                            <label>Posee cuenta bancaria:</label>
+                            <div class="radio-group">
+                                <label for="pvPosCuBanSi">Si</label><input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" />
+                                <label for="pvPosCuBanNo">No</label><input type="radio" id="pvPosCuBanNo" name="pvPosCuBan" value="No" />
+                            </div>
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvEntidad">Entidad:</label>
+                            <input type="text" id="pvEntidad" name="pvEntidad" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvNumCueBanc">N° de cuenta:</label>
+                            <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control" required />
+                        </div>
+                        <div class="form-group half-width">
+                            <label for="pvClasCueBan">Clase de cuenta:</label>
+                            <select id="pvClasCueBan" name="pvClasCueBan">
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="Ahorros">Ahorros</option>
+                                <option value="Corriente">Corriente</option>
+                            </select>
+                        </div>
+                        <p>
+                            Nota: Nos permitimos informar que aceptamos el pago de todas nuestras facturas a través del sistema automático de pagos, para lo cual
+                            autorizamos nos consignen a la cuenta y entidad bancaria aquí señalada.
+                        </p>
+                    </div>
+                </div>
+            </form>
+
         </section>
 
 
@@ -466,35 +713,43 @@
 			let activeDirecform = null;
 
 
-            function fillSelect2(select, data, placeholder, valueField = 'Código', textField = 'Nombre') {
+            function fillSelect2(select, data, placeholder = '-- Seleccione --', valueField = 'Código', textField = 'Nombre') {
                 const $select = $(select);
 
                 //limpia opciones previas
                 $select.empty();
                 
                 //agrega el placeholder
-                $select.append(new Option(placeholder, '', true, false));
+                $select.append(new Option(placeholder, '', false, false));
 
                 //llena las opciones
-                if (typeof data[0] === 'string'){
+                if (Array.isArray(data) && data.length > 0){
                     data.forEach(item => {
-                        $select.append(new Option(item, item, false, false));
-                    });
-                }else {
-                    data.forEach(item => {
-                        const value = item[valueField] ?? item.id;
-                        const text = item[textField] ?? item.name;
+                        let value, text;
+                        if (typeof item === 'string'){
+                            value = item;
+                            text = item;
+                        } else{
+                            value = item[valueField] ?? item.id ?? '';
+                            text = item[textField] ?? item.name ?? '';
+                        }
                         $select.append(new Option(text, value, false, false));
                     });
                 }
 
-                //reinicia select2
-                $select.select2({
-                    placeholder,
-                    allowClear: true,
-                    width: '100%',
-                    language: {noResults: () => "No se encontraron resultados"}
-                });
+                //inicializa o refresca select2
+                if ($select.data('select2')){
+                    $select.trigger('change.select2')
+                } else {
+                    $select.select2({
+                        placeholder,
+                        allowClear: true,
+                        width: '100%',
+                        language: {noResults: () => "No se encontraron resultados"}
+                    });
+                }
+                //resetear valor seleccionado
+                $select.val('').trigger('change.select2');
             }
 
             //bloqueo inicial
@@ -552,7 +807,7 @@
                 const ciudadByDep = {};
 
                 data.forEach(item => {
-                    const depto = (item["Nombre"] || "").trim();
+                    const depto = (item["Nombre"] || "").trim().toUpperCase();
                     const ciud = (item[" Nombre "] || item["Nombre"] || '').trim();
 
                     if (!ciudadByDep[depto]) ciudadByDep[depto] = [];
@@ -593,28 +848,25 @@
                 });
 
                 if (radNacional.checked){
+                    //pais fijo colombia
                     fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
                     
-                    const option = new Option('COLOMBIA', 'CO', true,true);
-                    $(pnNacionalidad).append(option).trigger('change.select2');
+                    $(pnNacionalidad).val('CO').trigger('change.select2');
                     $(pnNacionalidad).prop('disabled', true);
-                    
 
-                    const {departamentos, ciudadByDep} = await loadUbiNac();
+                    //carga departamentos/ciudades de colombia
+                    const { departamentos, ciudadByDep } = await loadUbiNac();
 
-                    //llena los 3 select de departamentos/estados
-                    [pnDepartNac,pnDepExpDoc,pnDepRes].forEach(depSelect => {
+                    [pnDepartNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
                         fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
                         $(depSelect).prop('disabled', false);
                     });
 
-                    //Cascada departamento -> ciudad
-                    const handleDeptChange = (depSelect,citySelect) => {
-                        $(depSelect).off('change').on('change', function(){
-                            const selectedDep = $(this).val();
-
-                            const municipios = ciudadByDep[selectedDep] || [];
-                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                    const handleDeptChange = (depSelect, citySelect) => {
+                        $(depSelect).off('change.ubi').on('change.ubi', function() {
+                            const dep = ($(this).val() || '' ).trim().toUpperCase();
+                            const municipios = ciudadByDep[dep] || [];
+                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad--');
                             $(citySelect).prop('disabled', municipios.length === 0);
                         });
                     };
@@ -623,32 +875,33 @@
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
-
-                }else if (radExtranjero.checked){
-                    pnNacionalidad.disabled = false;
-
+                }
+                else if (radExtranjero.checked){
+                    $(pnNacionalidad).prop('disabled', false);
                     const countries = await loadUbiExt();
                     fillSelect2(pnNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
 
                     //Departamentos y ciudades colombianas para expedicion y residencia
-                    const {departamentos, ciudadByDep} = await loadUbiNac();
+                    const { departamentos, ciudadByDep } = await loadUbiNac();
                     [pnDepExpDoc, pnDepRes].forEach(depSelect => {
                         fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
                         $(depSelect).prop('disabled', false);
                     });
+
                     const handleDeptChange = (depSelect, citySelect) => {
-                        $(depSelect).off('change').on('change', function(){
-                            const selectedDep = $(this).val();
+                        $(depSelect).off('change.ubi').on('change.ubi', function(){
+                            const selectedDep = ($(this).val() || '').trim().toUpperCase();
                             const municipios = ciudadByDep[selectedDep] || [];
                             fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
                             $(citySelect).prop('disabled', municipios.length === 0);
                         });
                     };
+
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                     //Estados y ciudades para país seleccionado
-                    $(pnNacionalidad).off('change').on('change', async function(){
+                    $(pnNacionalidad).off('change.ubi').on('change.ubi', async function(){
                         const countryId = $(this).val();
                         if (!countryId){
                             fillSelect2(pnDepartNac, [], '-- Seleccione estado --');
@@ -657,12 +910,13 @@
                             $(pnCiudadNac).prop('disabled', true);
                             return;
                         }
+
                         $(pnDepartNac).prop('disabled', false);
-                        $(pnCiudadNac).prop('disabled', false);
 
                         const states = await loadStates(countryId);
                         fillSelect2(pnDepartNac, states, '-- Seleccione estado --', 'id', 'name');
-                        $(pnDepartNac).off('change').on('change', async function(){
+
+                        $(pnDepartNac).off('change.ubi2').on('change.ubi2', async function(){
                             const stateId = $(this).val();
                             const cities = await loadCities(stateId);
                             fillSelect2(pnCiudadNac, cities, '-- Seleccione ciudad --', 'id', 'name');
@@ -673,7 +927,7 @@
                 else {
                     fillSelect2(pnNacionalidad, [], '--Seleccion país--');
                     [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
-                        $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
+                        $(sel).empty().append(new Option('-- Seleccione --', '', false, false)).prop('disabled', true);
                     });
                 }
             }
@@ -689,7 +943,7 @@
             });
 
             //funcion para precargar los datos del formulario
-            function loadFormData_Natural(data){
+            async function loadFormData_Natural(data){
 				const form = document.getElementById('persNatuForm');
 
                 form.querySelectorAll('input,select, textarea').forEach(el => {
@@ -737,6 +991,7 @@
                     }
 
                     selecNacionalidad();
+                    await ubicacionHandler();
 
                     setTimeout(() => {
                         const tipoDocNac = data.pnNacDoc || data.pnRadNac;
