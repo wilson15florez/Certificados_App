@@ -145,6 +145,19 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
    
         }
 
+        public ActionResult PV_FormUnicPro()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
+        }
+
         public IActionResult UpdateProvider([FromBody]ProveedoresMaster provider)
         {
             try

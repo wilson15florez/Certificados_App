@@ -60,8 +60,8 @@
                 <div class="form-group flex-container">
                     <label>Nacionalidad:</label>
                     <div class="form-check form-check-inline">
-						<input type="radio" id="radNacional" name="pnRadNac" value="Nacional" /><label>Nacional</label>
-						<input type="radio" id="radExtranjero" name="pnRadNac" value="Extranjero" /><label>Extranjero</label>
+						<input type="radio" id="pnRadNacional" name="pnRadNac" value="Nacional" /><label>Nacional</label>
+						<input type="radio" id="pnRadExtranjero" name="pnRadNac" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
@@ -339,77 +339,76 @@
                 <div class="form-group flex-container">
                     <label>Nacionalidad:</label>
                     <div class="form-check form-check-inline">
-                        <input type="radio" id="radNacional" name="pjRadNac" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="radExtranjero" name="pjRadNac" value="Extranjero" /><label>Extranjero</label>
+                        <input type="radio" id="pjRLRadNac" name="pjRadNac" value="Nacional" /><label>Nacional</label>
+                        <input type="radio" id="pjRLRadExtr" name="pjRadNac" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
-                <div id="seccionNacional" style="display:none;">
+                <div id="pjRLSeccionNacional" style="display:none;">
                     <h3 class="sub-header">Personas Nacionales</h3>
                     <div class="flex-container">
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjNac-CC" name="pjNacDoc" value="CC" /><label for="pjNac-CC">CC</label>
-                                <input type="radio" id="pjNac-NIT" name="pjNacDoc" value="NIT" /><label for="pjNac-NIT">NIT</label>
+                                <input type="radio" id="pjRLNac-CC" name="pjRLNacDoc" value="CC" /><label for="pjRLNac-CC">CC</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
-                            <label for="pjNac-Num">N°:</label>
-                            <input type="number" id="pjNacNum" name="pjDocNum" disabled required />
+                            <label for="pjRLNacNum">N°:</label>
+                            <input type="number" id="pjRLNacNum" name="pjRLDocNum" required />
                         </div>
                     </div>
                 </div>
 
-                <div id="seccionExtranjera" style="display:none;">
+                <div id="pjRLSeccionExtranjera" style="display:none;">
                     <h3 class="sub-header">Personas Extranjeras</h3>
                     <div class="flex-container">
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjExt-CE" name="pjExtDoc" value="CE" /><label for="pjExt-CE">CE</label>
-                                <input type="radio" id="pjExt-PAS" name="pjExtDoc" value="PAS" /><label for="pjExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pjExt-CAR" name="pjExtDoc" value="CAR" /><label for="pjExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                                <input type="radio" id="pjRLExt-CE" name="pjRLExtDoc" value="CE" /><label for="pjRLExt-CE">CE</label>
+                                <input type="radio" id="pjRLExt-PAS" name="pjRLExtDoc" value="PAS" /><label for="pjRLExt-PAS">Pasaporte</label>
+                                <input type="radio" id="pjRLExt-CAR" name="pjRLExtDoc" value="CAR" /><label for="pjRLExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
-                            <label for="pjExt-Num">N°:</label>
-                            <input type="number" id="pjExtNum" name="pjDocNum" disabled required />
+                            <label for="pjRLExtNum">N°:</label>
+                            <input type="number" id="pjRLExtNum" name="pjRLDocNum" required />
                         </div>
                     </div>
                 </div>
 
                 <div class="flex-container">
                     <div class="form-group half-width">
-                        <label for="pjFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-                        <input type="date" id="pjFechaExpDoc" name="pjFechaExpDoc" required />
+                        <label for="pjRLFechExpDoc">Fecha de Expedición de Documento de Identidad:</label>
+                        <input type="date" id="pjRLFechExpDoc" name="pjRLFechExpDoc" required />
                     </div>
                     <div class="form-group half-width">
-                        <label for="pjDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
-                        <select id="pjDepExpDoc" name="pjDepExpDoc" class="form-control" required></select>
+                        <label for="pjRLDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
+                        <select id="pjRLDepExpDoc" name="pjRLDepExpDoc" class="form-control" required></select>
                     </div>
                     <div class="form-group half-width">
-                        <label for="pjCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
-                        <select id="pjCiuExpDoc" name="pjCiuExpDoc" class="form-control" required></select>
+                        <label for="pjRLCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
+                        <select id="pjRLCiuExpDoc" name="pjRLCiuExpDoc" class="form-control" required></select>
                     </div>
                 </div>
 
                 <div class="flex-container">
                     <div class="form-group half-width">
-                        <label for="pjFechaNac">Fecha de Nacimiento:</label>
-                        <input type="date" id="pjFechaNac" name="pjFechaNac" required />
+                        <label for="pjRLFechaNac">Fecha de Nacimiento:</label>
+                        <input type="date" id="pjRLFechaNac" name="pjRLFechaNac" required />
                     </div>
                     <div class="form-group half-width">
-                        <label for="pjNacionalidad">Nacionalidad/Pais:</label>
-                        <select id="pjNacionalidad" name="pjNacionalidad" class="form-control" required></select>
+                        <label for="pjRLNacionalidad">Nacionalidad/Pais:</label>
+                        <select id="pjRLNacionalidad" name="pjRLNacionalidad" class="form-control" required></select>
                     </div>
                     <div class="form-group half-weidth">
-                        <label for="pjDepartNac">Departamento de nacimiento::</label>
-                        <select id="jnDepartNac" name="pjDepartNac" class="form-control" required></select>
+                        <label for="pjRLDepartNac">Departamento de nacimiento::</label>
+                        <select id="pjRLDepartNac" name="pjRLDepartNac" class="form-control" required></select>
                     </div>
                     <div class="form-group half-width">
-                        <label for="pjCiudadNac">Ciudad de nacimiento:</label>
-                        <select id="pjCiudadNac" name="pjCiudadNac" class="form-control" required></select>
+                        <label for="pjRLCiudadNac">Ciudad de nacimiento:</label>
+                        <select id="pjRLCiudadNac" name="pjRLCiudadNac" class="form-control" required></select>
                     </div>
                 </div>
 
@@ -567,6 +566,12 @@
                             autorizamos nos consignen a la cuenta y entidad bancaria aquí señalada.
                         </p>
                     </div>
+                    <div class="decl_autori-container">
+                        <p id="declAutTrigger" class="interactive-text">
+                            Declaraciones y Autorizaciones. (Hacer click)
+                        </p>
+
+                    </div>
                 </div>
             </form>
 
@@ -624,6 +629,119 @@
         </div>
     </div>
 
+    <!--subform declaraciones y autorizaciones-->
+    <div id="declAutorPanel" class="floating-panel">
+        <div class="DeclAut-content">
+            <h4>Declaraciones y Autorizaciones</h4>
+            <div class="panelField">
+                <p>
+					<b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" />,
+                    de manera voluntaria y bajo la gravedad del juramento afirmo que todo lo aquí consignado es cierto, veraz y verificable, por lo tanto realizo las siguientes declaraciones: 
+                    a) Los recursos de mi propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social) <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" />;
+                    b) Mi actividad, profesión u ocupación y/o de la empresa que represento es lícita y se ejerce dentro del marco legal y los recursos no provienen de actividades ilícitas contempladas en el Código Penal; 
+                    c) Que sus socios, accionistas con participación directa o indirecta igual o superior al 5%, o administradores, empleados o beneficiarios finales no presentan registros negativos en las listas tanto 
+                    nacionales como internacionales de control y prevención del riesgo del lavado de activos y/o financiación del terrorismo, así como tampoco en ninguna base de datos de índole privada o pública relacionada con 
+                    actividades ilícitas asociadas a corrupción y/o soborno transnacional y que pueden ser consultadas para este fin; 
+                    d) En desarrollo del objeto social y/o en la ejecución de mi actividad profesional no incurriré en alguna actividad ilícita de las contempladas en el Código Penal o en cualquier otra norma que modifique o 
+                    adicione y en consecuencia me obligo a responder frente a LA EMPRESA y/o terceros por todos los perjuicios que se llegaren a causar como consecuencia del incumplimiento de estas afirmaciones; 
+                    e) Me obligo a actualizar la información personal, corporativa, societaria, según aplique, así como la información financiera cada vez que haya cambios en la misma y en la medida en que la solicite 
+                    LA EMPRESA, suministrando totalidad de los soportes documentales; 
+                    f) Los bienes y/o recursos que se deriven de la presente relación contractual no serán destinados para la ejecución de actividades delictivas, así como tampoco, para la promoción y/o financiación de grupos 
+                    armados al margen de la ley y en general a personas dedicadas a actividades ilícitas; g) No tiene relación alguna con personas asociadas a actividades delictivas. El incumplimiento de cualquiera de estas 
+                    obligaciones aquí contempladas, faculta a LA EMPRESA para terminar de manera inmediata y unilateral el presente contrato y a que éste, efectué de manera inmediata los pagos adeudados a LA EMPRESA.
+                </p>
+            </div>
+            <div class="panelField">
+                <p>
+					<b>AUTORIZACIÓN PARA EL TRATAMIENTO DE DATOS PERSONALES:</b> Mediante el registro de mis datos personales en el presente formulario, autorizo a (marque con x) para que:<br />
+                    <div class="checkboxAUT-content">
+                        <label for="pvTDPMotMaqSI">SI</label><input type="radio" id="pvTDPMotMaqSI" name="pvTDPMotMaq" value="SI" /> 
+                        <label for="pvTDPMotMaqNO">NO</label><input type="radio" id="pvTDPMotMaqNO" name="pvTDPMotMaq" value="NO" /> 
+                        <p>
+							<b>MOTORES Y MÁQUINAS S.A. BIC - MOTORYSA BIC</b> identificada con NIT 860.019.063-8 ubicada en la dirección
+							Avenida Carrera 68 No. 68B-61 de Bogotá canal de comunicación <b>seguridad_de_datos@moterysa.com</b>,
+							Politica de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
+                        </p>
+                    </div>
+                    <div class="checkboxAUT-content">
+                        <label for="pvTDPCasTorSI">SI</label><input type="radio" id="pvTDPCasTorSI" name="pvTDPCasTor" value="SI" />
+                        <label for="pvTDPCasTorNO">NO</label><input type="radio" id="pvTDPCasTorNO" name="pvTDPCasTor" value="NO" />
+                        <p>
+							<b>CASATORO S.A. BIC</b> identificada con NIT 830.004.993-8 ubicada en la dirección Avenida Boyacá No. 170-97
+							de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>, Politica de Tratamiento de Datos
+							Personales publicada en página web <b>www.casatoro.com</b>.
+                        </p>
+                    </div>
+                    <div class="checkboxAUT-content">
+                        <label for="pvTDPBonapSI">SI</label><input type="radio" id="pvTDPBonapSI" name="pvTDPBonap" value="SI" />
+                        <label for="pvTDPBonapNO">NO</label><input type="radio" id="pvTDPBonapNO" name="pvTDPBonap" value="NO" />
+                        <p>
+							<b>REPUESTOS, ACCESORIOS Y LUBRICANTES BONAPARTE S.A.S. - BONAPARTE RAL</b> identificada con NIT 900.353.939-1
+							ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>,
+							Politica de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
+                        </p>
+                    </div>
+                    <div class="checkboxAUT-content">
+                        <label for="pvTDPBellpiSI">SI</label><input type="radio" id="pvTDPBellpiSI" name="pvTDPBellpi" value="SI" />
+                        <label for="pvTDPBellpiNO">NO</label><input type="radio" id="pvTDPBellpiNO" name="pvTDPBellpi" value="NO" />
+                        <p>
+							<b>BELLPI S.A.S</b> identificada con NIT 901.389.327-1 ubicada en la dirección Calle 170 #67-42 de Bogotá,
+							canal de comunicación <b>seguridaddedatos@bellpi.com</b> Politica de Tratamiento de Datos Personales publicada
+							en página wet <b>www.bellpi.com</b>.
+                        </p>
+                    </div>
+                </p>
+            </div>
+            <div class="panelField">
+                <p>
+                    Guarde, use, almacene, recolecte, transfiera, transmita a nivel nacional, Internacional y realice el tratamiento de mis datos personales, comerciales y financieros recolectados por medio digital o 
+                    escrito con las siguientes finalidades: a) Consultorías, auditorias, asesorías y servicios relacionados; b) Gestión administrativa; c) Gestión de cobros y pagos; d) Gestión de facturación; 
+                    e) Gestión de proveedores, f) Gestión económica y contable; g) Suministrar y transferir información personal, comercial y financiera para que sea conocida y tratada por las personas naturales, 
+                    juridicas y/o accionistas de LA EMPRESA y a sociedades controlantes, controladas, vinculadas, aliadas, o pertenecientes al mismo grupo empresarial y a cualquier aliado comercial; h) realizar el 
+                    tratamiento de datos sensibles como: Huellas dactilares o un cálculo sobre ellas, fotografias, imágenes de video, ubicación espacial, datos de ordenadores, teléfonos y números celulares, VPN, correo 
+                    electrónico, que serán utilizados con fines de autenticación e identificación por medio de la firma electrónica y/o digital con el fin de verificar la autenticidad de la autorización. Dicha 
+                    información será almacenada y utilizada adicionalmente para ofrecer una capa adicional de seguridad. El titular conoce que no está obligado a autorizar el tratamiento de los datos sensibles a menos 
+                    que sea estrictamente necesario para alguno de los fines descritos a requerido por ley, I) Suministrar, transmitir, transferir información personal, comercial y financiera para que sea conocida y 
+                    tratada por las personas naturales o juridicas, filiales, matrices accionistas o vinculados económicos de LA EMPRESA como entidades bancarias, aliados comerciales y/o la Comunidad de la empresa, 
+                    proveedores nacionales o extranjeros, que presten servicios tecnológicos, logisticos y operativos. j) El control y la prevención del fraude; k) Prevención y control de actividades ilicitas incluyendo, 
+                    pero no limitándose al lavado de activos, financiación del terrorismo, soborno transnacional y/o los delitos asociados a corrupción. <br />
+                    Así mismo, declaro que LA EMPRESA me ha informado de manera previa y expresa lo siguiente: i) los datos suministrados en la presente solicitud son recolectados atendiendo las disposiciones legales e
+					instrucciones de las autoridades competentes en materia de protección de datos personales; ii) El responsable del dicho tratamiento es la empresa <b>seleccionada anteriormente</b> según corresponda la vinculación
+					comercial, iii) Que en ciertas situaciones es necesario realizar transferencias Internacionales de mis datos para cumplir con las finalidades del mismo y con las obligaciones contractuales y pos contractuales;
+                    iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles, en consecuencia no he sido obligado a responderias, por lo que <b>SI</b><input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" /> 
+                    <b>NO</b><input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" /> autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes; 
+                    v) los derechos que me asisten como titular de los datos son actualizar, conocer, rectificar, conocer sobre el uso que le darán a mis datos, solicitar prueba de la autorización y/o revocar la misma, los 
+                    cuales puedo ejercer a través de los canales de comunicación informados por LA EMPRESA y en la Politica de Tratamiento de Datos Personales, dirigida al encargado de Protección de Datos Personales.<br />
+					<b>CONFIDENCIALIDAD Y RESERVA:</b> Toda la información no pública que sea entregada por LA EMPRESA y/o por cualquiera de sus sociedades vinculadas será considerada como CONFIDENCIAL Y RESERVADA, por lo tanto,
+					gozará de especial protección, razón por la cual todo acto de divulgación, uso indebido de la información y/o falta de seguridad sobre la misma será considerado como un incumplimiento grave. 
+                    El PROVEEDOR reconoce y acepta expresamente que la violación de confidencialidad generará perjuicios graves a LA EMPRESA.<br />
+
+					<b>ÉTICA EMPRESARIAL:</b><br />
+
+                    Declaro que he recibido la información de:<br />
+
+                    <ul>
+						<li>Politica de Transparencia y Anticorrupción</li>
+						<li>Politica de Prevención y Gestión del Riesgo, de Corrupción y Soborno Trasnacional</li>
+						<li>Politica de Derechos Humanos</li>
+						<li>Politica para la Prevención del Consumo de Alcohol y Sustancias Psicoactivas</li>
+						<li>Sistema de Autocontrol y Gestión del Riesgo Integral de LA/FT/FPADM-SAGRILAFT</li>
+                    </ul><br />
+                    
+                    Que conozco en su totalidad su contenido y por lo tanto entiendo las obligaciones, responsabilidades, deberes y derechos alli contenidos, velando por el cabal cumplimiento de lo dispuesto en las politicas - procedimientos
+                    y por lo tanto me comprometo a seguir sus principios y normas de conducta.
+
+                    Si conoce algún hecho contrario al código de conducta, ética y el programa anticorrupción dirijase al canal ético:<br />
+                    https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379.
+                </p>
+            </div>
+            <div class="panel-actions">
+                <button id="cancelAutBtn" type="button" class="btn btn-secondary">Cancelar</button>
+                <button id="saveAutBtn" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="loader-container" style="
         display: none;
         position: fixed;
@@ -673,9 +791,9 @@
             const controlTableBody = document.querySelector('#control-table tbody');
             const submitPjBtn = document.getElementById('submitPjBtn');
 
-            //elementos de persona nacional o extranjera
-            const radNacional = document.getElementById('radNacional');
-            const radExtranjero = document.getElementById('radExtranjero');
+            //elementos del formulario persona natural
+            const pnRadNacional = document.getElementById('pnRadNacional');
+            const pnRadExtranjero = document.getElementById('pnRadExtranjero');
             const seccionNacional = document.getElementById('seccionNacional');
             const seccionExtranjera = document.getElementById('seccionExtranjera');
             const inputNacNum = document.getElementById('pnNacNum');
@@ -690,8 +808,31 @@
             const pnCiuExpDoc = document.getElementById('pnCiuExpDoc');
             const pnDepRes = document.getElementById('pnDepRes');
             const pnCiudadRes = document.getElementById('pnCiudadRes');
-			const UbiNacional = document.getElementById('UbiNacional');
-			const UbiExtranjero = document.getElementById('UbiExtranjero');
+
+            //elementos del formulario persona juridica
+            const pjDepartDirPrincipal = document.getElementById('pjDepartDirPrincipal');
+            const pjCiudadDirPrincipal = document.getElementById('pjCiudadDirPrincipal');
+
+            const pjRLDepExpDoc = document.getElementById('pjRLDepExpDoc');
+            const pjRLCiuExpDoc = document.getElementById('pjRLCiuExpDoc');
+            const pjRLNacionalidad = document.getElementById('pjRLNacionalidad');
+            const pjRLDepartNac = document.getElementById('pjRLDepartNac');
+            const pjRLCiudadNac = document.getElementById('pjRLCiudadNac');
+
+            const pjRLRadNac = document.getElementById('pjRLRadNac');
+            const pjRLRadExtr = document.getElementById('pjRLRadExtr');
+            const pjRadiosNacDoc = document.querySelectorAll('input[name="pjRLNacDoc"]');
+            const pjRadiosExtDoc = document.querySelectorAll('input[name="pjRLExtDoc"]');
+            const pjInputNacNum = document.getElementById('pjRLNacNum');
+            const pjInputExtNum = document.getElementById('pjRLExtNum');
+            const pjRLSeccionNacional = document.getElementById('pjRLSeccionNacional');
+            const pjRLSeccionExtranjera = document.getElementById('pjRLSeccionExtranjera');
+
+            //panel de declaraciones y autorizaciones
+            const declAutorPanel = document.getElementById('declAutorPanel');
+            const cancelAutBtn = document.getElementById('cancelAutBtn');
+            const saveAutBtn = document.getElementById('saveAutBtn');
+            const declAutTrigger = document.getElementById('declAutTrigger');
 
             //JSON local Colombia
             const colDMJSON = '/data/ubiNacional/ColombiaDepMun.json'
@@ -711,6 +852,7 @@
             let originalPEPTypes = [];
             let originalPEPEntidad = '';
 			let activeDirecform = null;
+            let activeParagraph = null;
 
 
             function fillSelect2(select, data, placeholder = '-- Seleccione --', valueField = 'Código', textField = 'Nombre') {
@@ -765,14 +907,15 @@
                 }
             });
 
-            function selecNacionalidad(){
+            //funcion que identifica tipo de nacionalidad en form persona natural
+            function pnSelecNacionalidad(){
 				const idNumValue = idNumInput.value;
-				if (radNacional.checked){
+                if (pnRadNacional.checked){
 					seccionNacional.style.display = 'block';
 					seccionExtranjera.style.display = 'none';
 					if (inputNacNum) inputNacNum.value = idNumValue;
 					clearRadios(radiosExtDoc);
-				}else if (radExtranjero.checked){
+                }else if (pnRadExtranjero.checked){
                     seccionNacional.style.display = 'none';
 					seccionExtranjera.style.display = 'block';
 					if (inputExtNum) inputExtNum.value = idNumValue;
@@ -784,9 +927,30 @@
 					clearRadios(radiosExtDoc);
                 }
             }
-			if (radNacional) radNacional.addEventListener('change', selecNacionalidad);
-			if (radExtranjero) radExtranjero.addEventListener('change', selecNacionalidad);
-			selecNacionalidad();
+            if (pnRadNacional) pnRadNacional.addEventListener('change', pnSelecNacionalidad);
+            if (pnRadExtranjero) pnRadExtranjero.addEventListener('change', pnSelecNacionalidad);
+            pnSelecNacionalidad();
+
+            //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
+            function pjSelecNacionalidad(){
+                if (pjRLRadNac.checked){
+                    pjRLSeccionNacional.style.display = 'block';
+                    pjRLSeccionExtranjera.style.display = 'none';
+                    clearRadios(pjRadiosExtDoc);
+                }else if (pjRLRadExtr.checked){
+                    pjRLSeccionNacional.style.display = 'none';
+                    pjRLSeccionExtranjera.style.display = 'block';
+                    clearRadios(pjRadiosNacDoc);
+                }else {
+                    pjRLSeccionNacional.style.display = 'none';
+                    pjRLSeccionExtranjera.style.display = 'none';
+                    clearRadios(pjRadiosNacDoc);
+                    clearRadios(pjRadiosExtDoc);
+                }
+            }
+            if (pjRLRadNac) pjRLRadNac.addEventListener('change', pjSelecNacionalidad);
+            if (pjRLRadExtr) pjRLRadExtr.addEventListener('change', pjSelecNacionalidad);
+            pjSelecNacionalidad();
 
             //funcion para crear alertas
             function createAlert(message, type='warning'){
@@ -839,15 +1003,15 @@
                 return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
             }
 
-            //lister principal para nacionalidad
-            async function ubicacionHandler(){
+            //funcion que gestiona los select de ubicacion de persona natural
+            async function ubicPNaHandler(){
 
 				//limpia los selects
                 [pnNacionalidad, pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
                     $(sel).empty().prop('disabled', true);
                 });
 
-                if (radNacional.checked){
+                if (pnRadNacional.checked){
                     //pais fijo colombia
                     fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
                     
@@ -876,7 +1040,7 @@
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                 }
-                else if (radExtranjero.checked){
+                else if (pnRadExtranjero.checked){
                     $(pnNacionalidad).prop('disabled', false);
                     const countries = await loadUbiExt();
                     fillSelect2(pnNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
@@ -931,18 +1095,145 @@
                     });
                 }
             }
-            radNacional.addEventListener('change', ubicacionHandler);
-            radExtranjero.addEventListener('change', ubicacionHandler);
+            pnRadNacional.addEventListener('change', ubicPNaHandler);
+            pnRadExtranjero.addEventListener('change', ubicPNaHandler);
+
+            //funcion que gestiona los select de ubicacion de persona juridica
+            async function ubicPJuHandler(){
+
+                const { departamentos, ciudadByDep } = await loadUbiNac();
+
+                //direccion principal
+                fillSelect2(pjDepartDirPrincipal, departamentos, '-- Seleccione departamento --');
+                $(pjDepartDirPrincipal).prop('disabled', false);
+
+                $(pjDepartDirPrincipal).off('change.ubiPJ').on('change.ubiPJ', function(){
+                    const dep = ($(this).val() || '').trim().toUpperCase();
+                    const municipios = ciudadByDep[dep] || [];
+                    fillSelect2(pjCiudadDirPrincipal, municipios, '-- Seleccione ciudad --');
+                    $(pjCiudadDirPrincipal).prop('disabled', municipios.length === 0);
+                });
+
+                //funcion para crear select dinamico en sucursales
+                window.initSucursalUbic = function (index){
+                    const depSelect = document.getElementById(`pjDepartDirSucursal_${index}`);
+                    const citySelect = document.getElementById(`pjCiudadDirSucursal_${index}`);
+                    if (!depSelect || !citySelect) return;
+
+                    fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                    $(depSelect).prop('disabled', false);
+
+                    $(depSelect).off('change.ubiSUC').on('change.ubiSUC', function(){
+                        const dep = ($(this).val() || '').trim().toUpperCase();
+                        const municipios = ciudadByDep[dep] || [];
+                        fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                        $(citySelect).prop('disabled', municipios.length === 0);
+                    });
+                };
+
+                //representante legal
+                const handleRepLeg = async () => {
+                    // limpiar selects
+                    [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc].forEach(sel => {
+                        $(sel).empty().prop('disabled', true);
+                    });
+
+                    if (pjRLRadNac.checked){
+                        //pais fijo colombia
+                        fillSelect2(pjRLNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
+
+                        $(pjRLNacionalidad).val('CO').trigger('change.select2');
+                        $(pjRLNacionalidad).prop('disabled', true);
+
+                        //carga departamentos/ciudades de colombia
+                        fillSelect2(pjRLDepartNac, departamentos, '-- Seleccione departamento --');
+                        fillSelect2(pjRLDepExpDoc, departamentos, '-- Seleccione departamento --');
+                        $(pjRLDepartNac).prop('disabled', false);
+                        $(pjRLDepExpDoc).prop('disabled', false);
+
+                        const handleDeptChange = (depSelect, citySelect) => {
+                            $(depSelect).off('change.rep').on('change.rep', function() {
+                                const dep = ($(this).val() || '' ).trim().toUpperCase();
+                                const municipios = ciudadByDep[dep] || [];
+                                fillSelect2(citySelect, municipios, '-- Seleccione ciudad--');
+                                $(citySelect).prop('disabled', municipios.length === 0);
+                            });
+                        };
+
+                        handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
+                        handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
+                    }
+                    else if (pjRLRadExtr.checked){
+                        $(pjRLNacionalidad).prop('disabled', false);
+                        const countries = await loadUbiExt();
+                        fillSelect2(pjRLNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
+
+                        //Departamentos y ciudades colombianas para expedicion
+                        const { departamentos, ciudadByDep } = await loadUbiNac();
+                        [pjRLDepExpDoc].forEach(depSelect => {
+                            fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                            $(depSelect).prop('disabled', false);
+                        });
+
+                        const handleDeptChange = (depSelect, citySelect) => {
+                            $(depSelect).off('change.rep').on('change.rep', function(){
+                                const selectedDep = ($(this).val() || '').trim().toUpperCase();
+                                const municipios = ciudadByDep[selectedDep] || [];
+                                fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                                $(citySelect).prop('disabled', municipios.length === 0);
+                            });
+                        };
+
+                        handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
+
+                        //Estados y ciudades para país seleccionado
+                        $(pjRLNacionalidad).off('change.rep').on('change.rep', async function(){
+                            const countryId = $(this).val();
+                            if (!countryId){
+                                fillSelect2(pjRLDepartNac, [], '-- Seleccione estado --');
+                                fillSelect2(pjRLCiudadNac, [], '-- Seleccione ciudad --');
+                                $(pjRLDepartNac).prop('disabled', true);
+                                $(pjRLCiudadNac).prop('disabled', true);
+                                return;
+                            }
+
+                            $(pjRLDepartNac).prop('disabled', false);
+
+                            const states = await loadStates(countryId);
+                            fillSelect2(pjRLDepartNac, states, '-- Seleccione estado --', 'id', 'name');
+
+                            $(pjRLDepartNac).off('change.ubi2').on('change.ubi2', async function(){
+                                const stateId = $(this).val();
+                                const cities = await loadCities(stateId);
+                                fillSelect2(pjRLCiudadNac, cities, '-- Seleccione ciudad --', 'id', 'name');
+                                $(pjRLCiudadNac).prop('disabled', false);
+                            });
+                        });
+                    }
+                    else {
+                        fillSelect2(pjRLNacionalidad, [], '--Seleccion país--');
+                        [pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc].forEach(sel => {
+                            $(sel).empty().append(new Option('-- Seleccione --', '', false, false)).prop('disabled', true);
+                        });
+                    }
+                };
+                pjRLRadNac.addEventListener('change', handleRepLeg);
+                pjRLRadExtr.addEventListener('change', handleRepLeg);
+                handleRepLeg();
+
+                initSucursalUbic(1);
+            }
 
             // Estado inicial: nada seleccionado
-            radNacional.checked = false;
-            radExtranjero.checked = false;
+            pnRadNacional.checked = false;
+            pnRadExtranjero.checked = false;
             fillSelect2(pnNacionalidad, [], '-- Seleccione país --');
             [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
                 $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
             });
+            ubicPJuHandler()
 
-            //funcion para precargar los datos del formulario
+            //funcion para precargar los datos del formulario persona natural
             async function loadFormData_Natural(data){
 				const form = document.getElementById('persNatuForm');
 
@@ -985,13 +1276,13 @@
 
                 if (data.pnTipoNacionalidad) {
                     if (data.pnTipoNacionalidad === 'Nacional') {
-                        document.getElementById('radNacional').checked = true;
+                        document.getElementById('pnRadNacional').checked = true;
                     } else if (data.pnTipoNacionalidad === 'Extranjero') {
-                        document.getElementById('radExtranjero').checked = true;
+                        document.getElementById('pnRadExtranjero').checked = true;
                     }
 
-                    selecNacionalidad();
-                    await ubicacionHandler();
+                    pnSelecNacionalidad();
+                    await ubicPNaHandler();
 
                     setTimeout(() => {
                         const tipoDocNac = data.pnNacDoc || data.pnRadNac;
@@ -1038,6 +1329,7 @@
                 handlePEPChange();
             }
 
+            //funcion para precargar los datos del formulario persona juridica
             function loadFormData_Juridica(data) {
 				const form = document.getElementById('persJuriForm');
 
@@ -1111,6 +1403,7 @@
 
             //funcion para limpiar los radioButtons de nacionalidad
             function clearRadios(radioGroup){
+                if (!radioGroup || !radioGroup.forEach) return;
                 radioGroup.forEach(radio  => radio.checked = false);
             }
 
@@ -1174,6 +1467,7 @@
 
                 persNatuForm.style.display = 'none';
                 persJuriForm.style.display = 'none';
+                provForm.style.display = 'none';
 
                 const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
                 loaderContainer.style.display = 'flex';
@@ -1209,10 +1503,12 @@
 
                         if (personType === 'natural'){
                             persNatuForm.style.display = 'block';
+                            provForm.style.display = 'block';
                             loadFormData_Natural({});
                             loadMasterData(masterData, 'persNatuForm', idNum);
                         }else {
                             persJuriForm.style.display = 'block';
+                            provForm.style.display = 'block'
                             loadFormData_Juridica({});
                             loadMasterData(masterData, 'persJuriForm', idNum);
                         }
@@ -1227,10 +1523,12 @@
 
                         if (personType === 'natural'){
                             persNatuForm.style.display = 'block';
+                            provForm.style.display = 'block'
                             loadFormData_Natural(formData);
                             loadMasterData(null, 'persNatuForm', idNum);
                         }else {
                             persJuriForm.style.display = 'block';
+                            provForm.style.display = 'block'
                             loadFormData_Juridica(formData);
                             loadMasterData(null, 'persJuriForm', idNum);
                         }
@@ -1251,6 +1549,7 @@
 
                 persNatuForm.style.display = 'none';
                 persJuriForm.style.display = 'none';
+                provForm.style.display = 'none';
                 idNumInput.value = '';
 
                 idSection.style.display = 'flex';
@@ -1305,9 +1604,13 @@
                     </div>
                     <div class="flex-container">
                         <div class="form-group half-width">
-                            <label for="pjCiudadDirSucursal_${newIndex}">Ciudad:</label>
-                            <input type="text" id="pjCiudadDirSucursal_${newIndex}" />
-                        </div>
+                                <label for="pjDepartDirSucursal_${newIndex}">Departamento:</label>
+                                <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="pjCiudadDirSucursal_${newIndex}">Ciudad:</label>
+                                <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
+                            </div>
                         <div class="form-group half-width">
                             <label for="pjEmailDirSucursal_${newIndex}">E-mail:</label>
                             <input type="email" id="pjEmailDirSucursal_${newIndex}" />
@@ -1317,10 +1620,11 @@
                             <input type="text" id="pjTelDirSucursal_${newIndex}" />
                         </div>
                     </div>
-                    <button type="button" class="remove-sucursal-btn button-group">Eliminar Sucursal</button>
+                    <button type="button" class="remove-sucursal-btn button-group">Remover Sucursal</button>
                 `;
 
                 sucursalesContainer.appendChild(newSucursalDiv);
+                initSucursalUbic(newIndex);
                 if (newIndex === 3) {
                     sucursalLimitMsg.style.display = 'block';
                 }
@@ -1440,8 +1744,8 @@
 					data[rname] = checked ? checked.value : null;
                 });
 
-				if (document.getElementById('radNacional')?.checked) data.pnTipoNacionalidad = "Nacional";
-                else if (document.getElementById('radExtranjero')?.checked) data.pnTipoNacionalidad = "Extranjero";
+                if (document.getElementById('pnRadNacional')?.checked) data.pnTipoNacionalidad = "Nacional";
+                else if (document.getElementById('pnRadExtranjero')?.checked) data.pnTipoNacionalidad = "Extranjero";
 				else data.pnTipoNacionalidad = null;
 
 				const pnNacNum = document.getElementById('pnNacNum');
@@ -1505,8 +1809,8 @@
 				alertContainer.innerHTML = '';
 
                 //verifica que sea nacional o extranjero
-				const isNacional = document.getElementById('radNacional')?.checked;
-				const isExtranjero = document.getElementById('radExtranjero')?.checked;
+                const isNacional = document.getElementById('pnRadNacional')?.checked;
+                const isExtranjero = document.getElementById('pnRadExtranjero')?.checked;
 				if (!isNacional && !isExtranjero){
 					createAlert('Por favor seleccione si es Nacional o Extranjero.', 'danger');
 					return false;
@@ -1736,7 +2040,7 @@
                 }
             });
 
-            //boton de cancelar
+            //boton de cancelar form direccion
 			document.getElementById('cancelDirBtn').addEventListener('click', () => {
 				document.getElementById('directionStructure').style.display = 'none';
 				activeDirecform = null;
@@ -1770,6 +2074,32 @@
 				document.getElementById('directionStructure').style.display = 'none';
 				activeDirecform = null;
             });
+
+            //abre las declaraciones y autorizaciones
+            declAutTrigger.addEventListener('click', () => {
+                declAutorPanel.style.display = 'flex';
+                activeParagraph = declAutTrigger;
+            });
+
+            //boton cancelar autorizacion
+            cancelAutBtn.addEventListener('click', () => {
+                declAutorPanel.style.display = 'none';
+                activeParagraph = null;
+            });
+
+            //boton guardar autorizacion
+            saveAutBtn.addEventListener('click', () => {
+                const pvDeAuRepresentacion = document.getElementById('pvDeAuRepresentacion').value.trim();
+                const pvFuenteRecur = document.getElementById('pvFuenteRecur').value.trim();
+                const pvTDPMotMaq = document.getElementById('input[name="pvTDPMotMaq"]');
+                const pvTDPCasTor = document.getElementById('input[name="pvTDPCasTor"]');
+                const pvTDPBonap = document.getElementById('input[name="pvTDPBonap"]');
+                const pvTDPBellpi = document.getElementById('input[name="pvTDPBellpi"]');
+                const pvRadAut = document.getElementById('input[name="pvRadAut"]');
+
+                declAutorPanel.style.display = 'none';
+                activeParagraph = null;
+            })
         });
 	</script>
     

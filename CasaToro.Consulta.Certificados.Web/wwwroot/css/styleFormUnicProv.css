@@ -23,17 +23,78 @@
     margin-bottom: 10px;
 }
 
-    .structure-field label {
-        display: block;
-        font-weight: 500;
-    }
+.structure-field label {
+    display: block;
+    font-weight: 500;
+ }
 
-    .structure-field input, .structure-field select {
-        width: 100%;
-        padding: 5px;
-    }
+.structure-field input, .structure-field select {
+    width: 100%;
+    padding: 5px;
+}
 
 .structure-actions {
     display: flex;
     justify-content: space-between;
+}
+
+/* --- Panel general estilo modal (fondo oscuro) --- */
+#declAutorPanel {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* fondo semi oscuro */
+    justify-content: center;
+    align-items: center;
+}
+
+    /* --- Contenido del panel --- */
+    #declAutorPanel .DeclAut-content {
+        background: #fff;
+        border-radius: 10px;
+        padding: 25px 30px;
+        width: 70%;
+        max-width: 900px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        font-size: 15px;
+    }
+
+    /* --- Estructura interna --- */
+    #declAutorPanel h4 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    #declAutorPanel .panelField p {
+        text-align: justify;
+    }
+
+    #declAutorPanel .panel-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    #declAutorPanel .btn {
+        border-radius: 6px;
+        padding: 8px 15px;
+    }
+
+
+.interactive-text {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.interactive-text:hover {
+    color: #0056b3;
 }
