@@ -40,6 +40,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; }
 
+    public virtual DbSet<Proveedores_FUCP> Proveedores_FUCP { get; set; }
+
     public virtual DbSet<Proveedores_Juridica> Proveedores_Juridica { get; set; }
 
     public virtual DbSet<Proveedores_Natural> Proveedores_Natural { get; set; }
@@ -381,19 +383,100 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.razonSocial).HasMaxLength(255);
 
             entity.HasOne(d => d.NitProveedorNavigation).WithMany(p => p.AccionistasControlPJuridica)
+                .HasPrincipalKey(p => p.Nit)
                 .HasForeignKey(d => d.NitProveedor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Accionistas_PJ");
+                .HasConstraintName("FK_Nit_Proveedores_Juridica");
+        });
+
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        modelBuilder.Entity<Proveedores_FUCP>(entity =>
+        {
+            entity.HasKey(e => e.Id_ProFUCP);
+
+            entity.Property(e => e.DeclaIndCom)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.GranContrib)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.Nit).HasMaxLength(20);
+            entity.Property(e => e.actEconomica).HasMaxLength(255);
+            entity.Property(e => e.activos).HasMaxLength(50);
+            entity.Property(e => e.autReten)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_TraDatos)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_bellpi)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_bonaparte)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_casatoro)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_fuentRecurs).HasMaxLength(255);
+            entity.Property(e => e.aut_motorysa)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.aut_representacion).HasMaxLength(255);
+            entity.Property(e => e.capSoRegis).HasMaxLength(255);
+            entity.Property(e => e.ciudad).HasMaxLength(100);
+            entity.Property(e => e.clasCuenta).HasMaxLength(50);
+            entity.Property(e => e.egreMensuales).HasMaxLength(50);
+            entity.Property(e => e.entidad).HasMaxLength(255);
+            entity.Property(e => e.fechNumResol).HasMaxLength(100);
+            entity.Property(e => e.formPagComExt).HasMaxLength(255);
+            entity.Property(e => e.ingrMensuales).HasMaxLength(50);
+            entity.Property(e => e.numCuenta).HasMaxLength(50);
+            entity.Property(e => e.numResulDIAN).HasMaxLength(100);
+            entity.Property(e => e.ocExtranjero).HasMaxLength(3);
+            entity.Property(e => e.ocNacional).HasMaxLength(3);
+            entity.Property(e => e.ocPaisExtr).HasMaxLength(100);
+            entity.Property(e => e.otrosIngre).HasMaxLength(50);
+            entity.Property(e => e.pasivos).HasMaxLength(50);
+            entity.Property(e => e.patrimonio).HasMaxLength(50);
+            entity.Property(e => e.persEmprBenef).HasMaxLength(255);
+            entity.Property(e => e.posCuenBanc)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.tipEmpresa).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Proveedores_Juridica>(entity =>
         {
-            entity.HasKey(e => e.Nit).HasName("PK__Proveedo__C7D1D6DBA7B907E9");
+            entity.HasKey(e => e.Id_ProJuri);
+
+            entity.HasIndex(e => e.Nit, "UQ_Proveedores_Juridica_Nit").IsUnique();
 
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.pjCiudadDirPrincipal).HasMaxLength(100);
+            entity.Property(e => e.pjDepartDirPrincipal).HasMaxLength(100);
             entity.Property(e => e.pjDirPrincipal).HasMaxLength(255);
             entity.Property(e => e.pjEmailDirPrincipal).HasMaxLength(100);
+            entity.Property(e => e.pjNomReLeg).HasMaxLength(255);
+            entity.Property(e => e.pjRLCiuExpDoc).HasMaxLength(100);
+            entity.Property(e => e.pjRLCiudadNac).HasMaxLength(100);
+            entity.Property(e => e.pjRLDepExpDoc).HasMaxLength(100);
+            entity.Property(e => e.pjRLDepartNac).HasMaxLength(100);
+            entity.Property(e => e.pjRLDocNum).HasMaxLength(20);
+            entity.Property(e => e.pjRLNacionalidad).HasMaxLength(100);
+            entity.Property(e => e.pjRLRadExtr).HasMaxLength(50);
+            entity.Property(e => e.pjRLRadNac).HasMaxLength(50);
+            entity.Property(e => e.pjRLTipNacionalidad).HasMaxLength(50);
             entity.Property(e => e.pjRazSocial).HasMaxLength(255);
             entity.Property(e => e.pjTelDirPrincipal).HasMaxLength(20);
         });
@@ -446,15 +529,17 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.Id_SucJuri);
 
             entity.Property(e => e.Ciudad).HasMaxLength(100);
+            entity.Property(e => e.Departamento).HasMaxLength(100);
             entity.Property(e => e.Direccion).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.NitProveedor).HasMaxLength(20);
             entity.Property(e => e.Telefono).HasMaxLength(20);
 
             entity.HasOne(d => d.NitProveedorNavigation).WithMany(p => p.Sucursales_PJuridica)
+                .HasPrincipalKey(p => p.Nit)
                 .HasForeignKey(d => d.NitProveedor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Sucursal_PJ");
+                .HasConstraintName("FK_Nit_SJ_Proveedores_Juridica");
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");

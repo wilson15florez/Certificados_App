@@ -46,7 +46,7 @@
             </div>
 
             <div id="alertContainer"></div>
-
+            <!-- form de persona natural-->
             <form id="persNatuForm" class="form-section" style="display:none;">
 
                 <h2>Persona Natural</h2>
@@ -60,8 +60,8 @@
                 <div class="form-group flex-container">
                     <label>Nacionalidad:</label>
                     <div class="form-check form-check-inline">
-						<input type="radio" id="pnRadNacional" name="pnRadNac" value="Nacional" /><label>Nacional</label>
-						<input type="radio" id="pnRadExtranjero" name="pnRadNac" value="Extranjero" /><label>Extranjero</label>
+                        <input type="radio" id="pnRadNacional" name="pnTipoNacionalidad" value="Nacional" /><label>Nacional</label>
+                        <input type="radio" id="pnRadExtranjero" name="pnTipoNacionalidad" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@
 				<div class="flex-container">
                     <div class="form-group half-weidth">
                         <label for="pnDepartNac">Departamento de nacimiento::</label>
-                        <select id="pnDepartNac" name="pnDepartNac" class="form-control" required></select>
+                        <select id="pnDepartNac" name="pnEstadoNac" class="form-control" required></select>
                     </div>
                     <div class="form-group half-width">
                         <label for="pnCiudadNac">Ciudad de nacimiento:</label>
@@ -225,7 +225,7 @@
                     <button type="submit" id="submitPnBtn">Guardar Persona Natural</button>
                 </div>
             </form>
-
+            <!-- form de persona juridica-->
             <form id="persJuriForm" class="form-section" style="display:none;">
 				<h2>Persona Jurídica</h2>
 				<div class="flex-container">
@@ -339,8 +339,8 @@
                 <div class="form-group flex-container">
                     <label>Nacionalidad:</label>
                     <div class="form-check form-check-inline">
-                        <input type="radio" id="pjRLRadNac" name="pjRadNac" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="pjRLRadExtr" name="pjRadNac" value="Extranjero" /><label>Extranjero</label>
+                        <input type="radio" id="pjRLRadNacional" name="pjRLTipNacionalidad" value="Nacional" /><label>Nacional</label>
+                        <input type="radio" id="pjRLRadExtranjero" name="pjRLTipNacionalidad" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
@@ -350,12 +350,12 @@
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjRLNac-CC" name="pjRLNacDoc" value="CC" /><label for="pjRLNac-CC">CC</label>
+                                <input type="radio" id="pjRLNac-CC" name="pjRLRadNac" value="CC" /><label for="pjRLNac-CC">CC</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
                             <label for="pjRLNacNum">N°:</label>
-                            <input type="number" id="pjRLNacNum" name="pjRLDocNum" required />
+                            <input type="number" id="pjRLNacNum" name="pjRLNacNum" required />
                         </div>
                     </div>
                 </div>
@@ -366,14 +366,14 @@
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjRLExt-CE" name="pjRLExtDoc" value="CE" /><label for="pjRLExt-CE">CE</label>
-                                <input type="radio" id="pjRLExt-PAS" name="pjRLExtDoc" value="PAS" /><label for="pjRLExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pjRLExt-CAR" name="pjRLExtDoc" value="CAR" /><label for="pjRLExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                                <input type="radio" id="pjRLExt-CE" name="pjRLRadExtr" value="CE" /><label for="pjRLExt-CE">CE</label>
+                                <input type="radio" id="pjRLExt-PAS" name="pjRLRadExtr" value="PAS" /><label for="pjRLExt-PAS">Pasaporte</label>
+                                <input type="radio" id="pjRLExt-CAR" name="pjRLRadExtr" value="CAR" /><label for="pjRLExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
                             <label for="pjRLExtNum">N°:</label>
-                            <input type="number" id="pjRLExtNum" name="pjRLDocNum" required />
+                            <input type="number" id="pjRLExtNum" name="pjRLExtNum" />
                         </div>
                     </div>
                 </div>
@@ -520,11 +520,11 @@
                         </div>
                         <div class="form-group half-width">
                             <label for="pvCiuResolucion">Ciudad:</label>
-                            <input type="text" id="pvCiuResolucion" name="pvCiuResolucion" class="form-control" required />
+                            <select id="pvCiuResolucion" name="pvCiuResolucion" class="form-control" required></select>
                         </div>
                         <div class="form-group half-width">
                             <label for="pvNumResolucionDIAN">N° Resolución DIAN:</label>
-                            <input type="text" id="pvNumResolucionDIAN" name="pvNumResolucionDIAN" class="form-control" required />
+                            <input type="number" id="pvNumResolucionDIAN" name="pvNumResolucionDIAN" class="form-control" required />
                         </div>
                     </div>
                     <div class="mer_comExt-conteiner">
@@ -772,6 +772,7 @@
             const idSection = document.getElementById('idSection');
             const persNatuForm = document.getElementById('persNatuForm');
             const persJuriForm = document.getElementById('persJuriForm');
+            const provForm = document.getElementById('provForm');
 			const loaderContainer = document.getElementById('loader-container');
 
             //elementos del formulario de persona natural para PEP
@@ -819,8 +820,8 @@
             const pjRLDepartNac = document.getElementById('pjRLDepartNac');
             const pjRLCiudadNac = document.getElementById('pjRLCiudadNac');
 
-            const pjRLRadNac = document.getElementById('pjRLRadNac');
-            const pjRLRadExtr = document.getElementById('pjRLRadExtr');
+            const pjRLRadNacional = document.getElementById('pjRLRadNacional');
+            const pjRLRadExtranjero = document.getElementById('pjRLRadExtranjero');
             const pjRadiosNacDoc = document.querySelectorAll('input[name="pjRLNacDoc"]');
             const pjRadiosExtDoc = document.querySelectorAll('input[name="pjRLExtDoc"]');
             const pjInputNacNum = document.getElementById('pjRLNacNum');
@@ -933,14 +934,22 @@
 
             //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
             function pjSelecNacionalidad(){
-                if (pjRLRadNac.checked){
+                if (pjRLRadNacional.checked){
                     pjRLSeccionNacional.style.display = 'block';
                     pjRLSeccionExtranjera.style.display = 'none';
                     clearRadios(pjRadiosExtDoc);
-                }else if (pjRLRadExtr.checked){
+                    pjInputExtNum.value = '';
+                    pjInputNacNum.required = true;
+                    pjInputExtNum.required = false;
+
+                }else if (pjRLRadExtranjero.checked){
                     pjRLSeccionNacional.style.display = 'none';
                     pjRLSeccionExtranjera.style.display = 'block';
                     clearRadios(pjRadiosNacDoc);
+                    pjInputNacNum.value = '';
+                    pjInputExtNum.required = true;
+                    pjInputNacNum.required = false;
+
                 }else {
                     pjRLSeccionNacional.style.display = 'none';
                     pjRLSeccionExtranjera.style.display = 'none';
@@ -948,8 +957,8 @@
                     clearRadios(pjRadiosExtDoc);
                 }
             }
-            if (pjRLRadNac) pjRLRadNac.addEventListener('change', pjSelecNacionalidad);
-            if (pjRLRadExtr) pjRLRadExtr.addEventListener('change', pjSelecNacionalidad);
+            if (pjRLRadNacional) pjRLRadNacional.addEventListener('change', pjSelecNacionalidad);
+            if (pjRLRadExtranjero) pjRLRadExtranjero.addEventListener('change', pjSelecNacionalidad);
             pjSelecNacionalidad();
 
             //funcion para crear alertas
@@ -1138,7 +1147,7 @@
                         $(sel).empty().prop('disabled', true);
                     });
 
-                    if (pjRLRadNac.checked){
+                    if (pjRLRadNacional.checked){
                         //pais fijo colombia
                         fillSelect2(pjRLNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
 
@@ -1163,7 +1172,7 @@
                         handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
                         handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
                     }
-                    else if (pjRLRadExtr.checked){
+                    else if (pjRLRadExtranjero.checked){
                         $(pjRLNacionalidad).prop('disabled', false);
                         const countries = await loadUbiExt();
                         fillSelect2(pjRLNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
@@ -1217,8 +1226,8 @@
                         });
                     }
                 };
-                pjRLRadNac.addEventListener('change', handleRepLeg);
-                pjRLRadExtr.addEventListener('change', handleRepLeg);
+                pjRLRadNacional.addEventListener('change', handleRepLeg);
+                pjRLRadExtranjero.addEventListener('change', handleRepLeg);
                 handleRepLeg();
 
                 initSucursalUbic(1);
@@ -1738,26 +1747,20 @@
 						data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
 					});
 
-				const radioGroups = ['pnRadNac','pnNacDoc', 'pnExtDoc', 'pnReconoPublic', 'pnManRePub', 'pnPEP'];
+                const radioGroups = ['pnTipoNacionalidad','pnNacDoc', 'pnExtDoc', 'pnReconoPublic', 'pnManRePub', 'pnPEP'];
                 radioGroups.forEach(rname =>{
 					const checked = form.querySelector(`input[name="${rname}"]:checked`);
 					data[rname] = checked ? checked.value : null;
                 });
 
-                if (document.getElementById('pnRadNacional')?.checked) data.pnTipoNacionalidad = "Nacional";
-                else if (document.getElementById('pnRadExtranjero')?.checked) data.pnTipoNacionalidad = "Extranjero";
-				else data.pnTipoNacionalidad = null;
-
-				const pnNacNum = document.getElementById('pnNacNum');
-				const pnExtNum = document.getElementById('pnExtNum');
-				if (pnNacNum && !pnNacNum.disabled && pnNacNum.value.trim() !== "") data.pnDocNum = pnNacNum.value.trim();
-				else if (pnExtNum && !pnExtNum.disabled && pnExtNum.value.trim() !== "") data.pnDocNum = pnExtNum.value.trim();
+                if (inputNacNum && !inputNacNum.disabled && inputNacNum.value.trim() !== "") data.pnDocNum = inputNacNum.value.trim();
+                else if (inputExtNum && !inputExtNum.disabled && inputExtNum.value.trim() !== "") data.pnDocNum = inputExtNum.value.trim();
 				else data.pnDocNum = null;
 
 				data.Nit = document.getElementById('idNum').value;
 
-				data.pnNacNum = data['pnNacNum'] || null;
-				data.pnExtNum = data['pnExtNum'] || null;
+                data.inputNacNum = data['pnNacNum'] || null;
+                data.inputExtNum = data['pnExtNum'] || null;
 
 				const selectedPEPTypes = Array.from(form.querySelectorAll('input[name="pnPEPType"]:checked'))
 											  .map(chk => parseInt(chk.value));
@@ -1775,15 +1778,30 @@
 				const form = document.getElementById('persJuriForm');
                 const data = {};
 
-                form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], select, textarea')
+                form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea')
 					.forEach(el => {
-						if (el.name) data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
+						if (!el.name) return;
+                        data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
 					});
+
+                const radioGroups = ['pjRLTipNacionalidad','pjRLRadNac', 'pjRLRadExtr'];
+                radioGroups.forEach(rname =>{
+                    const checked = form.querySelector(`input[name="${rname}"]:checked`);
+                    data[rname] = checked ? checked.value : null;
+                });
+
+                if (pjInputNacNum && !pjInputNacNum.disabled && pjInputNacNum.value.trim() !== "") data.pjRLDocNum = pjInputNacNum.value.trim();
+                else if (pjInputExtNum && !pjInputExtNum.disabled && pjInputExtNum.value.trim() !== "") data.pjRLDocNum = pjInputExtNum.value.trim();
+                else data.pjRLDocNum = null;
+
+                data.pjInputNacNum = data['pjRLNacNum'] || null;
+                data.pjInputExtNum = data['pjRLExtNum'] || null;
 
                 data.Sucursales_PJuridica = Array.from(document.querySelectorAll('#sucursales-container .sucursal-item')).map((s, idx) => {
 					const i = idx + 1;
                     return{
 						Direccion: document.getElementById(`pjDirSucursal_${i}`)?.value || '',
+                        Departamento: document.getElementById(`pjDepartDirSucursal_${i}`)?.value || '',
 						Ciudad: document.getElementById(`pjCiudadDirSucursal_${i}`)?.value || '',
 						Email: document.getElementById(`pjEmailDirSucursal_${i}`)?.value || '',
 						Telefono: document.getElementById(`pjTelDirSucursal_${i}`)?.value || ''
@@ -1803,7 +1821,7 @@
 				return data;
             }
 
-            //Validacion de campos de los forms
+            //Validacion de campos del form Persona natural
             function validateNaturalForm(){
 				const form = document.getElementById('persNatuForm');
 				alertContainer.innerHTML = '';
@@ -1827,10 +1845,10 @@
 
                 //verifica que los demas campos esten diligenciados
                 const requiredFields = [
-					'pnNombreCompl','pnFechaExpDoc','pnDepExpDoc',
-                    'pnFechaNac','pnNacionalidad','pnLugNac',
-                    'pnDiResidencia','pnCiudadRes','pnEmail',
-                    'pnOficProfe','pnActividad'
+                    'pnNombreCompl', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc',
+                    'pnFechaNac', 'pnNacionalidad', 'pnDepartNac', 'pnCiudadNac',
+                    'pnDiResidencia', 'pnDepRes', 'pnCiudadRes',
+                    'pnEmail', 'pnOficProfe', 'pnActividad'
                 ];
 
 				for (const id of requiredFields){
@@ -1912,13 +1930,14 @@
                 return true;
 			}
 
+            //validacion de campos del form persona juridica
             function validateJuridicaForm(){
 				const form = document.getElementById('persJuriForm');
                 alertContainer.innerHTML = '';
 
 				//verifica que los demas campos esten diligenciados
                 const requiredFields = [
-                    'pjRazSocial','pjDirPrincipal','pjCiudadDirPrincipal',
+                    'pjRazSocial','pjDirPrincipal', 'pjDepartDirPrincipal','pjCiudadDirPrincipal',
 					'pjEmailDirPrincipal','pjTelDirPrincipal'
                 ];
 
@@ -1952,11 +1971,12 @@
 				for (let i = 0; i < sucursales.length; i++){
 					const idx = i + 1;
 					const dir = document.getElementById(`pjDirSucursal_${idx}`).value.trim();
+                    const dep = document.getElementById(`pjDepartDirSucursal_${idx}`).value.trim();
 					const ciudad = document.getElementById(`pjCiudadDirSucursal_${idx}`).value.trim();
 					const email = document.getElementById(`pjEmailDirSucursal_${idx}`).value.trim();
 					const tel = document.getElementById(`pjTelDirSucursal_${idx}`).value.trim();
 
-					if (!dir || !ciudad || !email || !tel){
+					if (!dir || !dep || !ciudad || !email || !tel){
 						createAlert(`Por favor complete todos los campos de la sucursal ${idx}.`, 'danger');
                         return false;
                     }
@@ -2002,9 +2022,71 @@
                     return false;
                 }
 
+                //valida representante legal
+                const pjRLNombre = document.getElementById('pjNomReLeg').value.trim();
+                if (!pjRLNombre){
+                    createAlert('Debe diligenciar el nombre del representante legal.', 'danger');
+                    return false;
+                }
+
+                const tipoNacionalidad = form.querySelector('input[name="pjRLTipNacionalidad"]:checked');
+                if (!tipoNacionalidad) {
+                    createAlert('Seleccione si el representante legal es Nacional o Extranjero.', 'danger');
+                    return false;
+                }
+
+                const isNacional = tipoNacionalidad.value === 'Nacional';
+                const isExtranjero = tipoNacionalidad.value === 'Extranjero';
+
+                //tipo y numero
+                let docNum = null;
+                if (isNacional) {
+                    const tipoDoc = form.querySelector('input[name="pjRLRadNac"]:checked');
+                    const num = document.getElementById('pjRLNacNum').value.trim();
+                    if(!tipoDoc){
+                        createAlert('Seleccione el tipo de documento del representante legal.', 'danger');
+                        return false;
+                    }
+                    if(!num){
+                        createAlert('Ingrese el numero de documento del representante legal.', 'danger');
+                        return false;
+                    }
+                    docNum = num;
+                } else if(isExtranjero){
+                    const tipoDoc = form.querySelector('input[name="pjRLRadExtr"]:checked');
+                    const num = document.getElementById('pjRLExtNum').value.trim();
+                    if (!tipoDoc) {
+                        createAlert('Seleccione el tipo de documento del representante legal extranjero.', 'danger');
+                        return false;
+                    }
+                    if (!num) {
+                        createAlert('Ingrese el número de documento del representante legal extranjero.', 'danger');
+                        return false;
+                    }
+                    docNum = num;
+                }
+
+                //fechas
+                const fechExp = document.getElementById('pjRLFechExpDoc').value.trim();
+                const fechNac = document.getElementById('pjRLFechaNac').value.trim();
+                if(!fechExp){
+                    createAlert('Ingrese la fecha de expedicion del documento de identidad del representante legal.', 'danger');
+                    return false;
+                }
+                if(!fechNac){
+                    createAlert('Ingrese la fecha de nacimiento del representante legal.', 'danger');
+                    return false;
+                }
+
+                //lugar de expedicion
+
+
 				return true;
 
             }
+
+            //validacion de campos del form formato unico
+            
 
             //listener de submit
             document.getElementById('persNatuForm').addEventListener('submit', function(e) {
@@ -2032,7 +2114,6 @@
             });
 
             //muestra el subform al oprimir el input de direccion
-
             document.addEventListener('focusin', (e) =>{
                 if (e.target.matches('input[id^="pnDiResidencia"], input[id^="pjDirPrincipal"],input[id^="pjDirSucursal_"]')) {
                     activeDirecform = e.target;

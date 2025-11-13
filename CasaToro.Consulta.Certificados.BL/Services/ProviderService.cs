@@ -117,10 +117,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {"pnCiuExpDoc", naturalData.pnCiuExpDoc },
 
                     {"pnFechaNac", naturalData.pnFechaNac?.ToString("yyyy-MM-dd") },
-                    {"pnNaDepartNac", naturalData.pnEstadoNac },
-                    {"pnExEstadoNac", naturalData.pnEstadoNac },
-                    {"pnNaCiudadNac", naturalData.pnCiudadNac },
-                    {"pnExCiudadNac", naturalData.pnCiudadNac },
+                    {"pnEstadoNac", naturalData.pnEstadoNac },
+                    {"pnCiudadNac", naturalData.pnCiudadNac },
                     {"pnNacionalidad", naturalData.pnNacionalidad },
                     {"pnDiResidencia", naturalData.pnDiResidencia },
                     {"pnDepRes", naturalData.pnDepRes },
@@ -160,13 +158,27 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {"Nit",juridicaData.Nit},
                         {"pjRazSocial",juridicaData.pjRazSocial},
                         {"pjDirPrincipal",juridicaData.pjDirPrincipal},
+                        {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
                         {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
                         {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
                         {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
+                        {"pjNomReLeg",juridicaData.pjNomReLeg},
+                        {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
+                        {"pjRLRadNac",juridicaData.pjRLRadNac},
+                        {"pjRLRadExtr",juridicaData.pjRLRadExtr},
+                        {"pjRLDocNum",juridicaData.pjRLDocNum},
+                        {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
+                        {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
+                        {"pjRLCiuExpDoc",juridicaData.pjRLCiuExpDoc },
+                        {"pjRLFechaNac",juridicaData.pjRLFechaNac?.ToString("yyyy-MM-dd")},
+                        {"pjRLNacionalidad",juridicaData.pjRLNacionalidad},
+                        {"pjRLDepartNac",juridicaData.pjRLDepartNac},
+                        {"pjRLCiudadNac",juridicaData.pjRLCiudadNac},
 
                         {"Sucursales", sucursales.Select(s => new
                         {
                             pjSucursalDir = s.Direccion,
+                            pjSucursalDepart = s.Departamento,
                             pjSucursalCiudad = s.Ciudad,
                             pjSucursalEmail = s.Email,
                             pjSucursalTel = s.Telefono
@@ -276,7 +288,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
             }
         }
-
+        
         public void UpdateJuridicaInfo(Proveedores_Juridica providerData)
         {
             string providerNit = providerData.Nit;
@@ -292,9 +304,23 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     
                     existingJuridica.pjRazSocial = providerData.pjRazSocial;
                     existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
+                    existingJuridica.pjDepartDirPrincipal = providerData.pjDepartDirPrincipal;
                     existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;
                     existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
                     existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
+
+                    existingJuridica.pjNomReLeg = providerData.pjNomReLeg;
+                    existingJuridica.pjRLTipNacionalidad = providerData.pjRLTipNacionalidad;
+                    existingJuridica.pjRLRadNac = providerData.pjRLRadNac;
+                    existingJuridica.pjRLRadExtr = providerData.pjRLRadExtr;
+                    existingJuridica.pjRLDocNum = providerData.pjRLDocNum;
+                    existingJuridica.pjRLFechExpDoc = providerData.pjRLFechExpDoc;
+                    existingJuridica.pjRLDepExpDoc = providerData.pjRLDepExpDoc;
+                    existingJuridica.pjRLCiuExpDoc = providerData.pjRLCiuExpDoc;
+                    existingJuridica.pjRLFechaNac = providerData.pjRLFechaNac;
+                    existingJuridica.pjRLNacionalidad = providerData.pjRLNacionalidad;
+                    existingJuridica.pjRLDepartNac = providerData.pjRLDepartNac;
+                    existingJuridica.pjRLCiudadNac = providerData.pjRLCiudadNac;
 
                     _context.Proveedores_Juridica.Update(existingJuridica);
                     _context.SaveChanges();
@@ -311,6 +337,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {
                             NitProveedor = providerNit,
                             Direccion = s.Direccion,
+                            Departamento = s.Departamento,
                             Ciudad = s.Ciudad,
                             Email = s.Email,
                             Telefono = s.Telefono
@@ -358,7 +385,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-
+        
 
         public void RestoreProviderPassword(string nit)
         {
@@ -442,7 +469,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-
+        
         public void AddProveedorJuridica(Proveedores_Juridica proveedor)
         {
             try

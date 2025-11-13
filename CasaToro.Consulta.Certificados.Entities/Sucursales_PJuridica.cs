@@ -11,6 +11,8 @@ public partial class Sucursales_PJuridica
 
     public string? Direccion { get; set; }
 
+    public string? Departamento { get; set; }
+
     public string? Ciudad { get; set; }
 
     public string? Email { get; set; }

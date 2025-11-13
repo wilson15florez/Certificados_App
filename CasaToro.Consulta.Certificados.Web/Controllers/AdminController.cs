@@ -150,11 +150,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = ex.Message });
                 return Json(new { error = "Error al actualizar la persona natural: " + ex.Message });
             }
         }
-
+        
         [HttpPost]
         [Route("/Admin/UpdateProviderJuridica")]
         public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData)
@@ -176,7 +175,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
             }
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> CheckProvider(string idNum, string personType)
         {
@@ -245,7 +244,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-
+        
         [HttpPost]
         [Route("/Admin/AddProviderJuridica")]
         public IActionResult AddProviderJuridica([FromBody] Proveedores_Juridica provider)
@@ -271,7 +270,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-
+        
         [HttpGet]
         public IActionResult RestoreProviderPassword(string nit)
         {
