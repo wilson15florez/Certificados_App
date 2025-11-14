@@ -435,12 +435,13 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.capSoRegis).HasMaxLength(255);
             entity.Property(e => e.ciudad).HasMaxLength(100);
             entity.Property(e => e.clasCuenta).HasMaxLength(50);
+            entity.Property(e => e.departamento).HasMaxLength(100);
             entity.Property(e => e.egreMensuales).HasMaxLength(50);
             entity.Property(e => e.entidad).HasMaxLength(255);
-            entity.Property(e => e.fechNumResol).HasMaxLength(100);
             entity.Property(e => e.formPagComExt).HasMaxLength(255);
             entity.Property(e => e.ingrMensuales).HasMaxLength(50);
             entity.Property(e => e.numCuenta).HasMaxLength(50);
+            entity.Property(e => e.numResolGC).HasMaxLength(100);
             entity.Property(e => e.numResulDIAN).HasMaxLength(100);
             entity.Property(e => e.ocExtranjero).HasMaxLength(3);
             entity.Property(e => e.ocNacional).HasMaxLength(3);

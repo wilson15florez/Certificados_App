@@ -45,7 +45,11 @@ public partial class Proveedores_FUCP
 
     public string? autReten { get; set; }
 
-    public string? fechNumResol { get; set; }
+    public DateOnly? fechResolGC { get; set; }
+
+    public string? numResolGC { get; set; }
+
+    public string? departamento { get; set; }
 
     public string? ciudad { get; set; }
 
