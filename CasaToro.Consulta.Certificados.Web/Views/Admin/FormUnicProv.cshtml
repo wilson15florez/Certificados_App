@@ -1230,6 +1230,7 @@
             async function loadFormData_Natural(data){
 				const form = document.getElementById('persNatuForm');
 
+                //limpieza inicial
                 form.querySelectorAll('input,select, textarea').forEach(el => {
                     if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
 					else el.value = '';
@@ -1237,17 +1238,18 @@
 
                 if (!data) return;
 
+                //carga los datos simples y radios/checkbox
                 for (const key in data){
 					if (!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
 
-					const value = data[key];
+					const value = typeof data[key] === 'string' ? data[key].trim() : data[key];
 
-					const radios = form.querySelectorAll(`input[type="radio"][name="${key}"]`);
-					if (radios.length > 0){
-						radios.forEach(r => {
-							if(r.value === data[key]) r.checked = true;
-						});
-						continue;
+					if (key !== 'pnNacDoc' && key !== 'pnExtDoc'){
+                        const radios = form.querySelectorAll(`input[type="radio"][name="${key}"]`);
+						if (radios.length > 0){
+                            radios.forEach(r => { if (r.value === value) r.checked = true; });
+                            continue;
+                        }
                     }
 
 					const checkboxes = form.querySelectorAll(`input[name="checkbox"][name="${key}"]`);
@@ -1267,43 +1269,97 @@
 					if (el) el.value = value;
                 }
 
+                //logica de nacionalidad y ubicacion
                 if (data.pnTipoNacionalidad) {
-                    if (data.pnTipoNacionalidad === 'Nacional') {
-                        document.getElementById('pnRadNacional').checked = true;
-                    } else {
-                        document.getElementById('pnRadExtranjero').checked = true;
-                    }
+                    const isNacional = data.pnTipoNacionalidad === 'Nacional';
+                    document.getElementById(isNacional ? 'pnRadNacional' : 'pnRadExtranjero').checked = true;
 
                     pnSelecNacionalidad();
+                    //precarga los selects
                     await ubicPNaHandler();
 
-                    const tipoDocNac = data.pnNacDoc || data.pnRadNac;
-                    if (tipoDocNac) {
-                        const nacRadio = form.querySelector(`input[name="pnNacDoc"][value="${tipoDocNac}"]`);
-                        if (nacRadio) nacRadio.checked = true;
-                    }
+                    //helper para asignar select2 y disparar el cambio
+                    const setSelect = (id, val, trigger = false) => {
+                        if (!val) return;
+                        const cleanVal = String(val).trim();
+                        const $el = $(`#${id}`);
+                        $el.val(cleanVal);
 
-                    const tipoDocExt = data.pnExtDoc || data.pnRadExt;
-                    if (tipoDocExt) {
-                        const extRadio = form.querySelector(`input[name="pnExtDoc"][value="${tipoDocExt}"]`);
-                        if (extRadio) extRadio.checked = true;
-                    }
+                        if (trigger) $el.trigger('change');
+                        $el.trigger('change.select2');
+                    };
 
+                    //documento y nacimiento
+                    if (isNacional){
+                        //nacional
+                        const tipoDoc = data.pnNacDoc || data.pnRadNac;
+                        if (tipoDoc){
+                            const r = form.querySelector(`input[name="pnNacDoc"][value="${tipoDoc}"]`);
+                            if (r) r.checked = true;
+                        }
+
+                        if (data.pnDepartNac){
+                            setSelect('pnDepartNac', data.pnDepartNac, true);
+
+                            setTimeout(() => {
+                                if (data.pnCiudadNac) setSelect('pnCiudadNac', data.pnCiudadNac);
+                            }, 300);
+                        }
+
+                    } else {
+                        //extranjero
+                        const tipoDoc = data.pnExtDoc || data.pnRadExt;
+                        if (tipoDoc){
+                            const r = form.querySelector(`input[name="pnExtDoc"][value="${tipoDoc}"]`);
+                            if (r) r.checked = true;
+                        }
+
+                        if (data.pnNacionalidad){
+                            setSelect('pnNacionalidad', data.pnNacionalidad, true);
+
+                            setTimeout(async () => {
+                                if (data.pnDepartNac){
+                                    if ($('#pnDepartNac option').length <= 1){
+                                        const states = await loadStates(data.pnNacionalidad);
+                                        fillSelect2('#pnDepartNac', states, '-- Seleccione estado --', 'id', 'name');
+                                    }
+                                    setSelect('pnDepartNac', data.pnDepartNac, true);
+
+                                    setTimeout(async () => {
+                                        if (data.pnCiudadNac){
+                                            if ($('#pnCiudadNac option').length <= 1){
+                                                const cities = await loadCities(data.pnDepartNac);
+                                                fillSelect2('#pnCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
+                                            }
+                                            setSelect('pnCiudadNac', data.pnCiudadNac);
+                                        }
+                                    }, 500);
+                                }
+                            }, 500);
+                        }
+                    }
+                    //expedicion y residencia
+                    if (data.pnDepExpDoc){
+                        setSelect('pnDepExpDoc', data.pnDepExpDoc, true);
+                        setTimeout(() => { if (data.pnCiuExpDoc) setSelect('pnCiuExpDoc', data.pnCiuExpDoc); }, 200);
+                    }
+                    
+                    if (data.pnDepRes){
+                        setSelect('pnDepRes', data.pnDepRes, true);
+                        setTimeout(() => { if (data.pnCiudadRes) setSelect('pnCiudadRes', data.pnCiudadRes); }, 200);
+                    }
+                    
+                    //numeros y fechas
                     if (data.pnNacNum) document.getElementById('pnNacNum').value = data.pnNacNum;
-                    if(data.pnExtNum) document.getElementById('pnExtNum').value = data.pnExtNum;
-
-                    if(data.pnFechaExpDoc) document.getElementById('pnFechaExpDoc').value = data.pnFechaExpDoc;
-                    if(data.pnFechaNac) document.getElementById('pnFechaNac').value = data.pnFechaNac;
-
-                    if(data.pnDepartNac){
-                        $(pnDepartNac).val(data.pnDepartNac).trigger('change.select2');
+                    if (data.pnExtNum) document.getElementById('pnExtNum').value = data.pnExtNum;
+                    if (data.pnDocNum){
+                        const targetId = isNacional ? 'pnNacNum' : 'pnExtNum';
+                        document.getElementById(targetId).value = data.pnDocNum;
                     }
 
-                    if(data.pnDepExpDoc) $(pnDepExpDoc).val(data.pnDepExpDoc).trigger('change.select2');
-                    if (data.pnDepRes) $(pnDepRes).val(data.pnDepRes).trigger('change.select2');
-
-                    if (data.pnCiudadNac) $(pnCiudadNac).val(data.pnCiudadNac).trigger('change.select2');
-                    if (data.pnCiuExpDoc) $(pnCiuExpDoc).val(data.pnCiuExpDoc).trigger('change.select2');
+                    if (data.pnFechaExpDoc) document.getElementById('pnFechaExpDoc').value = data.pnFechaExpDoc;
+                    if (data.pnFechaNac) document.getElementById('pnFechaNac').value = data.pnFechaNac;
+                    
                 }
 
 				if(data.pnReconoPublic){
@@ -1338,6 +1394,7 @@
             async function loadFormData_Juridica(data) {
 				const form = document.getElementById('persJuriForm');
 
+                //limpieza
                 form.querySelectorAll('input,select, textarea').forEach(el => {
 					if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
                     else el.value = '';
@@ -1351,35 +1408,65 @@
 					pjNitInput.setAttribute('disabled', 'disabled');
                 }
 
+                //carga generica
 				for (const key in data){
 					if(!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
-					const el = document.getElementById(key);
+					if (key.startsWith('pjDepart') || key.startsWith('pjCiudad') || key.startsWith('pjRL')) continue;
+                    
+                    const el = document.getElementById(key);
                     if (el) el.value = data[key];
                 }
 
-				const sucursalesContainer = document.getElementById('sucursales-container');
-				const addSucursalBtn = document.getElementById('addSucursalBtn');
-				const sucursalLimitMsg = document.getElementById('sucursal_limit_msg');
-				const controlTableBody = document.querySelector('#control-table tbody');
+                //helper local para select2
+                const setSelect = (id, val, trigger = false) => {
+                    if (!val) return;
+                    const cleanVal = String(val).trim();
+                    const $el = $(`#${id}`);
+                    $el.val(cleanVal);
+                    if (trigger) $el.trigger('change');
+                    $el.trigger('change.select2');
+                };
 
-                document.querySelectorAll('.sucursal-item:not(#sucursal_1)').forEach(item => item.remove());
+                await ubicPJuHandler();
 
+                //precarga ubicacion direccion oficina principal
+                if (data.pjDepartDirPrincipal){
+                    setSelect('pjDepartDirPrincipal', data.pjDepartDirPrincipal, true);
+                    setTimeout(() => {
+                        if (data.pjCiudadDirPrincipal) setSelect('pjCiudadDirPrincipal', data.pjCiudadDirPrincipal);
+                    }, 300);
+                }
+
+                //precarga las sucursales
+                const addSucursalBtn = document.getElementById('addSucursalBtn');
                 if(data.Sucursales && Array.isArray(data.Sucursales) && data.Sucursales.length > 0) {
-					const first = data.Sucursales[0];
-					document.getElementById('pjDirSucursal_1').value = first.pjSucursalDir || '';
-					document.getElementById('pjCiudadDirSucursal_1').value = first.pjSucursalCiudad || '';
-					document.getElementById('pjEmailDirSucursal_1').value = first.pjSucursalEmail || '';
-                    document.getElementById('pjTelDirSucursal_1').value = first.pjSucursalTel || '';
+                    //limpia las sucursales existentes exepto la primera
+                    document.querySelectorAll('.sucursal-item:not(#sucursal_1)').forEach(item => item.remove());
 
-					for (let i = 1; i < data.Sucursales.length; i++){
-                        addSucursalBtn.click();
-						const idx = i + 1;
-						const suc = data.Sucursales[i];
-						document.getElementById(`pjDirSucursal_${idx}`).value = suc.pjSucursalDir || '';
-						document.getElementById(`pjCiudadDirSucursal_${idx}`).value = suc.pjSucursalCiudad || '';
-						document.getElementById(`pjEmailDirSucursal_${idx}`).value = suc.pjSucursalEmail || '';
-						document.getElementById(`pjTelDirSucursal_${idx}`).value = suc.pjSucursalTel || '';
-                    }
+					data.Sucursales.forEach((suc, index) => {
+                        const i  = index + 1;
+                        if (i > 1){
+                            addSucursalBtn.click();
+                        }
+
+                        //llenar campos de texto
+                        document.getElementById(`pjDirSucursal_${i}`).value = suc.pjSucursalDir || '';
+                        document.getElementById(`pjEmailDirSucursal_${i}`).value = suc.pjSucursalEmail || '';
+                        document.getElementById(`pjTelDirSucursal_${i}`).value = suc.pjSucursalTel || '';
+
+                        //inicializa ubicacion para sucursal dinamica
+                        if (typeof initSucursalUbic === 'function'){
+                            initSucursalUbic(i);
+                        }
+
+                        //llena departamento y dispara el cambio para cargar ciudades
+                        if (suc.pjSucursalDepart){
+                            setSelect(`pjDepartDirSucursal_${i}`, suc.pjSucursalDepart, true);
+                            setTimeout(() => {
+                                if (suc.pjSucursalCiudad) setSelect(`pjCiudadDirSucursal_${i}`, suc.pjSucursalCiudad);
+                            }, 300);
+                        }
+                    });
                 }
 
                 while (controlTableBody.querySelectorAll('.control-row').length > 1) {
@@ -1402,37 +1489,82 @@
                     controlTableBody.innerHTML = '';
                     addControlRow();
                 }
-				const pjNit = document.getElementById('pjNIT');
-				if (pjNit) pjNit.setAttribute('disabled', 'disabled');
 
                 //representante legal
                 if (data.pjRLTipNacionalidad){
-                    if (data.pjRLTipNacionalidad === 'Nacional') document.getElementById('pjRLRadNacional').checked = true;
-                    else document.getElementById('pjRLRadExtranjero').checked = true;
+                    const isNacional = data.pjRLTipNacionalidad === 'Nacional';
+                    document.getElementById(isNacional ? 'pjRLRadNacional' : 'pjRLRadExtranjero').checked = true;
 
                     pjSelecNacionalidad();
-
-                    await ubicPJuHandler();
-
-                    if (data.pjRLRadNacional){
-                        const r = form.querySelector(`input[name="pjRLRadNacional"][value="${data.pjRLRadNacional}"]`);
-                        if (r) r.checked = true;
+                    //llena los select base (paises o dep colombia)
+                    await handleRepLeg();
+                    
+                    //mapeo de documentos y numeros
+                    const docNum = data.pjRLDocNum || data.pjRLNacNum || data.pjRLExtNum;
+                    if (isNacional){
+                        const tipoDoc = data.pjRLNacDoc || data.pjRLRadNac;
+                        if (tipoDoc) {
+                            const nacRadio = form.querySelector(`input[name="pjRLNacDoc"][value="${tipoDoc}"]`);
+                            if (nacRadio) nacRadio.checked = true;
+                        }
+                        if (docNum) document.getElementById('pjRLNacNum').value = docNum;
+                        
+                    } else {
+                        const tipoDoc = data.pjRLExtDoc || data.pjRLRadExt;
+                        if (tipoDoc) {
+                            const extRadio = form.querySelector(`input[name="pjRLExtDoc"][value="${tipoDoc}"]`);
+                            if (extRadio) extRadio.checked = true;
+                        }
+                        if (docNum) document.getElementById('pjRLExtNum').value = docNum;
                     }
-                    if (data.pjRLRadExtranjero){
-                        const r = form.querySelector(`input[name="pjRLRadExtranjero"][value="${data.pjRLRadExtranjero}"]`);
-                        if (r) r.checked = true;
+                    
+                    //llena fechas
+                    if(data.pjRLFechExpDoc) document.getElementById('pjRLFechExpDoc').value = data.pjRLFechExpDoc;
+                    if(data.pjRLFechaNac) document.getElementById('pjRLFechaNac').value = data.pjRLFechaNac;
+
+                    //mapeo ubicacion
+                    //expedicion
+                    if (data.pjRLDepExpDoc){
+                        setSelect('pjRLDepExpDoc', data.pjRLDepExpDoc, true);
+                        setTimeout(() => {
+                            if (data.pjRLCiuExpDoc) setSelect('pjRLCiuExpDoc', data.pjRLCiuExpDoc);
+                        }, 300);
                     }
 
-                    if (data.pjRLDocNum){
-                        const inN = document.getElementById('pjRLNacNum');
-                        const inE = document.getElementById('pjRLExtNum');
-                        if (inN && !inN.disabled) inN.value = data.pjRLDocNum;
-                        if (inE && !inE.disabled) inE.value = data.pjRLDocNum;
+                    //nacimiento
+                    if (isNacional){
+                        //nacional
+                        if (data.pjRLDepartNac){
+                            setSelect('pjRLDepartNac', data.pjRLDepartNac, true);
+                            setTimeout(async () => {
+                                if(data.pjRLCiudadNac) setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
+                            }, 300);
+                        }
+                    } else {
+                        //extranjero
+                        if (data.pjRLNacionalidad){
+                            setSelect('pjRLNacionalidad', data.pjRLNacionalidad, true);
+                            setTimeout(() => {
+                                if (data.pjRLDepartNac) {
+                                    if ($('#pjRLDepartNac option').length <= 1){
+                                        const states = await loadStates(data.pjRLNacionalidad);
+                                        fillSelect2('#pjRLDepartNac', states, '-- Seleccione estado --', 'id', 'name');
+                                    }
+                                    setSelect('pjRLDepartNac', data.pjRLDepartNac, true);
+                                    setTimeout(async () => {
+                                        if (data.pjRLCiudadNac){
+                                            if ($('#pjRLCiudadNac option').length <= 1){
+                                                const cities = await loadCities(data.pjRLDepartNac);
+                                                fillSelect2('#pjRLCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
+                                            }
+                                            setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
+                                        }
+                                    }, 500);
+                                }
+                            }, 500);
+                        }
                     }
-
-                    if (data.pjRLFechExpDoc) document.getElementById('pjRLFechExpDoc').value = data.pjRLFechExpDoc;
                 }
-                
             }
 
             //funcion para limpiar los radioButtons de nacionalidad
