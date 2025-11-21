@@ -30,21 +30,26 @@
             <div class="content-header">
 				<h1>Formato Único de Conocimiento de Proveedores</h1>
             </div>
-            <div class="form-group">
-                <label for="personType">Seleccione el Tipo de Persona:</label>
-                <select id="personType">
-					<option value="" disabled selected>-- Seleccione una opción --</option>
-                    <option value="natural">Persona Natural</option>
-					<option value="juridica">Persona Jurídica</option>
-				</select>
-            </div>
+            <div class="d-flex justify-content-around align-items-center w-75 card flex-row m-2 p-2">
+                <div class="form-group d-block">
+                    <label for="personType" class="form-label">Seleccione el Tipo de Persona:</label>
+                    <select id="personType" class="form-control">
+                        <option value="" disabled selected>-- Seleccione una opción --</option>
+                        <option value="natural">Persona Natural</option>
+                        <option value="juridica">Persona Jurídica</option>
+                    </select>
+                </div>
 
-            <div id="idSection" class="form-group">
-                <label for="idNum">Número de Identificación:</label>
-				<input type="number" id="idNum" name="idNum" placeholder="Número"/>
-                <button id="consultBtn" type="button" class="button-group">Consultar</button>
+                <div id="idSection" class="form-group d-block">
+                    <label for="idNum" class="form-label">Número de Identificación:</label>
+                    <input type="number" id="idNum" name="idNum" placeholder="Número" class="form-control" />
+                </div>
+                <div>
+                    <button id="consultBtn" type="button" class="btn btn-primary">Consultar</button>
+                </div>
             </div>
-
+            
+            
             <div id="alertContainer"></div>
             <!-- form de persona natural-->
             <form id="persNatuForm" class="form-section" style="display:none;">
@@ -339,8 +344,8 @@
                 <div class="form-group flex-container">
                     <label>Nacionalidad:</label>
                     <div class="form-check form-check-inline">
-                        <input type="radio" id="pjRLRadNacional" name="pjRLTipNacionalidad" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="pjRLRadExtranjero" name="pjRLTipNacionalidad" value="Extranjero" /><label>Extranjero</label>
+                        <input type="radio" id="pjRLRadNac" name="pjRLTipNacionalidad" value="Nacional" /><label>Nacional</label>
+                        <input type="radio" id="pjRLRadExtr" name="pjRLTipNacionalidad" value="Extranjero" /><label>Extranjero</label>
                     </div>
                 </div>
 
@@ -350,7 +355,7 @@
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjRLNac-CC" name="pjRLNacDoc" value="CC" /><label for="pjRLNac-CC">CC</label>
+                                <input type="radio" id="pjRLNac-CC" name="pjRLRadNac" value="CC" /><label for="pjRLNac-CC">CC</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
@@ -366,9 +371,9 @@
                         <div class="form-group half-width">
                             <label>Tipo de Documento:</label>
                             <div class="radio-group">
-                                <input type="radio" id="pjRLExt-CE" name="pjRLExtDoc" value="CE" /><label for="pjRLExt-CE">CE</label>
-                                <input type="radio" id="pjRLExt-PAS" name="pjRLExtDoc" value="PAS" /><label for="pjRLExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pjRLExt-CAR" name="pjRLExtDoc" value="CAR" /><label for="pjRLExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                                <input type="radio" id="pjRLExt-CE" name="pjRLRadExtr" value="CE" /><label for="pjRLExt-CE">CE</label>
+                                <input type="radio" id="pjRLExt-PAS" name="pjRLRadExtr" value="PAS" /><label for="pjRLExt-PAS">Pasaporte</label>
+                                <input type="radio" id="pjRLExt-CAR" name="pjRLRadExtr" value="CAR" /><label for="pjRLExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
                             </div>
                         </div>
                         <div class="form-group half-width">
@@ -654,41 +659,75 @@
             <div class="panelField">
                 <p>
 					<b>AUTORIZACIÓN PARA EL TRATAMIENTO DE DATOS PERSONALES:</b> Mediante el registro de mis datos personales en el presente formulario, autorizo a (marque con x) para que:<br />
-                    <div class="checkboxAUT-content">
-                        <label for="pvTDPMotMaqSI">SI</label><input type="radio" id="pvTDPMotMaqSI" name="pvTDPMotMaq" value="SI" /> 
-                        <label for="pvTDPMotMaqNO">NO</label><input type="radio" id="pvTDPMotMaqNO" name="pvTDPMotMaq" value="NO" /> 
-                        <p>
-							<b>MOTORES Y MÁQUINAS S.A. BIC - MOTORYSA BIC</b> identificada con NIT 860.019.063-8 ubicada en la dirección
-							Avenida Carrera 68 No. 68B-61 de Bogotá canal de comunicación <b>seguridad_de_datos@moterysa.com</b>,
-							Politica de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
-                        </p>
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPMotMaqSI" class="form-check-label">SI</label><input type="radio" id="pvTDPMotMaqSI" name="pvTDPMotMaq" value="SI" class="form-check-input" />
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPMotMaqNO" class="form-check-label">NO</label><input type="radio" id="pvTDPMotMaqNO" name="pvTDPMotMaq" value="NO" class="form-check-input" />
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>MOTORES Y MÁQUINAS S.A. BIC - MOTORYSA BIC</b> identificada con NIT 860.019.063-8 ubicada en la dirección
+                                Avenida Carrera 68 No. 68B-61 de Bogotá canal de comunicación <b>seguridad_de_datos@moterysa.com</b>,
+                                Politica de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
+                            </p>
+                        </div>
                     </div>
-                    <div class="checkboxAUT-content">
-                        <label for="pvTDPCasTorSI">SI</label><input type="radio" id="pvTDPCasTorSI" name="pvTDPCasTor" value="SI" />
-                        <label for="pvTDPCasTorNO">NO</label><input type="radio" id="pvTDPCasTorNO" name="pvTDPCasTor" value="NO" />
-                        <p>
-							<b>CASATORO S.A. BIC</b> identificada con NIT 830.004.993-8 ubicada en la dirección Avenida Boyacá No. 170-97
-							de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>, Politica de Tratamiento de Datos
-							Personales publicada en página web <b>www.casatoro.com</b>.
-                        </p>
+                    
+                    
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPCasTorSI" class="form-check-label">SI</label><input type="radio" id="pvTDPCasTorSI" name="pvTDPCasTor" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPCasTorNO" class="form-check-label">NO</label><input type="radio" id="pvTDPCasTorNO" name="pvTDPCasTor" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>CASATORO S.A. BIC</b> identificada con NIT 830.004.993-8 ubicada en la dirección Avenida Boyacá No. 170-97
+                                de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>, Politica de Tratamiento de Datos
+                                Personales publicada en página web <b>www.casatoro.com</b>.
+                            </p>
+                        </div>
                     </div>
-                    <div class="checkboxAUT-content">
-                        <label for="pvTDPBonapSI">SI</label><input type="radio" id="pvTDPBonapSI" name="pvTDPBonap" value="SI" />
-                        <label for="pvTDPBonapNO">NO</label><input type="radio" id="pvTDPBonapNO" name="pvTDPBonap" value="NO" />
-                        <p>
-							<b>REPUESTOS, ACCESORIOS Y LUBRICANTES BONAPARTE S.A.S. - BONAPARTE RAL</b> identificada con NIT 900.353.939-1
-							ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>,
-							Politica de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
-                        </p>
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPBonapSI" class="form-check-label">SI</label><input type="radio" id="pvTDPBonapSI" name="pvTDPBonap" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPBonapNO" class="form-check-label">NO</label><input type="radio" id="pvTDPBonapNO" name="pvTDPBonap" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>REPUESTOS, ACCESORIOS Y LUBRICANTES BONAPARTE S.A.S. - BONAPARTE RAL</b> identificada con NIT 900.353.939-1
+                                ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>,
+                                Politica de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
+                            </p>
+                        </div>
                     </div>
-                    <div class="checkboxAUT-content">
-                        <label for="pvTDPBellpiSI">SI</label><input type="radio" id="pvTDPBellpiSI" name="pvTDPBellpi" value="SI" />
-                        <label for="pvTDPBellpiNO">NO</label><input type="radio" id="pvTDPBellpiNO" name="pvTDPBellpi" value="NO" />
-                        <p>
-							<b>BELLPI S.A.S</b> identificada con NIT 901.389.327-1 ubicada en la dirección Calle 170 #67-42 de Bogotá,
-							canal de comunicación <b>seguridaddedatos@bellpi.com</b> Politica de Tratamiento de Datos Personales publicada
-							en página wet <b>www.bellpi.com</b>.
-                        </p>
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPBellpiSI" class="form-check-label">SI</label><input type="radio" id="pvTDPBellpiSI" name="pvTDPBellpi" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPBellpiNO" class="form-check-label">NO</label><input type="radio" id="pvTDPBellpiNO" name="pvTDPBellpi" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>BELLPI S.A.S</b> identificada con NIT 901.389.327-1 ubicada en la dirección Calle 170 #67-42 de Bogotá,
+                                canal de comunicación <b>seguridaddedatos@bellpi.com</b> Politica de Tratamiento de Datos Personales publicada
+                                en página wet <b>www.bellpi.com</b>.
+                            </p>
+                        </div>
                     </div>
                 </p>
             </div>
@@ -820,10 +859,10 @@
             const pjRLDepartNac = document.getElementById('pjRLDepartNac');
             const pjRLCiudadNac = document.getElementById('pjRLCiudadNac');
 
-            const pjRLRadNacional = document.getElementById('pjRLRadNacional');
-            const pjRLRadExtranjero = document.getElementById('pjRLRadExtranjero');
-            const pjRadiosNacDoc = document.querySelectorAll('input[name="pjRLNacDoc"]');
-            const pjRadiosExtDoc = document.querySelectorAll('input[name="pjRLExtDoc"]');
+            const pjRLRadNac = document.getElementById('pjRLRadNac');
+            const pjRLRadExtr = document.getElementById('pjRLRadExtr');
+            const pjRadiosNacDoc = document.querySelectorAll('input[name="pjRLRadNac"]');
+            const pjRadiosExtDoc = document.querySelectorAll('input[name="pjRLRadExtr"]');
             const pjInputNacNum = document.getElementById('pjRLNacNum');
             const pjInputExtNum = document.getElementById('pjRLExtNum');
             const pjRLSeccionNacional = document.getElementById('pjRLSeccionNacional');
@@ -934,7 +973,7 @@
 
             //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
             function pjSelecNacionalidad(){
-                if (pjRLRadNacional.checked){
+                if (pjRLRadNac.checked){
                     pjRLSeccionNacional.style.display = 'block';
                     pjRLSeccionExtranjera.style.display = 'none';
                     clearRadios(pjRadiosExtDoc);
@@ -942,7 +981,7 @@
                     pjInputNacNum.required = true;
                     pjInputExtNum.required = false;
 
-                }else if (pjRLRadExtranjero.checked){
+                }else if (pjRLRadExtr.checked){
                     pjRLSeccionNacional.style.display = 'none';
                     pjRLSeccionExtranjera.style.display = 'block';
                     clearRadios(pjRadiosNacDoc);
@@ -957,8 +996,8 @@
                     clearRadios(pjRadiosExtDoc);
                 }
             }
-            if (pjRLRadNacional) pjRLRadNacional.addEventListener('change', pjSelecNacionalidad);
-            if (pjRLRadExtranjero) pjRLRadExtranjero.addEventListener('change', pjSelecNacionalidad);
+            if (pjRLRadNac) pjRLRadNac.addEventListener('change', pjSelecNacionalidad);
+            if (pjRLRadExtr) pjRLRadExtr.addEventListener('change', pjSelecNacionalidad);
             pjSelecNacionalidad();
 
             //funcion para crear alertas
@@ -1115,7 +1154,7 @@
 
                 const { departamentos, ciudadByDep } = await loadUbiNac();
 
-                if (pjRLRadNacional.checked){
+                if (pjRLRadNac.checked){
                     
                     fillSelect2(pjRLNacionalidad, [{id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --');
                     $(pjRLNacionalidad).val('CO').trigger('change.select2');
@@ -1138,7 +1177,7 @@
                     handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
                     handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
                 }
-                else if(pjRLRadExtranjero.checked){
+                else if(pjRLRadExtr.checked){
                     const countries = await loadUbiExt();
                     fillSelect2(pjRLNacionalidad, countries, '-- Seleccione país --');
                     $(pjRLNacionalidad).prop('disabled', false);
@@ -1210,8 +1249,8 @@
                 };
 
                 //representante legal
-                pjRLRadNacional.addEventListener('change', handleRepLeg);
-                pjRLRadExtranjero.addEventListener('change', handleRepLeg);
+                pjRLRadNac.addEventListener('change', handleRepLeg);
+                pjRLRadExtr.addEventListener('change', handleRepLeg);
                 handleRepLeg();
 
                 initSucursalUbic(1);
@@ -1269,6 +1308,13 @@
 					if (el) el.value = value;
                 }
 
+                //helper para asignar select2 y disparar el cambio
+                const setSelect = (id, val) => {
+                    if (!val) return;
+                    const cleanVal = String(val).trim();
+                    $(`#${id}`).val(cleanVal).trigger('change.select2');
+                };
+
                 //logica de nacionalidad y ubicacion
                 if (data.pnTipoNacionalidad) {
                     const isNacional = data.pnTipoNacionalidad === 'Nacional';
@@ -1278,16 +1324,8 @@
                     //precarga los selects
                     await ubicPNaHandler();
 
-                    //helper para asignar select2 y disparar el cambio
-                    const setSelect = (id, val, trigger = false) => {
-                        if (!val) return;
-                        const cleanVal = String(val).trim();
-                        const $el = $(`#${id}`);
-                        $el.val(cleanVal);
-
-                        if (trigger) $el.trigger('change');
-                        $el.trigger('change.select2');
-                    };
+                    //carga los datos colombia
+                    const { departamentos, ciudadByDep } = await loadUbiNac();
 
                     //documento y nacimiento
                     if (isNacional){
@@ -1299,11 +1337,13 @@
                         }
 
                         if (data.pnDepartNac){
-                            setSelect('pnDepartNac', data.pnDepartNac, true);
+                            const depVal = data.pnDepartNac.trim();
+                            setSelect('pnDepartNac', depVal);
 
-                            setTimeout(() => {
-                                if (data.pnCiudadNac) setSelect('pnCiudadNac', data.pnCiudadNac);
-                            }, 300);
+                            const ciudades = ciudadByDep[depVal.toUpperCase()] || [];
+                            fillSelect2('#pnCiudadNac', ciudades, '-- Seleccion ciudad --');
+
+                            if (data.pnCiudadNac) setSelect('pnCiudadNac', data.pnCiudadNac);
                         }
 
                     } else {
@@ -1315,38 +1355,37 @@
                         }
 
                         if (data.pnNacionalidad){
-                            setSelect('pnNacionalidad', data.pnNacionalidad, true);
+                            const paisVal = data.pnNacionalidad.trim();
+                            setSelect('pnNacionalidad', paisVal);
 
-                            setTimeout(async () => {
-                                if (data.pnDepartNac){
-                                    if ($('#pnDepartNac option').length <= 1){
-                                        const states = await loadStates(data.pnNacionalidad);
-                                        fillSelect2('#pnDepartNac', states, '-- Seleccione estado --', 'id', 'name');
-                                    }
-                                    setSelect('pnDepartNac', data.pnDepartNac, true);
+                            if (data.pnDepartNac){
+                                const states = await loadStates(paisVal);
+                                fillSelect2('#pnDepartNac', states, '-- Seleccione estado --', 'id', 'name');
+                                
+                                setSelect('pnDepartNac', data.pnDepartNac);
 
-                                    setTimeout(async () => {
-                                        if (data.pnCiudadNac){
-                                            if ($('#pnCiudadNac option').length <= 1){
-                                                const cities = await loadCities(data.pnDepartNac);
-                                                fillSelect2('#pnCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
-                                            }
-                                            setSelect('pnCiudadNac', data.pnCiudadNac);
-                                        }
-                                    }, 500);
+                                if (data.pnCiudadNac){
+                                    const cities = await loadCities(data.pnDepartNac);
+                                    fillSelect2('#pnCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
+                                    
+                                    setSelect('pnCiudadNac', data.pnCiudadNac);
                                 }
-                            }, 500);
+                            }
                         }
                     }
                     //expedicion y residencia
                     if (data.pnDepExpDoc){
-                        setSelect('pnDepExpDoc', data.pnDepExpDoc, true);
-                        setTimeout(() => { if (data.pnCiuExpDoc) setSelect('pnCiuExpDoc', data.pnCiuExpDoc); }, 200);
+                        setSelect('pnDepExpDoc', data.pnDepExpDoc);
+                        const cities = ciudadByDep[data.pnDepExpDoc.trim().toUpperCase()] || [];
+                        fillSelect2('#pnCiuExpDoc', cities, '-- Seleccione ciudad --');
+                        if (data.pnCiuExpDoc) setSelect('pnCiuExpDoc', data.pnCiuExpDoc);
                     }
                     
                     if (data.pnDepRes){
-                        setSelect('pnDepRes', data.pnDepRes, true);
-                        setTimeout(() => { if (data.pnCiudadRes) setSelect('pnCiudadRes', data.pnCiudadRes); }, 200);
+                        setSelect('pnDepRes', data.pnDepRes);
+                        const cities = ciudadByDep[data.pnDepRes.trim().toUpperCase()] || [];
+                        fillSelect2('#pnCiudadRes', cities, '-- Seleccione ciudad --');
+                        if (data.pnCiudadRes) setSelect('pnCiudadRes', data.pnCiudadRes);
                     }
                     
                     //numeros y fechas
@@ -1412,29 +1451,26 @@
 				for (const key in data){
 					if(!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
 					if (key.startsWith('pjDepart') || key.startsWith('pjCiudad') || key.startsWith('pjRL')) continue;
-                    
+
                     const el = document.getElementById(key);
                     if (el) el.value = data[key];
                 }
 
                 //helper local para select2
-                const setSelect = (id, val, trigger = false) => {
+                const setSelect = (id, val) => {
                     if (!val) return;
-                    const cleanVal = String(val).trim();
-                    const $el = $(`#${id}`);
-                    $el.val(cleanVal);
-                    if (trigger) $el.trigger('change');
-                    $el.trigger('change.select2');
+                    $(`#${id}`).val(String(val).trim()).trigger('change.select2');
                 };
 
                 await ubicPJuHandler();
+                const { ciudadByDep } = await loadUbiNac();
 
                 //precarga ubicacion direccion oficina principal
                 if (data.pjDepartDirPrincipal){
-                    setSelect('pjDepartDirPrincipal', data.pjDepartDirPrincipal, true);
-                    setTimeout(() => {
-                        if (data.pjCiudadDirPrincipal) setSelect('pjCiudadDirPrincipal', data.pjCiudadDirPrincipal);
-                    }, 300);
+                    setSelect('pjDepartDirPrincipal', data.pjDepartDirPrincipal);
+                    const cities = ciudadByDep[data.pjDepartDirPrincipal.trim().toUpperCase()] || [];
+                    fillSelect2('#pjCiudadDirPrincipal', cities, '-- Seleccione ciudad --');
+                    if (data.pjCiudadDirPrincipal) setSelect('pjCiudadDirPrincipal', data.pjCiudadDirPrincipal);
                 }
 
                 //precarga las sucursales
@@ -1461,14 +1497,15 @@
 
                         //llena departamento y dispara el cambio para cargar ciudades
                         if (suc.pjSucursalDepart){
-                            setSelect(`pjDepartDirSucursal_${i}`, suc.pjSucursalDepart, true);
-                            setTimeout(() => {
-                                if (suc.pjSucursalCiudad) setSelect(`pjCiudadDirSucursal_${i}`, suc.pjSucursalCiudad);
-                            }, 300);
+                            setSelect(`pjDepartDirSucursal_${i}`, suc.pjSucursalDepart);
+                            const cities = ciudadByDep[suc.pjSucursalDepart.trim().toUpperCase()] || [];
+                            fillSelect2(`#pjCiudadDirSucursal_${i}`, cities, '-- Seleccione ciudad --');
+                            if (suc.pjSucursalCiudad) setSelect(`pjCiudadDirSucursal_${i}`, suc.pjSucursalCiudad);
                         }
                     });
                 }
 
+                //tabla de accionistas
                 while (controlTableBody.querySelectorAll('.control-row').length > 1) {
 					controlTableBody.lastElementChild.remove();
 				}
@@ -1493,27 +1530,28 @@
                 //representante legal
                 if (data.pjRLTipNacionalidad){
                     const isNacional = data.pjRLTipNacionalidad === 'Nacional';
-                    document.getElementById(isNacional ? 'pjRLRadNacional' : 'pjRLRadExtranjero').checked = true;
+                    document.getElementById(isNacional ? 'pjRLRadNac' : 'pjRLRadExtr').checked = true;
 
                     pjSelecNacionalidad();
                     //llena los select base (paises o dep colombia)
                     await handleRepLeg();
                     
                     //mapeo de documentos y numeros
+                    const tipoDoc = isNacional
+                        ? (data.pjRLNacDoc || data.pjRLRadNac)
+                        : (data.pjRLExtDoc || data.pjRLRadExtr);
+
                     const docNum = data.pjRLDocNum || data.pjRLNacNum || data.pjRLExtNum;
+
                     if (isNacional){
-                        const tipoDoc = data.pjRLNacDoc || data.pjRLRadNac;
                         if (tipoDoc) {
-                            const nacRadio = form.querySelector(`input[name="pjRLNacDoc"][value="${tipoDoc}"]`);
-                            if (nacRadio) nacRadio.checked = true;
+                            $(`input[name="pjRLRadNac"][value="${tipoDoc}"]`).prop('checked', true);
                         }
                         if (docNum) document.getElementById('pjRLNacNum').value = docNum;
                         
                     } else {
-                        const tipoDoc = data.pjRLExtDoc || data.pjRLRadExt;
                         if (tipoDoc) {
-                            const extRadio = form.querySelector(`input[name="pjRLExtDoc"][value="${tipoDoc}"]`);
-                            if (extRadio) extRadio.checked = true;
+                            $(`input[name="pjRLRadExtr"][value="${tipoDoc}"]`).prop('checked', true);
                         }
                         if (docNum) document.getElementById('pjRLExtNum').value = docNum;
                     }
@@ -1525,43 +1563,35 @@
                     //mapeo ubicacion
                     //expedicion
                     if (data.pjRLDepExpDoc){
-                        setSelect('pjRLDepExpDoc', data.pjRLDepExpDoc, true);
-                        setTimeout(() => {
-                            if (data.pjRLCiuExpDoc) setSelect('pjRLCiuExpDoc', data.pjRLCiuExpDoc);
-                        }, 300);
+                        setSelect('pjRLDepExpDoc', data.pjRLDepExpDoc);
+                        const cities = ciudadByDep[data.pjRLDepExpDoc.trim().toUpperCase()] || [];
+                        fillSelect2('#pjRLCiuExpDoc', cities, '-- Seleccione ciudad --');
+                        if (data.pjRLCiuExpDoc) setSelect('pjRLCiuExpDoc', data.pjRLCiuExpDoc);
                     }
 
                     //nacimiento
                     if (isNacional){
                         //nacional
                         if (data.pjRLDepartNac){
-                            setSelect('pjRLDepartNac', data.pjRLDepartNac, true);
-                            setTimeout(async () => {
-                                if(data.pjRLCiudadNac) setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
-                            }, 300);
+                            setSelect('pjRLDepartNac', data.pjRLDepartNac);
+                            const cities = ciudadByDep[data.pjRLDepartNac.trim().toUpperCase()] || [];
+                            fillSelect2('#pjRLCiudadNac', cities, '-- Seleccione ciudad --');
+                            if(data.pjRLCiudadNac) setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
                         }
                     } else {
                         //extranjero
                         if (data.pjRLNacionalidad){
-                            setSelect('pjRLNacionalidad', data.pjRLNacionalidad, true);
-                            setTimeout(() => {
-                                if (data.pjRLDepartNac) {
-                                    if ($('#pjRLDepartNac option').length <= 1){
-                                        const states = await loadStates(data.pjRLNacionalidad);
-                                        fillSelect2('#pjRLDepartNac', states, '-- Seleccione estado --', 'id', 'name');
-                                    }
-                                    setSelect('pjRLDepartNac', data.pjRLDepartNac, true);
-                                    setTimeout(async () => {
-                                        if (data.pjRLCiudadNac){
-                                            if ($('#pjRLCiudadNac option').length <= 1){
-                                                const cities = await loadCities(data.pjRLDepartNac);
-                                                fillSelect2('#pjRLCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
-                                            }
-                                            setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
-                                        }
-                                    }, 500);
+                            setSelect('pjRLNacionalidad', data.pjRLNacionalidad);
+                            if (data.pjRLDepartNac) {
+                                const states = await loadStates(data.pjRLNacionalidad);
+                                fillSelect2('#pjRLDepartNac', states, '-- Seleccione estado --', 'id', 'name');
+                                setSelect('pjRLDepartNac', data.pjRLDepartNac);
+                                if (data.pjRLCiudadNac){
+                                    const cities = await loadCities(data.pjRLDepartNac);
+                                    fillSelect2('#pjRLCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
+                                    setSelect('pjRLCiudadNac', data.pjRLCiudadNac);
                                 }
-                            }, 500);
+                            }
                         }
                     }
                 }
@@ -1941,7 +1971,7 @@
                         data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
 					});
 
-                const radioGroups = ['pjRLTipNacionalidad','pjRLRadNacional', 'pjRLRadExtranjero'];
+                const radioGroups = ['pjRLTipNacionalidad','pjRLRadNac', 'pjRLRadExtr'];
                 radioGroups.forEach(rname =>{
                     const checked = form.querySelector(`input[name="${rname}"]:checked`);
                     data[rname] = checked ? checked.value : null;
