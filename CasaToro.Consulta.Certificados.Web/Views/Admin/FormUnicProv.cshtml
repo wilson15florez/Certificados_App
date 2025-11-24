@@ -30,22 +30,22 @@
             <div class="content-header">
 				<h1>Formato Único de Conocimiento de Proveedores</h1>
             </div>
-            <div class="d-flex justify-content-around align-items-center w-75 card flex-row m-2 p-2">
-                <div class="form-group d-block">
+            <div class="row d-flex justify-content-around align-items-center w-75 card flex-row m-2 p-2">
+                <div class="col form-group d-block custom-input-group">
                     <label for="personType" class="form-label">Seleccione el Tipo de Persona:</label>
                     <select id="personType" class="form-control">
-                        <option value="" disabled selected>-- Seleccione una opción --</option>
+                        <option value="" disabled selected>Seleccione una opción</option>
                         <option value="natural">Persona Natural</option>
                         <option value="juridica">Persona Jurídica</option>
                     </select>
                 </div>
 
-                <div id="idSection" class="form-group d-block">
-                    <label for="idNum" class="form-label">Número de Identificación:</label>
+                <div id="idSection" class="col form-group d-block input-wrapper">
                     <input type="number" id="idNum" name="idNum" placeholder="Número" class="form-control" />
+                    <label for="idNum" class="form-label adaptive-label" placeholder="Número de Identificación" alt="Número de Identificación"></label>
                 </div>
                 <div>
-                    <button id="consultBtn" type="button" class="btn btn-primary">Consultar</button>
+                    <button id="consultBtn" type="button" class="col btn btn-primary">Consultar</button>
                 </div>
             </div>
             
@@ -55,250 +55,304 @@
             <form id="persNatuForm" class="form-section" style="display:none;">
 
                 <h2>Persona Natural</h2>
-				<div class="flex-container">
-					<div class="form-group half-width">
-                        <label for="pnNombreCompl">Nombre Completo:</label>
-                        <input type="text" id="pnNombreCompl" name="pnNombreCompl" required/>
-                    </div>
-                </div>
 
-                <div class="form-group flex-container">
-                    <label>Nacionalidad:</label>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" id="pnRadNacional" name="pnTipoNacionalidad" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="pnRadExtranjero" name="pnTipoNacionalidad" value="Extranjero" /><label>Extranjero</label>
+                <div>
+                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pnNombreCompl" name="pnNombreCompl" class="form-control" required />
+                            <label for="pnNombreCompl" class="form-label adaptive-label" placeholder="Nombre Completo" alt="Nombre Completo"></label>
+                        </div>
                     </div>
-                </div>
-
-                <div id="seccionNacional" style="display:none;">
-                    <h3 class="sub-header">Personas Nacionales</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pnNac-CC" name="pnNacDoc" value="CC" /><label for="pnNac-CC">CC</label>
-                                <input type="radio" id="pnNac-NIT" name="pnNacDoc" value="NIT" /><label for="pnNac-NIT">NIT</label>
+                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div class="form-group input-wrapper form-check">
+                            <h5>Nacionalidad:</h5>
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pnRadNacional" name="pnTipoNacionalidad" value="Nacional" class="form-check-input" /><label class="form-check-label">Nacional</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pnRadExtranjero" name="pnTipoNacionalidad" value="Extranjero" class="form-check-input" /><label class="form-check-label">Extranjero</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pnNac-Num">N°:</label>
-                            <input type="number" id="pnNacNum" name="pnDocNum" disabled required/>
-                        </div>
                     </div>
-                </div>
-
-				<div id="seccionExtranjera" style="display:none;">
-                    <h3 class="sub-header">Personas Extranjeras</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pnExt-CE" name="pnExtDoc" value="CE" /><label for="pnExt-CE">CE</label>
-                                <input type="radio" id="pnExt-PAS" name="pnExtDoc" value="PAS" /><label for="pnExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pnExt-CAR" name="pnExtDoc" value="CAR" /><label for="pnExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                    <div id="seccionNacional" style="display:none;" class="justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div>
+                            <h6 class="sub-header">Personas Nacionales</h6>
+                            <div class="row d-flex">
+                                <div class="col form-group input-wrapper form-check">
+                                    <label>Tipo de Documento:</label>
+                                    <div class="d-flex">
+                                        <div class="form-check m-2">
+                                            <input type="radio" id="pnNac-CC" name="pnNacDoc" value="CC" class="form-check-input" /><label for="pnNac-CC" class="form-check-label">CC</label>
+                                        </div>
+                                        <div class="form-check m-2">
+                                            <input type="radio" id="pnNac-NIT" name="pnNacDoc" value="NIT" class="form-check-input" /><label for="pnNac-NIT" class="form-check-label">NIT</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group input-wrapper">
+                                    <input type="number" id="pnNacNum" name="pnDocNum" class="form-control" disabled required />
+                                    <label for="pnNac-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pnExt-Num">N°:</label>
-                            <input type="number" id="pnExtNum" name="pnDocNum" disabled required/>
+                    </div>
+
+                    <div id="seccionExtranjera" style="display:none;" class="justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div>
+                            <h6 class="sub-header">Personas Extranjeras</h6>
+                            <div class="row d-flex">
+                                <div class="col form-group input-wrapper form-check">
+                                    <label>Tipo de Documento:</label>
+                                    <div class="d-flex">
+                                        <div class="form-check m-2">
+                                            <input type="radio" id="pnExt-CE" name="pnExtDoc" value="CE" class="form-check-input" /><label for="pnExt-CE" class="form-check-label">CE</label>
+                                        </div>
+                                        <div class="form-check m-2">
+                                            <input type="radio" id="pnExt-PAS" name="pnExtDoc" value="PAS" class="form-check-input" /><label for="pnExt-PAS" class="form-check-label">Pasaporte</label>
+                                        </div>
+                                        <div class="form-check m-2">
+                                            <input type="radio" id="pnExt-CAR" name="pnExtDoc" value="CAR" class="form-check-input" /><label for="pnExt-CAR" class="form-check-label">Carné Dir. Producido Min Rel. Ext</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group input-wrapper">
+                                    <input type="number" id="pnExtNum" name="pnDocNum" class="form-control" disabled required />
+                                    <label for="pnExt-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-5 mb-3 form-group input-wrapper">
+                            <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" class="form-control" required />
+                            <label for="pnFechaExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento" alt="Fecha de Expedición de Documento"></label>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento de Identidad:</label>
+                            <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento de Identidad:</label>
+                            <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnNacionalidad" class="form-label">Nacionalidad/Pais:</label>
+                            <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnDepartNac" class="form-label">Departamento de nacimiento:</label>
+                            <select id="pnDepartNac" name="pnEstadoNac" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento:</label>
+                            <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col mb-3 form-group input-wrapper">
+                            <input type="date" id="pnFechaNac" name="pnFechaNac" class="form-control" required />
+                            <label for="pnFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento" alt="Fecha de Nacimiento"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="text" id="pnDiResidencia" name="pnDiResidencia" class="form-control" required />
+                            <label for="pnDiResidencia" class="form-label adaptive-label" placeholder="Dirección de Residencia" alt="Dirección de Residencia"></label>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnDepRes" class="form-label">Departamento de Residencia:</label>
+                            <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnCiudadRes" class="form-label">Ciudad de Residencia:</label>
+                            <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnTelefono" name="pnTelefono" class="form-control"/>
+                            <label for="pnTelefono" class="form-label adaptive-label" placeholder="Teléfono Fijo" alt="Teléfono Fijo"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnCelular" name="pnCelular" class="form-control"/>
+                            <label for="pnCelular" class="form-label adaptive-label" placeholder="Teléfono Celular" alt="Teléfono Celular"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="email" id="pnEmail" name="pnEmail" class="form-control" required/>
+                            <label for="pnEmail" class="form-label adaptive-label" placeholder="Correo Electrónico" alt="Correo Electrónico"></label>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group input-wrapper">
+                            <label for="pnOficProfe">Oficio o Profesión:</label>
+                            <input type="text" id="pnOficProfe" name="pnOficProfe" />
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnActividad" class="form-label">Actividad:</label>
+                            <select id="pnActividad" name="pnActividad" class="form-control">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="dependiente">Dependiente</option>
+                                <option value="independiente">Independiente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="sub-header">Marque según su perfil, cargo y/u ocupación</h4>
+                        <div class="row d-flex">
+                            <div class="col form-group input-wrapper form-check">
+						        <label>Goza de Reconocimiento Público:</label>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnReconoPblSi" name="pnReconoPublic" value="Si" class="form-check-input" /><label for="pnReconoPblSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnReconoPblNo" name="pnReconoPublic" value="No" class="form-check-input" /><label for="pnReconoPblNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col form-group input-wrapper form-check">
+                                <label>Maneja Recursos Públicos:</label>
+						        <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnManRePubSi" name="pnManRePub" value="Si" class="form-check-input" /><label for="pnManRePubSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnManRePubNo" name="pnManRePub" value="No" class="form-check-input" /><label for="pnManRePubNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="col form-group input-wrapper form-check">
+                                <label>Es Persona Expuesta Politicamente:</label>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnPEPSi" name="pnPEP" value="Si" class="form-check-input"/><label for="pnPEPSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnPEPNo" name="pnPEP" value="No" class="form-check-input"/><label for="pnPEPNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col form-group input-wrapper form-check" >
+                                <label>Tipo de PEP:</label>
+                                <div class="d-flex" id="pnPEPtypeGroup" style="display:none;">
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" class="form-check-input"/><label for="pnPEP-Nac" class="form-check-label">PEP Nacional</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="2" class="form-check-input"/><label for="pnPEP-OrgInt" class="form-check-label">PEP Org.Internacional</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" class="form-check-input"/><label for="pnPEP-Ext" class="form-check-label">PEP Extranjero</label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group input-wrapper" id="pnPEP_Entidad_Container" style="display:none;">
+                                <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" class="form-control" required />
+                                <label for="pnPEP_Entidad" class="form-label adaptive-label" placeholder="En caso afirmativo señale la entidad" alt="En caso afirmativo señale la entidad"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-				<div class="flex-container">
-					<div class="form-group half-width">
-                        <label for="pnFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-                        <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" required/>
-                    </div>
-                    <div class="form-group half-width">
-						<label for="pnDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
-                        <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
-					</div>
-                    <div class="form-group half-width">
-                        <label for="pnCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
-                        <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
-                    </div>
-                </div>
-                <div class="flex-container">
-					<div class="form-group half-width">
-						<label for="pnNacionalidad">Nacionalidad/Pais:</label>
-						<select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
-					</div>
-                </div>
-
-				<div class="flex-container">
-                    <div class="form-group half-weidth">
-                        <label for="pnDepartNac">Departamento de nacimiento::</label>
-                        <select id="pnDepartNac" name="pnEstadoNac" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnCiudadNac">Ciudad de nacimiento:</label>
-                        <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
-                    </div>
-                </div>
-
-				<div class="flex-container">
-					<div class="form-group half-width">
-						<label for="pnFechaNac">Fecha de Nacimiento:</label>
-						<input type="date" id="pnFechaNac" name="pnFechaNac" required />
-					</div>
-                    <div class="form-group half-width">
-                        <label for="pnDiResidencia">Dirección de Residencia:</label>
-                        <input type="text" id="pnDiResidencia" name="pnDiResidencia" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnDepRes">Departamento de Residencia:</label>
-                        <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
-                    </div>
-					<div class="form-group half-width">
-                        <label for="pnCiudadRes">Ciudad de Residencia:</label>
-                        <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
-                    </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnTelefono">Teléfono Fijo:</label>
-                        <input type="number" id="pnTelefono" name="pnTelefono" />
-                    </div>
-					<div class="form-group half-width">
-						<label for="pnCelular">Teléfono Celular:</label>
-                        <input type="number" id="pnCelular" name="pnCelular" />
-                    </div>
-                    <div class="form-group half-width">
-						<label for="pnEmail">Correo Electrónico:</label>
-                        <input type="email" id="pnEmail" name="pnEmail" />
-                    </div>
-                </div>
-
-                <div class="flrex-container">
-                    <div class="form-group half-width">
-                        <label for="pnOficProfe">Oficio o Profesión:</label>
-                        <input type="text" id="pnOficProfe" name="pnOficProfe" />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnActividad">Actividad:</label>
-                        <select id="pnActividad" name="pnActividad">
-                            <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="dependiente">Dependiente</option>
-							<option value="independiente">Independiente</option>
-                        </select>
-                    </div>
-                </div>
-
-				<h3 class="sub-header">Marque según su perfil, cargo y/u ocupación</h3>
-                <div class="flex-container">
-					<div class="form-group half-width">
-						<label>Goza de Reconocimiento Público:</label>
-                        <div class="radio-group">
-							<input type="radio" id="pnReconoPblSi" name="pnReconoPublic" value="Si" /><label for="pnReconoPblSi">Sí</label>
-							<input type="radio" id="pnReconoPblNo" name="pnReconoPublic" value="No" /><label for="pnReconoPblNo">No</label>
-                        </div>
-                    </div>
-					<div class="form-group half-width">
-                        <label>Maneja Recursos Públicos:</label>
-						<div class="radio-group">
-							<input type="radio" id="pnManRePubSi" name="pnManRePub" value="Si" /><label for="pnManRePubSi">Sí</label>
-                            <input type="radio" id="pnManRePubNo" name="pnManRePub" value="No" /><label for="pnManRePubNo">No</label>
-						</div>
-                    </div>
-                </div>
-
-				<div class="flex-container">
-                    <div class="form-group half-width">
-						<label>Es Persona Expuesta Politicamente:</label>
-						<div class="radio-group">
-							<input type="radio" id="pnPEPSi" name="pnPEP" value="Si" /><label for="pnPEPSi">Sí</label>
-							<input type="radio" id="pnPEPNo" name="pnPEP" value="No" /><label for="pnPEPNo">No</label>
-                        </div>
-                    </div>
-                    <div class="form-group half-width" id="pnPEPtypeGroup" style="display:none;">
-						<label>Tipo de PEP:</label>
-                        <div class="checkbox-group">
-							<input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" /><label for="pnPEP-Nac">PEP Nacional</label>
-							<input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="2" /><label for="pnPEP-OrgInt">PEP Org.Internacional</label>
-							<input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" /><label for="pnPEP-Ext">PEP Extranjero</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" id="pnPEP_Entidad_Container" style="display:none;">
-					<label for="pnPEP_Entidad">En caso afirmativo señale la entidad:</label>
-                    <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" required/>
-                </div>
-
                 <div class="button-group">
-                    <button type="submit" id="submitPnBtn">Guardar Persona Natural</button>
+                    <button type="submit" id="submitPnBtn" class="btn btn-primary">Guardar Persona Natural</button>
                 </div>
             </form>
+
             <!-- form de persona juridica-->
             <form id="persJuriForm" class="form-section" style="display:none;">
+
 				<h2>Persona Jurídica</h2>
-				<div class="flex-container">
-                    <div class="form-group half-width">
-						<label for="pjRazSocial">Razón Social:</label>
-                        <input type="text" id="pjRazSocial" name="pjRazSocial" required/>
-                    </div>
-					<div class="form-group half-width">
-                        <label for="pjNIT">NIT:</label>
-                        <input type="number" id="pjNIT" name="pjNIT" disabled />
-                    </div>
-				</div>
 
-				<h3 class="sub-header">Direcciones</h3>
-                <div id="direcPrincipal">
+                <div>
+                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pjRazSocial" name="pjRazSocial" class="form-control" required />
+                            <label for="pjRazSocial" class="form-label adaptive-label" placeholder="Razón Social" alt="Razón Social"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjNIT" name="pjNIT" class="form-control" disabled required/>
+                            <label for="pjNIT" class="form-label adaptive-label" placeholder="NIT" alt="NIT"></label>
+                        </div>
+                    </div>
+
+                    <div class="justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <h3 class="sub-header">Direcciones</h3>
+                        <div class="d-flex">
+                            <div class="form-group input-wrapper">
+                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" required />
+                                <label for="pjDirPrincipal" class="form-label adaptive-label" placeholder="Dirección Oficina Principal" alt="Dirección Oficina Principal"></label>
+                            </div>
+                            <div class="form-group d-block custom-input-group">
+                                <label for="pjDepartDirPrincipal" class="form-label">Departamento:</label>
+                                <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
+                            </div>
+                            <div class="form-group d-block custom-input-group">
+                                <label for="pjCiudadDirPrincipal" class="form-label">Ciudad:</label>
+                                <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" class="form-control" required />
+                            <label for="pjEmailDirPrincipal" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" class="form-control" required />
+                            <label for="pjTelDirPrincipal" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                        </div>
+                    </div>
+
+                    <div id="sucursales-container">
+                        <div class="sucursal-item justify-content-around align-items-center w-75 flex-row m-2 p-2" id="sucursal_1">
+                            <h4>Dirección sucursal 1</h4>
+                            <div class="d-flex">
+                                <div class="form-group input-wrapper">
+                                    <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" class="form-control" required />
+                                    <label for="pjDirSucursal_1" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
+                                </div>
+                                <div class="form-group d-block custom-input-group">
+                                    <label for="pjDepartDirSucursal_1" class="form-label">Departamento:</label>
+                                    <select id="pjDepartDirSucursal_1" name="pjDepartDirSucursal_1" class="form-control" required></select>
+                                </div>
+                                <div class="form-group d-block custom-input-group">
+                                    <label for="pjCiudadDirSucursal_1" class="form-label">Ciudad:</label>
+                                    <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                                <div class="form-group input-wrapper">
+                                    <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" class="form-control" required />
+                                    <label for="pjEmailDirSucursal_1" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                                </div>
+                                <div class="form-group input-wrapper">
+                                    <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" class="form-control" required />
+                                    <label for="pjTelDirSucursal_1" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
-						<label for="pjDirPrincipal">Dirección Oficina Principal:</label>
-                        <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" required/>
-                    </div>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label for="pjDepartDirPrincipal">Departamento:</label>
-                            <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
-                        </div>
-						<div class="form-group half-width">
-							<label for="pjCiudadDirPrincipal">Ciudad:</label>
-                            <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pjEmailDirPrincipal">E-mail:</label>
-                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" required/>
-                        </div>
-						<div class="form-group half-width">
-							<label for="pjTelDirPrincipal">Teléfono:</label>
-                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" required/>
-                        </div>
+                        <button id="addSucursalBtn" type="button" class="button-group btn btn-primary">Agregar Sucursal</button>
+                        <p id="sucursal_limit_msg" style="color:red; display:none;">Máximo 3 sucursales (principal + 2 adicionales).</p>
                     </div>
                 </div>
+                
 
-                <div id="sucursales-container">
-                    <div class="sucursal-item" id="sucursal_1">
-						<h4>Dirección sucursal 1</h4>
-						<div class="form-group">
-							<label for="pjDirSucursal_1">Dirección Sucursal:</label>
-                            <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" required/>
-                        </div>
-						<div class="flex-container">
-                            <div class="form-group half-width">
-                                <label for="pjDepartDirSucursal_1">Departamento:</label>
-                                <select id="pjDepartDirSucursal_1" name="pjDepartDirSucursal_1" class="form-control" required></select>
-                            </div>
-							<div class="form-group half-width">
-								<label for="pjCiudadDirSucursal_1">Ciudad:</label>
-                                <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
-                            </div>
-							<div class="form-group half-width">
-								<label for="pjEmailDirSucursal_1">E-mail:</label>
-                                <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" required/>
-                            </div>
-							<div class="form-group half-width">
-								<label for="pjTelDirSucursal_1">Teléfono:</label>
-                                <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" required/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				<button id="addSucursalBtn" type="button" class="button-group">Agregar Sucursal</button>
-                <p id="sucursal_limit_msg" style="color:red; display:none;">Máximo 3 sucursales (principal + 2 adicionales).</p>
+				
+
+                
 
 
 				<p class="sub-header">Identifique la persona natural que ejerza control sobre la persona juridica o que sea titular, directa o indirectamente, del cinco por ciento (5%) 
@@ -771,7 +825,7 @@
                     y por lo tanto me comprometo a seguir sus principios y normas de conducta.
 
                     Si conoce algún hecho contrario al código de conducta, ética y el programa anticorrupción dirijase al canal ético:<br />
-                    https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379.
+                    <a href="https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379">https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379</a>.
                 </p>
             </div>
             <div class="panel-actions">
@@ -1790,33 +1844,37 @@
                 sucursalLimitMsg.style.display = 'none';
 
                 const newSucursalDiv = document.createElement('div');
-                newSucursalDiv.className = 'sucursal-item';
+                newSucursalDiv.className = 'sucursal-item justify-content-around align-items-center w-75 flex-row m-2 p-2';
                 newSucursalDiv.id = `sucursal_${newIndex}`;
                 newSucursalDiv.innerHTML = `
                     <h4>Dirección sucursal ${newIndex}</h4>
-                    <div class="form-group
-                        <label for="pjDirSucursal_${newIndex}">Dirección Sucursal:</label>
-                        <input type="text" id="pjDirSucursal_${newIndex}" />
-                    </div>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                                <label for="pjDepartDirSucursal_${newIndex}">Departamento:</label>
-                                <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
-                            </div>
-                            <div class="form-group half-width">
-                                <label for="pjCiudadDirSucursal_${newIndex}">Ciudad:</label>
-                                <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
-                            </div>
-                        <div class="form-group half-width">
-                            <label for="pjEmailDirSucursal_${newIndex}">E-mail:</label>
-                            <input type="email" id="pjEmailDirSucursal_${newIndex}" />
+                    <div class="d-flex">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" required />
+                            <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pjTelDirSucursal_${newIndex}">Teléfono:</label>
-                            <input type="text" id="pjTelDirSucursal_${newIndex}" />
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento:</label>
+                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
+                        </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad:</label>
+                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                     </div>
-                    <button type="button" class="remove-sucursal-btn button-group">Remover Sucursal</button>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
+                            <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
+                            <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
+                        </div>
+                    </div>
                 `;
 
                 sucursalesContainer.appendChild(newSucursalDiv);
