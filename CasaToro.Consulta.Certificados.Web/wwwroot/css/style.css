@@ -437,14 +437,13 @@ body {
 
 .custom-input-group input,
 .custom-input-group select {
-    border: 2px solid #000;
-    border-radius: 8px;
+    border-radius: 2rem;
     padding: 5px 10px;
     font-size: 12px;
     color: #000;
     outline: none;
     appearance: none;
-    background-color: var(--body-bg);
+    background-color: #ffffff;
 }
 
 
@@ -461,11 +460,20 @@ body {
     position: absolute;
     top: -8px;
     left: 10px;
-    background: var(--body-bg);
+    background: #ffffff;
     padding: 0 5px;
     font-size: 11px;
     font-weight: 600;
-    color: #000;
+    color: #00bafa;
+    z-index: 1;
+}
+
+.form-control:disabled {
+    border-radius: 2rem !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border-radius: 2rem !important;
 }
 
 /**/
@@ -643,32 +651,10 @@ body {
 }
 
 
-.input-wrapper input[type="text"]{
-    width: 100%;
-    height: 2rem;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 2rem;
-    font-size: small;
-}
-
-.input-wrapper input[type="email"]{
-    width: 100%;
-    height: 2rem;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 2rem;
-    font-size: small;
-}
-
+.input-wrapper input[type="text"],
+.input-wrapper input[type="email"],
+.input-wrapper input[type="date"],
+.input-wrapper input[type="number"],
 .input-wrapper input[type="password"]{
     width: 100%;
     height: 2rem;

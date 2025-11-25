@@ -66,66 +66,35 @@
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
-                        <div class="form-group input-wrapper form-check">
-                            <h5>Nacionalidad:</h5>
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pnRadNacional" name="pnTipoNacionalidad" value="Nacional" class="form-check-input" /><label class="form-check-label">Nacional</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pnRadExtranjero" name="pnTipoNacionalidad" value="Extranjero" class="form-check-input" /><label class="form-check-label">Extranjero</label>
-                                </div>
-                            </div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pnSelNacional" class="form-label">Nacionalidad</label>
+                            <select id="pnSelNacional" class="form-control">
+                                <option value="" disabled selected>Seleccione una opcion</option>
+                                <option value="Nacional">Nacional</option>
+                                <option value="Extranjero">Extranjero</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div id="seccionNacional" class="justify-content-around align-items-center w-75 flex-row m-2 p-2" style="display:none;">
-                        <div>
-                            <h6 class="sub-header">Personas Nacionales</h6>
-                            <div class="row d-flex">
-                                <div class="col form-group form-check">
-                                    <label>Tipo de Documento:</label>
-                                    <div class="d-flex">
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pnNac-CC" name="pnNacDoc" value="CC" class="form-check-input" /><label for="pnNac-CC" class="form-check-label">CC</label>
-                                        </div>
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pnNac-NIT" name="pnNacDoc" value="NIT" class="form-check-input" /><label for="pnNac-NIT" class="form-check-label">NIT</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col form-group input-wrapper">
-                                    <input type="number" id="pnNacNum" name="pnDocNum" class="form-control" disabled required />
-                                    <label for="pnNac-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
-                                </div>
-                            </div>
+                        <div class="form-group d-block custom-input-group" style="display:none;">
+                            <label for="pnNacDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pnNacDoc" class="form-control">
+                                <option value="" disabled selected>Seleccione un documento</option>
+                                <option value="CC">CC</option>
+                                <option value="NIT">NIT</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div id="seccionExtranjera" class="justify-content-around align-items-center w-75 flex-row m-2 p-2" style="display:none;">
-                        <div>
-                            <h6 class="sub-header">Personas Extranjeras</h6>
-                            <div class="row d-flex">
-                                <div class="col form-group form-check">
-                                    <label>Tipo de Documento:</label>
-                                    <div class="d-flex">
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pnExt-CE" name="pnExtDoc" value="CE" class="form-check-input" /><label for="pnExt-CE" class="form-check-label">CE</label>
-                                        </div>
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pnExt-PAS" name="pnExtDoc" value="PAS" class="form-check-input" /><label for="pnExt-PAS" class="form-check-label">Pasaporte</label>
-                                        </div>
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pnExt-CAR" name="pnExtDoc" value="CAR" class="form-check-input" /><label for="pnExt-CAR" class="form-check-label">Carné Dir. Producido Min Rel. Ext</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col form-group input-wrapper">
-                                    <input type="number" id="pnExtNum" name="pnDocNum" class="form-control" disabled required />
-                                    <label for="pnExt-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
-                                </div>
-                            </div>
+                        <div class="form-group d-block custom-input-group" style="display:none;">
+                            <label for="pnExtDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pnExtDoc" class="form-control">
+                                <option value="" disabled selected>Seleccione un documento</option>
+                                <option value="CE">CE</option>
+                                <option value="PAS">Pasaporte</option>
+                                <option value="CAR">Carné Dir. Producido Min Rel. Ext</option>
+                            </select>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnNacNum" name="pnDocNum" class="form-control" disabled required />
+                            <label for="pnNac-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
 
@@ -135,26 +104,26 @@
                             <label for="pnFechaExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento" alt="Fecha de Expedición de Documento"></label>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento de Identidad:</label>
+                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento</label>
                             <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento de Identidad:</label>
+                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento</label>
                             <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnNacionalidad" class="form-label">Nacionalidad/Pais:</label>
+                            <label for="pnNacionalidad" class="form-label">Nacionalidad/Pais</label>
                             <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnDepartNac" class="form-label">Departamento de nacimiento:</label>
+                            <label for="pnDepartNac" class="form-label">Departamento de nacimiento</label>
                             <select id="pnDepartNac" name="pnEstadoNac" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento:</label>
+                            <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento</label>
                             <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
                         </div>
                     </div>
@@ -169,11 +138,11 @@
                             <label for="pnDiResidencia" class="form-label adaptive-label" placeholder="Dirección de Residencia" alt="Dirección de Residencia"></label>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnDepRes" class="form-label">Departamento de Residencia:</label>
+                            <label for="pnDepRes" class="form-label">Departamento de Residencia</label>
                             <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnCiudadRes" class="form-label">Ciudad de Residencia:</label>
+                            <label for="pnCiudadRes" class="form-label">Ciudad de Residencia</label>
                             <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
                         </div>
                     </div>
@@ -1097,7 +1066,7 @@
                     consultBtn.click();
                 }
             });
-
+            /*
             //funcion que identifica tipo de nacionalidad en form persona natural
             function pnSelecNacionalidad(){
 				const idNumValue = idNumInput.value;
@@ -1121,7 +1090,7 @@
             if (pnRadNacional) pnRadNacional.addEventListener('change', pnSelecNacionalidad);
             if (pnRadExtranjero) pnRadExtranjero.addEventListener('change', pnSelecNacionalidad);
             pnSelecNacionalidad();
-
+            
             //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
             function pjSelecNacionalidad(){
                 if (pjRLRadNac.checked){
@@ -1150,7 +1119,7 @@
             if (pjRLRadNac) pjRLRadNac.addEventListener('change', pjSelecNacionalidad);
             if (pjRLRadExtr) pjRLRadExtr.addEventListener('change', pjSelecNacionalidad);
             pjSelecNacionalidad();
-
+            */
             //funcion para crear alertas
             function createAlert(message, type='warning'){
                 alertContainer.innerHTML = `
@@ -1201,7 +1170,7 @@
 				const data = await res.json();
                 return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
             }
-
+            /*
             //funcion que gestiona los select de ubicacion de persona natural
             async function ubicPNaHandler(){
 
@@ -1296,7 +1265,7 @@
             }
             pnRadNacional.addEventListener('change', ubicPNaHandler);
             pnRadExtranjero.addEventListener('change', ubicPNaHandler);
-
+            */
             async function handleRepLeg(){
                 //limpiar selects
                 [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc].forEach(sel => {
@@ -1406,7 +1375,7 @@
 
                 initSucursalUbic(1);
             }
-
+            /*
             // Estado inicial: nada seleccionado
             pnRadNacional.checked = false;
             pnRadExtranjero.checked = false;
@@ -1415,7 +1384,7 @@
                 $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
             });
             ubicPJuHandler()
-
+            */
             //funcion para precargar los datos del formulario persona natural
             async function loadFormData_Natural(data){
 				const form = document.getElementById('persNatuForm');
