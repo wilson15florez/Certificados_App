@@ -25,9 +25,7 @@ public partial class Proveedores_Juridica
 
     public string? pjRLTipNacionalidad { get; set; }
 
-    public string? pjRLRadNac { get; set; }
-
-    public string? pjRLRadExtr { get; set; }
+    public string? pjRLTipoDoc { get; set; }
 
     public string? pjRLDocNum { get; set; }
 

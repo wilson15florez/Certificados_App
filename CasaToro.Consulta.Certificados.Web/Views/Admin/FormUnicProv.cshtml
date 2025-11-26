@@ -68,33 +68,22 @@
 
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="form-group d-block custom-input-group">
-                            <label for="pnSelNacional" class="form-label">Nacionalidad</label>
-                            <select id="pnSelNacional" class="form-control">
+                            <label for="pnTipoNacionalidad" class="form-label">Nacionalidad</label>
+                            <select id="pnTipoNacionalidad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opcion</option>
                                 <option value="Nacional">Nacional</option>
                                 <option value="Extranjero">Extranjero</option>
                             </select>
                         </div>
-                        <div class="form-group d-block custom-input-group" style="display:none;">
-                            <label for="pnNacDoc" class="form-label">Tipo de Documento</label>
-                            <select id="pnNacDoc" class="form-control">
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pnTipoDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pnTipoDoc" class="form-control">
                                 <option value="" disabled selected>Seleccione un documento</option>
-                                <option value="CC">CC</option>
-                                <option value="NIT">NIT</option>
-                            </select>
-                        </div>
-                        <div class="form-group d-block custom-input-group" style="display:none;">
-                            <label for="pnExtDoc" class="form-label">Tipo de Documento</label>
-                            <select id="pnExtDoc" class="form-control">
-                                <option value="" disabled selected>Seleccione un documento</option>
-                                <option value="CE">CE</option>
-                                <option value="PAS">Pasaporte</option>
-                                <option value="CAR">Carné Dir. Producido Min Rel. Ext</option>
                             </select>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pnNacNum" name="pnDocNum" class="form-control" disabled required />
-                            <label for="pnNac-Num" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
+                            <input type="number" id="pnNumId" name="pnDocNum" class="form-control" disabled required />
+                            <label for="pnNumId" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
 
@@ -119,8 +108,8 @@
                             <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
-                            <label for="pnDepartNac" class="form-label">Departamento de nacimiento</label>
-                            <select id="pnDepartNac" name="pnEstadoNac" class="form-control" required></select>
+                            <label for="pnEstadoNac" class="form-label">Departamento de nacimiento</label>
+                            <select id="pnEstadoNac" name="pnEstadoNac" class="form-control" required></select>
                         </div>
                         <div class="col form-group d-block custom-input-group">
                             <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento</label>
@@ -164,8 +153,8 @@
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="col form-group input-wrapper">
-                            <label for="pnOficProfe">Oficio o Profesión:</label>
-                            <input type="text" id="pnOficProfe" name="pnOficProfe" />
+                            <input type="text" id="pnOficProfe" name="pnOficProfe" class="form-control" required/>
+                            <label for="pnOficProfe" class="form-label adaptive-label" placeholder="Oficio o Profesión" alt="Oficio o Profesión"></label>
                         </div>
                         <div class="col form-group d-block custom-input-group">
                             <label for="pnActividad" class="form-label">Actividad:</label>
@@ -952,17 +941,21 @@
             const controlTableBody = document.querySelector('#control-table tbody');
 
             //elementos del formulario persona natural
-            const pnRadNacional = document.getElementById('pnRadNacional');
-            const pnRadExtranjero = document.getElementById('pnRadExtranjero');
-            const seccionNacional = document.getElementById('seccionNacional');
-            const seccionExtranjera = document.getElementById('seccionExtranjera');
-            const inputNacNum = document.getElementById('pnNacNum');
-            const inputExtNum = document.getElementById('pnExtNum');
-			const radiosNacDoc = document.querySelectorAll('input[name="pnNacDoc"]');
-			const radiosExtDoc = document.querySelectorAll('input[name="pnExtDoc"]');
+            const pnTipoNacionalidad = document.getElementById('pnTipoNacionalidad');
+            const pnTipoDoc = document.getElementById('pnTipoDoc');
+            const docNacionales = [
+                {value: 'CC', text: 'CC'},
+                {value: 'NIT', text: 'NIT'}
+            ];
+            const docExtranjeros = [
+                { value: 'CE', text: 'CE'},
+                { value: 'PAS', text: 'Pasaporte'},
+                { value: 'CAR', text: 'Carné Dir. Producido Min Rel. Ext'}
+            ];
+            const inputNumId = document.getElementById('pnNumId');
 
             const pnNacionalidad = document.getElementById('pnNacionalidad');
-            const pnDepartNac = document.getElementById('pnDepartNac');
+            const pnEstadoNac = document.getElementById('pnEstadoNac');
             const pnCiudadNac = document.getElementById('pnCiudadNac');
             const pnDepExpDoc = document.getElementById('pnDepExpDoc');
             const pnCiuExpDoc = document.getElementById('pnCiuExpDoc');
@@ -1056,7 +1049,7 @@
 
             //bloqueo inicial
             pnNacionalidad.disabled = true;
-            pnDepartNac.disabled = true;
+            pnEstadoNac.disabled = true;
             pnCiudadNac.disabled = true;
 
 
@@ -1066,31 +1059,31 @@
                     consultBtn.click();
                 }
             });
-            /*
+
             //funcion que identifica tipo de nacionalidad en form persona natural
-            function pnSelecNacionalidad(){
-				const idNumValue = idNumInput.value;
-                if (pnRadNacional.checked){
-					seccionNacional.style.display = 'block';
-					seccionExtranjera.style.display = 'none';
-					if (inputNacNum) inputNacNum.value = idNumValue;
-					clearRadios(radiosExtDoc);
-                }else if (pnRadExtranjero.checked){
-                    seccionNacional.style.display = 'none';
-					seccionExtranjera.style.display = 'block';
-					if (inputExtNum) inputExtNum.value = idNumValue;
-					clearRadios(radiosNacDoc);
-				}else{
-					seccionNacional.style.display = 'none';
-					seccionExtranjera.style.display = 'none';
-					clearRadios(radiosNacDoc);
-					clearRadios(radiosExtDoc);
+            pnTipoNacionalidad.addEventListener("change", () => {
+                const tipoNac = pnTipoNacionalidad.value;
+
+                //limpiar select
+                pnTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
+
+                let listTipDoc = [];
+
+                if (tipoNac === 'Nacional'){
+                    listTipDoc = docNacionales;
+                } else if (tipoNac === 'Extranjero'){
+                    listTipDoc = docExtranjeros;
                 }
-            }
-            if (pnRadNacional) pnRadNacional.addEventListener('change', pnSelecNacionalidad);
-            if (pnRadExtranjero) pnRadExtranjero.addEventListener('change', pnSelecNacionalidad);
-            pnSelecNacionalidad();
-            
+
+                //llenar el select de tipo de documento
+                listTipDoc.forEach(doc => {
+                    const option = document.createElement('option');
+                    option.value = doc.value;
+                    option.textContent = doc.text;
+                    pnTipoDoc.appendChild(option);
+                });
+            });
+            /*
             //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
             function pjSelecNacionalidad(){
                 if (pjRLRadNac.checked){
@@ -1170,102 +1163,99 @@
 				const data = await res.json();
                 return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
             }
-            /*
+            
             //funcion que gestiona los select de ubicacion de persona natural
             async function ubicPNaHandler(){
 
 				//limpia los selects
-                [pnNacionalidad, pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                [pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
                     $(sel).empty().prop('disabled', true);
                 });
 
-                if (pnRadNacional.checked){
+                const nac = pnTipoNacionalidad.value;
+
+                if (nac === 'Nacional'){
                     //pais fijo colombia
-                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --', 'id', 'name');
+                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], 'Seleccione país', 'id', 'name');
                     
                     $(pnNacionalidad).val('CO').trigger('change.select2');
-                    $(pnNacionalidad).prop('disabled', true);
+                    pnNacionalidad.disabled = true;
 
                     //carga departamentos/ciudades de colombia
                     const { departamentos, ciudadByDep } = await loadUbiNac();
 
-                    [pnDepartNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
-                        fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                    //departamentos de nacimiento, expedicion y residencia
+                    [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
+                        fillSelect2(depSelect, departamentos, 'Seleccione departamento');
                         $(depSelect).prop('disabled', false);
                     });
 
-                    const handleDeptChange = (depSelect, citySelect) => {
-                        $(depSelect).off('change.ubi').on('change.ubi', function() {
-                            const dep = ($(this).val() || '' ).trim().toUpperCase();
+                    function handleDeptChange(depSelect, citySelect) {
+                        $(depSelect).off('change').on('change', () => {
+                            const dep = depSelect.value.trim().toUpperCase();
                             const municipios = ciudadByDep[dep] || [];
-                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad--');
-                            $(citySelect).prop('disabled', municipios.length === 0);
+                            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+                            citySelect.disabled = municipios.length === 0;
                         });
-                    };
+                    }
 
-                    handleDeptChange(pnDepartNac, pnCiudadNac);
+                    handleDeptChange(pnEstadoNac, pnCiudadNac);
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                 }
-                else if (pnRadExtranjero.checked){
-                    $(pnNacionalidad).prop('disabled', false);
+                else if (nac === 'Extranjero'){
+
+                    //carga paises
                     const countries = await loadUbiExt();
-                    fillSelect2(pnNacionalidad, countries, '-- Seleccione país --', 'id', 'name');
+                    fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
+                    pnNacionalidad.disabled = false;
 
                     //Departamentos y ciudades colombianas para expedicion y residencia
                     const { departamentos, ciudadByDep } = await loadUbiNac();
                     [pnDepExpDoc, pnDepRes].forEach(depSelect => {
-                        fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
-                        $(depSelect).prop('disabled', false);
+                        fillSelect2(depSelect, departamentos, 'Seleccione departamento');
+                        depSelect.disabled = false;
                     });
 
-                    const handleDeptChange = (depSelect, citySelect) => {
-                        $(depSelect).off('change.ubi').on('change.ubi', function(){
-                            const selectedDep = ($(this).val() || '').trim().toUpperCase();
+                    function handleDeptChange (depSelect, citySelect) {
+                        $(depSelect).off('change').on('change', () => {
+                            const selectedDep = depSelect.value.trim().toUpperCase();
                             const municipios = ciudadByDep[selectedDep] || [];
-                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
-                            $(citySelect).prop('disabled', municipios.length === 0);
+                            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+                            citySelect.disabled = municipios.length === 0;
                         });
-                    };
+                    }
 
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                     //Estados y ciudades para país seleccionado
-                    $(pnNacionalidad).off('change.ubi').on('change.ubi', async function(){
-                        const countryId = $(this).val();
+                    $(pnNacionalidad).off('change').on('change', async function(){
+                        const countryId = pnNacionalidad.value;
+
                         if (!countryId){
-                            fillSelect2(pnDepartNac, [], '-- Seleccione estado --');
-                            fillSelect2(pnCiudadNac, [], '-- Seleccione ciudad --');
-                            $(pnDepartNac).prop('disabled', true);
-                            $(pnCiudadNac).prop('disabled', true);
+                            pnEstadoNac.disabled = true;
+                            pnCiudadNac.disabled = true;
                             return;
                         }
 
-                        $(pnDepartNac).prop('disabled', false);
-
+                        //estados
                         const states = await loadStates(countryId);
-                        fillSelect2(pnDepartNac, states, '-- Seleccione estado --', 'id', 'name');
+                        fillSelect2(pnEstadoNac, states, 'Seleccione estado', 'id', 'name');
+                        pnEstadoNac.disabled = false;
 
-                        $(pnDepartNac).off('change.ubi2').on('change.ubi2', async function(){
-                            const stateId = $(this).val();
+                        //ciudades
+                        $(pnEstadoNac).off('change').on('change.', async function(){
+                            const stateId = pnEstadoNac.value;
                             const cities = await loadCities(stateId);
-                            fillSelect2(pnCiudadNac, cities, '-- Seleccione ciudad --', 'id', 'name');
-                            $(pnCiudadNac).prop('disabled', false);
+                            fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
+                            pnCiudadNac.disabled = false;
                         });
                     });
                 }
-                else {
-                    fillSelect2(pnNacionalidad, [], '--Seleccion país--');
-                    [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
-                        $(sel).empty().append(new Option('-- Seleccione --', '', false, false)).prop('disabled', true);
-                    });
-                }
             }
-            pnRadNacional.addEventListener('change', ubicPNaHandler);
-            pnRadExtranjero.addEventListener('change', ubicPNaHandler);
-            */
+            
             async function handleRepLeg(){
                 //limpiar selects
                 [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc].forEach(sel => {
@@ -1357,13 +1347,13 @@
                     const citySelect = document.getElementById(`pjCiudadDirSucursal_${index}`);
                     if (!depSelect || !citySelect) return;
 
-                    fillSelect2(depSelect, departamentos, '-- Seleccione departamento --');
+                    fillSelect2(depSelect, departamentos, 'Seleccione departamento');
                     $(depSelect).prop('disabled', false);
 
                     $(depSelect).off('change.ubiSUC').on('change.ubiSUC', function(){
                         const dep = ($(this).val() || '').trim().toUpperCase();
                         const municipios = ciudadByDep[dep] || [];
-                        fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                        fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                         $(citySelect).prop('disabled', municipios.length === 0);
                     });
                 };
@@ -1375,16 +1365,13 @@
 
                 initSucursalUbic(1);
             }
-            /*
+            
             // Estado inicial: nada seleccionado
-            pnRadNacional.checked = false;
-            pnRadExtranjero.checked = false;
-            fillSelect2(pnNacionalidad, [], '-- Seleccione país --');
-            [pnDepartNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
-                $(sel).empty().append(new Option('-- Seleccione --', '', true, false)).prop('disabled', true);
+            fillSelect2(pnNacionalidad, [], 'Seleccione país');
+            [pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                $(sel).empty().append(new Option('Seleccione', '', true, false)).prop('disabled', true);
             });
-            ubicPJuHandler()
-            */
+            
             //funcion para precargar los datos del formulario persona natural
             async function loadFormData_Natural(data){
 				const form = document.getElementById('persNatuForm');
@@ -1397,130 +1384,80 @@
 
                 if (!data) return;
 
-                //carga los datos simples y radios/checkbox
+                //asigna los campos simples excepto los que requieren logica especial
+                const skipCampos = [
+                        'pnTipoNacionalidad',
+                        'pnTipoDoc',
+                        'pnNacionalidad',
+                        'pnEstadoNac',
+                        'pnCiudadNac',
+                        'pnDepExpDoc',
+                        'pnCiuExpDoc',
+                        'pnDepRes',
+                        'pnCiudadRes',
+                        'Nit'
+                ];
+
                 for (const key in data){
-					if (!data.hasOwnProperty(key) || data[key] === null || data[key] === undefined) continue;
+                    if(!data.hasOwnProperty(key)) continue;
+                    if(skipCampos.includes(key)) continue;
 
-					const value = typeof data[key] === 'string' ? data[key].trim() : data[key];
-
-					if (key !== 'pnNacDoc' && key !== 'pnExtDoc'){
-                        const radios = form.querySelectorAll(`input[type="radio"][name="${key}"]`);
-						if (radios.length > 0){
-                            radios.forEach(r => { if (r.value === value) r.checked = true; });
-                            continue;
-                        }
-                    }
-
-					const checkboxes = form.querySelectorAll(`input[name="checkbox"][name="${key}"]`);
-					if (checkboxes.length > 0){
-						if (Array.isArray(data[key])){
-							data[key].forEach(v => {
-								const chk = form.querySelector(`input[name="${key}"][value="${v}"]`);
-                                if (chk) chk.checked = true;
-							});
-						}else {
-							const chk = form.querySelector(`input[name="${key}"][value="${data[key]}"]`);
-							if (chk) chk.checked = true;
-                        }
-						continue;
-                    }
-					const el = document.getElementById(key);
-					if (el) el.value = value;
+                    const el = document.getElementById(key);
+                    if (el && data[key] != null) el.value = data[key];
                 }
 
-                //helper para asignar select2 y disparar el cambio
-                const setSelect = (id, val) => {
-                    if (!val) return;
-                    const cleanVal = String(val).trim();
-                    $(`#${id}`).val(cleanVal).trigger('change.select2');
-                };
+                //mapea nit al campo de identificacion
+                if (data.Nit) inputNumId.value = data.Nit;
 
-                //logica de nacionalidad y ubicacion
-                if (data.pnTipoNacionalidad) {
-                    const isNacional = data.pnTipoNacionalidad === 'Nacional';
-                    document.getElementById(isNacional ? 'pnRadNacional' : 'pnRadExtranjero').checked = true;
-
-                    pnSelecNacionalidad();
-                    //precarga los selects
-                    await ubicPNaHandler();
-
-                    //carga los datos colombia
-                    const { departamentos, ciudadByDep } = await loadUbiNac();
-
-                    //documento y nacimiento
-                    if (isNacional){
-                        //nacional
-                        const tipoDoc = data.pnNacDoc || data.pnRadNac;
-                        if (tipoDoc){
-                            const r = form.querySelector(`input[name="pnNacDoc"][value="${tipoDoc}"]`);
-                            if (r) r.checked = true;
-                        }
-
-                        if (data.pnDepartNac){
-                            const depVal = data.pnDepartNac.trim();
-                            setSelect('pnDepartNac', depVal);
-
-                            const ciudades = ciudadByDep[depVal.toUpperCase()] || [];
-                            fillSelect2('#pnCiudadNac', ciudades, '-- Seleccion ciudad --');
-
-                            if (data.pnCiudadNac) setSelect('pnCiudadNac', data.pnCiudadNac);
-                        }
-
-                    } else {
-                        //extranjero
-                        const tipoDoc = data.pnExtDoc || data.pnRadExt;
-                        if (tipoDoc){
-                            const r = form.querySelector(`input[name="pnExtDoc"][value="${tipoDoc}"]`);
-                            if (r) r.checked = true;
-                        }
-
-                        if (data.pnNacionalidad){
-                            const paisVal = data.pnNacionalidad.trim();
-                            setSelect('pnNacionalidad', paisVal);
-
-                            if (data.pnDepartNac){
-                                const states = await loadStates(paisVal);
-                                fillSelect2('#pnDepartNac', states, '-- Seleccione estado --', 'id', 'name');
-                                
-                                setSelect('pnDepartNac', data.pnDepartNac);
-
-                                if (data.pnCiudadNac){
-                                    const cities = await loadCities(data.pnDepartNac);
-                                    fillSelect2('#pnCiudadNac', cities, '-- Seleccione ciudad --', 'id', 'name');
-                                    
-                                    setSelect('pnCiudadNac', data.pnCiudadNac);
-                                }
-                            }
-                        }
-                    }
-                    //expedicion y residencia
-                    if (data.pnDepExpDoc){
-                        setSelect('pnDepExpDoc', data.pnDepExpDoc);
-                        const cities = ciudadByDep[data.pnDepExpDoc.trim().toUpperCase()] || [];
-                        fillSelect2('#pnCiuExpDoc', cities, '-- Seleccione ciudad --');
-                        if (data.pnCiuExpDoc) setSelect('pnCiuExpDoc', data.pnCiuExpDoc);
-                    }
-                    
-                    if (data.pnDepRes){
-                        setSelect('pnDepRes', data.pnDepRes);
-                        const cities = ciudadByDep[data.pnDepRes.trim().toUpperCase()] || [];
-                        fillSelect2('#pnCiudadRes', cities, '-- Seleccione ciudad --');
-                        if (data.pnCiudadRes) setSelect('pnCiudadRes', data.pnCiudadRes);
-                    }
-                    
-                    //numeros y fechas
-                    if (data.pnNacNum) document.getElementById('pnNacNum').value = data.pnNacNum;
-                    if (data.pnExtNum) document.getElementById('pnExtNum').value = data.pnExtNum;
-                    if (data.pnDocNum){
-                        const targetId = isNacional ? 'pnNacNum' : 'pnExtNum';
-                        document.getElementById(targetId).value = data.pnDocNum;
-                    }
-
-                    if (data.pnFechaExpDoc) document.getElementById('pnFechaExpDoc').value = data.pnFechaExpDoc;
-                    if (data.pnFechaNac) document.getElementById('pnFechaNac').value = data.pnFechaNac;
-                    
+                //logica de tipo nacionalidad
+                if (data.pnTipoNacionalidad){
+                    pnTipoNacionalidad.value = data.pnTipoNacionalidad;
+                    pnTipoNacionalidad.dispatchEvent(new Event('change'));
                 }
 
+                //permite que se cargue el tipo de documento
+                await new Promise(r => setTimeout(r, 150));
+
+                //tipo de documento
+                if (data.pnTipoDoc){
+                    pnTipoDoc.value = data.pnTipoDoc;
+                }
+
+                //ubicaciones 
+                await ubicPNaHandler();
+
+                //nacimiento
+                if (data.pnNacionalidad){
+                    $(pnNacionalidad).val(data.pnNacionalidad).trigger('change.select2');
+                    await new Promise(r => setTimeout(r, 150));
+                }
+                if (data.pnEstadoNac) {
+                    $(pnEstadoNac).val(data.pnEstadoNac).trigger('change');
+                    await new Promise(r => setTimeout(r, 150));
+                }
+                if (data.pnCiudadNac) {
+                    $(pnCiudadNac).val(data.pnCiudadNac).trigger('change');
+                }
+
+                //expedicion
+                if (data.pnDepExpDoc) {
+                    $(pnDepExpDoc).val(data.pnDepExpDoc).trigger('change');
+                    await new Promise(r => setTimeout(r, 150));
+                }
+                if (data.pnCiuExpDoc) {
+                    $(pnCiuExpDoc).val(data.pnCiuExpDoc).trigger('change');
+                }
+
+                //residencia
+                if (data.pnDepRes) {
+                    $(pnDepRes).val(data.pnDepRes).trigger('change');
+                    await new Promise(r => setTimeout(r, 150));
+                }
+                if (data.pnCiudadRes) {
+                    $(pnCiudadRes).val(data.pnCiudadRes).trigger('change');
+                }
+
+                //radios, PEP y checkboxes
 				if(data.pnReconoPublic){
 					const r = form.querySelector(`input[name="pnReconoPublic"][value="${data.pnReconoPublic}"]`);
 					if (r) r.checked = true;
@@ -2049,43 +1986,66 @@
                 });
             }
 
+            //funcion para recopilar los datos del formulario persona natural
             function collectFormData_Natural(){
 				const form = document.getElementById('persNatuForm');
                 const data = {};
 
-                form.querySelectorAll('input[type="text"], input[type="email"],input[type="number"], input[type="date"], select, textarea')
+                //recopila campos simples
+                form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea')
                     .forEach(el => {
 						if (!el.name) return;
 						data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
 					});
 
-                const radioGroups = ['pnTipoNacionalidad','pnNacDoc', 'pnExtDoc', 'pnReconoPublic', 'pnManRePub', 'pnPEP'];
+                //recopila Nacionalidad
+                data.pnTipoNacionalidad = pnTipoNacionalidad.value || null;
+                data.pnTipoDoc = pnTipoDoc.value || null;
+                data.pnNumId = inputNumId.value.trim() !== "" ? inputNumId.value.trim() : null;
+
+                //radios y checkboxes
+                const radioGroups = [
+                    'pnReconoPublic', 
+                    'pnManRePub',
+                    'pnPEP'
+                ];
+
                 radioGroups.forEach(rname =>{
-					const checked = form.querySelector(`input[name="${rname}"]:checked`);
-					data[rname] = checked ? checked.value : null;
+                    const checked = form.querySelector(`input[name="${rname}"]:checked`);
+                    data[rname] = checked ? checked.value : null;
                 });
 
-                if (inputNacNum && !inputNacNum.disabled && inputNacNum.value.trim() !== "") data.pnDocNum = inputNacNum.value.trim();
-                else if (inputExtNum && !inputExtNum.disabled && inputExtNum.value.trim() !== "") data.pnDocNum = inputExtNum.value.trim();
-				else data.pnDocNum = null;
+                const selectedPEPTypes = Array.from(form.querySelectorAll('input[name="pnPEPType"]:checked'))
+                                              .map(chk => chk.value);
 
-				data.Nit = document.getElementById('idNum').value;
+                data.PEPTypes = selectedPEPTypes.length > 0 ? selectedPEPTypes : [];
 
-                data.inputNacNum = data['pnNacNum'] || null;
-                data.inputExtNum = data['pnExtNum'] || null;
-
-				const selectedPEPTypes = Array.from(form.querySelectorAll('input[name="pnPEPType"]:checked'))
-											  .map(chk => parseInt(chk.value));
-				data.PEPTypes = selectedPEPTypes;
-
-                if (data.pnPEP === 'No'){
-					data.PEPTypes = [];
-					data.pnPEP_Entidad = null;
+				//PEP entidad (solo si es 'si')
+                if (data.pnPEP === 'Si'){
+                    const entidad = Document.getElementById('pnPEP_Entidad').value.trim();
+                    data.pnPEP_Entidad = entidad !== "" ? entidad : null;
+                } else {
+                    data.pnPEP_Entidad = null;
+                    data.PEPTypes = [];
                 }
+
+                //forzar ubicaciones a null por seguridad si estan vacias
+                [
+                    'pnDepExpDoc', 'pnCiuExpDoc',
+                    'pnDepRes', 'pnCiudadRes',
+                    'pnEstadoNac', 'pnCiudadNac',
+                    'pnNacionalidad'
+                ].forEach(name => {
+                    if (!data[name] || data[name] === "") data[name] = null;
+                });
+
+                //agregar NIT consultado
+                data.Nit = document.getElementById('idNum').value;
 
 				return data;
             }
 
+            //funcion para recopilar los datos del formulario persona juridica
             function collectFormData_Juridica(){
 				const form = document.getElementById('persJuriForm');
                 const data = {};
@@ -2139,26 +2099,23 @@
 				alertContainer.innerHTML = '';
 
                 //verifica que sea nacional o extranjero
-                const isNacional = document.getElementById('pnRadNacional')?.checked;
-                const isExtranjero = document.getElementById('pnRadExtranjero')?.checked;
-				if (!isNacional && !isExtranjero){
+                if (!pnTipoNacionalidad.value){
 					createAlert('Por favor seleccione si es Nacional o Extranjero.', 'danger');
+                    pnTipoNacionalidad.focus();
 					return false;
                 }
 
                 //verifica que tipo de documento este seleccionado
-                const tipoDoc = isNacional
-					? form.querySelector('input[name="pnNacDoc"]:checked')
-					: form.querySelector('input[name="pnExtDoc"]:checked');
-				if (!tipoDoc){
+                if (!pnTipoDoc.value){
 					createAlert('Por favor seleccione el tipo de documento correspondiente.', 'danger');
+                    pnTipoDoc.focus();
                     return false;
 				}
 
                 //verifica que los demas campos esten diligenciados
                 const requiredFields = [
                     'pnNombreCompl', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc',
-                    'pnFechaNac', 'pnNacionalidad', 'pnDepartNac', 'pnCiudadNac',
+                    'pnFechaNac', 'pnNacionalidad', 'pnEstadoNac', 'pnCiudadNac',
                     'pnDiResidencia', 'pnDepRes', 'pnCiudadRes',
                     'pnEmail', 'pnOficProfe', 'pnActividad'
                 ];
@@ -2174,9 +2131,11 @@
                     }
                 }
 
+
 				//verifica telefono fijo o celular (al menos uno diligenciado)
 				const tel = document.getElementById('pnTelefono').value.trim();
 				const cel = document.getElementById('pnCelular').value.trim();
+
 				if (!tel && !cel){
 					createAlert('Por favor ingrese al menos un número de teléfono fijo o celular.', 'danger');
 					return false;
@@ -2194,16 +2153,10 @@
 
                 // verifica email
 				const email = document.getElementById('pnEmail').value.trim();
+
 				if (email && !regexEmail.test(email)){
 					createAlert('Por favor ingrese un correo electrónico válido.', 'danger');
 					return false;
-                }
-
-                //verifica actividad
-				const acti = document.getElementById('pnActividad');
-				if ( !acti || !acti.value.trim()){
-					createAlert('Por favor ingrese el tipo de actividad.', 'danger');
-                    return false;
                 }
 
                 //verificacion reconocimiento publico
@@ -2220,6 +2173,7 @@
 				//verifica PEP y de ser si, valida el check y entidad
 				const pepSi = document.getElementById('pnPEPSi').checked;
 				const pepNo = document.getElementById('pnPEPNo').checked;
+
 				if (!pepSi && !pepNo){
                     createAlert('Por favor seleccione si es PEP.', 'danger');
 					return false;
@@ -2413,7 +2367,6 @@
             }
 
             //validacion de campos del form formato unico
-            
 
             //listener de submit
             document.getElementById('persNatuForm').addEventListener('submit', function(e) {

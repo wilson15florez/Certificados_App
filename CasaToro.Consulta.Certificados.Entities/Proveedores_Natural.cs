@@ -14,9 +14,7 @@ public partial class Proveedores_Natural
 
     public string? pnTipoNacionalidad { get; set; }
 
-    public string? pnNacDoc { get; set; }
-
-    public string? pnExtDoc { get; set; }
+    public string? pnTipoDoc { get; set; }
 
     public DateOnly? pnFechaExpDoc { get; set; }
 

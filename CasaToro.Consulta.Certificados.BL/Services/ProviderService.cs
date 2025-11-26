@@ -88,7 +88,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al actualizar el proveedor", ex);
             }
         }
-
+        
         //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica
         public async Task<object> getProviderDetails(string nit, string personType)
         {
@@ -110,8 +110,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {"pnNombreCompl", naturalData.pnNombreCompl },
 
                     {"pnTipoNacionalidad", naturalData.pnTipoNacionalidad },
-                    {"pnRadNac", naturalData.pnNacDoc },
-                    {"pnRadExt", naturalData.pnExtDoc },
+                    {"pnTipoDoc", naturalData.pnTipoDoc },
                     {"pnFechaExpDoc", naturalData.pnFechaExpDoc?.ToString("yyyy-MM-dd") },
                     {"pnDepExpDoc", naturalData.pnDepExpDoc },
                     {"pnCiuExpDoc", naturalData.pnCiuExpDoc },
@@ -164,8 +163,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
                         {"pjNomReLeg",juridicaData.pjNomReLeg},
                         {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
-                        {"pjRLRadNac",juridicaData.pjRLRadNac},
-                        {"pjRLRadExtr",juridicaData.pjRLRadExtr},
+                        {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
                         {"pjRLDocNum",juridicaData.pjRLDocNum},
                         {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
                         {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
@@ -198,7 +196,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
             return null;
         }
-
+        
         public void UpdateNaturalInfo(Proveedores_Natural providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -228,8 +226,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingNatural.pnCelular = providerData.pnCelular;
 
                         existingNatural.pnTipoNacionalidad = providerData.pnTipoNacionalidad;
-                        existingNatural.pnNacDoc = providerData.pnNacDoc;
-                        existingNatural.pnExtDoc = providerData.pnExtDoc;
+                        existingNatural.pnTipoDoc = providerData.pnTipoDoc;
                         existingNatural.pnFechaExpDoc = providerData.pnFechaExpDoc;
                         existingNatural.pnDepExpDoc = providerData.pnDepExpDoc;
                         existingNatural.pnCiuExpDoc = providerData.pnCiuExpDoc;
@@ -311,8 +308,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                     existingJuridica.pjNomReLeg = providerData.pjNomReLeg;
                     existingJuridica.pjRLTipNacionalidad = providerData.pjRLTipNacionalidad;
-                    existingJuridica.pjRLRadNac = providerData.pjRLRadNac;
-                    existingJuridica.pjRLRadExtr = providerData.pjRLRadExtr;
+                    existingJuridica.pjRLTipoDoc = providerData.pjRLTipoDoc;
                     existingJuridica.pjRLDocNum = providerData.pjRLDocNum;
                     existingJuridica.pjRLFechExpDoc = providerData.pjRLFechExpDoc;
                     existingJuridica.pjRLDepExpDoc = providerData.pjRLDepExpDoc;
@@ -436,7 +432,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al agregar el proveedor", ex);
             }
         }
-
+        
         public void AddProveedorNatural(Proveedores_Natural proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())

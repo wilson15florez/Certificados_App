@@ -371,7 +371,7 @@ public partial class ApplicationDbContext : DbContext
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
+        
         modelBuilder.Entity<AccionistasControlPJuridica>(entity =>
         {
             entity.HasKey(e => e.Id_Control);
@@ -388,7 +388,7 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nit_Proveedores_Juridica");
         });
-
+        
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
         modelBuilder.Entity<Proveedores_FUCP>(entity =>
@@ -457,6 +457,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.tipEmpresa).HasMaxLength(100);
         });
 
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         modelBuilder.Entity<Proveedores_Juridica>(entity =>
         {
             entity.HasKey(e => e.Id_ProJuri);
@@ -475,9 +477,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pjRLDepartNac).HasMaxLength(100);
             entity.Property(e => e.pjRLDocNum).HasMaxLength(20);
             entity.Property(e => e.pjRLNacionalidad).HasMaxLength(100);
-            entity.Property(e => e.pjRLRadExtr).HasMaxLength(50);
-            entity.Property(e => e.pjRLRadNac).HasMaxLength(50);
             entity.Property(e => e.pjRLTipNacionalidad).HasMaxLength(50);
+            entity.Property(e => e.pjRLTipoDoc).HasMaxLength(50);
             entity.Property(e => e.pjRazSocial).HasMaxLength(255);
             entity.Property(e => e.pjTelDirPrincipal).HasMaxLength(20);
         });
@@ -503,12 +504,10 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pnDiResidencia).HasMaxLength(255);
             entity.Property(e => e.pnEmail).HasMaxLength(100);
             entity.Property(e => e.pnEstadoNac).HasMaxLength(100);
-            entity.Property(e => e.pnExtDoc).HasMaxLength(50);
             entity.Property(e => e.pnManRePub)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.pnNacDoc).HasMaxLength(50);
             entity.Property(e => e.pnNacionalidad).HasMaxLength(100);
             entity.Property(e => e.pnNombreCompl).HasMaxLength(255);
             entity.Property(e => e.pnOficProfe).HasMaxLength(100);
@@ -522,6 +521,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pnTelefono).HasMaxLength(20);
+            entity.Property(e => e.pnTipoDoc).HasMaxLength(50);
             entity.Property(e => e.pnTipoNacionalidad).HasMaxLength(50);
         });
 
@@ -542,7 +542,7 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nit_SJ_Proveedores_Juridica");
         });
-
+        
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
         modelBuilder.Entity<PEPtipos>(entity =>
