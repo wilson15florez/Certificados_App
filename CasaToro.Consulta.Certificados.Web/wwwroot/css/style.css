@@ -434,6 +434,18 @@ body {
     position: relative;
     width: 19%;
 }
+.row>* {
+    padding-left: unset !important;
+}
+
+.no-edit {
+    pointer-events: none;
+    background-color: #e9ecef !important;
+}
+
+.disabled-label {
+    background: linear-gradient(#ffffff,#e9ecef) !important;
+}
 
 .custom-input-group input,
 .custom-input-group select {
@@ -671,10 +683,10 @@ body {
 
 .adaptive-label {
     position: absolute;
-    left: 10px;
+    left: 11px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 16px;
+    font-size: 12px;
     color: #898989;
     background: white;
     padding: 0 5px;

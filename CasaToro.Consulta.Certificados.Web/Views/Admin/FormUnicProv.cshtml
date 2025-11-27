@@ -82,8 +82,8 @@
                             </select>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pnNumId" name="pnDocNum" class="form-control" disabled required />
-                            <label for="pnNumId" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
+                            <input type="number" id="pnNumId" name="pnDocNum" class="form-control no-edit" required />
+                            <label for="pnNumId" class="form-label adaptive-label disabled-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
 
@@ -1006,9 +1006,27 @@
             let originalPEPEntidad = '';
 			let activeDirecform = null;
             let activeParagraph = null;
+            let isAutoFilling = false;
 
 
-            function fillSelect2(select, data, placeholder = '-- Seleccione --', valueField = 'Código', textField = 'Nombre') {
+            function waitForSelec2(select, timeout = 800){
+                return new Promise(r => {
+                    const start = performance.now();
+
+                    const check() {
+                        const hasOptions = select.options.length > 1;
+
+                        if (hasOptions || performance.now() - start > timeout){
+                            return r();
+                        }
+                        requestAnimationFrame(check);
+                    }
+
+                    check();
+                });
+            }
+
+            function fillSelect2(select, data, placeholder = 'Seleccione', valueField = 'id', textField = 'name') {
                 const $select = $(select);
 
                 //limpia opciones previas
@@ -1018,24 +1036,27 @@
                 $select.append(new Option(placeholder, '', false, false));
 
                 //llena las opciones
-                if (Array.isArray(data) && data.length > 0){
+                if (Array.isArray(data)){
                     data.forEach(item => {
                         let value, text;
+
                         if (typeof item === 'string'){
-                            value = item;
-                            text = item;
+                            value = text = item;
                         } else{
-                            value = item[valueField] ?? item.id ?? '';
-                            text = item[textField] ?? item.name ?? '';
+                            value = item[valueField] ?? item.Código ?? item.id ?? '';
+                            text = item[textField] ?? item.Nombre ?? item.name '';
                         }
+
                         $select.append(new Option(text, value, false, false));
                     });
                 }
 
-                //inicializa o refresca select2
-                if ($select.data('select2')){
+                //Si ya tiene Select2, NO reiniciar completamente
+                if ($select.hasClass('select2-hidden-accessible')){
+                    //reflesca UI sin resetear el valor
                     $select.trigger('change.select2')
                 } else {
+                    //inicializar solo la primera vez
                     $select.select2({
                         placeholder,
                         allowClear: true,
@@ -1043,8 +1064,25 @@
                         language: {noResults: () => "No se encontraron resultados"}
                     });
                 }
-                //resetear valor seleccionado
-                $select.val('').trigger('change.select2');
+            }
+
+            //funcion para setear valores con select2
+            async function setSelect2Val(select, value){
+                
+                if (!value) return false;
+
+                await waitForSelec2(select);
+
+                const exists = [...select.options].some(o => o.value == value);
+
+                if (!exists){
+                    console.warn(`El valor no encontrado en el select2.`, {select, value});
+                    return false;
+                }
+
+                $(select).val(value).trigger('change.select2');
+                return true;
+                    
             }
 
             //bloqueo inicial
@@ -1082,8 +1120,10 @@
                     option.textContent = doc.text;
                     pnTipoDoc.appendChild(option);
                 });
+
+                ubicPNaHandler();
             });
-            /*
+
             //funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
             function pjSelecNacionalidad(){
                 if (pjRLRadNac.checked){
@@ -1112,7 +1152,7 @@
             if (pjRLRadNac) pjRLRadNac.addEventListener('change', pjSelecNacionalidad);
             if (pjRLRadExtr) pjRLRadExtr.addEventListener('change', pjSelecNacionalidad);
             pjSelecNacionalidad();
-            */
+            
             //funcion para crear alertas
             function createAlert(message, type='warning'){
                 alertContainer.innerHTML = `
@@ -1128,7 +1168,7 @@
                 const res = await fetch(colDMJSON);
 				const data = await res.json();
 
-                const departamentos = [...new Set(data.map(d => d["Nombre"].trim()))];
+                const departamentos = [...new Set(data.map(d => (d["Nombre"] || "").trim().toUpperCase()))];
                 const ciudadByDep = {};
 
                 data.forEach(item => {
@@ -1154,30 +1194,32 @@
 			async function loadStates(countryId){
 				const res = await fetch(url_STATES);
                 const data = await res.json();
-                return (data.states || []).filter(s => s.id_country === parseInt(countryId));
+                return (data.states || []).filter(s => s.id_country == countryId);
 			}
 
             //funcion para cargar ciudades segun el estado
 			async function loadCities(stateId){
 				const res = await fetch(url_CITIES);
 				const data = await res.json();
-                return (data.cities || []).filter(c => c.id_state === parseInt(stateId));
+                return (data.cities || []).filter(c => c.id_state == stateId);
             }
             
             //funcion que gestiona los select de ubicacion de persona natural
             async function ubicPNaHandler(){
 
-				//limpia los selects
-                [pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
-                    $(sel).empty().prop('disabled', true);
-                });
-
                 const nac = pnTipoNacionalidad.value;
+
+                //si es autorellenado no limbia ni deshabilita
+                if (!isAutoFilling) {
+                    [pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
+                        $(sel).empty().prop("disabled", true);
+                    });
+                }
 
                 if (nac === 'Nacional'){
                     //pais fijo colombia
-                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], 'Seleccione país', 'id', 'name');
-                    
+                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], 'Seleccione país');
+
                     $(pnNacionalidad).val('CO').trigger('change.select2');
                     pnNacionalidad.disabled = true;
 
@@ -1186,13 +1228,13 @@
 
                     //departamentos de nacimiento, expedicion y residencia
                     [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
-                        fillSelect2(depSelect, departamentos, 'Seleccione departamento');
-                        $(depSelect).prop('disabled', false);
+                        fillSelect2(depSelect, departamentos, 'Seleccione departamento', undefined, undefined);
+                        depSelect.disabled = false;
                     });
 
                     function handleDeptChange(depSelect, citySelect) {
-                        $(depSelect).off('change').on('change', () => {
-                            const dep = depSelect.value.trim().toUpperCase();
+                        $(depSelect).off('change.ubiNac').on('change.ubiNac', function() {
+                            const dep = this.value.trim().toUpperCase();
                             const municipios = ciudadByDep[dep] || [];
                             fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                             citySelect.disabled = municipios.length === 0;
@@ -1208,19 +1250,21 @@
 
                     //carga paises
                     const countries = await loadUbiExt();
+
                     fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
                     pnNacionalidad.disabled = false;
 
                     //Departamentos y ciudades colombianas para expedicion y residencia
                     const { departamentos, ciudadByDep } = await loadUbiNac();
+
                     [pnDepExpDoc, pnDepRes].forEach(depSelect => {
                         fillSelect2(depSelect, departamentos, 'Seleccione departamento');
                         depSelect.disabled = false;
                     });
 
                     function handleDeptChange (depSelect, citySelect) {
-                        $(depSelect).off('change').on('change', () => {
-                            const selectedDep = depSelect.value.trim().toUpperCase();
+                        $(depSelect).off('change.ubiExtr').on('change.ubiExtr', function() {
+                            const selectedDep = this.value.trim().toUpperCase();
                             const municipios = ciudadByDep[selectedDep] || [];
                             fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                             citySelect.disabled = municipios.length === 0;
@@ -1231,14 +1275,8 @@
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                     //Estados y ciudades para país seleccionado
-                    $(pnNacionalidad).off('change').on('change', async function(){
-                        const countryId = pnNacionalidad.value;
-
-                        if (!countryId){
-                            pnEstadoNac.disabled = true;
-                            pnCiudadNac.disabled = true;
-                            return;
-                        }
+                    $(pnNacionalidad).off('change.ubiExtrPais').on('change.ubiExtrPais', async function() {
+                        const countryId = $(this).val();
 
                         //estados
                         const states = await loadStates(countryId);
@@ -1246,8 +1284,8 @@
                         pnEstadoNac.disabled = false;
 
                         //ciudades
-                        $(pnEstadoNac).off('change').on('change.', async function(){
-                            const stateId = pnEstadoNac.value;
+                        $(pnEstadoNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado.', async function() {
+                            const stateId = $(this).val();
                             const cities = await loadCities(stateId);
                             fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
                             pnCiudadNac.disabled = false;
@@ -1374,6 +1412,9 @@
             
             //funcion para precargar los datos del formulario persona natural
             async function loadFormData_Natural(data){
+
+                isAutoFilling = true;
+
 				const form = document.getElementById('persNatuForm');
 
                 //limpieza inicial
@@ -1382,79 +1423,69 @@
 					else el.value = '';
                 });
 
-                if (!data) return;
-
-                //asigna los campos simples excepto los que requieren logica especial
-                const skipCampos = [
-                        'pnTipoNacionalidad',
-                        'pnTipoDoc',
-                        'pnNacionalidad',
-                        'pnEstadoNac',
-                        'pnCiudadNac',
-                        'pnDepExpDoc',
-                        'pnCiuExpDoc',
-                        'pnDepRes',
-                        'pnCiudadRes',
-                        'Nit'
-                ];
-
-                for (const key in data){
-                    if(!data.hasOwnProperty(key)) continue;
-                    if(skipCampos.includes(key)) continue;
-
-                    const el = document.getElementById(key);
-                    if (el && data[key] != null) el.value = data[key];
+                if (!data) {
+                    isAutoFilling = false;
+                    return;
                 }
 
-                //mapea nit al campo de identificacion
-                if (data.Nit) inputNumId.value = data.Nit;
-
-                //logica de tipo nacionalidad
+                //tipo nacionalidad
                 if (data.pnTipoNacionalidad){
                     pnTipoNacionalidad.value = data.pnTipoNacionalidad;
-                    pnTipoNacionalidad.dispatchEvent(new Event('change'));
                 }
 
-                //permite que se cargue el tipo de documento
-                await new Promise(r => setTimeout(r, 150));
+                //permite que se cargue selects de ubicacion
+                await ubicPNaHandler();
 
                 //tipo de documento
                 if (data.pnTipoDoc){
                     pnTipoDoc.value = data.pnTipoDoc;
                 }
 
-                //ubicaciones 
-                await ubicPNaHandler();
+                //mapea nit al campo de identificacion
+                if (data.Nit) inputNumId.value = data.Nit;
+
+
+                //ubicaciones
 
                 //nacimiento
                 if (data.pnNacionalidad){
-                    $(pnNacionalidad).val(data.pnNacionalidad).trigger('change.select2');
-                    await new Promise(r => setTimeout(r, 150));
+                    await setSelect2Val(pnNacionalidad, data.pnNacionalidad);
                 }
                 if (data.pnEstadoNac) {
-                    $(pnEstadoNac).val(data.pnEstadoNac).trigger('change');
-                    await new Promise(r => setTimeout(r, 150));
+                    await setSelect2Val(pnEstadoNac, data.pnEstadoNac);
                 }
                 if (data.pnCiudadNac) {
-                    $(pnCiudadNac).val(data.pnCiudadNac).trigger('change');
+                    await setSelect2Val(pnCiudadNac, data.pnCiudadNac);
                 }
 
                 //expedicion
                 if (data.pnDepExpDoc) {
-                    $(pnDepExpDoc).val(data.pnDepExpDoc).trigger('change');
-                    await new Promise(r => setTimeout(r, 150));
+                    await setSelect2Val(pnDepExpDoc, data.pnDepExpDoc);
                 }
                 if (data.pnCiuExpDoc) {
-                    $(pnCiuExpDoc).val(data.pnCiuExpDoc).trigger('change');
+                    await setSelect2Val(pnCiuExpDoc, data.pnCiuExpDoc);
                 }
 
                 //residencia
                 if (data.pnDepRes) {
-                    $(pnDepRes).val(data.pnDepRes).trigger('change');
-                    await new Promise(r => setTimeout(r, 150));
+                    await setSelect2Val(pnDepRes, data.pnDepRes);
                 }
                 if (data.pnCiudadRes) {
-                    $(pnCiudadRes).val(data.pnCiudadRes).trigger('change');
+                    await setSelect2Val(pnCiudadRes, data.pnCiudadRes);
+                }
+
+                //asigna los campos simples excepto los que requieren logica especial
+                const skipCampos = [
+                        'pnTipoNacionalidad', 'pnTipoDoc', 'pnNacionalidad',
+                        'pnEstadoNac', 'pnCiudadNac', 'pnDepExpDoc',
+                        'pnCiuExpDoc', 'pnDepRes', 'pnCiudadRes', 'Nit'
+                ];
+
+                for (const key in data){
+                    if(!skipCampos.includes(key)){
+                        const el = document.getElementById(key);
+                        if (el && data[key] != null) el.value = data[key];
+                    }
                 }
 
                 //radios, PEP y checkboxes
@@ -1484,6 +1515,8 @@
 				if (entidadInput) entidadInput.value = data.pnPEP_Entidad || '';
 
                 handlePEPChange();
+
+                isAutoFilling = false;
             }
 
             //funcion para precargar los datos del formulario persona juridica
