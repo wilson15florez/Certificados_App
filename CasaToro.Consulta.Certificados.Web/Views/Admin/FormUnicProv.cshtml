@@ -981,7 +981,56 @@
             const pjRLSeccionNacional = document.getElementById('pjRLSeccionNacional');
             const pjRLSeccionExtranjera = document.getElementById('pjRLSeccionExtranjera');
 
+            //elementos del formulario provForm
+            const pvIngrMens = document.getElementById('pvIngrMens');
+            const pvEgrMens = document.getElementById('pvEgrMens');
+            const pvActivos = document.getElementById('pvActivos');
+            const pvPasivos = document.getElementById('pvPasivos');
+            const pvPatrimonio = document.getElementById('pvPatrimonio');
+            const pvOtrIngr = document.getElementById('pvOtrIngr');
+
+            const pvPorNacional = document.getElementById('pvPorNacional');
+            const pvPorExtranjero = document.getElementById('pvPorExtranjero');
+            const pvPorPais = document.getElementById('pvPorPais');
+            
+            const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+            const pvAcEconomica = document.getElementById('pvAcEconomica');
+            const pvCodCIIU = document.getElementById('pvCodCIIU');
+
+            const pvCapSocReg = document.getElementById('pvCapSocReg');
+            const pvFechConst = document.getElementById('pvFechConst');
+            const pvFechVen = document.getElementById('pvFechVen');
+
+            const pvGrCon = document.querySelectorAll('input[name="pvGrCon"]');
+            const pvFechResolGC = document.getElementById('pvFechResolGC');
+            const pvNumResolGC = document.getElementById('pvNumResolGC');
+
+            const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
+            const pvDepartDec = document.getElementById('pvDepartDec');
+            const pvCiudadDec = document.getElementById('pvCiudadDec');
+
+            const pvAutRet = document.getElementById('pvAutRet');
+            const pvNumResDIAN = document.getElementById('pvNumResDIAN');
+
+            const pvForPag = document.getElementById('pvForPag');
+            const pvEntBenef = document.getElementById('pvEntBenef');
+
+            const pvPosCuBan = document.querySelectorAll('input[name="pvPosCuBan"]');
+            const pvEntidad = document.getElementById('pvEntidad');
+
+            const pvNumCueBanc = document.getElementById('pvNumCueBanc');
+            const pvClasCueBan = document.getElementById('pvClasCueBan');
+
             //panel de declaraciones y autorizaciones
+            const pvDeAuRepresentacion = document.getElementById('pvDeAuRepresentacion');
+            const pvFuenteRecur = document.getElementById('pvFuenteRecur');
+
+            const pvTDPMotMaq = document.querySelectorAll('input[name="pvTDPMotMaq"]');
+            const pvTDPCasTor = document.querySelectorAll('input[name="pvTDPCasTor"]');
+            const pvTDPBonap = document.querySelectorAll('input[name="pvTDPBonap"]');
+            const pvTDPBellpi = document.querySelectorAll('input[name="pvTDPBellpi"]');
+            const pvRadAut = document.querySelectorAll('input[name="pvRadAut"]');
+
             const declAutorPanel = document.getElementById('declAutorPanel');
             const cancelAutBtn = document.getElementById('cancelAutBtn');
             const saveAutBtn = document.getElementById('saveAutBtn');
@@ -1013,7 +1062,7 @@
                 return new Promise(r => {
                     const start = performance.now();
 
-                    const check() {
+                    function check() {
                         const hasOptions = select.options.length > 1;
 
                         if (hasOptions || performance.now() - start > timeout){
@@ -1044,7 +1093,7 @@
                             value = text = item;
                         } else{
                             value = item[valueField] ?? item.Código ?? item.id ?? '';
-                            text = item[textField] ?? item.Nombre ?? item.name '';
+                            text = item[textField] ?? item.Nombre ?? item.name ?? '';
                         }
 
                         $select.append(new Option(text, value, false, false));
@@ -1209,7 +1258,7 @@
 
                 const nac = pnTipoNacionalidad.value;
 
-                //si es autorellenado no limbia ni deshabilita
+                //si es autorellenado no limpia ni deshabilita
                 if (!isAutoFilling) {
                     [pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
                         $(sel).empty().prop("disabled", true);
@@ -1218,7 +1267,7 @@
 
                 if (nac === 'Nacional'){
                     //pais fijo colombia
-                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}], 'Seleccione país');
+                    fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA'}]);
 
                     $(pnNacionalidad).val('CO').trigger('change.select2');
                     pnNacionalidad.disabled = true;
@@ -1228,18 +1277,18 @@
 
                     //departamentos de nacimiento, expedicion y residencia
                     [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
-                        fillSelect2(depSelect, departamentos, 'Seleccione departamento', undefined, undefined);
+                        fillSelect2(depSelect, departamentos);
                         depSelect.disabled = false;
                     });
 
-                    function handleDeptChange(depSelect, citySelect) {
+                    const handleDeptChange = (depSelect, citySelect) => {
                         $(depSelect).off('change.ubiNac').on('change.ubiNac', function() {
                             const dep = this.value.trim().toUpperCase();
                             const municipios = ciudadByDep[dep] || [];
-                            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+                            fillSelect2(citySelect, municipios);
                             citySelect.disabled = municipios.length === 0;
                         });
-                    }
+                    };
 
                     handleDeptChange(pnEstadoNac, pnCiudadNac);
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
@@ -1258,25 +1307,25 @@
                     const { departamentos, ciudadByDep } = await loadUbiNac();
 
                     [pnDepExpDoc, pnDepRes].forEach(depSelect => {
-                        fillSelect2(depSelect, departamentos, 'Seleccione departamento');
+                        fillSelect2(depSelect, departamentos);
                         depSelect.disabled = false;
                     });
 
-                    function handleDeptChange (depSelect, citySelect) {
-                        $(depSelect).off('change.ubiExtr').on('change.ubiExtr', function() {
+                    const handleDeptChange = (depSelect, citySelect) => {
+                        $(depSelect).off('change.ubiNac').on('change.ubiNac', function() {
                             const selectedDep = this.value.trim().toUpperCase();
                             const municipios = ciudadByDep[selectedDep] || [];
-                            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+                            fillSelect2(citySelect, municipios);
                             citySelect.disabled = municipios.length === 0;
                         });
-                    }
+                    };
 
                     handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
                     handleDeptChange(pnDepRes, pnCiudadRes);
 
                     //Estados y ciudades para país seleccionado
                     $(pnNacionalidad).off('change.ubiExtrPais').on('change.ubiExtrPais', async function() {
-                        const countryId = $(this).val();
+                        const countryId = this.value;
 
                         //estados
                         const states = await loadStates(countryId);
@@ -1284,8 +1333,8 @@
                         pnEstadoNac.disabled = false;
 
                         //ciudades
-                        $(pnEstadoNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado.', async function() {
-                            const stateId = $(this).val();
+                        $(pnEstadoNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function() {
+                            const stateId = this.value;
                             const cities = await loadCities(stateId);
                             fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
                             pnCiudadNac.disabled = false;
@@ -1294,6 +1343,7 @@
                 }
             }
             
+            //funcion que gestiona los select de ubicacion replesentante legal
             async function handleRepLeg(){
                 //limpiar selects
                 [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc].forEach(sel => {
@@ -1304,12 +1354,12 @@
 
                 if (pjRLRadNac.checked){
                     
-                    fillSelect2(pjRLNacionalidad, [{id: 'CO', name: 'COLOMBIA'}], '-- Seleccione país --');
+                    fillSelect2(pjRLNacionalidad, [{id: 'CO', name: 'COLOMBIA'}], 'Seleccione país');
                     $(pjRLNacionalidad).val('CO').trigger('change.select2');
                     $(pjRLNacionalidad).prop('disabled', true);
 
-                    fillSelect2(pjRLDepartNac, departamentos, '-- Seleccione departamento --');
-                    fillSelect2(pjRLDepExpDoc, departamentos, '-- Seleccione departamento --');
+                    fillSelect2(pjRLDepartNac, departamentos, 'Seleccione departamento');
+                    fillSelect2(pjRLDepExpDoc, departamentos, 'Seleccione departamento');
                     $(pjRLDepartNac).prop('disabled', false);
                     $(pjRLDepExpDoc).prop('disabled', false)
 
@@ -1317,7 +1367,7 @@
                         $(depSelect).off('change.rep').on('change.rep', function(){
                             const dep = ($(this).val() || '').trim().toUpperCase();
                             const municipios = ciudadByDep[dep] || [];
-                            fillSelect2(citySelect, municipios, '-- Seleccione ciudad --');
+                            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                             $(citySelect).prop('disabled', municipios.length === 0);
                         });
                     };
@@ -1327,36 +1377,36 @@
                 }
                 else if(pjRLRadExtr.checked){
                     const countries = await loadUbiExt();
-                    fillSelect2(pjRLNacionalidad, countries, '-- Seleccione país --');
+                    fillSelect2(pjRLNacionalidad, countries, 'Seleccione país');
                     $(pjRLNacionalidad).prop('disabled', false);
 
-                    fillSelect2(pjRLDepExpDoc, departamentos, '-- Seleccione departamento --');
+                    fillSelect2(pjRLDepExpDoc, departamentos, 'Seleccione departamento');
                     $(pjRLDepExpDoc).prop('disabled', false);
 
                     $(pjRLDepExpDoc).off('change.rep').on('change.rep', function(){
                         const dep = ($(this).val() || '').trim().toUpperCase();
                         const municipios = ciudadByDep[dep] || [];
-                        fillSelect2(pjRLCiuExpDoc, municipios, '-- Seleccione ciudad --');
+                        fillSelect2(pjRLCiuExpDoc, municipios, 'Seleccione ciudad');
                         $(pjRLCiuExpDoc).prop('disabled', municipios.length === 0);
                     });
 
                     $(pjRLNacionalidad).off('change.rep').on('change.rep', async function(){
                         const countryId = $(this).val();
                         if (!countryId){
-                            fillSelect2(pjRLDepartNac, [], '-- Seleccione estado --');
-                            fillSelect2(pjRLCiudadNac, [], '-- Seleccione ciudad --');
+                            fillSelect2(pjRLDepartNac, [], 'Seleccione estado');
+                            fillSelect2(pjRLCiudadNac, [], 'Seleccione ciudad');
                             $(pjRLDepartNac).prop('disabled', true);
                             $(pjRLCiudadNac).prop('disabled', true);
                             return;
                         }
 
                         const states = await loadStates(countryId);
-                        fillSelect2(pjRLDepartNac, states, '-- Seleccione estado --');
+                        fillSelect2(pjRLDepartNac, states, 'Seleccione estado');
                         $(pjRLDepartNac).prop('disabled', false);
 
                         $(pjRLDepartNac).off('change.rep2').on('change.rep2', async function(){
                             const cities = await loadCities($(this).val());
-                            fillSelect2(pjRLCiudadNac, cities, '-- Seleccione ciudad --');
+                            fillSelect2(pjRLCiudadNac, cities, 'Seleccione ciudad');
                             $(pjRLCiudadNac).prop('disabled', false);
                         });
                     });
@@ -1404,6 +1454,41 @@
                 initSucursalUbic(1);
             }
             
+            //funcion que gestiona los select de ubicacion del provForm
+            async function ubicProvFormHandler(){
+                
+                //si es autorellenado no limpia
+                if (!isAutoFilling) {
+                    [pvPorPais, pvDepartDec, pvCiudadDec].forEach(sel => {
+                        $(sel).empty().prop("disabled", true);
+                    });
+                }
+
+                //carga pais extranjero de porcentaje origen de capital
+                const countries = await loadUbiExt();
+                fillSelect2(pvPorPais, countries, 'Seleccione país', 'id', 'name');
+                pvPorPais.disabled = false;
+
+                //carga departamento y ciudad de declaracion
+                const { departamentos, ciudadByDep } = await loadUbiNac();
+
+                [pvDepartDec, pvCiudadDec].forEach(depSelect => {
+                    fillSelect2(depSelect, departamentos);
+                    depSelect.disabled = false;
+                });
+
+                const handleDeptChange = (depSelect, citySelect) => {
+                    $(depSelect).off('change.ubiNac').on('change.ubiNac', function() {
+                        const selectedDep = this.value.trim().toUpperCase();
+                        const municipios = ciudadByDep[selectedDep] || [];
+                        fillSelect2(citySelect, municipios);
+                        citySelect.disabled = municipios.length === 0;
+                    });
+                };
+
+                handleDeptChange(pvDepartDec, pvCiudadDec);
+            }
+
             // Estado inicial: nada seleccionado
             fillSelect2(pnNacionalidad, [], 'Seleccione país');
             [pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
@@ -1436,6 +1521,10 @@
                 //permite que se cargue selects de ubicacion
                 await ubicPNaHandler();
 
+                await waitForSelec2(pnEstadoNac);
+                await waitForSelec2(pnDepExpDoc);
+                await waitForSelec2(pnDepRes);
+
                 //tipo de documento
                 if (data.pnTipoDoc){
                     pnTipoDoc.value = data.pnTipoDoc;
@@ -1450,10 +1539,28 @@
                 //nacimiento
                 if (data.pnNacionalidad){
                     await setSelect2Val(pnNacionalidad, data.pnNacionalidad);
+
+                    if (data.pnTipoNacionalidad === 'Nacional') {
+                        $(pnNacionalidad).trigger("change.ubiNac");
+                    } else {
+                        $(pnNacionalidad).trigger("change.ubiExtrPais");
+                    }
+
+                    await waitForSelec2(pnEstadoNac);
                 }
+
                 if (data.pnEstadoNac) {
                     await setSelect2Val(pnEstadoNac, data.pnEstadoNac);
+
+                    if (data.pnTipoNacionalidad === 'Nacional'){
+                        $(pnEstadoNac).trigger("change.ubiNac");
+                    } else {
+                        $(pnEstadoNac).trigger("change.ubiExtrEstado");
+                    }
+
+                    await waitForSelec2(pnCiudadNac);
                 }
+
                 if (data.pnCiudadNac) {
                     await setSelect2Val(pnCiudadNac, data.pnCiudadNac);
                 }
@@ -1461,6 +1568,8 @@
                 //expedicion
                 if (data.pnDepExpDoc) {
                     await setSelect2Val(pnDepExpDoc, data.pnDepExpDoc);
+                    $(pnDepExpDoc).trigger("change.ubiNac");
+                    await waitForSelec2(pnCiuExpDoc);
                 }
                 if (data.pnCiuExpDoc) {
                     await setSelect2Val(pnCiuExpDoc, data.pnCiuExpDoc);
@@ -1469,6 +1578,8 @@
                 //residencia
                 if (data.pnDepRes) {
                     await setSelect2Val(pnDepRes, data.pnDepRes);
+                    $(pnDepRes).trigger("change.ubiNac");
+                    await waitForSelec2(pnCiudadRes);
                 }
                 if (data.pnCiudadRes) {
                     await setSelect2Val(pnCiudadRes, data.pnCiudadRes);
@@ -1685,6 +1796,103 @@
                         }
                     }
                 }
+            }
+
+
+            //funcion para precargar datos en el formulario de proveedor general (provForm)
+            async function loadProvFormData(data){
+                
+                isAutoFilling = true;
+
+                const form = document.getElementById('provForm');
+                
+                //limpieza inicial
+                form.querySelectorAll('input,select, textarea').forEach(el => {
+                    if (el.type === 'radio') el.checked = false;
+                    else el.value = '';
+                });
+
+                if (!data) {
+                    isAutoFilling = false;
+                    return;
+                }
+
+                //permite que se cargue selects de ubicacion
+                await ubicProvFormHandler();
+
+                await waitForSelec2(pvDepartDec);
+                await waitForSelec2(pvCiudadDec);
+
+                //ubicacion pais
+                if (data.pvPorPais) {
+                    await setSelect2Val(pvPorPais, data.pvPorPais);
+                }
+
+                //ubicaciones departamento y ciudad de declaracion
+                if (data.pvDepartDec) {
+                    await setSelect2Val(pvDepartDec, data.pvDepartDec);
+                    $(pvDepartDec).trigger("change.ubiNac");
+                    await waitForSelec2(pvCiudadDec);
+                }
+                if (data.pvCiudadDec) {
+                    await setSelect2Val(pvCiudadDec, data.pvCiudadDec);
+                }
+
+                //asigna los campos simples excepto los que rquieren logica especial
+                const skipCampos = [
+                        'pvPorPais','pvDepartDec', 'pvCiudadDec'
+                ];
+
+                for (const key in data) {
+                    if (!skipCampos.includes(key)){
+                        const el = document.getElementById(key);
+                        if (el && data[key] != null) el.value = data[key];
+                    }
+                }
+
+                //radios
+                if (data.pvTipEmp) {
+                    const r = form.querySelector(`input[name="pvTipEmp"][value="${data.pvTipEmp}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvGrCon) {
+                    const r = form.querySelector(`input[name="pvGrCon"][value="${data.pvGrCon}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvDeclIndCom) {
+                    const r = form.querySelector(`input[name="pvDeclIndCom"][value="${data.pvDeclIndCom}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvAutRet) {
+                    const r = form.querySelector(`input[name="pvAutRet"][value="${data.pvAutRet}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvPosCuBan) {
+                    const r = form.querySelector(`input[name="pvPosCuBan"][value="${data.pvPosCuBan}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvTDPMotMaq) {
+                    const r = form.querySelector(`input[name="pvTDPMotMaq"][value="${data.pvTDPMotMaq}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvTDPCasTor) {
+                    const r = form.querySelector(`input[name="pvTDPCasTor"][value="${data.pvTDPCasTor}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvTDPBonap) {
+                    const r = form.querySelector(`input[name="pvTDPBonap"][value="${data.pvTDPBonap}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvTDPBellpi) {
+                    const r = form.querySelector(`input[name="pvTDPBellpi"][value="${data.pvTDPBellpi}"]`);
+                    if (r) r.checked = true;
+                }
+                if (data.pvRadAut) {
+                    const r = form.querySelector(`input[name="pvRadAut"][value="${data.pvRadAut}"]`);
+                    if (r) r.checked = true;
+                }
+
+                isAutoFilling = false;
             }
 
             //funcion para limpiar los radioButtons de nacionalidad

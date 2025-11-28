@@ -113,7 +113,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             try
             {
                 // Verificar si el proveedor existe
-                var existingProvider = _providerService.getPoviderByNit(provider.Nit);
+                var existingProvider = _providerService.getProviderByNit(provider.Nit);
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
 
                 // Actualizar información del proveedor existente
@@ -163,7 +163,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (providerData == null) 
                     return Json(new { error = "Datos del proveedor no recibidos." });
 
-                var pmaster = _providerService.getPoviderByNit(providerData.Nit);
+                var pmaster = _providerService.getProviderByNit(providerData.Nit);
                 if (pmaster == null) 
                     return Json(new { error = "El proveedor no esta registrado en el sistema." });
 
@@ -173,6 +173,25 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             catch (Exception ex)
             {
                 return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("/Admin/UpdateProviderFUCP")]
+        public IActionResult UpdateProviderFUCP([FromBody] Proveedores_FUCP providerData)
+        {
+            try
+            {
+                if (providerData == null)
+                    return Json(new { status = "error", message = "Datos no recibidos." });
+
+                _providerService.UpdateFUCPInfo(providerData);
+
+                return Json(new { status = "success", message = "Información FUCP actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = "Error al actualizar la informacion FUCP: " + ex.Message });
             }
         }
         
@@ -185,15 +204,15 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                     return Json(new { status = "error", message = "ID y Tipo de persona son requeridos." });
 
                 //verifica si el proveedor existe en la tabla Proveedores_Master
-                var providerMaster = _providerService.getPoviderByNit(idNum);
+                var providerMaster = _providerService.getProviderByNit(idNum);
                 
                 //si no lo encuentra en proveedores_Master
                 if (providerMaster == null)
                 {
-                    return Json(new { status = "notFound", idNum = idNum });
+                    return Json(new { status = "notFound", idNum });
                 }
 
-                //intenta obtener los detalles de persona natural o juridica
+                //intenta obtener los detalles de persona (natural o juridica) + FUCP
                 var naturalData = await _providerService.getProviderDetails(idNum, "natural");
                 var juridicaData = await _providerService.getProviderDetails(idNum, "juridica");
 
@@ -228,7 +247,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
 
                 //validar la existencia del proveedor en la tabla Proveedores_Master
-                var pmaster = _providerService.getPoviderByNit(provider.Nit);
+                var pmaster = _providerService.getProviderByNit(provider.Nit);
                 if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
 
                 //validar que no exista ya el registro en proveedor_natural
@@ -254,7 +273,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
 
                 //validar la existencia del proveedor en la tabla Proveedores_Master
-                var pmaster = _providerService.getPoviderByNit(provider.Nit);
+                var pmaster = _providerService.getProviderByNit(provider.Nit);
                 if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
 
                 //validar que no exista ya el registro en proveedor_juridica
@@ -270,6 +289,32 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("/Admin/AddProviderFUCP")]
+        public IActionResult AddProviderFUCP([FromBody] Proveedores_FUCP provider)
+        {
+            try
+            {
+                if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getProviderByNit(provider.Nit);
+                if (pmaster == null) return Json(new { error = "El provedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedores_FUCP
+                var existingFUCP = _providerService.getProviderDetails(provider.Nit, "fucp").Result;
+                if (existingFUCP != null) return Json(new { error = "El proveedor ya tiene informacion registrada en FUCP." });
+
+                //insertar registro en FUCP
+                _providerService.AddProveedorFUCP(provider);
+                return Json(new { message = "Proveedor registrado en FUCP correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
         
         [HttpGet]
         public IActionResult RestoreProviderPassword(string nit)
@@ -279,7 +324,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (string.IsNullOrEmpty(nit)) return Json(new { error = "NIT del proveedor no recibido" });
 
                 // Verificar si el proveedor existe
-                var existingProvider = _providerService.getPoviderByNit(nit);
+                var existingProvider = _providerService.getProviderByNit(nit);
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
                 // Restaurar contraseña del proveedor
                 _providerService.RestoreProviderPassword(nit);

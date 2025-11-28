@@ -130,7 +130,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 // Obtener el NIT del proveedor autenticado
                 var nit = User.FindFirst("NIT").Value;
                 // Obtener el proveedor por su NIT
-                var provider = _providerService.getPoviderByNit(nit);
+                var provider = _providerService.getProviderByNit(nit);
                 var model = new ProfileViewModel
                 {
                     Provider = provider
@@ -164,7 +164,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             {
                 var nit = User.FindFirst("NIT").Value;
                 // Verificar si el proveedor existe
-                var existingProvider = _providerService.getPoviderByNit(nit);
+                var existingProvider = _providerService.getProviderByNit(nit);
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
 
                 // Actualizar información del proveedor existente
@@ -188,7 +188,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         {
             try
             {
-                var existingProvider = _providerService.getPoviderByNit(User.FindFirst("NIT").Value);
+                var existingProvider = _providerService.getProviderByNit(User.FindFirst("NIT").Value);
 
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
 
@@ -208,7 +208,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         {
             try
             {
-                var provider = _providerService.getPoviderByNit(User.FindFirst("NIT").Value);
+                var provider = _providerService.getProviderByNit(User.FindFirst("NIT").Value);
                 if (provider == null) return Json(new { error = "Proveedor no encontrado" });
 
                 string hashedPassword = LoginService.HashSHA256(currentPassword);

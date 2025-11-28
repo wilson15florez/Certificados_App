@@ -44,7 +44,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     return CreateClaimsPrincipal(admin.Nombre, admin.IdAdmin, true);
                 }
 
-                ProveedoresMaster provider = _providerService.getPoviderByNit(user);
+                ProveedoresMaster provider = _providerService.getProviderByNit(user);
                 if (provider != null && provider.Contrasena == HashSHA256(pass))
                 {
                     return CreateClaimsPrincipal(provider.Nombre, provider.Nit, false);
