@@ -395,66 +395,66 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.HasKey(e => e.Id_ProFUCP);
 
-            entity.Property(e => e.DeclaIndCom)
-                .HasMaxLength(2)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.GranContrib)
-                .HasMaxLength(2)
-                .IsUnicode(false)
-                .IsFixedLength();
             entity.Property(e => e.Nit).HasMaxLength(20);
-            entity.Property(e => e.actEconomica).HasMaxLength(255);
-            entity.Property(e => e.activos).HasMaxLength(50);
-            entity.Property(e => e.autReten)
+            entity.Property(e => e.pvAcEconomica).HasMaxLength(255);
+            entity.Property(e => e.pvActivos).HasMaxLength(50);
+            entity.Property(e => e.pvAutRet)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_TraDatos)
+            entity.Property(e => e.pvCapSocReg).HasMaxLength(255);
+            entity.Property(e => e.pvCiudadDec).HasMaxLength(100);
+            entity.Property(e => e.pvClasCueBan).HasMaxLength(50);
+            entity.Property(e => e.pvDeAuRepresentacion).HasMaxLength(255);
+            entity.Property(e => e.pvDeclIndCom)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_bellpi)
+            entity.Property(e => e.pvDepartDec).HasMaxLength(100);
+            entity.Property(e => e.pvEgrMens).HasMaxLength(50);
+            entity.Property(e => e.pvEntBenef).HasMaxLength(255);
+            entity.Property(e => e.pvEntidad).HasMaxLength(255);
+            entity.Property(e => e.pvForPag).HasMaxLength(255);
+            entity.Property(e => e.pvFuenteRecur).HasMaxLength(255);
+            entity.Property(e => e.pvGrCon)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_bonaparte)
+            entity.Property(e => e.pvIngrMens).HasMaxLength(50);
+            entity.Property(e => e.pvNumCueBanc).HasMaxLength(50);
+            entity.Property(e => e.pvNumResDIAN).HasMaxLength(100);
+            entity.Property(e => e.pvNumResolGC).HasMaxLength(100);
+            entity.Property(e => e.pvOtrIngr).HasMaxLength(50);
+            entity.Property(e => e.pvPasivos).HasMaxLength(50);
+            entity.Property(e => e.pvPatrimonio).HasMaxLength(50);
+            entity.Property(e => e.pvPorExtranjero).HasMaxLength(3);
+            entity.Property(e => e.pvPorNacional).HasMaxLength(3);
+            entity.Property(e => e.pvPorPais).HasMaxLength(100);
+            entity.Property(e => e.pvPosCuBan)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_casatoro)
+            entity.Property(e => e.pvRadAut)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_fuentRecurs).HasMaxLength(255);
-            entity.Property(e => e.aut_motorysa)
+            entity.Property(e => e.pvTDPBellpi)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.aut_representacion).HasMaxLength(255);
-            entity.Property(e => e.capSoRegis).HasMaxLength(255);
-            entity.Property(e => e.ciudad).HasMaxLength(100);
-            entity.Property(e => e.clasCuenta).HasMaxLength(50);
-            entity.Property(e => e.departamento).HasMaxLength(100);
-            entity.Property(e => e.egreMensuales).HasMaxLength(50);
-            entity.Property(e => e.entidad).HasMaxLength(255);
-            entity.Property(e => e.formPagComExt).HasMaxLength(255);
-            entity.Property(e => e.ingrMensuales).HasMaxLength(50);
-            entity.Property(e => e.numCuenta).HasMaxLength(50);
-            entity.Property(e => e.numResolGC).HasMaxLength(100);
-            entity.Property(e => e.numResulDIAN).HasMaxLength(100);
-            entity.Property(e => e.ocExtranjero).HasMaxLength(3);
-            entity.Property(e => e.ocNacional).HasMaxLength(3);
-            entity.Property(e => e.ocPaisExtr).HasMaxLength(100);
-            entity.Property(e => e.otrosIngre).HasMaxLength(50);
-            entity.Property(e => e.pasivos).HasMaxLength(50);
-            entity.Property(e => e.patrimonio).HasMaxLength(50);
-            entity.Property(e => e.persEmprBenef).HasMaxLength(255);
-            entity.Property(e => e.posCuenBanc)
+            entity.Property(e => e.pvTDPBonap)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.tipEmpresa).HasMaxLength(100);
+            entity.Property(e => e.pvTDPCasTor)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pvTDPMotMaq)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pvTipEmp).HasMaxLength(100);
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");

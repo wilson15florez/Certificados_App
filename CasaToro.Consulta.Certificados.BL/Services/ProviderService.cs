@@ -4,6 +4,7 @@ using CasaToro.Consulta.Certificados.DAL;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Dynamic;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
@@ -59,6 +60,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         {
             return _context.ProveedoresMasters.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
         }
+        
+        public Proveedores_FUCP? getFUCPByNit(string nit)
+        {
+            return _context.Proveedores_FUCP.FirstOrDefault(f => f.Nit == nit);
+        }
+        
         // Método que obtiene las empresas asociadas a un proveedor
         public List<EmpresasMaster> GetCompaniesForProvider(string nit)
 
@@ -88,10 +95,29 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al actualizar el proveedor", ex);
             }
         }
-
+        
         //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica y el FUCP
-        public async Task<object> getProviderDetails(string nit, string personType)
+        public async Task<dynamic> getProviderDetails(string nit, string personType)
         {
+            ExpandoObject MakeDynamic(
+                bool existNatu,
+                bool existJuri,
+                bool existFUCP,
+                object? natural,
+                object? juridica,
+                object? fucp
+            )
+            {
+                dynamic d = new ExpandoObject();
+                d.existNatu = existNatu;
+                d.existJuri = existJuri;
+                d.existFUCP = existFUCP;
+                d.natural = natural;
+                d.juridica = juridica;
+                d.fucp = fucp;
+                return d;
+            }
+            
             var fucpData = await _context.Proveedores_FUCP
                                         .FirstOrDefaultAsync(f => f.Nit == nit);
 
@@ -102,58 +128,69 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 mapFUCPdata = new Dictionary<string, object>
                 {
                     { "Nit", fucpData.Nit },
-                    { "ingrMensuales", fucpData.ingrMensuales },
-                    { "egreMensuales", fucpData.egreMensuales },
-                    { "activos", fucpData.activos },
-                    { "pasivos", fucpData.pasivos },
-                    { "patrimonio", fucpData.patrimonio },
-                    { "otrosIngre", fucpData.otrosIngre },
-                    { "ocNacional", fucpData.ocNacional },
-                    { "ocExtranjero", fucpData.ocExtranjero },
-                    { "ocPaisExtr", fucpData.ocPaisExtr },
-                    { "tipEmpresa", fucpData.tipEmpresa },
-                    { "actEconomica", fucpData.actEconomica },
-                    { "codCIIU", fucpData.codCIIU },
-                    { "capSoRegis", fucpData.capSoRegis },
-                    { "fechConsti", fucpData.fechConsti?.ToString("yyyy-MM-dd") },
-                    { "fechVenc", fucpData.fechVenc?.ToString("yyyy-MM-dd") },
-                    { "GranContrib", fucpData.GranContrib },
-                    { "DeclaIndCom", fucpData.DeclaIndCom },
-                    { "autReten", fucpData.autReten },
-                    { "fechResolGC", fucpData.fechResolGC?.ToString("yyyy-MM-dd") },
-                    { "numResolGC", fucpData.numResolGC },
-                    { "departamento", fucpData.departamento },
-                    { "ciudad", fucpData.ciudad },
-                    { "numResulDIAN", fucpData.numResulDIAN },
-                    { "formPagComExt", fucpData.formPagComExt },
-                    { "persEmprBenef", fucpData.persEmprBenef },
-                    { "posCuenBanc", fucpData.posCuenBanc },
-                    { "entidad", fucpData.entidad },
-                    { "numCuenta", fucpData.numCuenta },
-                    { "clasCuenta", fucpData.clasCuenta },
-                    { "aut_representacion", fucpData.aut_representacion },
-                    { "aut_fuentRecurs", fucpData.aut_fuentRecurs },
-                    { "aut_bonaparte", fucpData.aut_bonaparte },
-                    { "aut_bellpi", fucpData.aut_bellpi },
-                    { "aut_motorysa", fucpData.aut_motorysa },
-                    { "aut_casatoro", fucpData.aut_casatoro },
-                    { "aut_TraDatos", fucpData.aut_TraDatos }
+                    { "pvIngrMens", fucpData.pvIngrMens },
+                    { "pvEgrMens", fucpData.pvEgrMens },
+                    { "pvActivos", fucpData.pvActivos },
+                    { "pvPasivos", fucpData.pvPasivos },
+                    { "pvPatrimonio", fucpData.pvPatrimonio },
+                    { "pvOtrIngr", fucpData.pvOtrIngr },
+                    { "pvPorNacional", fucpData.pvPorNacional },
+                    { "pvPorExtranjero", fucpData.pvPorExtranjero },
+                    { "pvPorPais", fucpData.pvPorPais },
+                    { "pvTipEmp", fucpData.pvTipEmp },
+                    { "pvAcEconomica", fucpData.pvAcEconomica },
+                    { "pvCodCIIU", fucpData.pvCodCIIU },
+                    { "pvCapSocReg", fucpData.pvCapSocReg },
+                    { "pvFechConst", fucpData.pvFechConst?.ToString("yyyy-MM-dd") },
+                    { "pvFechVen", fucpData.pvFechVen?.ToString("yyyy-MM-dd") },
+                    { "pvGrCon", fucpData.pvGrCon },
+                    { "pvDeclIndCom", fucpData.pvDeclIndCom },
+                    { "pvAutRet", fucpData.pvAutRet },
+                    { "pvFechResolGC", fucpData.pvFechResolGC?.ToString("yyyy-MM-dd") },
+                    { "pvNumResolGC", fucpData.pvNumResolGC },
+                    { "pvDepartDec", fucpData.pvDepartDec },
+                    { "pvCiudadDec", fucpData.pvCiudadDec },
+                    { "pvNumResDIAN", fucpData.pvNumResDIAN },
+                    { "pvForPag", fucpData.pvForPag },
+                    { "pvEntBenef", fucpData.pvEntBenef },
+                    { "pvPosCuBan", fucpData.pvPosCuBan },
+                    { "pvEntidad", fucpData.pvEntidad },
+                    { "pvNumCueBanc", fucpData.pvNumCueBanc },
+                    { "pvClasCueBan", fucpData.pvClasCueBan },
+                    { "pvDeAuRepresentacion", fucpData.pvDeAuRepresentacion },
+                    { "pvFuenteRecur", fucpData.pvFuenteRecur },
+                    { "pvTDPBonap", fucpData.pvTDPBonap },
+                    { "pvTDPBellpi", fucpData.pvTDPBellpi },
+                    { "pvTDPMotMaq", fucpData.pvTDPMotMaq },
+                    { "pvTDPCasTor", fucpData.pvTDPCasTor },
+                    { "pvRadAut", fucpData.pvRadAut }
                 };
             }
-
+            
             if (personType.Equals("natural", StringComparison.OrdinalIgnoreCase))
             {
                 var naturalData = await _context.Proveedores_Natural
                                                     .FirstOrDefaultAsync(p => p.Nit == nit);
                 if (naturalData == null)
-                    return null;
+                {
+                    return MakeDynamic
+                    (
+                        existNatu: false,
+                        existJuri: false,
+                        existFUCP: (mapFUCPdata != null),
+                        natural: null,
+                        juridica: null,
+                        fucp: mapFUCPdata
+
+                    );
+                }
 
                 var pepTipos = await _context.PEPtipos_ProveedoresNatural
                                                 .Where(t => t.NitProveedor == nit)
                                                 .Select(t => t.TipoPEPid)
                                                 .ToListAsync();
 
-                var pepData = new Dictionary<string, object>
+                var mapNaturalData = new Dictionary<string, object>
                 {
                     {"Nit", naturalData.Nit },
                     {"pnNombreCompl", naturalData.pnNombreCompl },
@@ -187,69 +224,98 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                     { "FUCP", mapFUCPdata }
                 };
-                return pepData;
+
+                return MakeDynamic
+                (
+                    existNatu: true,
+                    existJuri: false,
+                    existFUCP: (mapFUCPdata != null),
+                    natural: mapNaturalData,
+                    juridica: null,
+                    fucp: mapFUCPdata
+                );
             }
-            else if (personType.Equals("juridica", StringComparison.OrdinalIgnoreCase))
+
+            if (personType.Equals("juridica", StringComparison.OrdinalIgnoreCase))
             {
                 var juridicaData = await _context.Proveedores_Juridica
                                                     .FirstOrDefaultAsync(p => p.Nit == nit);
-                if (juridicaData != null)
+                if (juridicaData == null)
                 {
-                    var sucursales = await _context.Sucursales_PJuridica
-                                                .Where(s => s.NitProveedor == nit)
-                                                .ToListAsync();
-                    var accionistas = await _context.AccionistasControlPJuridica
-                                                .Where(a => a.NitProveedor == nit)
-                                                .ToListAsync();
-
-                    //mapea los datos
-                    var mapJuridicaData = new Dictionary<string, object>
-                    {
-                        {"Nit",juridicaData.Nit},
-                        {"pjRazSocial",juridicaData.pjRazSocial},
-                        {"pjDirPrincipal",juridicaData.pjDirPrincipal},
-                        {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
-                        {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
-                        {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
-                        {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
-                        {"pjNomReLeg",juridicaData.pjNomReLeg},
-                        {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
-                        {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
-                        {"pjRLDocNum",juridicaData.pjRLDocNum},
-                        {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
-                        {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
-                        {"pjRLCiuExpDoc",juridicaData.pjRLCiuExpDoc },
-                        {"pjRLFechaNac",juridicaData.pjRLFechaNac?.ToString("yyyy-MM-dd")},
-                        {"pjRLNacionalidad",juridicaData.pjRLNacionalidad},
-                        {"pjRLDepartNac",juridicaData.pjRLDepartNac},
-                        {"pjRLCiudadNac",juridicaData.pjRLCiudadNac},
-
-                        {"Sucursales", sucursales.Select(s => new
-                        {
-                            pjSucursalDir = s.Direccion,
-                            pjSucursalDepart = s.Departamento,
-                            pjSucursalCiudad = s.Ciudad,
-                            pjSucursalEmail = s.Email,
-                            pjSucursalTel = s.Telefono
-                        }).ToList()},
-
-                        {"ControlRow", accionistas.Select(a => new
-                        {
-                            razonSocial = a.razonSocial,
-                            idType = a.idType,
-                            idNum = a.idNum,
-                            porcentaje = a.porcentaje
-                        }).ToList() },
-
-                        {  "FUCP", mapFUCPdata }
-                    };
-                    return mapJuridicaData;
+                    return MakeDynamic
+                    (
+                        existNatu: false,
+                        existJuri: false,
+                        existFUCP: (mapFUCPdata != null),
+                        natural: null,
+                        juridica: null,
+                        fucp: mapFUCPdata
+                    );
                 }
-                return null;
-            }
-            return null;
-        }
 
+                var sucursales = await _context.Sucursales_PJuridica
+                                            .Where(s => s.NitProveedor == nit)
+                                            .ToListAsync();
+                var accionistas = await _context.AccionistasControlPJuridica
+                                            .Where(a => a.NitProveedor == nit)
+                                            .ToListAsync();
+
+                //mapea los datos
+                var mapJuridicaData = new Dictionary<string, object>
+                {
+                    {"Nit",juridicaData.Nit},
+                    {"pjRazSocial",juridicaData.pjRazSocial},
+                    {"pjDirPrincipal",juridicaData.pjDirPrincipal},
+                    {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
+                    {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
+                    {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
+                    {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
+                    {"pjNomReLeg",juridicaData.pjNomReLeg},
+                    {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
+                    {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
+                    {"pjRLDocNum",juridicaData.pjRLDocNum},
+                    {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
+                    {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
+                    {"pjRLCiuExpDoc",juridicaData.pjRLCiuExpDoc },
+                    {"pjRLFechaNac",juridicaData.pjRLFechaNac?.ToString("yyyy-MM-dd")},
+                    {"pjRLNacionalidad",juridicaData.pjRLNacionalidad},
+                    {"pjRLDepartNac",juridicaData.pjRLDepartNac},
+                    {"pjRLCiudadNac",juridicaData.pjRLCiudadNac},
+
+                    {"Sucursales", sucursales.Select(s => new
+                    {
+                        pjSucursalDir = s.Direccion,
+                        pjSucursalDepart = s.Departamento,
+                        pjSucursalCiudad = s.Ciudad,
+                        pjSucursalEmail = s.Email,
+                        pjSucursalTel = s.Telefono
+                    }).ToList()},
+
+                    {"ControlRow", accionistas.Select(a => new
+                    {
+                        razonSocial = a.razonSocial,
+                        idType = a.idType,
+                        idNum = a.idNum,
+                        porcentaje = a.porcentaje
+                    }).ToList() },
+
+                    {  "FUCP", mapFUCPdata   }
+                };
+
+                return MakeDynamic
+                (
+                    existNatu: false,
+                    existJuri: true,
+                    existFUCP: (mapFUCPdata != null),
+                    natural: null,
+                    juridica: mapJuridicaData,
+                    fucp: mapFUCPdata
+                );
+            }
+
+            return MakeDynamic(false,false,false,null,null,null);
+        }
+        
         public void UpdateNaturalInfo(Proveedores_Natural providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -434,7 +500,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-
+        
         public void UpdateFUCPInfo(Proveedores_FUCP providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -446,42 +512,42 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     var existingFUCP = _context.Proveedores_FUCP.FirstOrDefault(f => f.Nit == providerNit);
                     if (existingFUCP != null)
                     {
-                        existingFUCP.ingrMensuales = providerData.ingrMensuales;
-                        existingFUCP.egreMensuales = providerData.egreMensuales;
-                        existingFUCP.activos = providerData.activos;
-                        existingFUCP.pasivos = providerData.pasivos;
-                        existingFUCP.patrimonio = providerData.patrimonio;
-                        existingFUCP.otrosIngre = providerData.otrosIngre;
-                        existingFUCP.ocNacional = providerData.ocNacional;
-                        existingFUCP.ocExtranjero = providerData.ocExtranjero;
-                        existingFUCP.ocPaisExtr = providerData.ocPaisExtr;
-                        existingFUCP.tipEmpresa = providerData.tipEmpresa;
-                        existingFUCP.actEconomica = providerData.actEconomica;
-                        existingFUCP.codCIIU = providerData.codCIIU;
-                        existingFUCP.capSoRegis = providerData.capSoRegis;
-                        existingFUCP.fechConsti = providerData.fechConsti;
-                        existingFUCP.fechVenc = providerData.fechVenc;
-                        existingFUCP.GranContrib = providerData.GranContrib;
-                        existingFUCP.DeclaIndCom = providerData.DeclaIndCom;
-                        existingFUCP.autReten = providerData.autReten;
-                        existingFUCP.fechResolGC = providerData.fechResolGC;
-                        existingFUCP.numResolGC = providerData.numResolGC;
-                        existingFUCP.departamento = providerData.departamento;
-                        existingFUCP.ciudad = providerData.ciudad;
-                        existingFUCP.numResulDIAN = providerData.numResulDIAN;
-                        existingFUCP.formPagComExt = providerData.formPagComExt;
-                        existingFUCP.persEmprBenef = providerData.persEmprBenef;
-                        existingFUCP.posCuenBanc = providerData.posCuenBanc;
-                        existingFUCP.entidad = providerData.entidad;
-                        existingFUCP.numCuenta = providerData.numCuenta;
-                        existingFUCP.clasCuenta = providerData.clasCuenta;
-                        existingFUCP.aut_representacion = providerData.aut_representacion;
-                        existingFUCP.aut_fuentRecurs = providerData.aut_fuentRecurs;
-                        existingFUCP.aut_motorysa = providerData.aut_motorysa;
-                        existingFUCP.aut_casatoro = providerData.aut_casatoro;
-                        existingFUCP.aut_bonaparte = providerData.aut_bonaparte;
-                        existingFUCP.aut_bellpi = providerData.aut_bellpi;
-                        existingFUCP.aut_TraDatos = providerData.aut_TraDatos;
+                        existingFUCP.pvIngrMens = providerData.pvIngrMens;
+                        existingFUCP.pvEgrMens = providerData.pvEgrMens;
+                        existingFUCP.pvActivos = providerData.pvActivos;
+                        existingFUCP.pvPasivos = providerData.pvPasivos;
+                        existingFUCP.pvPatrimonio = providerData.pvPatrimonio;
+                        existingFUCP.pvOtrIngr = providerData.pvOtrIngr;
+                        existingFUCP.pvPorNacional = providerData.pvPorNacional;
+                        existingFUCP.pvPorExtranjero = providerData.pvPorExtranjero;
+                        existingFUCP.pvPorPais = providerData.pvPorPais;
+                        existingFUCP.pvTipEmp = providerData.pvTipEmp;
+                        existingFUCP.pvAcEconomica = providerData.pvAcEconomica;
+                        existingFUCP.pvCodCIIU = providerData.pvCodCIIU;
+                        existingFUCP.pvCapSocReg = providerData.pvCapSocReg;
+                        existingFUCP.pvFechConst = providerData.pvFechConst;
+                        existingFUCP.pvFechVen = providerData.pvFechVen;
+                        existingFUCP.pvGrCon = providerData.pvGrCon;
+                        existingFUCP.pvDeclIndCom = providerData.pvDeclIndCom;
+                        existingFUCP.pvAutRet = providerData.pvAutRet;
+                        existingFUCP.pvFechResolGC = providerData.pvFechResolGC;
+                        existingFUCP.pvNumResolGC = providerData.pvNumResolGC;
+                        existingFUCP.pvDepartDec = providerData.pvDepartDec;
+                        existingFUCP.pvCiudadDec = providerData.pvCiudadDec;
+                        existingFUCP.pvNumResDIAN = providerData.pvNumResDIAN;
+                        existingFUCP.pvForPag = providerData.pvForPag;
+                        existingFUCP.pvEntBenef = providerData.pvEntBenef;
+                        existingFUCP.pvPosCuBan = providerData.pvPosCuBan;
+                        existingFUCP.pvEntidad = providerData.pvEntidad;
+                        existingFUCP.pvNumCueBanc = providerData.pvNumCueBanc;
+                        existingFUCP.pvClasCueBan = providerData.pvClasCueBan;
+                        existingFUCP.pvDeAuRepresentacion = providerData.pvDeAuRepresentacion;
+                        existingFUCP.pvFuenteRecur = providerData.pvFuenteRecur;
+                        existingFUCP.pvTDPMotMaq = providerData.pvTDPMotMaq;
+                        existingFUCP.pvTDPCasTor = providerData.pvTDPCasTor;
+                        existingFUCP.pvTDPBonap = providerData.pvTDPBonap;
+                        existingFUCP.pvTDPBellpi = providerData.pvTDPBellpi;
+                        existingFUCP.pvRadAut = providerData.pvRadAut;
                     }
                     else
                     {
@@ -497,8 +563,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-
-
+        
         public void RestoreProviderPassword(string nit)
         {
             try
@@ -594,7 +659,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al agregar el proveedor juridico", ex);
             }
         }
-
+        
         public void AddProveedorFUCP(Proveedores_FUCP proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())

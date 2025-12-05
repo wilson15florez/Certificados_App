@@ -9,75 +9,75 @@ public partial class Proveedores_FUCP
 
     public string Nit { get; set; } = null!;
 
-    public string? ingrMensuales { get; set; }
+    public string? pvIngrMens { get; set; }
 
-    public string? egreMensuales { get; set; }
+    public string? pvEgrMens { get; set; }
 
-    public string? activos { get; set; }
+    public string? pvActivos { get; set; }
 
-    public string? pasivos { get; set; }
+    public string? pvPasivos { get; set; }
 
-    public string? patrimonio { get; set; }
+    public string? pvPatrimonio { get; set; }
 
-    public string? otrosIngre { get; set; }
+    public string? pvOtrIngr { get; set; }
 
-    public string? ocNacional { get; set; }
+    public string? pvPorNacional { get; set; }
 
-    public string? ocExtranjero { get; set; }
+    public string? pvPorExtranjero { get; set; }
 
-    public string? ocPaisExtr { get; set; }
+    public string? pvPorPais { get; set; }
 
-    public string? tipEmpresa { get; set; }
+    public string? pvTipEmp { get; set; }
 
-    public string? actEconomica { get; set; }
+    public string? pvAcEconomica { get; set; }
 
-    public int? codCIIU { get; set; }
+    public int? pvCodCIIU { get; set; }
 
-    public string? capSoRegis { get; set; }
+    public string? pvCapSocReg { get; set; }
 
-    public DateOnly? fechConsti { get; set; }
+    public DateOnly? pvFechConst { get; set; }
 
-    public DateOnly? fechVenc { get; set; }
+    public DateOnly? pvFechVen { get; set; }
 
-    public string? GranContrib { get; set; }
+    public string? pvGrCon { get; set; }
 
-    public string? DeclaIndCom { get; set; }
+    public DateOnly? pvFechResolGC { get; set; }
 
-    public string? autReten { get; set; }
+    public string? pvNumResolGC { get; set; }
 
-    public DateOnly? fechResolGC { get; set; }
+    public string? pvDeclIndCom { get; set; }
 
-    public string? numResolGC { get; set; }
+    public string? pvDepartDec { get; set; }
 
-    public string? departamento { get; set; }
+    public string? pvCiudadDec { get; set; }
 
-    public string? ciudad { get; set; }
+    public string? pvAutRet { get; set; }
 
-    public string? numResulDIAN { get; set; }
+    public string? pvNumResDIAN { get; set; }
 
-    public string? formPagComExt { get; set; }
+    public string? pvForPag { get; set; }
 
-    public string? persEmprBenef { get; set; }
+    public string? pvEntBenef { get; set; }
 
-    public string? posCuenBanc { get; set; }
+    public string? pvPosCuBan { get; set; }
 
-    public string? entidad { get; set; }
+    public string? pvEntidad { get; set; }
 
-    public string? numCuenta { get; set; }
+    public string? pvNumCueBanc { get; set; }
 
-    public string? clasCuenta { get; set; }
+    public string? pvClasCueBan { get; set; }
 
-    public string? aut_representacion { get; set; }
+    public string? pvDeAuRepresentacion { get; set; }
 
-    public string? aut_fuentRecurs { get; set; }
+    public string? pvFuenteRecur { get; set; }
 
-    public string? aut_motorysa { get; set; }
+    public string? pvTDPMotMaq { get; set; }
 
-    public string? aut_casatoro { get; set; }
+    public string? pvTDPCasTor { get; set; }
 
-    public string? aut_bonaparte { get; set; }
+    public string? pvTDPBonap { get; set; }
 
-    public string? aut_bellpi { get; set; }
+    public string? pvTDPBellpi { get; set; }
 
-    public string? aut_TraDatos { get; set; }
+    public string? pvRadAut { get; set; }
 }
