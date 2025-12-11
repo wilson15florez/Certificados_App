@@ -31,7 +31,7 @@
 				<h1>Formato Único de Conocimiento de Proveedores</h1>
             </div>
 
-            <div class="row d-flex justify-content-around align-items-center w-75 card flex-row m-2 p-2">
+            <div class="row d-flex justify-content-around align-items-center card flex-row m-2 p-2">
                 <div class="col form-group d-block custom-input-group">
                     <label for="personType" class="form-label">Seleccione el Tipo de Persona:</label>
                     <select id="personType" class="form-control">
@@ -55,12 +55,12 @@
             <!-- form de persona natural-->
             <form id="persNatuForm" class="form-section" style="display:none;">
 
-                <div class="justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                <div class="justify-content-around align-items-center flex-row m-2 p-2">
                     <h2>Persona Natural</h2>
                 </div>
                 
                 <div>
-                    <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="form-group input-wrapper">
                             <input type="text" id="pnNombreCompl" name="pnNombreCompl" class="form-control" required />
                             <label for="pnNombreCompl" class="form-label adaptive-label" placeholder="Nombre Completo" alt="Nombre Completo"></label>
@@ -235,6 +235,7 @@
                 <div class="justify-content-around align-items-center flex-row m-2 p-2">
                     <h2>Persona Jurídica</h2>
                 </div>
+                
                 <div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="form-group input-wrapper">
@@ -242,8 +243,8 @@
                             <label for="pjRazSocial" class="form-label adaptive-label" placeholder="Razón Social" alt="Razón Social"></label>
                         </div>
                         <div class="form-group input-wrapper">
-                            <input type="number" id="pjNIT" name="pjNIT" class="form-control" disabled required/>
-                            <label for="pjNIT" class="form-label adaptive-label" placeholder="NIT" alt="NIT"></label>
+                            <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required/>
+                            <label for="pjNIT" class="form-label adaptive-label disabled-label" placeholder="NIT" alt="NIT"></label>
                         </div>
                     </div>
 
@@ -292,7 +293,7 @@
                                     <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-around align-items-center w-75 flex-row m-2 p-2">
+                            <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                                 <div class="form-group input-wrapper">
                                     <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" class="form-control" required />
                                     <label for="pjEmailDirSucursal_1" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
@@ -361,62 +362,23 @@
                     </div>
                     
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper form-check">
-                            <h5>Nacionalidad:</h5>
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pjRLRadNac" name="pjRLTipNacionalidad" value="Nacional" class="form-check-input"/><label class="form-check-label">Nacional</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pjRLRadExtr" name="pjRLTipNacionalidad" value="Extranjero" class="form-check-input"/><label class="form-check-label">Extranjero</label>
-                                </div>
-                            </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjRLTipNacionalidad" class="form-label">Nacionalidad</label>
+                            <select id="pjRLTipNacionalidad" class="form-control">
+                                <option value="" disabled selected>Seleccione una opcion</option>
+                                <option value="Nacional">Nacional</option>
+                                <option value="Extranjero">Extranjero</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div id="pjRLSeccionNacional" class="justify-content-around align-items-center flex-row m-2 p-2" style="display:none;">
-                        <div>
-                            <h6 class="sub-header">Personas Nacionales</h6>
-                            <div class="row d-flex">
-                                <div class="col form-group input-wrapper form-check">
-                                    <label>Tipo de Documento:</label>
-                                    <div class="d-flex">
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pjRLNac-CC" name="pjRLRadNac" value="CC" class="form-check-input"/><label for="pjRLNac-CC" class="form-check-label">CC</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col form-group input-wrapper">
-                                    <input type="number" id="pjRLNacNum" name="pjRLNacNum" class="form-control" required />
-                                    <label for="pjRLNacNum" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
-                                </div>
-                            </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjRLTipoDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pjRLTipoDoc" class="form-control">
+                                <option value="" disabled selected>Seleccione un documento</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div id="pjRLSeccionExtranjera" class="justify-content-around align-items-center flex-row m-2 p-2" style="display:none;">
-                        <div>
-                            <h6 class="sub-header">Personas Extranjeras</h6>
-                            <div class="row d-flex">
-                                <div class="col form-group input-wrapper form-check">
-                                    <label>Tipo de Documento:</label>
-                                    <div class="d-flex">
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pjRLExt-CE" name="pjRLRadExtr" value="CE" class="form-check-input"/><label for="pjRLExt-CE" class="form-check-label">CE</label>
-                                        </div>
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pjRLExt-PAS" name="pjRLRadExtr" value="PAS" class="form-check-input"/><label for="pjRLExt-PAS" class="form-check-label">Pasaporte</label>
-                                        </div>
-                                        <div class="form-check m-2">
-                                            <input type="radio" id="pjRLExt-CAR" name="pjRLRadExtr" value="CAR" class="form-check-input" /><label for="pjRLExt-CAR" class="form-check-label">Carné Dir. Producido Min Rel. Ext</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col form-group input-wrapper">
-                                    <input type="number" id="pjRLExtNum" name="pjRLExtNum" class="form-control" required/>
-                                    <label for="pjRLExtNum" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
-                                </div>
-                            </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pjRLDocNum" name="pjRLDocNum" class="form-control no-edit" required />
+                            <label for="pjRLDocNum" class="form-label adaptive-label disabled-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
 
