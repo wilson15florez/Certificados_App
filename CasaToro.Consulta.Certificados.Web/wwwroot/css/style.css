@@ -255,6 +255,13 @@ body {
     padding: 0;
 }
 
+.main-page-container-height {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    /*height: 100vh;*/
+    padding: 0;
+}
+
 .page-menu {
     display: flex;
     flex-direction: column;
@@ -263,6 +270,12 @@ body {
     background: linear-gradient(#69ABE2,#3381C2,#0B61AA);
     color: white;
     height:100vh;
+    position: sticky;
+    top: 0px;
+}
+
+.form-section {
+    width: 100%;
 }
 
 .menu-header {
@@ -670,6 +683,18 @@ body {
 .input-wrapper input[type="password"]{
     width: 100%;
     height: 2rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 2rem;
+    font-size: small;
+}
+
+.form-control-input-wrapper {
+    height: 1rem;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

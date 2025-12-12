@@ -98,3 +98,7 @@
 .interactive-text:hover {
     color: #0056b3;
 }
+
+.select2-container--default .select2-selection--single {
+    height: 2rem !important;
+}

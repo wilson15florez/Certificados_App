@@ -24,7 +24,7 @@
 
 </head>
 <body>
-    <main class="main-page-container">
+    <main class="main-page-container-height">
         @Html.Partial("_NavAdmin")
         <section class="page-content">
             <div class="content-header">
@@ -53,7 +53,7 @@
             
             <div id="alertContainer"></div>
             <!-- form de persona natural-->
-            <form id="persNatuForm" class="form-section" style="display:none;">
+            <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
 
                 <div class="justify-content-around align-items-center flex-row m-2 p-2">
                     <h2>Persona Natural</h2>
@@ -93,11 +93,11 @@
                             <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" class="form-control" required />
                             <label for="pnFechaExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento" alt="Fecha de Expedición de Documento"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col mb-3 form-group d-block custom-input-group">
                             <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento</label>
                             <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col mb-3 form-group d-block custom-input-group">
                             <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento</label>
                             <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
                         </div>
@@ -157,7 +157,7 @@
                             <input type="text" id="pnOficProfe" name="pnOficProfe" class="form-control" required/>
                             <label for="pnOficProfe" class="form-label adaptive-label" placeholder="Oficio o Profesión" alt="Oficio o Profesión"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col mb-3 form-group d-block custom-input-group">
                             <label for="pnActividad" class="form-label">Actividad:</label>
                             <select id="pnActividad" name="pnActividad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -167,7 +167,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <h4 class="sub-header">Marque según su perfil, cargo y/u ocupación</h4>
                         <div class="row d-flex">
                             <div class="col form-group input-wrapper form-check">
@@ -230,7 +230,7 @@
             </form>
 
             <!-- form de persona juridica-->
-            <form id="persJuriForm" class="form-section" style="display:none;">
+            <form id="persJuriForm" class="form-section" style="display:none;" autocomplete="off">
 
                 <div class="justify-content-around align-items-center flex-row m-2 p-2">
                     <h2>Persona Jurídica</h2>
@@ -377,8 +377,8 @@
                             </select>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pjRLDocNum" name="pjRLDocNum" class="form-control no-edit" required />
-                            <label for="pjRLDocNum" class="form-label adaptive-label disabled-label" placeholder="Número de documento" alt="Número de documento"></label>
+                            <input type="number" id="pjRLDocNum" name="pjRLDocNum" class="form-control" required />
+                            <label for="pjRLDocNum" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
 
@@ -419,7 +419,7 @@
             </form>
 
             <!--form conocimiento proveedores (tanto para persona natural como juridica)-->
-            <form id="provForm" class="form-section" style="display: none;">
+            <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
 
                 <div class="justify-content-around align-items-center flex-row m-2 p-2">
                     <h3>Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>
@@ -470,7 +470,7 @@
                                 <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" required />
                                 <label for="pvPorExtranjero" class="form-label adaptive-label" placeholder="Porcentaje Extranjero (%)" alt="Porcentaje Extranjero (%)"></label>
                             </div>
-                            <div class="form-group d-block custom-input-group">
+                            <div class="form-group input-wrapper d-block custom-input-group">
                                 <label for="pvPorPais" class="form-label">País:</label>
                                 <select id="pvPorPais" name="pvPorPais" class="form-control" required></select>
                             </div>
@@ -478,8 +478,8 @@
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <h6>Tipo de Empresa</h6>
                         <div class="col form-group form-check">
-                            <h6>Tipo de Empresa</h6>
                             <div class="d-flex">
                                 <div class="form-check m-2">
                                     <input type="radio" id="pvEmPublica" name="pvTipEmp" value="EmPublica" class="form-check-input" /><label for="pvEmPublica" class="form-check-label">Pública</label>
@@ -521,8 +521,8 @@
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group form-check">
-                            <h6>Gran Contribuyente</h6>
+                        <h6>Gran Contribuyente</h6>
+                        <div class="col-md-2 form-group form-check">
                             <div class="d-flex">
                                 <div class="form-check m-2">
                                     <input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" class="form-check-input"/><label for="pvGrConSi" class="form-check-label">Si</label>
@@ -543,8 +543,8 @@
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group form-check">
-                            <h6>Declarante Industria y Comercio</h6>
+                        <h6>Declarante Industria y Comercio</h6>
+                        <div class="col-md-2 form-group form-check">
                             <div class="d-flex">
                                 <div class="form-check m-2">
                                     <input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" class="form-check-input" /><label for="pvDeclIndComSi" class="form-check-label">Si</label>
@@ -564,9 +564,9 @@
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group form-check">
-                            <h6>Auto Retenedor:</h6>
+                    <div class="row d-flex justify-content-start align-items-center flex-row m-2 p-2">
+                        <h6>Auto Retenedor:</h6>
+                        <div class="col-md-2 form-group form-check">
                             <div class="d-flex">
                                 <div class="form-check m-2">
                                     <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input"/><label for="pvAutRetSi" class="form-check-label">Si</label>
@@ -576,7 +576,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col form-group input-wrapper">
+                        <div class="col-md-5 form-group input-wrapper">
                             <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control" required />
                             <label for="pvNumResDIAN" class="form-label adaptive-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
                         </div>
@@ -713,9 +713,9 @@
             <h4>Declaraciones y Autorizaciones</h4>
             <div class="panelField">
                 <p>
-					<b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" />,
+                    <b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" class="form-control-input-wrapper" />,
                     de manera voluntaria y bajo la gravedad del juramento afirmo que todo lo aquí consignado es cierto, veraz y verificable, por lo tanto realizo las siguientes declaraciones: 
-                    a) Los recursos de mi propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social) <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" />;
+                    a) Los recursos de mi propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social) <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" class="form-control-input-wrapper" />;
                     b) Mi actividad, profesión u ocupación y/o de la empresa que represento es lícita y se ejerce dentro del marco legal y los recursos no provienen de actividades ilícitas contempladas en el Código Penal; 
                     c) Que sus socios, accionistas con participación directa o indirecta igual o superior al 5%, o administradores, empleados o beneficiarios finales no presentan registros negativos en las listas tanto 
                     nacionales como internacionales de control y prevención del riesgo del lavado de activos y/o financiación del terrorismo, así como tampoco en ninguna base de datos de índole privada o pública relacionada con 
@@ -820,8 +820,8 @@
                     Así mismo, declaro que LA EMPRESA me ha informado de manera previa y expresa lo siguiente: i) los datos suministrados en la presente solicitud son recolectados atendiendo las disposiciones legales e
 					instrucciones de las autoridades competentes en materia de protección de datos personales; ii) El responsable del dicho tratamiento es la empresa <b>seleccionada anteriormente</b> según corresponda la vinculación
 					comercial, iii) Que en ciertas situaciones es necesario realizar transferencias Internacionales de mis datos para cumplir con las finalidades del mismo y con las obligaciones contractuales y pos contractuales;
-                    iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles, en consecuencia no he sido obligado a responderias, por lo que <b>SI</b><input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" /> 
-                    <b>NO</b><input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" /> autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes; 
+                    iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles, en consecuencia no he sido obligado a responderias, por lo que 
+                    <input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" class="form-check-input me-1" /><b class="me-1">SI</b> <input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" class="form-check-input me-1" /><b>NO</b> autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes;
                     v) los derechos que me asisten como titular de los datos son actualizar, conocer, rectificar, conocer sobre el uso que le darán a mis datos, solicitar prueba de la autorización y/o revocar la misma, los 
                     cuales puedo ejercer a través de los canales de comunicación informados por LA EMPRESA y en la Politica de Tratamiento de Datos Personales, dirigida al encargado de Protección de Datos Personales.<br />
 					<b>CONFIDENCIALIDAD Y RESERVA:</b> Toda la información no pública que sea entregada por LA EMPRESA y/o por cualquiera de sus sociedades vinculadas será considerada como CONFIDENCIAL Y RESERVADA, por lo tanto,
