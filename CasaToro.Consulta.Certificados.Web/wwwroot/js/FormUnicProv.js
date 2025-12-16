@@ -67,7 +67,7 @@ const pjRLCiudadNac = document.getElementById('pjRLCiudadNac');
 //elementos del formulario de persona juridica para sucursales y tabla de accionistas
 const addSucursalBtn = document.getElementById('addSucursalBtn');
 const sucursalesContainer = document.getElementById('sucursales-container');
-const maxSucursales = 3;
+const maxSucursales = 2;
 const addControlRowBtn = document.getElementById('addControlRowBtn');
 const controlTableBody = document.querySelector('#control-table tbody');
 
@@ -138,7 +138,7 @@ const url_CITIES = '/data/ubiExterior/cities.json';
 //elemento para validacion con parametros
 const regexTelFijo = /^60[1-9]\d{7}$/;
 const regexTelCelular = /^3\d{9}$/;
-const regexEmail = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let isNewRegister = false;
 let originalPEPTypes = [];
@@ -447,6 +447,7 @@ function validateJuridicaForm() {
 
     //valida telefono principal (fijo o celular)
     const telPrincipal = document.getElementById('pjTelDirPrincipal').value.trim();
+
     if (!regexTelFijo.test(telPrincipal) && !regexTelCelular.test(telPrincipal)) {
         createAlert('El número de teléfono principal debe ser un número fijo válido (10 dígitos con indicativo) o un número celular válido (10 dígitos comenzando con 3).', 'danger');
         return false;
@@ -454,6 +455,7 @@ function validateJuridicaForm() {
 
     //validar email
     const emailPrincipal = document.getElementById('pjEmailDirPrincipal').value.trim();
+
     if (emailPrincipal && !regexEmail.test(emailPrincipal)) {
         createAlert('Por favor ingrese un correo electrónico válido para la dirección principal.', 'danger');
         return false;
@@ -529,6 +531,8 @@ function validateJuridicaForm() {
         pjRLTipoDoc.focus();
         return false;
     }
+
+    return true;
 }
 
 //validacion de campos del form formato unico
@@ -794,8 +798,11 @@ async function ubicPJuHandler() {
     };
 
     //departamento y ciudad direccion principal
-    fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
-    pjDepartDirPrincipal.disabled = false;
+    if (pjDepartDirPrincipal.options.length <= 1) {
+        fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
+        pjDepartDirPrincipal.disabled = false;
+    }
+
     handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal);
 
     //departamento y ciudad expedicion documento representante legal
@@ -812,7 +819,7 @@ async function ubicPJuHandler() {
         pjRLNacionalidad.disabled = true;
 
         //depatamento y ciudad colombianos
-        fillSelect2(pjRLDepartNac, departamentos, 'Seleccione departamento');
+        fillSelect2(pjRLDepartNac, ubi_Departamentos, 'Seleccione departamento');
         pjRLDepartNac.disabled = false;
         handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
     }
@@ -841,25 +848,6 @@ async function ubicPJuHandler() {
         });
     }
 }
-//funcion para crear select dinamico en sucursales
-window.initSucursalUbic = async function (index) {
-    //asegura que los datos de ubicacion colombiana esten cargados
-    await loadUbiData();
-
-    const depSelect = document.getElementById(`pjDepartDirSucursal_${index}`);
-    const citySelect = document.getElementById(`pjCiudadDirSucursal_${index}`);
-    if (!depSelect || !citySelect) return;
-
-    fillSelect2(depSelect, ubi_Departamentos, 'Seleccione departamento');
-    depSelect.disabled = false;
-
-    $(depSelect).off('change.ubiSUC').on('change.ubiSUC', function () {
-        const dep = this.value.trim().toUpperCase();
-        const municipios = ubi_CiudadByDep[dep] || [];
-        fillSelect2(citySelect, municipios);
-        citySelect.disabled = municipios.length === 0;
-    });
-};
 
 //funcion que gestiona los select de ubicacion del provForm
 async function ubicProvFormHandler() {
@@ -897,12 +885,6 @@ async function ubicProvFormHandler() {
     console.log("ubicProvFormHandler ejecutado");
 
 }
-
-// Estado inicial: nada seleccionado
-fillSelect2(pnNacionalidad, [], 'Seleccione país');
-[pnEstadoNac, pnCiudadNac, pnDepExpDoc, pnCiuExpDoc, pnDepRes, pnCiudadRes].forEach(sel => {
-    $(sel).empty().append(new Option('Seleccione', '', true, false)).prop('disabled', true);
-});
 
 //funcion para precargar los datos del formulario persona natural
 async function loadFormData_Natural(data) {
@@ -1038,71 +1020,6 @@ async function loadFormData_Natural(data) {
     isAutoFilling = false;
 }
 
-//funcion interna para agregar una nueva sucursal (usada por el click y loadFormData)
-function addSucursalInternal(newIndex) {
-    const currentSucursales = sucursalesContainer.querySelectorAll('.sucursal-item').length;
-    newIndex = currentSucursales + 1;
-
-    if (newIndex > maxSucursales) {
-        createAlert(`Máximo ${maxSucursales} sucursales permitidas (incluyendo la principal).`, 'warning');
-        return;
-    }
-    alertContainer.innerHTML = '';
-
-    const newSucursalDiv = document.createElement('div');
-    newSucursalDiv.className = 'sucursal-item justify-content-around align-items-center flex-row m-2 p-2';
-    newSucursalDiv.id = `sucursal_${newIndex}`;
-    newSucursalDiv.innerHTML = `
-                    <h4>Dirección sucursal ${newIndex}</h4>
-                    <div class="d-flex">
-                        <div class="form-group input-wrapper">
-                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" required />
-                            <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
-                        </div>
-                        <div class="form-group d-block custom-input-group">
-                            <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento:</label>
-                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
-                        </div>
-                        <div class="form-group d-block custom-input-group">
-                            <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad:</label>
-                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
-                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
-                            <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
-                        </div>
-                        <div class="form-group input-wrapper">
-                            <input type="number" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
-                            <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
-                        </div>
-                    </div>
-                `;
-
-    sucursalesContainer.appendChild(newSucursalDiv);
-
-    //inicializa los selects de ubicacion para la nueva sucursal
-    window.initSucursalUbic(newIndex);
-}
-
-//funcion interna para agregar una nueva fila en la tabla de accionistas (usada por el click y loadFormData)
-function addControlRowInternal(data = {}) {
-    addControlRow()
-    const rows = controlTableBody.querySelectorAll('.control-row');
-    const newRow = rows[rows.length - 1];
-
-    //llenar datos si existen
-    newRow.querySelector('[name="controlRazonSocial[]"]').value = data.razonSocial || '';
-    newRow.querySelector('[name="controlIdType[]"]').value = data.idType || '';
-    newRow.querySelector('[name="controlIdNum[]"]').value = data.idNum || '';
-    newRow.querySelector('[name="controlPorcentaje[]"]').value = data.porcentaje || '';
-
-}
-
 //funcion para precargar los datos del formulario persona juridica
 async function loadFormData_Juridica(data) {
     //bloquea los eventos de cambio para evitar conflictos durante el auto llenado
@@ -1124,25 +1041,12 @@ async function loadFormData_Juridica(data) {
     //mapea nit
     if (data.Nit) pjInputNumId.value = data.Nit;
 
-    //direccion principal
-    if (data.pjDepartDirPrincipal) {
-        await setSelect2Val(pjDepartDirPrincipal, data.pjDepartDirPrincipal);
-        $(pjDepartDirPrincipal).trigger("change.ubiNac");
-        await waitForSelec2(pjCiudadDirPrincipal);
-    }
-    if (data.pjCiudadDirPrincipal) {
-        await setSelect2Val(pjCiudadDirPrincipal, data.pjCiudadDirPrincipal);
-    }
-
     //precarga las sucursales
-    document.querySelectorAll('.sucursal-item:not(#sucursal_1)').forEach(item => item.remove());
+    document.querySelectorAll('.sucursal-item').forEach(item => item.remove());
     if (data.Sucursales && Array.isArray(data.Sucursales) && data.Sucursales.length > 0) {
-        //limpia la sucursal 1 antes de agregar
-        document.getElementById(`pjDirSucursal_1`).value = '';
-        document.getElementById(`pjEmailDirSucursal_1`).value = '';
-        document.getElementById(`pjTelDirSucursal_1`).value = '';
-
+        
         for (let index = 0; index < data.Sucursales.length; index++) {
+            addSucursalBtn.click();
             const suc = data.Sucursales[index];
             const i = index + 1;
 
@@ -1155,21 +1059,21 @@ async function loadFormData_Juridica(data) {
             }
 
             //llenar campos de texto
-            document.getElementById(`pjDirSucursal_${i}`).value = suc.Direccion || '';
-            document.getElementById(`pjEmailDirSucursal_${i}`).value = suc.Email || '';
-            document.getElementById(`pjTelDirSucursal_${i}`).value = suc.Telefono || '';
+            document.getElementById(`pjDirSucursal_${i}`).value = suc.pjSucursalDir || '';
+            document.getElementById(`pjEmailDirSucursal_${i}`).value = suc.pjSucursalEmail || '';
+            document.getElementById(`pjTelDirSucursal_${i}`).value = suc.pjSucursalTel || '';
 
             //llenar selects de ubicacion de sucursales
             const depSelect = document.getElementById(`pjDepartDirSucursal_${i}`);
             const citySelect = document.getElementById(`pjCiudadDirSucursal_${i}`);
 
-            if (suc.Departamento) {
-                await setSelect2Val(depSelect, suc.Departamento);
+            if (suc.pjSucursalDepart) {
+                await setSelect2Val(depSelect, suc.pjSucursalDepart);
                 $(depSelect).trigger("change.ubiSUC");
                 await waitForSelec2(citySelect);
             }
-            if (suc.Ciudad) {
-                await setSelect2Val(citySelect, suc.Ciudad);
+            if (suc.pjSucursalCiudad) {
+                await setSelect2Val(citySelect, suc.pjSucursalCiudad);
             }
         }
     }
@@ -1177,12 +1081,19 @@ async function loadFormData_Juridica(data) {
     //precarga de tabla de accionistas
     controlTableBody.querySelectorAll('.control-row').forEach(item => item.remove());
 
-    if (data.AccionistasControlPJuridica && Array.isArray(data.AccionistasControlPJuridica) && data.AccionistasControlPJuridica.length > 0) {
-        data.AccionistasControlPJuridica.forEach((row) => {
-            addControlRowInternal();
+    if (data.ControlRow && Array.isArray(data.ControlRow) && data.ControlRow.length > 0) {
+        data.ControlRow.forEach((row) => {
+            addControlRow();
+
+            const currentRow = controlTableBody.lastElementChild;
+
+            currentRow.querySelector('[name="controlRazonSocial[]"]').value = row.razonSocial || '';
+            currentRow.querySelector('[name="controlIdType[]"]').value = row.idType || '';
+            currentRow.querySelector('[name="controlIdNum[]"]').value = row.idNum || '';
+            currentRow.querySelector('[name="controlPorcentaje[]"]').value = row.porcentaje || '';
         });
     } else {
-        addControlRowInternal({});
+        addControlRow({});
     }
 
     //precarga de representante legal
@@ -1193,17 +1104,29 @@ async function loadFormData_Juridica(data) {
         //tipo documento segun nacionalidad
         pjTipDocument();
 
-        await ubicPJuHandler();
+        //await ubicPJuHandler();
 
         if (data.pjRLTipoDoc) {
             pjRLTipoDoc.value = data.pjRLTipoDoc;
         }
     } else {
         pjTipDocument();
-        await ubicPJuHandler();
+        //await ubicPJuHandler();
     }
+    await ubicPJuHandler();
 
     //ubicacion
+
+    //direccion principal
+    if (data.pjDepartDirPrincipal) {
+        await setSelect2Val(pjDepartDirPrincipal, data.pjDepartDirPrincipal);
+        $(pjDepartDirPrincipal).trigger("change.ubiNac");
+        await waitForSelec2(pjCiudadDirPrincipal);
+    }
+    if (data.pjCiudadDirPrincipal) {
+        await setSelect2Val(pjCiudadDirPrincipal, data.pjCiudadDirPrincipal);
+    }
+
     //nacimiento
     if (data.pjRLNacionalidad) {
         await setSelect2Val(pjRLNacionalidad, data.pjRLNacionalidad);
@@ -1358,10 +1281,6 @@ async function loadProvFormData(data) {
 //funcion para precargar datos de proveedores_Master
 function loadMasterData(masterData, formId, idNum) {
 
-    if (formId === 'persNatuForm') {
-        document.getElementById('idNum').value = idNum;
-    }
-
     //Precarga el resto de la data de proveedores_Master (si existe)
     if (masterData) {
         if (formId === 'persNatuForm') {
@@ -1383,6 +1302,10 @@ function loadMasterData(masterData, formId, idNum) {
             } else if (phone.startsWith('3') && pnCelular) {
                 pnCelular.value = phone;
             }
+
+            if (inputNumId) {
+                inputNumId.value = idNum;
+            }
         }
         else if (formId === 'persJuriForm') {
             //precarga los campos que coincida con la data de master
@@ -1391,10 +1314,8 @@ function loadMasterData(masterData, formId, idNum) {
             document.getElementById('pjEmailDirPrincipal').value = masterData.correo || '';
             document.getElementById('pjTelDirPrincipal').value = masterData.telefono || '';
 
-            const docInputPJ = document.getElementById('pjNIT');
-            if (docInputPJ) {
-                docInputPJ.value = idNum;
-                docInputPJ.setAttribute('disabled', 'disabled');
+            if (pjInputNumId) {
+                pjInputNumId.value = idNum;
             }
         }
     }
@@ -1707,7 +1628,79 @@ if (pnPEPNo) {
 }
 handlePEPChange();
 
-//logica para eliminar sucursales en el form de persona juridica
+//logica para crear select dinamico a sucursale, agregar sucursal (usada por el click y loadFormData) y eliminar sucrsale
+window.initSucursalUbic = async function (index) {
+    //asegura que los datos de ubicacion colombiana esten cargados
+    await loadUbiData();
+
+    const depSelect = document.getElementById(`pjDepartDirSucursal_${index}`);
+    const citySelect = document.getElementById(`pjCiudadDirSucursal_${index}`);
+    if (!depSelect || !citySelect) return;
+
+    fillSelect2(depSelect, ubi_Departamentos, 'Seleccione departamento');
+    depSelect.disabled = false;
+
+    $(depSelect).off('change.ubiSUC').on('change.ubiSUC', function () {
+        const dep = this.value.trim().toUpperCase();
+        const municipios = ubi_CiudadByDep[dep] || [];
+        fillSelect2(citySelect, municipios);
+        citySelect.disabled = municipios.length === 0;
+    });
+};
+function addSucursalInternal(newIndex) {
+    const currentSucursales = sucursalesContainer.querySelectorAll('.sucursal-item').length;
+    newIndex = currentSucursales + 1;
+
+    if (newIndex > maxSucursales) {
+        createAlert(`Máximo ${maxSucursales} sucursales permitidas (incluyendo la principal).`, 'warning');
+        return;
+    }
+    alertContainer.innerHTML = '';
+
+    const newSucursalDiv = document.createElement('div');
+    newSucursalDiv.className = 'sucursal-item justify-content-around align-items-center flex-row m-2 p-2';
+    newSucursalDiv.id = `sucursal_${newIndex}`;
+    newSucursalDiv.innerHTML = `
+                    <h4>Dirección sucursal ${newIndex}</h4>
+                    <div class="d-flex">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="off" required />
+                            <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
+                        </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento:</label>
+                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
+                        </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad:</label>
+                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
+                            <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
+                            <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
+                        </div>
+                    </div>
+                `;
+
+    sucursalesContainer.appendChild(newSucursalDiv);
+
+    //inicializa los selects de ubicacion para la nueva sucursal
+    window.initSucursalUbic(newIndex);
+}
+if (addSucursalBtn) {
+    addSucursalBtn.addEventListener('click', function () {
+        addSucursalInternal();
+    })
+}
 sucursalesContainer.addEventListener('click', function (e) {
     if (e.target.classList.contains('remove-sucursal-btn')) {
         const sucursalItem = e.target.closest('.sucursal-item');
@@ -1769,14 +1762,6 @@ controlTableBody.addEventListener('click', function (e) {
         }
     }
 });
-
-//inicializa la vista
-window.onload = function () {
-    personTypeSelect.value = '';
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    handlePEPChange();
-};
 
 //logica de conexion al backend
 function sendData(payload, url) {
@@ -1871,23 +1856,32 @@ submitPrvBtn.addEventListener("click", submitPrvBtnHandler);
 async function submitPrvBtnHandler(e) {
     e.preventDefault();
 
-    //recopila la data de los forms
-    const natData = collectFormData_Natural();
-    const jurData = collectFormData_Juridica();
+    let dataProNJ = null;
+
+    //valida y recopila la data
+    if (personTypeSelect.value === 'natural') {
+        if (!validateNaturalForm()) return;
+        dataProNJ = collectFormData_Natural();
+    } else if (personTypeSelect.value === 'juridica') {
+        if (!validateJuridicaForm()) return;
+        dataProNJ = collectFormData_Juridica();
+    }
+    if (!validateProvForm()) return;
     const provData = collectProvFormData();
-
-
+    
     try {
         //Add o Update segun tipo de persona y su registro
         if (personTypeSelect.value === 'natural') {
-            await sendData(natData, isNewRegister ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural');
+            await sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural');
+            //Add o Update del form proveedor general(FUCP)
+            await sendData(provData, isNewRegister ? '/Admin/AddProviderFUCP' : '/Admin/UpdateProviderFUCP');
 
         } else if (personTypeSelect.value === 'juridica') {
-            await sendData(jurData, isNewRegister ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
+            await sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
+            //Add o Update del form proveedor general(FUCP)
+            await sendData(provData, isNewRegister ? '/Admin/AddProviderFUCP' : '/Admin/UpdateProviderFUCP');
         }
 
-        //Add o Update del form proveedor general(FUCP)
-        await sendData(provData, isNewRegister ? '/Admin/AddProviderFUCP' : '/Admin/UpdateProviderFUCP');
 
         alert("Proveedor guardado completamente.");
 

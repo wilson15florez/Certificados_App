@@ -205,9 +205,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col form-group input-wrapper form-check" >
+                            <div class="col form-group input-wrapper form-check" id="pnPEPtypeGroup" style="display:none;">
                                 <label>Tipo de PEP:</label>
-                                <div class="d-flex" id="pnPEPtypeGroup" style="display:none;">
+                                <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" class="form-check-input"/><label for="pnPEP-Nac" class="form-check-label">PEP Nacional</label>
                                     </div>
@@ -218,11 +218,10 @@
                                         <input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" class="form-check-input"/><label for="pnPEP-Ext" class="form-check-label">PEP Extranjero</label>
                                     </div>
                                 </div>
-                                
                             </div>
                             <div class="form-group input-wrapper" id="pnPEP_Entidad_Container" style="display:none;">
                                 <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" class="form-control" required />
-                                <label for="pnPEP_Entidad" class="form-label adaptive-label" placeholder="En caso afirmativo señale la entidad" alt="En caso afirmativo señale la entidad"></label>
+                                <label for="pnPEP_Entidad" class="form-label adaptive-label" placeholder="Entidad a la que pertenece" alt="Entidad a la que pertenece"></label>
                             </div>
                         </div>
                     </div>
@@ -243,7 +242,7 @@
                             <label for="pjRazSocial" class="form-label adaptive-label" placeholder="Razón Social" alt="Razón Social"></label>
                         </div>
                         <div class="form-group input-wrapper">
-                            <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required/>
+                            <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required />
                             <label for="pjNIT" class="form-label adaptive-label disabled-label" placeholder="NIT" alt="NIT"></label>
                         </div>
                     </div>
@@ -252,7 +251,7 @@
                         <h3 class="sub-header">Direcciones</h3>
                         <div class="d-flex">
                             <div class="form-group input-wrapper">
-                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" required />
+                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" autocomplete="off" required />
                                 <label for="pjDirPrincipal" class="form-label adaptive-label" placeholder="Dirección Oficina Principal" alt="Dirección Oficina Principal"></label>
                             </div>
                             <div class="form-group d-block custom-input-group">
@@ -277,32 +276,8 @@
                     </div>
 
                     <div id="sucursales-container">
-                        <div class="sucursal-item justify-content-around align-items-center flex-row m-2 p-2" id="sucursal_1">
-                            <h4>Dirección sucursal 1</h4>
-                            <div class="d-flex">
-                                <div class="form-group input-wrapper">
-                                    <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" class="form-control" required />
-                                    <label for="pjDirSucursal_1" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
-                                </div>
-                                <div class="form-group d-block custom-input-group">
-                                    <label for="pjDepartDirSucursal_1" class="form-label">Departamento</label>
-                                    <select id="pjDepartDirSucursal_1" name="pjDepartDirSucursal_1" class="form-control" required></select>
-                                </div>
-                                <div class="form-group d-block custom-input-group">
-                                    <label for="pjCiudadDirSucursal_1" class="form-label">Ciudad</label>
-                                    <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                                <div class="form-group input-wrapper">
-                                    <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" class="form-control" required />
-                                    <label for="pjEmailDirSucursal_1" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
-                                </div>
-                                <div class="form-group input-wrapper">
-                                    <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" class="form-control" required />
-                                    <label for="pjTelDirSucursal_1" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
-                                </div>
-                            </div>
+                        <div class="sucursal-item justify-content-around align-items-center flex-row m-2 p-2">
+                            
                         </div>
                     </div>
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
@@ -659,7 +634,7 @@
     </main>
 
     <!--subform de direccion estructurada estandar-->
-    <div id="directionStructure" class="direction-structure">
+    <form id="directionStructure" class="direction-structure" autocomplete="off">
         <div class="direction-structure-content">
             <h4>Ingrese la Dirección siguiendo el estandar del DANE:</h4>
             <div class="structure-field">
@@ -705,10 +680,10 @@
 				<button id="saveDirBtn" type="button" class="btn btn-primary">Guardar Dirección</button>
             </div>
         </div>
-    </div>
+    </form>
 
     <!--subform declaraciones y autorizaciones-->
-    <div id="declAutorPanel" class="floating-panel">
+    <form id="declAutorPanel" class="floating-panel" autocomplete="off">
         <div class="DeclAut-content">
             <h4>Declaraciones y Autorizaciones</h4>
             <div class="panelField">
@@ -852,7 +827,7 @@
                 <button id="saveAutBtn" type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>
-    </div>
+    </form>
 
     <div id="loader-container" style="
         display: none;
