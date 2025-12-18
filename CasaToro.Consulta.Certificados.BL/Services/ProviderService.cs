@@ -60,12 +60,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         {
             return _context.ProveedoresMasters.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
         }
-        
+
         public Proveedores_FUCP? getFUCPByNit(string nit)
         {
             return _context.Proveedores_FUCP.FirstOrDefault(f => f.Nit == nit);
         }
-        
+
         // Método que obtiene las empresas asociadas a un proveedor
         public List<EmpresasMaster> GetCompaniesForProvider(string nit)
 
@@ -95,7 +95,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al actualizar el proveedor", ex);
             }
         }
-        
+
         //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica y el FUCP
         public async Task<dynamic> getProviderDetails(string nit, string personType)
         {
@@ -117,7 +117,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 d.fucp = fucp;
                 return d;
             }
-            
+
             var fucpData = await _context.Proveedores_FUCP
                                         .FirstOrDefaultAsync(f => f.Nit == nit);
 
@@ -166,7 +166,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvRadAut", fucpData.pvRadAut }
                 };
             }
-            
+
             if (personType.Equals("natural", StringComparison.OrdinalIgnoreCase))
             {
                 var naturalData = await _context.Proveedores_Natural
@@ -182,7 +182,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         juridica: null,
                         fucp: mapFUCPdata
 
-                    );
+                        );
                 }
 
                 var pepTipos = await _context.PEPtipos_ProveedoresNatural
@@ -191,39 +191,39 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                                                 .ToListAsync();
 
                 var mapNaturalData = new Dictionary<string, object>
-                {
-                    {"Nit", naturalData.Nit },
-                    {"pnNombreCompl", naturalData.pnNombreCompl },
+                    {
+                        {"Nit", naturalData.Nit },
+                        {"pnNombreCompl", naturalData.pnNombreCompl },
 
-                    {"pnTipoNacionalidad", naturalData.pnTipoNacionalidad },
-                    {"pnTipoDoc", naturalData.pnTipoDoc },
-                    {"pnFechaExpDoc", naturalData.pnFechaExpDoc?.ToString("yyyy-MM-dd") },
-                    {"pnDepExpDoc", naturalData.pnDepExpDoc },
-                    {"pnCiuExpDoc", naturalData.pnCiuExpDoc },
+                        {"pnTipoNacionalidad", naturalData.pnTipoNacionalidad },
+                        {"pnTipoDoc", naturalData.pnTipoDoc },
+                        {"pnFechaExpDoc", naturalData.pnFechaExpDoc?.ToString("yyyy-MM-dd") },
+                        {"pnDepExpDoc", naturalData.pnDepExpDoc },
+                        {"pnCiuExpDoc", naturalData.pnCiuExpDoc },
 
-                    {"pnFechaNac", naturalData.pnFechaNac?.ToString("yyyy-MM-dd") },
-                    {"pnEstadoNac", naturalData.pnEstadoNac },
-                    {"pnCiudadNac", naturalData.pnCiudadNac },
-                    {"pnNacionalidad", naturalData.pnNacionalidad },
-                    {"pnDiResidencia", naturalData.pnDiResidencia },
-                    {"pnDepRes", naturalData.pnDepRes },
-                    {"pnCiudadRes", naturalData.pnCiudadRes },
+                        {"pnFechaNac", naturalData.pnFechaNac?.ToString("yyyy-MM-dd") },
+                        {"pnEstadoNac", naturalData.pnEstadoNac },
+                        {"pnCiudadNac", naturalData.pnCiudadNac },
+                        {"pnNacionalidad", naturalData.pnNacionalidad },
+                        {"pnDiResidencia", naturalData.pnDiResidencia },
+                        {"pnDepRes", naturalData.pnDepRes },
+                        {"pnCiudadRes", naturalData.pnCiudadRes },
 
-                    {"pnTelefono", naturalData.pnTelefono },
-                    {"pnCelular", naturalData.pnCelular },
-                    {"pnEmail", naturalData.pnEmail },
+                        {"pnTelefono", naturalData.pnTelefono },
+                        {"pnCelular", naturalData.pnCelular },
+                        {"pnEmail", naturalData.pnEmail },
 
-                    {"pnOficProfe", naturalData.pnOficProfe },
-                    {"pnActividad", naturalData.pnActividad },
-                    {"pnReconoPublic", naturalData.pnReconoPublic },
-                    {"pnManRePub", naturalData.pnManRePub },
+                        {"pnOficProfe", naturalData.pnOficProfe },
+                        {"pnActividad", naturalData.pnActividad },
+                        {"pnReconoPublic", naturalData.pnReconoPublic },
+                        {"pnManRePub", naturalData.pnManRePub },
 
-                    {"pnPEP", naturalData.pnPEP },
-                    {"PEPTypes", pepTipos },
-                    {"pnPEP_Entidad", naturalData.pnPEP_Entidad },
+                        {"pnPEP", naturalData.pnPEP },
+                        {"PEPTypes", pepTipos },
+                        {"pnPEP_Entidad", naturalData.pnPEP_Entidad },
 
-                    { "FUCP", mapFUCPdata }
-                };
+                        { "FUCP", mapFUCPdata }
+                    };
 
                 return MakeDynamic
                 (
@@ -262,45 +262,45 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                 //mapea los datos
                 var mapJuridicaData = new Dictionary<string, object>
-                {
-                    {"Nit",juridicaData.Nit},
-                    {"pjRazSocial",juridicaData.pjRazSocial},
-                    {"pjDirPrincipal",juridicaData.pjDirPrincipal},
-                    {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
-                    {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
-                    {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
-                    {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
-                    {"pjNomReLeg",juridicaData.pjNomReLeg},
-                    {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
-                    {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
-                    {"pjRLDocNum",juridicaData.pjRLDocNum},
-                    {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
-                    {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
-                    {"pjRLCiuExpDoc",juridicaData.pjRLCiuExpDoc },
-                    {"pjRLFechaNac",juridicaData.pjRLFechaNac?.ToString("yyyy-MM-dd")},
-                    {"pjRLNacionalidad",juridicaData.pjRLNacionalidad},
-                    {"pjRLDepartNac",juridicaData.pjRLDepartNac},
-                    {"pjRLCiudadNac",juridicaData.pjRLCiudadNac},
-
-                    {"Sucursales", sucursales.Select(s => new
                     {
-                        pjSucursalDir = s.Direccion,
-                        pjSucursalDepart = s.Departamento,
-                        pjSucursalCiudad = s.Ciudad,
-                        pjSucursalEmail = s.Email,
-                        pjSucursalTel = s.Telefono
-                    }).ToList()},
+                        {"Nit",juridicaData.Nit},
+                        {"pjRazSocial",juridicaData.pjRazSocial},
+                        {"pjDirPrincipal",juridicaData.pjDirPrincipal},
+                        {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
+                        {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
+                        {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
+                        {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
+                        {"pjNomReLeg",juridicaData.pjNomReLeg},
+                        {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
+                        {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
+                        {"pjRLDocNum",juridicaData.pjRLDocNum},
+                        {"pjRLFechExpDoc",juridicaData.pjRLFechExpDoc?.ToString("yyyy-MM-dd")},
+                        {"pjRLDepExpDoc",juridicaData.pjRLDepExpDoc},
+                        {"pjRLCiuExpDoc",juridicaData.pjRLCiuExpDoc },
+                        {"pjRLFechaNac",juridicaData.pjRLFechaNac?.ToString("yyyy-MM-dd")},
+                        {"pjRLNacionalidad",juridicaData.pjRLNacionalidad},
+                        {"pjRLDepartNac",juridicaData.pjRLDepartNac},
+                        {"pjRLCiudadNac",juridicaData.pjRLCiudadNac},
 
-                    {"ControlRow", accionistas.Select(a => new
-                    {
-                        razonSocial = a.razonSocial,
-                        idType = a.idType,
-                        idNum = a.idNum,
-                        porcentaje = a.porcentaje
-                    }).ToList() },
+                        {"Sucursales", sucursales.Select(s => new
+                        {
+                            pjSucursalDir = s.Direccion,
+                            pjSucursalDepart = s.Departamento,
+                            pjSucursalCiudad = s.Ciudad,
+                            pjSucursalEmail = s.Email,
+                            pjSucursalTel = s.Telefono
+                        }).ToList()},
 
-                    {  "FUCP", mapFUCPdata   }
-                };
+                        {"ControlRow", accionistas.Select(a => new
+                        {
+                            razonSocial = a.razonSocial,
+                            idType = a.idType,
+                            idNum = a.idNum,
+                            porcentaje = a.porcentaje
+                        }).ToList() },
+
+                        {  "FUCP", mapFUCPdata   }
+                    };
 
                 return MakeDynamic
                 (
@@ -313,9 +313,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 );
             }
 
-            return MakeDynamic(false,false,false,null,null,null);
+            return MakeDynamic(false, false, false, null, null, null);
         }
-        
+
+        //metodo para actualizar proveedor natural
         public void UpdateNaturalInfo(Proveedores_Natural providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -405,6 +406,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para actualizar proveedor juridico
         public void UpdateJuridicaInfo(Proveedores_Juridica providerData)
         {
             string providerNit = providerData.Nit;
@@ -500,7 +502,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-        
+
+        //metodo para actualizar form general de proveedor
         public void UpdateFUCPInfo(Proveedores_FUCP providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -563,7 +566,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 }
             }
         }
-        
+
+        //metodo para restaurar contraseña de proveedor
         public void RestoreProviderPassword(string nit)
         {
             try
@@ -582,6 +586,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para actualizar contraseña
         public void UpdatePassword(ProveedoresMaster provider)
         {
             try
@@ -600,6 +605,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para agregar nuevo proveedor en la tabla master
         public void AddProveedorMaster(ProveedoresMaster proveedor)
         {
             try
@@ -614,6 +620,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para agregar proveedor a la tabla de p. natural a partir de la t. master
         public void AddProveedorNatural(Proveedores_Natural proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -647,6 +654,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para agregar proveedor a la tabla de p. juridica a partir de la t. master
         public void AddProveedorJuridica(Proveedores_Juridica proveedor)
         {
             try
@@ -659,7 +667,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 throw new Exception("Error al agregar el proveedor juridico", ex);
             }
         }
-        
+
+        //metodo para agragar proveedor a la tabla de form general a partir de la t. master
         public void AddProveedorFUCP(Proveedores_FUCP proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())

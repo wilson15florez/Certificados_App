@@ -82,6 +82,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        //accion para obtener la lista paginada de proveedores
         [HttpGet]
         public IActionResult GetProviders(int pageNumber = 1, int pageSize = 100, string? search = null)
         {
@@ -154,6 +155,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
         
+        //accion para actualizar persona juridica
         [HttpPost]
         [Route("/Admin/UpdateProviderJuridica")]
         public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData)
@@ -176,6 +178,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
         
+        //accion para actualizar form general
         [HttpPost]
         [Route("/Admin/UpdateProviderFUCP")]
         public IActionResult UpdateProviderFUCP([FromBody] Proveedores_FUCP providerData)
@@ -198,7 +201,8 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { status = "error", message = "Error al actualizar la informacion FUCP: " + ex.Message });
             }
         }
-        
+
+        //accion para consultar proveedor
         [HttpGet]
         public async Task<IActionResult> CheckProvider(string idNum, string personType)
         {
@@ -209,7 +213,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 //verifica si el proveedor existe en la tabla Proveedores_Master
                 var providerMaster = _providerService.getProviderByNit(idNum);
-                
+
                 //si no lo encuentra en proveedores_Master
                 if (providerMaster == null)
                 {
@@ -243,11 +247,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
                 return Json(new { status = "foundMasterOnly", data = providerMaster });
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
             }
         }
-        
+
+        //accion para agregar proveedor natural
         [HttpPost]
         [Route("/Admin/AddProviderNatural")]
         public async Task<IActionResult> AddProviderNatural([FromBody] Proveedores_Natural provider)
@@ -273,7 +279,8 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-        
+
+        //accion para agregar proveedor juridico
         [HttpPost]
         [Route("/Admin/AddProviderJuridica")]
         public async Task<IActionResult> AddProviderJuridica([FromBody] Proveedores_Juridica provider)
@@ -300,13 +307,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        //accion para agregar form general
         [HttpPost]
         [Route("/Admin/AddProviderFUCP")]
         public IActionResult AddProviderFUCP([FromBody] Proveedores_FUCP provider)
         {
             try
             {
-                if (provider == null) return Json(new { status = "error" , message = "Datos generales del proveedor no recibidos." });
+                if (provider == null) return Json(new { status = "error", message = "Datos generales del proveedor no recibidos." });
 
                 //validar la existencia del proveedor en la tabla Proveedores_Master
                 var pmaster = _providerService.getProviderByNit(provider.Nit);
@@ -325,7 +333,8 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { status = "error", message = "Error al agregar FUCP: " + ex.Message });
             }
         }
-        
+
+        //accion para restaurar contrasena de proveedor
         [HttpGet]
         public IActionResult RestoreProviderPassword(string nit)
         {

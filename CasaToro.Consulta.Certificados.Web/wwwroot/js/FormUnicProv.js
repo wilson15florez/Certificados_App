@@ -100,7 +100,7 @@ const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
 const pvDepartDec = document.getElementById('pvDepartDec');
 const pvCiudadDec = document.getElementById('pvCiudadDec');
 
-const pvAutRet = document.getElementById('input[name="pvAutRet"]');
+const pvAutRet = document.querySelectorAll('input[name="pvAutRet"]');
 const pvNumResDIAN = document.getElementById('pvNumResDIAN');
 
 const pvForPag = document.getElementById('pvForPag');
@@ -150,8 +150,30 @@ let ubi_Departamentos = [];
 let ubi_CiudadByDep = {};
 let isUbiLoaded = false;
 
+//bloqueo inicial form persona natural
+pnDepExpDoc.disabled = true;
+pnCiuExpDoc.disabled = true;
+pnNacionalidad.disabled = true;
+pnEstadoNac.disabled = true;
+pnCiudadNac.disabled = true;
+pnDepRes.disabled = true;
+pnCiudadRes.disabled = true;
+
+//bloqueo inicial form persona juridica
+pjCiudadDirPrincipal.disabled = true;
+pjRLCiuExpDoc.disabled = true;
+pjRLNacionalidad.disabled = true;
+pjRLDepartNac.disabled = true;
+pjRLCiudadNac.disabled = true;
+
+//bloqueo inicial form general
+pvPorPais.disabled = true;
+pvDepartDec.disabled = true;
+pvCiudadDec.disabled = true;
+pvClasCueBan.disabled = true;
 
 function initHandlers() {
+    //handlers de nacionalidad
     $(pnTipoNacionalidad).off("change.pnTipoNac").on("change.pnTipoNac", async function () {
         tipDocument();
         await ubicPNaHandler(false);
@@ -161,6 +183,14 @@ function initHandlers() {
         pjTipDocument();
         await ubicPJuHandler(false);
     });
+
+    //handlers para provForm
+    pvCodCIIU.addEventListener('input', ciiuInput);
+    pvPorExtranjero.addEventListener('input', togglePvPais);
+    pvGrCon.forEach(r => r.addEventListener('change', togglePvGC));
+    pvDeclIndCom.forEach(r => r.addEventListener('change', togglePvDIC));
+    pvAutRet.forEach(r => r.addEventListener('change', togglePvAR));
+    pvPosCuBan.forEach(r => r.addEventListener('change', togglePvCB));
 
     console.log("Handlers de nacionalidad inicializados");
 }
@@ -254,19 +284,6 @@ const awaitOpt = (selectEl) => {
         check();
     });
 };
-
-//bloqueo inicial
-pnNacionalidad.disabled = true;
-pnEstadoNac.disabled = true;
-pnCiudadNac.disabled = true;
-
-
-idNumInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-        e.preventDefault();
-        consultBtn.click();
-    }
-});
 
 //funcion que identifica tipo de nacionalidad en form persona natural
 function tipDocument() {
@@ -545,16 +562,17 @@ function validateProvForm() {
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
         'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos',
-        'pvPatrimonio', 'pvOtrIngr', 'pvPorNacional', 'pvPorExtranjero',
-        'pvPorPais', 'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst',
-        'pvFechVen', 'pvFechResolGC', 'pvNumResolGC', 'pvDepartDec', 'pvCiudadDec',
-        'pvNumResDIAN', 'pvForPag', 'pvEntBenef', 'pvEntidad', 'pvNumCueBanc',
-        'pvClasCueBan', 'pvDeAuRepresentacion', 'pvFuenteRecur'
+        'pvPatrimonio', 'pvOtrIngr', 'pvPorNacional', 'pvPorPais',
+        'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst',
+        'pvFechVen', 'pvFechResolGC', 'pvNumResolGC', 'pvDepartDec', 
+        'pvCiudadDec', 'pvNumResDIAN', 'pvForPag', 'pvEntBenef', 'pvEntidad', 
+        'pvNumCueBanc', 'pvClasCueBan', 'pvDeAuRepresentacion', 'pvFuenteRecur'
     ];
 
     for (const id of requiredFields) {
         const el = document.getElementById(id);
-        if (!el || !el.value.trim()) {
+        if (!el || el.disabled) continue;
+        if (!el.value.trim()) {
             const label = document.querySelector(`label[for="${id}"]`);
             const labelText = label ? label.textContent.replace(':', '').trim() : id;
             createAlert(`El campo "${labelText}" es obligatorio.`, 'danger');
@@ -566,6 +584,13 @@ function validateProvForm() {
     //verifica tipo de empresa
     if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
         createAlert('Por favor seleccione el tipo de empresa.', 'danger');
+        return false;
+    }
+
+    //verifica codigo CIIU
+    if (pvCodCIIU.value.trim().length > 0 && pvCodCIIU.value.length < 4) {
+        createAlert('El código CIIU debe tener 4 dígitos.', 'danger');
+        pvCodCIIU.focus();
         return false;
     }
 
@@ -770,6 +795,31 @@ async function ubicPNaHandler() {
     }
 }
 
+//logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
+function handlePEPChange() {
+    if (pnPEPYes && pnPEPYes.checked) {
+        pnPEPtypeGroup.style.display = 'flex';
+        pnPEP_Entidad_Cont.style.display = 'block';
+
+        pnPEPChk.forEach(chk => chk.checked = originalPEPTypes.includes(parseInt(chk.value)));
+        pnPEP_Entidad.value = originalPEPEntidad || '';
+
+    } else if (pnPEPNo.checked) {
+        pnPEPtypeGroup.style.display = 'none';
+        pnPEP_Entidad_Cont.style.display = 'none';
+
+        pnPEPChk.forEach(chk => chk.checked = false);
+        pnPEP_Entidad.value = '';
+    }
+}
+if (pnPEPYes) {
+    pnPEPYes.addEventListener('change', handlePEPChange);
+}
+if (pnPEPNo) {
+    pnPEPNo.addEventListener('change', handlePEPChange);
+}
+handlePEPChange();
+
 //funcion que gestiona los select de ubicacion de persona juridica
 async function ubicPJuHandler() {
     //asegura que los datos de ubicacion colombiana esten cargados
@@ -884,6 +934,8 @@ async function ubicProvFormHandler() {
 
     console.log("ubicProvFormHandler ejecutado");
 
+    togglePvPais();
+    togglePvDIC();
 }
 
 //funcion para precargar los datos del formulario persona natural
@@ -1104,14 +1156,11 @@ async function loadFormData_Juridica(data) {
         //tipo documento segun nacionalidad
         pjTipDocument();
 
-        //await ubicPJuHandler();
-
         if (data.pjRLTipoDoc) {
             pjRLTipoDoc.value = data.pjRLTipoDoc;
         }
     } else {
         pjTipDocument();
-        //await ubicPJuHandler();
     }
     await ubicPJuHandler();
 
@@ -1274,6 +1323,12 @@ async function loadProvFormData(data) {
         const r = document.querySelector(`input[name="pvRadAut"][value="${data.pvRadAut}"]`);
         if (r) r.checked = true;
     }
+
+    togglePvPais();
+    togglePvGC();
+    togglePvDIC();
+    togglePvAR();
+    togglePvCB();
 
     isAutoFilling = false;
 }
@@ -1479,117 +1534,77 @@ function collectProvFormData() {
     return data;
 }
 
-//funcion de consulta en el BACKEND
-consultBtn.addEventListener('click', async function (e) {
-    e.preventDefault();
+//logica para campos form general (provForm)
+function ciiuInput() {
+    let value = pvCodCIIU.value;
 
-    const idNum = idNumInput.value.trim();
-    const personType = personTypeSelect.value;
-    alertContainer.innerHTML = '';
+    value = value.replace(/\D/g, '');
 
-    if (!personType || !idNum) {
-        createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
-        return;
+    if (value.length > 4) {
+        value = value.slice(0, 4);
     }
-
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    provForm.style.display = 'none';
-
-    const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
-    loaderContainer.style.display = 'flex';
-
-    try {
-        const response = await fetch(url);
-        const result = await response.json();
-        console.log('Respuesta del servidor:', result);
-
-        if (!response.ok)
-            throw new Error(result.message || 'Error desconocido en la respuesta del servidor.');
-
-        //ID no encontrado (proveedor no registrado)
-        if (result.status === 'notFound') {
-            createAlert(`Proveedor con ID: ${idNum} no encontrado. Verifique el ID o registre el nuevo proveedor.`, 'success');
-            return;
-        }
-
-        //ID ya registrado con un tipo de persona diferente
-        if (result.status === 'misMatch') {
-            const registeredTypeText = result.registeredType === 'natural' ? 'Persona Natural' : 'Persona Juridica';
-            createAlert(`¡Advertencia! El proveedor con ID: ${idNum} ya esta registrado como ${registeredTypeText}. Para actualizarlo debe seleccionar "${registeredTypeText}" en el desplegable.`, 'warning');
-            return;
-        }
-
-        //ID solo registrado en proveedores_Master
-        if (result.status === 'foundMasterOnly') {
-            createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete y/o actualice la informacion.`, 'info');
-
-            isNewRegister = true;
-
-            const masterData = result.data;
-
-            if (personType === 'natural') {
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block';
-                loadFormData_Natural({});
-                loadMasterData(masterData, 'persNatuForm', idNum);
-            } else {
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block'
-                loadFormData_Juridica({});
-                loadMasterData(masterData, 'persJuriForm', idNum);
-            }
-
-            await ubicProvFormHandler();
-
-            return;
-        }
-
-        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_FUCP
-        if (result.status === 'foundDetail') {
-            createAlert(`Informacion del proveedor con ID: ${idNum} cargada con exito.`, 'success');
-
-            const formData = result.data;
-
-            if (personType === 'natural') {
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block'
-
-                if (formData.natural) {
-                    await loadFormData_Natural(formData.natural);
-                }
-
-                loadMasterData(null, 'persNatuForm', idNum);
-
-            } else {
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block'
-
-                if (formData.juridica) {
-                    await loadFormData_Juridica(formData.juridica);
-                }
-
-                loadMasterData(null, 'persJuriForm', idNum);
-
-            }
-
-            await ubicProvFormHandler();
-
-            if (formData.fucp) {
-                await loadProvFormData(formData.fucp);
-            }
-
-            return;
-        }
-
-        createAlert('No se pudo determinar el estado del proveedor.', 'danger');
-    } catch (error) {
-        createAlert("Error al consultar: " + error.message, 'danger');
-        console.error('Error de Fetch:', error);
-    } finally {
-        loaderContainer.style.display = 'none';
+    pvCodCIIU.value = value;
+}
+function togglePvPais() {
+    const hasValue = pvPorExtranjero.value.trim().length > 0;
+    $(pvPorPais).prop('disabled', !hasValue).trigger('change.select2');
+    if (!hasValue) {
+        $(pvPorPais).val(null).trigger('change.select2');
     }
-});
+}
+function togglePvGC() {
+    const si = document.getElementById('pvGrConSi').checked;
+    const inpGC = [document.getElementById('pvFechResolGC'), document.getElementById('pvNumResolGC')];
+    const labGC = [document.querySelector('label[for="pvFechResolGC"]'), document.querySelector('label[for="pvNumResolGC"]')];
+    if (si) {
+        inpGC.forEach(el => el.classList.remove('no-edit'));
+        labGC.forEach(el => el.classList.remove('disabled-label'));
+    } else {
+        pvFechResolGC.value = '';
+        pvNumResolGC.value = '';
+        inpGC.forEach(el => el.classList.add('no-edit'));
+        labGC.forEach(el => el.classList.add('disabled-label'));
+    }
+}
+function togglePvDIC() {
+    const si = document.getElementById('pvDeclIndComSi').checked;
+    $(pvDepartDec).prop('disabled', !si).trigger('change.select2');
+    $(pvCiudadDec).prop('disabled', !si).trigger('change.select2');
+    if (!si) {
+        $(pvDepartDec).val(null).trigger('change.select2');
+        $(pvCiudadDec).val(null).trigger('change.select2');
+    }
+}
+function togglePvAR() {
+    const si = document.getElementById('pvAutRetSi').checked;
+    const inpAR = document.getElementById('pvNumResDIAN');
+    const labAR = document.querySelector('label[for="pvNumResDIAN"]');
+    if (si) {
+        inpAR.classList.remove('no-edit');
+        labAR.classList.remove('disabled-label');
+    } else {
+        pvNumResDIAN.value = '';
+        inpAR.classList.add('no-edit');
+        labAR.classList.add('disabled-label');
+    }
+}
+function togglePvCB() {
+    const si = document.getElementById('pvPosCuBanSi').checked;
+    const inpCB = [document.getElementById('pvEntidad'), document.getElementById('pvNumCueBanc')];
+    const labCB = [document.querySelector('label[for="pvEntidad"]'), document.querySelector('label[for="pvNumCueBanc"]')];
+    $(pvClasCueBan).prop('disabled', !si).trigger('change');
+
+    if (si) {
+        inpCB.forEach(el => el.classList.remove('no-edit'));
+        labCB.forEach(el => el.classList.remove('disabled-label'));
+    } else {
+        pvEntidad.value = '';
+        pvNumCueBanc.value = '';
+        inpCB.forEach(el => el.classList.add('no-edit'));
+        labCB.forEach(el => el.classList.add('disabled-label'));
+        $(pvClasCueBan).val(null).trigger('change');
+    }
+}
 
 //logica para mostrar/ocultar los forms al cambiar el tipo de persona
 personTypeSelect.addEventListener('change', function () {
@@ -1603,32 +1618,7 @@ personTypeSelect.addEventListener('change', function () {
     alertContainer.innerHTML = '';
 });
 
-//logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
-function handlePEPChange() {
-    if (pnPEPYes && pnPEPYes.checked) {
-        pnPEPtypeGroup.style.display = 'flex';
-        pnPEP_Entidad_Cont.style.display = 'block';
-
-        pnPEPChk.forEach(chk => chk.checked = originalPEPTypes.includes(parseInt(chk.value)));
-        pnPEP_Entidad.value = originalPEPEntidad || '';
-
-    } else if (pnPEPNo.checked) {
-        pnPEPtypeGroup.style.display = 'none';
-        pnPEP_Entidad_Cont.style.display = 'none';
-
-        pnPEPChk.forEach(chk => chk.checked = false);
-        pnPEP_Entidad.value = '';
-    }
-}
-if (pnPEPYes) {
-    pnPEPYes.addEventListener('change', handlePEPChange);
-}
-if (pnPEPNo) {
-    pnPEPNo.addEventListener('change', handlePEPChange);
-}
-handlePEPChange();
-
-//logica para crear select dinamico a sucursale, agregar sucursal (usada por el click y loadFormData) y eliminar sucrsale
+//logica para crear select dinamico a sucursal, agregar sucursal (usada por el click y loadFormData) y eliminar sucrsale
 window.initSucursalUbic = async function (index) {
     //asegura que los datos de ubicacion colombiana esten cargados
     await loadUbiData();
@@ -1763,32 +1753,6 @@ controlTableBody.addEventListener('click', function (e) {
     }
 });
 
-//logica de conexion al backend
-function sendData(payload, url) {
-    console.log("Enviando datos a:", url, payload);
-
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-    })
-        .then(response => response.json())
-        .then(result => {
-            if (result.error || result.status === 'error') {
-                alert("Error: " + (result.message || result.error));
-                throw new Error(result.message || result.error);
-            }
-            alert("¡Exito! " + (result.message || 'Guardado correctamente.'));
-            return result;
-        })
-        .catch(error => {
-            console.error('Error de Fetch:', error);
-            alert("Error al guardar: " + error.message);
-        });
-}
-
 //logica del subformulario de direccion (despliega subform, botones cancelar y guardar)
 document.addEventListener('focusin', (e) => {
     if (e.target.matches('input[id^="pnDiResidencia"], input[id^="pjDirPrincipal"],input[id^="pjDirSucursal_"]')) {
@@ -1850,9 +1814,156 @@ saveAutBtn.addEventListener('click', () => {
     activeParagraph = null;
 })
 
+//atajo de consulta con enter
+idNumInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        consultBtn.click();
+    }
+});
+
+//funcion de consulta en el BACKEND
+consultBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const idNum = idNumInput.value.trim();
+    const personType = personTypeSelect.value;
+    alertContainer.innerHTML = '';
+
+    if (!personType || !idNum) {
+        createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
+        return;
+    }
+
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+
+    const url = `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`;
+    loaderContainer.style.display = 'flex';
+
+    try {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log('Respuesta del servidor:', result);
+
+        if (!response.ok)
+            throw new Error(result.message || 'Error desconocido en la respuesta del servidor.');
+
+        //ID no encontrado (proveedor no registrado)
+        if (result.status === 'notFound') {
+            createAlert(`Proveedor con ID: ${idNum} no encontrado. Verifique el ID o registre el nuevo proveedor.`, 'success');
+            return;
+        }
+
+        //ID ya registrado con un tipo de persona diferente
+        if (result.status === 'misMatch') {
+            const registeredTypeText = result.registeredType === 'natural' ? 'Persona Natural' : 'Persona Juridica';
+            createAlert(`¡Advertencia! El proveedor con ID: ${idNum} ya esta registrado como ${registeredTypeText}. Para actualizarlo debe seleccionar "${registeredTypeText}" en el desplegable.`, 'warning');
+            return;
+        }
+
+        //ID solo registrado en proveedores_Master
+        if (result.status === 'foundMasterOnly') {
+            createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete y/o actualice la informacion.`, 'info');
+
+            isNewRegister = true;
+
+            const masterData = result.data;
+
+            if (personType === 'natural') {
+                persNatuForm.style.display = 'block';
+                provForm.style.display = 'block';
+                loadFormData_Natural({});
+                loadProvFormData({});
+                loadMasterData(masterData, 'persNatuForm', idNum);
+            } else {
+                persJuriForm.style.display = 'block';
+                provForm.style.display = 'block'
+                loadFormData_Juridica({});
+                loadProvFormData({});
+                loadMasterData(masterData, 'persJuriForm', idNum);
+            }
+
+            await ubicProvFormHandler();
+
+            return;
+        }
+
+        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_FUCP
+        if (result.status === 'foundDetail') {
+            createAlert(`Informacion del proveedor con ID: ${idNum} cargada con exito.`, 'success');
+
+            const formData = result.data;
+
+            if (personType === 'natural') {
+                persNatuForm.style.display = 'block';
+                provForm.style.display = 'block'
+
+                if (formData.natural) {
+                    await loadFormData_Natural(formData.natural);
+                }
+
+                loadMasterData(null, 'persNatuForm', idNum);
+
+            } else {
+                persJuriForm.style.display = 'block';
+                provForm.style.display = 'block'
+
+                if (formData.juridica) {
+                    await loadFormData_Juridica(formData.juridica);
+                }
+
+                loadMasterData(null, 'persJuriForm', idNum);
+
+            }
+
+            await ubicProvFormHandler();
+
+            if (formData.fucp) {
+                await loadProvFormData(formData.fucp);
+            }
+
+            return;
+        }
+
+        createAlert('No se pudo determinar el estado del proveedor.', 'danger');
+    } catch (error) {
+        createAlert("Error al consultar: " + error.message, 'danger');
+        console.error('Error de Fetch:', error);
+    } finally {
+        loaderContainer.style.display = 'none';
+    }
+});
+
+//logica de conexion al backend
+function sendData(payload, url) {
+    console.log("Enviando datos a:", url, payload);
+
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.error || result.status === 'error') {
+                alert("Error: " + (result.message || result.error));
+                throw new Error(result.message || result.error);
+            }
+            alert("¡Exito! " + (result.message || 'Guardado correctamente.'));
+            return result;
+        })
+        .catch(error => {
+            console.error('Error de Fetch:', error);
+            alert("Error al guardar: " + error.message);
+        });
+}
+
 //listener de envio de forms
 submitPrvBtn.addEventListener("click", submitPrvBtnHandler);
-
 async function submitPrvBtnHandler(e) {
     e.preventDefault();
 
@@ -1890,4 +2001,5 @@ async function submitPrvBtnHandler(e) {
         alert("Error al guardar: " + (err.message || err));
     }
 };
+
 initHandlers()

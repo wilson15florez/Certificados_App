@@ -405,6 +405,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pvCapSocReg).HasMaxLength(255);
             entity.Property(e => e.pvCiudadDec).HasMaxLength(100);
             entity.Property(e => e.pvClasCueBan).HasMaxLength(50);
+            entity.Property(e => e.pvCodCIIU).HasMaxLength(10);
             entity.Property(e => e.pvDeAuRepresentacion).HasMaxLength(255);
             entity.Property(e => e.pvDeclIndCom)
                 .HasMaxLength(2)

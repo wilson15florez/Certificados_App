@@ -31,7 +31,7 @@ public partial class Proveedores_FUCP
 
     public string? pvAcEconomica { get; set; }
 
-    public int? pvCodCIIU { get; set; }
+    public string? pvCodCIIU { get; set; }
 
     public string? pvCapSocReg { get; set; }
 

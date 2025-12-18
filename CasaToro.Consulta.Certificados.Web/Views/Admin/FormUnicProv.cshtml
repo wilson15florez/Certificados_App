@@ -442,7 +442,7 @@
                                 <label for="pvPorNacional" class="form-label adaptive-label" placeholder="Porcentaje Nacional (%)" alt="Porcentaje Nacional (%)"></label>
                             </div>
                             <div class="form-group input-wrapper">
-                                <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" required />
+                                <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" />
                                 <label for="pvPorExtranjero" class="form-label adaptive-label" placeholder="Porcentaje Extranjero (%)" alt="Porcentaje Extranjero (%)"></label>
                             </div>
                             <div class="form-group input-wrapper d-block custom-input-group">
@@ -475,7 +475,7 @@
                             <label for="pvAcEconomica" class="form-label adaptive-label" placeholder="Actividad Económica" alt="Actividad Económica"></label>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pvCodCIIU" name="pvCodCIIU" class="form-control" required />
+                            <input type="text" id="pvCodCIIU" name="pvCodCIIU" maxlength="4" class="form-control" required />
                             <label for="pvCodCIIU" class="form-label adaptive-label" placeholder="Código CIIU" alt="Código CIIU"></label>
                         </div>
                     </div>
@@ -508,12 +508,12 @@
                             </div>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="date" id="pvFechResolGC" name="pvFechResolGC" class="form-control" required />
-                            <label for="pvFechResolGC" class="form-label adaptive-label" placeholder="Fecha resolución Gran Contribuyente" alt="Fecha resolución Gran Contribuyente"></label>
+                            <input type="date" id="pvFechResolGC" name="pvFechResolGC" class="form-control no-edit" required />
+                            <label for="pvFechResolGC" class="form-label adaptive-label disabled-label" placeholder="Fecha resolución Gran Contribuyente" alt="Fecha resolución Gran Contribuyente"></label>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pvNumResolGC" name="pvNumResolGC" class="form-control" required />
-                            <label for="pvNumResolGC" class="form-label adaptive-label" placeholder="Número resolución Gran Contribuyente" alt="Número resolución Gran Contribuyente"></label>
+                            <input type="number" id="pvNumResolGC" name="pvNumResolGC" class="form-control no-edit" required />
+                            <label for="pvNumResolGC" class="form-label adaptive-label disabled-label" placeholder="Número resolución Gran Contribuyente" alt="Número resolución Gran Contribuyente"></label>
                         </div>
                     </div>
 
@@ -552,8 +552,8 @@
                             </div>
                         </div>
                         <div class="col-md-5 form-group input-wrapper">
-                            <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control" required />
-                            <label for="pvNumResDIAN" class="form-label adaptive-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
+                            <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control no-edit" required />
+                            <label for="pvNumResDIAN" class="form-label adaptive-label disabled-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
                         </div>
                     </div>
 
@@ -589,15 +589,15 @@
                             </div>
                         </div>
                         <div class="col form-group input-wrapper">
-                            <input type="text" id="pvEntidad" name="pvEntidad" class="form-control" required />
-                            <label for="pvEntidad" class="form-label adaptive-label" placeholder="Entidad" alt="Entidad"></label>
+                            <input type="text" id="pvEntidad" name="pvEntidad" class="form-control no-edit" required />
+                            <label for="pvEntidad" class="form-label adaptive-label disabled-label" placeholder="Entidad" alt="Entidad"></label>
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center m-2 p-2">
                         <div class="col form-group input-wrapper">
-                            <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control" required />
-                            <label for="pvNumCueBanc" class="form-label adaptive-label" placeholder="N° de cuenta" alt="N° de cuenta"></label>
+                            <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control no-edit" required />
+                            <label for="pvNumCueBanc" class="form-label adaptive-label disabled-label" placeholder="N° de cuenta" alt="N° de cuenta"></label>
                         </div>
                         <div class="col form-group d-block custom-input-group">
                             <label for="pvClasCueBan" class="form-label">Clase de cuenta</label>
@@ -622,7 +622,7 @@
                         </p>
                     </div>
 
-                    <div class="button-group">
+                    <div class="button-group justify-content-around align-items-center m-2 p-2">
                         <button type="button" id="submitPrvBtn" class="btn btn-primary">Guardar Proveedor</button>
                     </div>
                 </div>
