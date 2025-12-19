@@ -31,7 +31,7 @@ public partial class CertificadosIca
 
     public virtual EmpresasMaster IdEmpresaNavigation { get; set; } = null!;
 
-    public virtual ProveedoresMaster NitNavigation { get; set; } = null!;
+    public virtual Proveedores_Master NitNavigation { get; set; } = null!;
 
     public override string ToString()
     {

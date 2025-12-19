@@ -18,11 +18,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         // Método que obtiene la lista de proveedores paginada
-        public List<ProveedoresMaster> getProviders(int pageNumber, int pageSize, string? search = null)
+        public List<Proveedores_Master> getProviders(int pageNumber, int pageSize, string? search = null)
         {
             try
             {
-                var query = _context.ProveedoresMasters.AsQueryable(); // Obtiene la consulta sin ejecutarla aún
+                var query = _context.Proveedores_Master.AsQueryable(); // Obtiene la consulta sin ejecutarla aún
 
                 // Aplicar filtro si hay búsqueda
                 if (!string.IsNullOrEmpty(search))
@@ -48,17 +48,17 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         // Método que obtiene la cantidad de proveedores
         public int getProvidersCount(string? search = null)
         {
-            return _context.ProveedoresMasters
+            return _context.Proveedores_Master
                                      .Where(p => string.IsNullOrEmpty(search) ||
                                                  p.Nit.ToLower().Contains(search.ToLower()) ||
                                                  p.Nombre.ToLower().Contains(search.ToLower()))
                                      .Count();
         }
 
-        // Método que obtiene un proveedor por su NIT
-        public ProveedoresMaster getProviderByNit(string nit)
+        //Método que obtiene un proveedor por su NIT
+        public Proveedores_Master getProviderByNit(string nit)
         {
-            return _context.ProveedoresMasters.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
+            return _context.Proveedores_Master.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
         }
 
         public Proveedores_FUCP? getFUCPByNit(string nit)
@@ -77,17 +77,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                            .ToList();
         }
 
-        //Metodo para actualizar la información de un proveedor
-        public void UpdateProvider(ProveedoresMaster provider)
+        //Metodo para actualizar la información de un proveedor en la tabla master
+        public void UpdateProvider(Proveedores_Master provider)
         {
             try
             {
-                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == provider.Nit);
+                var existingProvider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == provider.Nit);
                 if (existingProvider != null)
                 {
                     // Actualizar la entidad existente
                     _context.Entry(existingProvider).CurrentValues.SetValues(provider);
                     _context.SaveChanges();
+                    Console.WriteLine("proovedor actualizado");
                 }
             }
             catch (Exception ex)
@@ -325,7 +326,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 {
                     string providerNit = providerData.Nit;
 
-                    var existingMaster = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == providerNit);
+                    var existingMaster = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == providerNit);
                     if (existingMaster != null)
                     {
                         existingMaster.Nombre = providerData.pnNombreCompl.ToUpper();
@@ -572,7 +573,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         {
             try
             {
-                var provider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == nit);
+                var provider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == nit);
                 if (provider != null)
                 {
                     provider.Contrasena = provider.Nit;
@@ -587,11 +588,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para actualizar contraseña
-        public void UpdatePassword(ProveedoresMaster provider)
+        public void UpdatePassword(Proveedores_Master provider)
         {
             try
             {
-                var existingProvider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == provider.Nit);
+                var existingProvider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == provider.Nit);
                 if (existingProvider != null)
                 {
                     existingProvider.Contrasena = provider.Contrasena;
@@ -606,11 +607,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para agregar nuevo proveedor en la tabla master
-        public void AddProveedorMaster(ProveedoresMaster proveedor)
+        public void AddProveedorMaster(Proveedores_Master proveedor)
         {
             try
             {
-                _context.ProveedoresMasters.Add(proveedor);
+                _context.Proveedores_Master.Add(proveedor);
                 _context.SaveChanges();
 
             }

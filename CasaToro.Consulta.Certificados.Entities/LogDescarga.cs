@@ -15,5 +15,5 @@ public partial class LogDescarga
 
     public string DocumentoDesc { get; set; } = null!;
 
-    public virtual ProveedoresMaster NitTerceroNavigation { get; set; } = null!;
+    public virtual Proveedores_Master NitTerceroNavigation { get; set; } = null!;
 }

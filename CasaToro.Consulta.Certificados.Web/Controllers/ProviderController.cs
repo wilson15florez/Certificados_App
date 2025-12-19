@@ -139,10 +139,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
             catch (Exception e)
             {
-               ViewBag.Error = e.Message;
+                ViewBag.Error = e.Message;
                 return View("Error");
             }
-   
+
         }
 
         public ActionResult PV_FormUnicPro()
@@ -158,7 +158,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        public IActionResult UpdateProvider([FromBody]ProveedoresMaster provider)
+        public IActionResult UpdateProvider([FromBody] Proveedores_Master provider)
         {
             try
             {
@@ -172,6 +172,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 existingProvider.Direccion = provider.Direccion;
                 existingProvider.Correo = provider.Correo;
                 existingProvider.Telefono = provider.Telefono;
+                existingProvider.TipoPersona = provider.TipoPersona;
 
                 // Actualizar información del proveedor en la base de datos
                 _providerService.UpdateProvider(existingProvider);
@@ -183,6 +184,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return View("Error");
             }
         }
+
         [HttpPost]
         public IActionResult UpdatePassword([FromBody] string password)
         {

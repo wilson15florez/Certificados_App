@@ -31,7 +31,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             {
                 // Autenticar al usuario utilizando el servicio de login
                 var result = _loginService.Authenticate(model.UserName, model.Password);
-                    
+
                 // Si el usuario está autenticado y no es administrador
                 if (result.IsAuthenticated && !result.isAdmin)
                 {

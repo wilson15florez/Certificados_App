@@ -70,7 +70,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     foreach (var cert in ivaCertificates)
                     {
                         cert.IdEmpresaNavigation = _context.EmpresasMasters.FirstOrDefault(e => e.IdEmpresa == cert.IdEmpresa);
-                        cert.NitNavigation = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == cert.Nit);
+                        cert.NitNavigation = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == cert.Nit);
                     }
 
                     url = GenerateIvaCertificate(ivaCertificates);
@@ -84,7 +84,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     foreach (var cert in icaCertificates)
                     {
                         cert.IdEmpresaNavigation = _context.EmpresasMasters.FirstOrDefault(e => e.IdEmpresa == cert.IdEmpresa);
-                        cert.NitNavigation = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == cert.Nit);
+                        cert.NitNavigation = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == cert.Nit);
                     }
 
                     url = GenerateIcaCertificate(icaCertificates);
@@ -98,7 +98,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     foreach (var cert in rtfteCertificates)
                     {
                         cert.IdEmpresaNavigation = _context.EmpresasMasters.FirstOrDefault(e => e.IdEmpresa == cert.IdEmpresa);
-                        cert.NitNavigation = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == cert.Nit);
+                        cert.NitNavigation = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == cert.Nit);
                     }
 
                     url = GenerateRtfCertificate(rtfteCertificates);
@@ -109,7 +109,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             {
                 return "";
             }
-            
+
         }
 
         private string GenerateIvaCertificate(List<CertificadosIva> certificates)
@@ -117,7 +117,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             try
             {
                 string fileName = certificates[0].NitNavigation.Nit + "_" + certificates[0].IdEmpresaNavigation.Nombre + "_CertificadoIVA.pdf";
-                string logoPath = Path.Combine("wwwroot", "images", "Logos_Empresas", certificates[0].IdEmpresaNavigation.Nombre+ ".png");
+                string logoPath = Path.Combine("wwwroot", "images", "Logos_Empresas", certificates[0].IdEmpresaNavigation.Nombre + ".png");
                 string path = Path.Combine("wwwroot", "Certificados", "Generados", fileName);
                 using (PdfWriter writer = new PdfWriter(path))
                 {
@@ -132,7 +132,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             ImageData imageData = ImageDataFactory.Create(logoPath);
                             Image image = new Image(imageData);
 
-         
+
                             image.SetHeight(60);
 
                             image.SetHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -151,7 +151,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         Cell yearHeader = new Cell();
                         yearHeader.Add(new Paragraph("Año").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         dateInfo.AddHeaderCell(yearHeader);
- 
+
                         Cell periodHeader = new Cell();
                         periodHeader.Add(new Paragraph("Periodo").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         dateInfo.AddHeaderCell(periodHeader);
@@ -161,7 +161,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                         Table infoAgents = new Table(5);
 
-                        Cell headerRetentionAgent = new Cell(1,2);
+                        Cell headerRetentionAgent = new Cell(1, 2);
                         headerRetentionAgent.Add(new Paragraph("Apellidos y nombre o razón social del agente retenedor").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         infoAgents.AddHeaderCell(headerRetentionAgent);
 
@@ -186,11 +186,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         infoAgents.AddCell(addressRetention);
 
                         Cell nitRetention = new Cell();
-                        nitRetention.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Nit.Substring(0, certificates[0].IdEmpresaNavigation.Nit.Length-1)).SetTextAlignment(TextAlignment.CENTER));
+                        nitRetention.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Nit.Substring(0, certificates[0].IdEmpresaNavigation.Nit.Length - 1)).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(nitRetention);
 
                         Cell verificationCode = new Cell();
-                        verificationCode.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Nit.Substring(certificates[0].IdEmpresaNavigation.Nit.Length-1)).SetTextAlignment(TextAlignment.CENTER));
+                        verificationCode.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Nit.Substring(certificates[0].IdEmpresaNavigation.Nit.Length - 1)).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(verificationCode);
 
                         Cell headerAgent = new Cell(1, 4);
@@ -234,10 +234,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {
                             infoAgents.AddCell(cert.Concepto).SetTextAlignment(TextAlignment.CENTER);
                             infoAgents.AddCell(cert.CiudadPago.ToUpper()).SetTextAlignment(TextAlignment.CENTER);
-                            infoAgents.AddCell("$"+cert.Iva.ToString("#,##0")).SetTextAlignment(TextAlignment.CENTER);
+                            infoAgents.AddCell("$" + cert.Iva.ToString("#,##0")).SetTextAlignment(TextAlignment.CENTER);
                             var percentageInt = cert.Porcentaje * 100;
                             infoAgents.AddCell(percentageInt.ToString("0.##") + "%").SetTextAlignment(TextAlignment.CENTER);
-                            infoAgents.AddCell("$"+cert.Retenido.ToString("#,##0")).SetTextAlignment(TextAlignment.CENTER);
+                            infoAgents.AddCell("$" + cert.Retenido.ToString("#,##0")).SetTextAlignment(TextAlignment.CENTER);
                         }
 
                         document.Add(dateInfo);
@@ -259,13 +259,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         document.Add(footer);
                     }
                 }
-                return path.Replace("wwwroot",string.Empty);
+                return path.Replace("wwwroot", string.Empty);
             }
             catch (Exception e)
             {
                 return string.Empty;
             }
-         
+
         }
 
         private string GenerateIcaCertificate(List<CertificadosIca> certificates)
@@ -485,7 +485,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         verificationCode.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Nit.Substring(certificates[0].IdEmpresaNavigation.Nit.Length - 1)).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(verificationCode);
 
-                        Cell headerAddressRetention = new Cell(1,2);
+                        Cell headerAddressRetention = new Cell(1, 2);
                         headerAddressRetention.Add(new Paragraph("Dirección del agente retenedor").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         infoAgents.AddCell(headerAddressRetention);
 
@@ -497,7 +497,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         headerCity.Add(new Paragraph("Ciudad o municipio").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         infoAgents.AddCell(headerCity);
 
-                        Cell addressRetention = new Cell(1,2);
+                        Cell addressRetention = new Cell(1, 2);
                         addressRetention.Add(new Paragraph(certificates[0].IdEmpresaNavigation.Direccion).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(addressRetention);
 
@@ -513,7 +513,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         headerAgent.Add(new Paragraph("Apellidos y nombre o razón social a quien se le practicó la retención").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         infoAgents.AddCell(headerAgent);
 
-                        Cell headerNitAgent = new Cell(1,2);
+                        Cell headerNitAgent = new Cell(1, 2);
                         headerNitAgent.Add(new Paragraph("NIT O C.C").SetTextAlignment(TextAlignment.CENTER).SetFont(boldFont));
                         infoAgents.AddCell(headerNitAgent);
 
@@ -521,7 +521,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         nameAgent.Add(new Paragraph(certificates[0].NitNavigation.Nombre.ToUpper()).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(nameAgent);
 
-                        Cell nitAgent = new Cell(1,2);
+                        Cell nitAgent = new Cell(1, 2);
                         nitAgent.Add(new Paragraph(certificates[0].NitNavigation.Nit).SetTextAlignment(TextAlignment.CENTER));
                         infoAgents.AddCell(nitAgent);
 
@@ -577,6 +577,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        
+
     }
 }

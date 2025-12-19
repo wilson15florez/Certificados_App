@@ -109,7 +109,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProvider([FromBody] ProveedoresMaster provider)
+        public IActionResult UpdateProvider([FromBody] Proveedores_Master provider)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-        
+
         //Accion para actualizar persona natural
         [HttpPost]
         [Route("/Admin/UpdateProviderNatural")]
@@ -154,7 +154,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = "Error al actualizar la persona natural: " + ex.Message });
             }
         }
-        
+
         //accion para actualizar persona juridica
         [HttpPost]
         [Route("/Admin/UpdateProviderJuridica")]
@@ -162,11 +162,11 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         {
             try
             {
-                if (providerData == null) 
+                if (providerData == null)
                     return Json(new { error = "Datos del proveedor no recibidos." });
 
                 var pmaster = _providerService.getProviderByNit(providerData.Nit);
-                if (pmaster == null) 
+                if (pmaster == null)
                     return Json(new { error = "El proveedor no esta registrado en el sistema." });
 
                 _providerService.UpdateJuridicaInfo(providerData);
@@ -177,7 +177,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
             }
         }
-        
+
         //accion para actualizar form general
         [HttpPost]
         [Route("/Admin/UpdateProviderFUCP")]

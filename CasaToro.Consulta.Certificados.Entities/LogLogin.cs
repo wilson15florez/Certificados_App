@@ -13,5 +13,5 @@ public partial class LogLogin
 
     public DateTime FecLogin { get; set; }
 
-    public virtual ProveedoresMaster NitTerceroNavigation { get; set; } = null!;
+    public virtual Proveedores_Master NitTerceroNavigation { get; set; } = null!;
 }

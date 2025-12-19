@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CasaToro.Consulta.Certificados.Entities;
 
-public partial class ProveedoresMaster
+public partial class Proveedores_Master
 {
     public string Nit { get; set; } = null!;
 
@@ -16,6 +16,8 @@ public partial class ProveedoresMaster
     public string Nombre { get; set; } = null!;
 
     public string? Contrasena { get; set; }
+
+    public string? TipoPersona { get; set; }
 
     public virtual ICollection<CertificadosIca> CertificadosIcas { get; set; } = new List<CertificadosIca>();
 

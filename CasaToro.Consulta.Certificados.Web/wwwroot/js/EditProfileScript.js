@@ -3,6 +3,7 @@ let saveBtnPass = document.getElementById('save-btn');
 const alertContainer = document.getElementById('alerts-container');
 const alertEditPass = document.getElementById('alerts-container-edit');
 
+//logica para actualizar constraseña
 saveBtnPass.addEventListener('click', () => {
     const oldPass = document.getElementById('old-password-input').value;
     const newPass = document.getElementById('new-password-input').value;
@@ -58,12 +59,13 @@ saveBtn.addEventListener('click', () => {
     const address = document.getElementById('address-input').value;
     const email = document.getElementById('email-input').value;
     const phone = document.getElementById('phone-input').value;
+    const typePerson = document.getElementById('tipo_Persona');
 
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regexTelFijo = /^60[1-9]\d{7}$/;
+    const regexTelCelular = /^3\d{9}$/;
 
-    const regexE = /^\w+([.\-_+]?\w+)*@\w+([.\-]?\w+)*(\.\w{2,10})+$/;
-    const regexP = /^(\+?\d{1,3}[-.\s]?)?(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})$/;
-
-    if (!regexE.test(email) && email) {
+    if (!regexEmail.test(email) && email) {
         appendAlert('Correo electrónico inválido', 'danger', alertContainer);
         var emailInput = document.getElementById('email-input');
         emailInput.focus();
@@ -71,7 +73,7 @@ saveBtn.addEventListener('click', () => {
         return;
     }
 
-    if (!regexP.test(phone) && phone) {
+    if (!regexTelFijo.test(phone) && !regexTelCelular.test(phone) && phone) {
         appendAlert('Teléfono inválido', 'danger', alertContainer);
         var phoneInput = document.getElementById('phone-input');
         phoneInput.focus();
@@ -79,13 +81,14 @@ saveBtn.addEventListener('click', () => {
         return;
     }
 
-    let provider = {
+    const provider = {
         Nombre: name,
         Direccion: address,
         Correo: email,
-        Telefono: phone
+        Telefono: phone,
+        TipoPersona: typePerson.value
     }
-
+    console.log("Enviando datos: ", provider);
     fetch('/Provider/UpdateProvider', {
         method: 'POST',
         headers: {

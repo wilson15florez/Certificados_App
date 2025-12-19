@@ -34,6 +34,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         /// <param name="user">Nombre de usuario o NIT del usuario.</param>
         /// <param name="pass">Contraseña del usuario.</param>
         /// <returns>Una tupla que indica si la autenticación fue exitosa, el ClaimsPrincipal del usuario, un mensaje de error si lo hay, y si el usuario es un administrador.</returns>
+
         public (bool IsAuthenticated, ClaimsPrincipal Principal, string ErrorMessage, bool isAdmin) Authenticate(string user, string pass)
         {
             try
@@ -44,7 +45,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     return CreateClaimsPrincipal(admin.Nombre, admin.IdAdmin, true);
                 }
 
-                ProveedoresMaster provider = _providerService.getProviderByNit(user);
+                Proveedores_Master provider = _providerService.getProviderByNit(user);
                 if (provider != null && provider.Contrasena == HashSHA256(pass))
                 {
                     return CreateClaimsPrincipal(provider.Nombre, provider.Nit, false);

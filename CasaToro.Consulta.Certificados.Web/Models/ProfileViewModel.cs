@@ -4,6 +4,6 @@ namespace CasaToro.Consulta.Certificados.Web.Models
 {
     public class ProfileViewModel
     {
-        public ProveedoresMaster Provider { get; set; }
+        public Proveedores_Master Provider { get; set; }
     }
 }

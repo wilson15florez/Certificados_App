@@ -36,7 +36,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<LogLoginAdmin> LogLoginAdmins { get; set; }
 
-    public virtual DbSet<ProveedoresMaster> ProveedoresMasters { get; set; }
+    public virtual DbSet<Proveedores_Master> Proveedores_Master { get; set; }
 
     public virtual DbSet<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; }
 
@@ -352,15 +352,17 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("FK__Log_Login__Id_ad__778AC167");
         });
 
-        modelBuilder.Entity<ProveedoresMaster>(entity =>
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+        modelBuilder.Entity<Proveedores_Master>(entity =>
         {
             entity.HasKey(e => e.Nit).HasName("PK__Proveedo__C7D1D6DBE690F0DC");
 
-            entity.ToTable("Proveedores_Master", tb =>
-                {
-                    tb.HasTrigger("trg_HashContrasena");
-                    tb.HasTrigger("trg_HashContrasenaDespuesDeActualizar");
-                });
+            entity.ToTable(tb =>
+            {
+                tb.HasTrigger("trg_HashContrasena");
+                tb.HasTrigger("trg_HashContrasenaDespuesDeActualizar");
+            });
 
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.Contrasena).HasMaxLength(255);
@@ -368,10 +370,13 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Direccion).HasMaxLength(100);
             entity.Property(e => e.Nombre).HasMaxLength(255);
             entity.Property(e => e.Telefono).HasMaxLength(20);
+            entity.Property(e => e.TipoPersona)
+                .HasMaxLength(255)
+                .IsFixedLength();
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-        
+
         modelBuilder.Entity<AccionistasControlPJuridica>(entity =>
         {
             entity.HasKey(e => e.Id_Control);
@@ -388,7 +393,7 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nit_Proveedores_Juridica");
         });
-        
+
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
         modelBuilder.Entity<Proveedores_FUCP>(entity =>
@@ -543,7 +548,7 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Nit_SJ_Proveedores_Juridica");
         });
-        
+
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
         modelBuilder.Entity<PEPtipos>(entity =>

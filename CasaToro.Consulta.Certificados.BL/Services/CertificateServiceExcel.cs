@@ -59,17 +59,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         foreach (Row row in sheetData.Elements<Row>().Skip(1)) // Comenzar en la fila 2 para omitir el encabezado
                         {
                             // Verificar si el proveedor ya existe en la base de datos y agregarlo si no
-                            var provider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
+                            var provider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
                             if (provider == null)
                             {
-                                var newProvider = new ProveedoresMaster
+                                var newProvider = new Proveedores_Master
                                 {
                                     Nit = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)),
                                     Nombre = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(2))
                                 };
-                                _context.ProveedoresMasters.Add(newProvider);
+                                _context.Proveedores_Master.Add(newProvider);
                                 _context.SaveChanges();
-                            };
+                            }
+                            ;
                             // Crear un objeto CertificadoIva con los datos de la fila
                             var certificadoIva = new CertificadosIva
                             {
@@ -77,8 +78,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                                 Nit = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)),
                                 IdEmpresa = int.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(1))),
                                 Concepto = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(3)),
-                                PorcentajeIva = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(4)), CultureInfo.InvariantCulture)/100,
-                                Porcentaje = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(5)), CultureInfo.InvariantCulture)/100,
+                                PorcentajeIva = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(4)), CultureInfo.InvariantCulture) / 100,
+                                Porcentaje = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(5)), CultureInfo.InvariantCulture) / 100,
                                 Base = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(6)), CultureInfo.InvariantCulture),
                                 Iva = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(7)), CultureInfo.InvariantCulture),
                                 Retenido = decimal.Parse(GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(8)), CultureInfo.InvariantCulture),
@@ -98,7 +99,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         _context.SaveChanges();
                     }
                 }
-                return ("Datos cargados correctamente",true);
+                return ("Datos cargados correctamente", true);
             }
             catch (Exception e)
             {
@@ -139,22 +140,23 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             return (message, false);
 
                         case 547: // Violación de clave foránea (FK)
-                            return ("⚠️ Econtramos un ID de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.",false);
+                            return ("⚠️ Econtramos un ID de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.", false);
 
                         case 515: // Un campo obligatorio es nulo
-                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.",false);
+                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.", false);
 
                         default: // Otro error de SQL
-                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.",false);
+                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.", false);
                     }
                 }
-                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}",false);
+                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}", false);
             }
 
         }
 
         //Método que agrega información de certificados de ICA desde un archivo Excel
-        public (string message, bool success) AddInfoIcaFromExcel(IFormFile file) {
+        public (string message, bool success) AddInfoIcaFromExcel(IFormFile file)
+        {
             try
             {
                 using (var stream = new MemoryStream())
@@ -187,16 +189,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         foreach (Row row in sheetData.Elements<Row>().Skip(1)) // Comenzar en la fila 2 para omitir el encabezado
                         {
                             // Verificar si el proveedor ya existe en la base de datos y agregarlo si no
-                            var provider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
-                            if (provider == null) {
-                                var newProvider = new ProveedoresMaster
+                            var provider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
+                            if (provider == null)
+                            {
+                                var newProvider = new Proveedores_Master
                                 {
                                     Nit = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)),
                                     Nombre = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(2))
                                 };
-                                _context.ProveedoresMasters.Add(newProvider);
+                                _context.Proveedores_Master.Add(newProvider);
                                 _context.SaveChanges();
-                            };
+                            }
+                            ;
                             // Crear un objeto CertificadoIca con los datos de la fila
                             var certificadoIca = new CertificadosIca
                             {
@@ -223,9 +227,9 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         _context.SaveChanges();
                     }
                 }
-                    return ("Datos cargados correctamente",true);
+                return ("Datos cargados correctamente", true);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 var innerException = e.InnerException as SqlException;
 
@@ -263,16 +267,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             return (message, false);
 
                         case 547: // Violación de clave foránea (FK)
-                            return ("⚠️ Econtramos un ID de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.",false);
+                            return ("⚠️ Econtramos un ID de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.", false);
 
                         case 515: // Un campo obligatorio es nulo
-                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.",false);
+                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.", false);
 
-                        default: 
-                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.",false);
+                        default:
+                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.", false);
                     }
                 }
-                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}",false);
+                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}", false);
             }
         }
 
@@ -300,7 +304,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             throw new InvalidExcelFormatException("⚠️ El archivo no contiene encabezados. Asegúrese de que el archivo tenga la información correcta antes de intentar subirlo.");
                         }
 
-                        if (!IsHeadersRight(headersRtf,"RTF",workbookPart))
+                        if (!IsHeadersRight(headersRtf, "RTF", workbookPart))
                         {
                             throw new InvalidExcelFormatException("⚠️ El archivo no tiene la estructura correcta.\n\n" +
                                 "📌 Formato esperado para el archivo de RTF:\n\n" +
@@ -310,17 +314,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         // Recorrer las filas del archivo y agregar la información a la base de datos
                         foreach (Row row in sheetData.Elements<Row>().Skip(1)) // Comenzar en la fila 2 para omitir el encabezado
                         {
-                            var provider = _context.ProveedoresMasters.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
+                            var provider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)));
                             if (provider == null)
                             {
-                                var newProvider = new ProveedoresMaster
+                                var newProvider = new Proveedores_Master
                                 {
                                     Nit = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(0)),
                                     Nombre = GetCellValue(workbookPart, row.Elements<Cell>().ElementAt(2))
                                 };
-                                _context.ProveedoresMasters.Add(newProvider);
+                                _context.Proveedores_Master.Add(newProvider);
                                 _context.SaveChanges();
-                            };
+                            }
+                            ;
                             var certificadoRtf = new CertificadosRtefte
                             {
                                 IdRtf = Guid.NewGuid(),
@@ -346,7 +351,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         _context.SaveChanges();
                     }
                 }
-                return ("Datos cargados correctamente",true);
+                return ("Datos cargados correctamente", true);
             }
             catch (Exception e)
             {
@@ -377,7 +382,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                                   $"- Concepto: {duplicateKeyValues.Descripcion}\n\n" +
                                   $"Por favor, verifique los datos antes de intentar nuevamente. "
                                 : "⚠️ Se detectó un problema con los datos. El registro parece estar duplicado, pero no pudimos encontrarlo en la base de datos. Verifique los datos e intente nuevamente.\n" +
-                                  $"Datos en conflicto: \n" +$"- NIT: {duplicateKeyValues.Nit}\n" +
+                                  $"Datos en conflicto: \n" + $"- NIT: {duplicateKeyValues.Nit}\n" +
                                   $"- Empresa: {duplicateKeyValues.IdEmpresa}\n" +
                                   $"- Año: {duplicateKeyValues.Ano}\n" +
                                   $"- Concepto: {duplicateKeyValues.Descripcion}\n\n" +
@@ -387,16 +392,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             return (message, false);
 
                         case 547: // Violación de clave foránea (FK)
-                            return ("⚠️ Econtramos un Id de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.",false);
+                            return ("⚠️ Econtramos un Id de empresa no válido en el archivo. Verifique que el Id de empresa sea correcto antes de subir el archivo.", false);
 
                         case 515: // Un campo obligatorio es nulo
-                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.",false);
+                            return ("⚠️ El archivo contiene datos incompletos. Asegúrese de llenar todos los campos obligatorios.", false);
 
                         default: // Otro error de SQL
-                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.",false);
+                            return ("Ocurrió un error inesperado al procesar el archivo. Verifique los datos e intente nuevamente.", false);
                     }
                 }
-                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}",false);
+                return ($"Ocurrió un error al procesar la solicitud. Detalles técnicos:\n {e.Message}", false);
             }
         }
 

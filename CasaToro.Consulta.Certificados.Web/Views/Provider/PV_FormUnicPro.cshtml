@@ -24,535 +24,586 @@
 
 </head>
 <body>
-    <main class="main-page-container">
-        @Html.Partial("_NavAdmin")
+    <main class="main-page-container-height">
+        @Html.Partial("_Nav")
         <section class="page-content">
             <div class="content-header">
-                <h1>Formato Único de Conocimiento de Proveedores</h1>
+				<h1>Formato Único de Conocimiento de Proveedores</h1>
             </div>
+            
             <div id="alertContainer"></div>
+            <!-- form de persona natural-->
+            <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
 
-            <form id="persNatuForm" class="form-section" style="display:none;">
-
-                <h2>Persona Natural</h2>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnNombreCompl">Nombre Completo:</label>
-                        <input type="text" id="pnNombreCompl" name="pnNombreCompl" required />
-                    </div>
+                <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                    <h2>Persona Natural</h2>
                 </div>
-
-                <div class="form-group flex-container">
-                    <label>Nacionalidad:</label>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" id="radNacional" name="pnRadNac" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="radExtranjero" name="pnRadNac" value="Extranjero" /><label>Extranjero</label>
+                
+                <div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pnNombreCompl" name="pnNombreCompl" class="form-control" required />
+                            <label for="pnNombreCompl" class="form-label adaptive-label" placeholder="Nombre Completo" alt="Nombre Completo"></label>
+                        </div>
                     </div>
-                </div>
 
-                <div id="seccionNacional" style="display:none;">
-                    <h3 class="sub-header">Personas Nacionales</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pnNac-CC" name="pnNacDoc" value="CC" /><label for="pnNac-CC">CC</label>
-                                <input type="radio" id="pnNac-NIT" name="pnNacDoc" value="NIT" /><label for="pnNac-NIT">NIT</label>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pnTipoNacionalidad" class="form-label">Nacionalidad</label>
+                            <select id="pnTipoNacionalidad" class="form-control">
+                                <option value="" disabled selected>Seleccione una opcion</option>
+                                <option value="Nacional">Nacional</option>
+                                <option value="Extranjero">Extranjero</option>
+                            </select>
+                        </div>
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pnTipoDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pnTipoDoc" class="form-control">
+                                <option value="" disabled selected>Seleccione un documento</option>
+                            </select>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnNumId" name="pnDocNum" class="form-control no-edit" required />
+                            <label for="pnNumId" class="form-label adaptive-label disabled-label" placeholder="Número de documento" alt="Número de documento"></label>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-5 mb-3 form-group input-wrapper">
+                            <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" class="form-control" required />
+                            <label for="pnFechaExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento" alt="Fecha de Expedición de Documento"></label>
+                        </div>
+                        <div class="col mb-3 form-group d-block custom-input-group">
+                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento</label>
+                            <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
+                        </div>
+                        <div class="col mb-3 form-group d-block custom-input-group">
+                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento</label>
+                            <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnNacionalidad" class="form-label">Nacionalidad/Pais</label>
+                            <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnEstadoNac" class="form-label">Departamento de nacimiento</label>
+                            <select id="pnEstadoNac" name="pnEstadoNac" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento</label>
+                            <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col mb-3 form-group input-wrapper">
+                            <input type="date" id="pnFechaNac" name="pnFechaNac" class="form-control" required />
+                            <label for="pnFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento" alt="Fecha de Nacimiento"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="text" id="pnDiResidencia" name="pnDiResidencia" class="form-control" required />
+                            <label for="pnDiResidencia" class="form-label adaptive-label" placeholder="Dirección de Residencia" alt="Dirección de Residencia"></label>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnDepRes" class="form-label">Departamento de Residencia</label>
+                            <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pnCiudadRes" class="form-label">Ciudad de Residencia</label>
+                            <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnTelefono" name="pnTelefono" class="form-control"/>
+                            <label for="pnTelefono" class="form-label adaptive-label" placeholder="Teléfono Fijo" alt="Teléfono Fijo"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pnCelular" name="pnCelular" class="form-control"/>
+                            <label for="pnCelular" class="form-label adaptive-label" placeholder="Teléfono Celular" alt="Teléfono Celular"></label>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="email" id="pnEmail" name="pnEmail" class="form-control" required/>
+                            <label for="pnEmail" class="form-label adaptive-label" placeholder="Correo Electrónico" alt="Correo Electrónico"></label>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col form-group input-wrapper">
+                            <input type="text" id="pnOficProfe" name="pnOficProfe" class="form-control" required/>
+                            <label for="pnOficProfe" class="form-label adaptive-label" placeholder="Oficio o Profesión" alt="Oficio o Profesión"></label>
+                        </div>
+                        <div class="col mb-3 form-group d-block custom-input-group">
+                            <label for="pnActividad" class="form-label">Actividad:</label>
+                            <select id="pnActividad" name="pnActividad" class="form-control">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="dependiente">Dependiente</option>
+                                <option value="independiente">Independiente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <h4 class="sub-header">Marque según su perfil, cargo y/u ocupación</h4>
+                        <div class="row d-flex">
+                            <div class="col form-group input-wrapper form-check">
+						        <label>Goza de Reconocimiento Público:</label>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnReconoPblSi" name="pnReconoPublic" value="Si" class="form-check-input" /><label for="pnReconoPblSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnReconoPblNo" name="pnReconoPublic" value="No" class="form-check-input" /><label for="pnReconoPblNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col form-group input-wrapper form-check">
+                                <label>Maneja Recursos Públicos:</label>
+						        <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnManRePubSi" name="pnManRePub" value="Si" class="form-check-input" /><label for="pnManRePubSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnManRePubNo" name="pnManRePub" value="No" class="form-check-input" /><label for="pnManRePubNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pnNac-Num">N°:</label>
-                            <input type="number" id="pnNacNum" name="pnDocNum" disabled required />
-                        </div>
-                    </div>
-                </div>
-
-                <div id="seccionExtranjera" style="display:none;">
-                    <h3 class="sub-header">Personas Extranjeras</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pnExt-CE" name="pnExtDoc" value="CE" /><label for="pnExt-CE">CE</label>
-                                <input type="radio" id="pnExt-PAS" name="pnExtDoc" value="PAS" /><label for="pnExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pnExt-CAR" name="pnExtDoc" value="CAR" /><label for="pnExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
+                        <div class="row d-flex">
+                            <div class="col form-group input-wrapper form-check">
+                                <label>Es Persona Expuesta Politicamente:</label>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnPEPSi" name="pnPEP" value="Si" class="form-check-input"/><label for="pnPEPSi" class="form-check-label">Sí</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pnPEPNo" name="pnPEP" value="No" class="form-check-input"/><label for="pnPEPNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col form-group input-wrapper form-check" id="pnPEPtypeGroup" style="display:none;">
+                                <label>Tipo de PEP:</label>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" class="form-check-input"/><label for="pnPEP-Nac" class="form-check-label">PEP Nacional</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="2" class="form-check-input"/><label for="pnPEP-OrgInt" class="form-check-label">PEP Org.Internacional</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" class="form-check-input"/><label for="pnPEP-Ext" class="form-check-label">PEP Extranjero</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group input-wrapper" id="pnPEP_Entidad_Container" style="display:none;">
+                                <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" class="form-control" required />
+                                <label for="pnPEP_Entidad" class="form-label adaptive-label" placeholder="Entidad a la que pertenece" alt="Entidad a la que pertenece"></label>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pnExt-Num">N°:</label>
-                            <input type="number" id="pnExtNum" name="pnDocNum" disabled required />
-                        </div>
                     </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-                        <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
-                        <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
-                        <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
-                    </div>
-                </div>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnNacionalidad">Nacionalidad/Pais:</label>
-                        <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
-                    </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-weidth">
-                        <label for="pnDepartNac">Departamento de nacimiento::</label>
-                        <select id="pnDepartNac" name="pnDepartNac" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnCiudadNac">Ciudad de nacimiento:</label>
-                        <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
-                    </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnFechaNac">Fecha de Nacimiento:</label>
-                        <input type="date" id="pnFechaNac" name="pnFechaNac" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnDiResidencia">Dirección de Residencia:</label>
-                        <input type="text" id="pnDiResidencia" name="pnDiResidencia" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnDepRes">Departamento de Residencia:</label>
-                        <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnCiudadRes">Ciudad de Residencia:</label>
-                        <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
-                    </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pnTelefono">Teléfono Fijo:</label>
-                        <input type="number" id="pnTelefono" name="pnTelefono" />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnCelular">Teléfono Celular:</label>
-                        <input type="number" id="pnCelular" name="pnCelular" />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnEmail">Correo Electrónico:</label>
-                        <input type="email" id="pnEmail" name="pnEmail" />
-                    </div>
-                </div>
-
-                <div class="flrex-container">
-                    <div class="form-group half-width">
-                        <label for="pnOficProfe">Oficio o Profesión:</label>
-                        <input type="text" id="pnOficProfe" name="pnOficProfe" />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pnActividad">Actividad:</label>
-                        <select id="pnActividad" name="pnActividad">
-                            <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="dependiente">Dependiente</option>
-                            <option value="independiente">Independiente</option>
-                        </select>
-                    </div>
-                </div>
-
-                <h3 class="sub-header">Marque según su perfil, cargo y/u ocupación</h3>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label>Goza de Reconocimiento Público:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="pnReconoPblSi" name="pnReconoPublic" value="Si" /><label for="pnReconoPblSi">Sí</label>
-                            <input type="radio" id="pnReconoPblNo" name="pnReconoPublic" value="No" /><label for="pnReconoPblNo">No</label>
-                        </div>
-                    </div>
-                    <div class="form-group half-width">
-                        <label>Maneja Recursos Públicos:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="pnManRePubSi" name="pnManRePub" value="Si" /><label for="pnManRePubSi">Sí</label>
-                            <input type="radio" id="pnManRePubNo" name="pnManRePub" value="No" /><label for="pnManRePubNo">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label>Es Persona Expuesta Politicamente:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="pnPEPSi" name="pnPEP" value="Si" /><label for="pnPEPSi">Sí</label>
-                            <input type="radio" id="pnPEPNo" name="pnPEP" value="No" /><label for="pnPEPNo">No</label>
-                        </div>
-                    </div>
-                    <div class="form-group half-width" id="pnPEPtypeGroup" style="display:none;">
-                        <label>Tipo de PEP:</label>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="pnPEP-Nac" name="pnPEPType" value="1" /><label for="pnPEP-Nac">PEP Nacional</label>
-                            <input type="checkbox" id="pnPEP-OrgInt" name="pnPEPType" value="2" /><label for="pnPEP-OrgInt">PEP Org.Internacional</label>
-                            <input type="checkbox" id="pnPEP-Ext" name="pnPEPType" value="3" /><label for="pnPEP-Ext">PEP Extranjero</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" id="pnPEP_Entidad_Container" style="display:none;">
-                    <label for="pnPEP_Entidad">En caso afirmativo señale la entidad:</label>
-                    <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" required />
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" id="submitPnBtn">Guardar Persona Natural</button>
                 </div>
             </form>
 
-            <form id="persJuriForm" class="form-section" style="display:none;">
-                <h2>Persona Jurídica</h2>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pjRazSocial">Razón Social:</label>
-                        <input type="text" id="pjRazSocial" name="pjRazSocial" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pjNIT">NIT:</label>
-                        <input type="number" id="pjNIT" name="pjNIT" disabled />
-                    </div>
-                </div>
+            <!-- form de persona juridica-->
+            <form id="persJuriForm" class="form-section" style="display:none;" autocomplete="off">
 
-                <h3 class="sub-header">Direcciones</h3>
-                <div id="direcPrincipal">
-                    <div class="form-group">
-                        <label for="pjDirPrincipal">Dirección Oficina Principal:</label>
-                        <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" required />
-                    </div>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label for="pjDepartDirPrincipal">Departamento:</label>
-                            <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pjCiudadDirPrincipal">Ciudad:</label>
-                            <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pjEmailDirPrincipal">E-mail:</label>
-                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" required />
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pjTelDirPrincipal">Teléfono:</label>
-                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" required />
-                        </div>
-                    </div>
+                <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                    <h2>Persona Jurídica</h2>
                 </div>
+                
+                <div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pjRazSocial" name="pjRazSocial" class="form-control" required />
+                            <label for="pjRazSocial" class="form-label adaptive-label" placeholder="Razón Social" alt="Razón Social"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required />
+                            <label for="pjNIT" class="form-label adaptive-label disabled-label" placeholder="NIT" alt="NIT"></label>
+                        </div>
+                    </div>
 
-                <div id="sucursales-container">
-                    <div class="sucursal-item" id="sucursal_1">
-                        <h4>Dirección sucursal 1</h4>
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <h3 class="sub-header">Direcciones</h3>
+                        <div class="d-flex">
+                            <div class="form-group input-wrapper">
+                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" autocomplete="off" required />
+                                <label for="pjDirPrincipal" class="form-label adaptive-label" placeholder="Dirección Oficina Principal" alt="Dirección Oficina Principal"></label>
+                            </div>
+                            <div class="form-group d-block custom-input-group">
+                                <label for="pjDepartDirPrincipal" class="form-label">Departamento:</label>
+                                <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
+                            </div>
+                            <div class="form-group d-block custom-input-group">
+                                <label for="pjCiudadDirPrincipal" class="form-label">Ciudad:</label>
+                                <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" class="form-control" required />
+                            <label for="pjEmailDirPrincipal" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pjTelDirPrincipal" name="pjTelDirPrincipal" class="form-control" required />
+                            <label for="pjTelDirPrincipal" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                        </div>
+                    </div>
+
+                    <div id="sucursales-container">
+                        <div class="sucursal-item justify-content-around align-items-center flex-row m-2 p-2">
+                            
+                        </div>
+                    </div>
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="form-group">
-                            <label for="pjDirSucursal_1">Dirección Sucursal:</label>
-                            <input type="text" id="pjDirSucursal_1" name="pjDirSucursal_1" required />
-                        </div>
-                        <div class="flex-container">
-                            <div class="form-group half-width">
-                                <label for="pjDepartDirSucursal_1">Departamento:</label>
-                                <select id="pjDepartDirSucursal_1" name="pjDepartDirSucursal_1" class="form-control" required></select>
-                            </div>
-                            <div class="form-group half-width">
-                                <label for="pjCiudadDirSucursal_1">Ciudad:</label>
-                                <select id="pjCiudadDirSucursal_1" name="pjCiudadDirSucursal_1" class="form-control" required></select>
-                            </div>
-                            <div class="form-group half-width">
-                                <label for="pjEmailDirSucursal_1">E-mail:</label>
-                                <input type="email" id="pjEmailDirSucursal_1" name="pjEmailDirSucursal_1" required />
-                            </div>
-                            <div class="form-group half-width">
-                                <label for="pjTelDirSucursal_1">Teléfono:</label>
-                                <input type="number" id="pjTelDirSucursal_1" name="pjTelDirSucursal_1" required />
-                            </div>
+                            <button id="addSucursalBtn" type="button" class="button-group btn btn-primary">Agregar Sucursal</button>
                         </div>
                     </div>
-                </div>
-                <button id="addSucursalBtn" type="button" class="button-group">Agregar Sucursal</button>
-                <p id="sucursal_limit_msg" style="color:red; display:none;">Máximo 3 sucursales (principal + 2 adicionales).</p>
 
-
-                <p class="sub-header">
-                    Identifique la persona natural que ejerza control sobre la persona juridica o que sea titular, directa o indirectamente, del cinco por ciento (5%)
-                    o más del capital o derechos de voto y/o se beneficie en un cinco por ciento (5%) o mas de los rendimientos, utilidades o Activos.
-                </p>
-                <p>En caso de requerir más espacios debe anexarse la relación.</p>
-
-                <table id="control-table">
-                    <thead>
-                        <tr>
-                            <th>Razón Social o Nombre Completo</th>
-                            <th>Tipo de Identificación</th>
-                            <th>Número de Identificación</th>
-                            <th>Porcentaje de Participación (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="control-row">
-                            <td><input type="text" name="controlRazonSocial[]" style="width:100%;" /></td>
-                            <td>
-                                <select name="controlIdType[]">
-                                    <option value="" disabled selected>-- Seleccione --</option>
-                                    <option value="CC">CC</option>
-                                    <option value="NIT">NIT</option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="controlIdNum[]" style="width:100%;" /></td>
-                            <td><input type="number" name="controlPorcentaje[]" style="width:100%;" /></td>
-                            <td><button type="button" class="remove-control-row">Eliminar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button id="addControlRowBtn" type="button" class="button-group">Agregar Fila</button>
-
-                <!-- Subform de representante legal-->
-                <h2>Información del Representante Legal</h2>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pjNomReLeg">Nombre:</label>
-                        <input type="text" id="pjNomReLeg" name="pjNomReLeg" />
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <p class="sub-header">
+                            Identifique la persona natural que ejerza control sobre la persona juridica o que sea titular, directa o indirectamente, del cinco por ciento (5%)
+                            o más del capital o derechos de voto y/o se beneficie en un cinco por ciento (5%) o mas de los rendimientos, utilidades o Activos.
+                        </p>
+                        <p>En caso de requerir más espacios debe anexarse la relación.</p>
                     </div>
-                </div>
 
-                <div class="form-group flex-container">
-                    <label>Nacionalidad:</label>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" id="radNacional" name="pjRadNac" value="Nacional" /><label>Nacional</label>
-                        <input type="radio" id="radExtranjero" name="pjRadNac" value="Extranjero" /><label>Extranjero</label>
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <table class="table table-hover" id="control-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Razón Social o Nombre Completo</th>
+                                    <th scope="col">Tipo de Identificación</th>
+                                    <th scope="col">Número de Identificación</th>
+                                    <th scope="col">Porcentaje de Participación (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="control-row">
+                                    <td><input type="text" class="form-control" name="controlRazonSocial[]" style="width:100%;" /></td>
+                                    <td>
+                                        <select class="form-control" name="controlIdType[]">
+                                            <option value="" disabled selected>Seleccione</option>
+                                            <option value="CC">CC</option>
+                                            <option value="NIT">NIT</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control" name="controlIdNum[]" style="width:100%;" /></td>
+                                    <td><input type="number" class="form-control" name="controlPorcentaje[]" style="width:100%;" /></td>
+                                    <td><button type="button" class="remove-control-row button-group btn btn-primary">Eliminar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <button id="addControlRowBtn" type="button" class="button-group button-group btn btn-primary">Agregar Fila</button>
+                    </div>
 
-                <div id="seccionNacional" style="display:none;">
-                    <h3 class="sub-header">Personas Nacionales</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pjNac-CC" name="pjNacDoc" value="CC" /><label for="pjNac-CC">CC</label>
-                                <input type="radio" id="pjNac-NIT" name="pjNacDoc" value="NIT" /><label for="pjNac-NIT">NIT</label>
-                            </div>
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pjNac-Num">N°:</label>
-                            <input type="number" id="pjNacNum" name="pjDocNum" disabled required />
+                    <!-- Subform de representante legal-->
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <h3>Información del Representante Legal</h3>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center  m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="text" id="pjNomReLeg" name="pjNomReLeg" class="form-control"/>
+                            <label for="pjNomReLeg" class="form-label adaptive-label" placeholder="Nombre Completo" alt="Nombre Completo"></label>
                         </div>
                     </div>
-                </div>
-
-                <div id="seccionExtranjera" style="display:none;">
-                    <h3 class="sub-header">Personas Extranjeras</h3>
-                    <div class="flex-container">
-                        <div class="form-group half-width">
-                            <label>Tipo de Documento:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="pjExt-CE" name="pjExtDoc" value="CE" /><label for="pjExt-CE">CE</label>
-                                <input type="radio" id="pjExt-PAS" name="pjExtDoc" value="PAS" /><label for="pjExt-PAS">Pasaporte</label>
-                                <input type="radio" id="pjExt-CAR" name="pjExtDoc" value="CAR" /><label for="pjExt-CAR">Carné Dir. Producido Min Rel. Ext</label>
-                            </div>
+                    
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjRLTipNacionalidad" class="form-label">Nacionalidad</label>
+                            <select id="pjRLTipNacionalidad" class="form-control">
+                                <option value="" disabled selected>Seleccione una opcion</option>
+                                <option value="Nacional">Nacional</option>
+                                <option value="Extranjero">Extranjero</option>
+                            </select>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pjExt-Num">N°:</label>
-                            <input type="number" id="pjExtNum" name="pjDocNum" disabled required />
+                        <div class="form-group d-block custom-input-group">
+                            <label for="pjRLTipoDoc" class="form-label">Tipo de Documento</label>
+                            <select id="pjRLTipoDoc" class="form-control">
+                                <option value="" disabled selected>Seleccione un documento</option>
+                            </select>
+                        </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pjRLDocNum" name="pjRLDocNum" class="form-control" required />
+                            <label for="pjRLDocNum" class="form-label adaptive-label" placeholder="Número de documento" alt="Número de documento"></label>
                         </div>
                     </div>
-                </div>
 
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pjFechaExpDoc">Fecha de Expedición de Documento de Identidad:</label>
-                        <input type="date" id="pjFechaExpDoc" name="pjFechaExpDoc" required />
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col mb-3 form-group input-wrapper">
+                            <input type="date" id="pjRLFechExpDoc" name="pjRLFechExpDoc" class="form-control" required />
+                            <label for="pjRLFechExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento" alt="Fecha de Expedición de Documento"></label>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pjRLDepExpDoc" class="form-label">Departamento de Expedición de Documento</label>
+                            <select id="pjRLDepExpDoc" name="pjRLDepExpDoc" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pjRLCiuExpDoc" class="form-label">Ciudad de Expedición de Documento</label>
+                            <select id="pjRLCiuExpDoc" name="pjRLCiuExpDoc" class="form-control" required></select>
+                        </div>
                     </div>
-                    <div class="form-group half-width">
-                        <label for="pjDepExpDoc">Departamento de Expedición de Documento de Identidad:</label>
-                        <select id="pjDepExpDoc" name="pjDepExpDoc" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pjCiuExpDoc">Ciudad de Expedición de Documento de Identidad:</label>
-                        <select id="pjCiuExpDoc" name="pjCiuExpDoc" class="form-control" required></select>
-                    </div>
-                </div>
 
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pjFechaNac">Fecha de Nacimiento:</label>
-                        <input type="date" id="pjFechaNac" name="pjFechaNac" required />
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col mb-3 form-group input-wrapper">
+                            <input type="date" id="pjRLFechaNac" name="pjRLFechaNac" class="form-control" required />
+                            <label for="pjRLFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento" alt="Fecha de Nacimiento"></label>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pjRLNacionalidad" class="form-label">Nacionalidad/Pais:</label>
+                            <select id="pjRLNacionalidad" name="pjRLNacionalidad" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pjRLDepartNac" class="form-label">Departamento de nacimiento::</label>
+                            <select id="pjRLDepartNac" name="pjRLDepartNac" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pjRLCiudadNac" class="form-label">Ciudad de nacimiento:</label>
+                            <select id="pjRLCiudadNac" name="pjRLCiudadNac" class="form-control" required></select>
+                        </div>
                     </div>
-                    <div class="form-group half-width">
-                        <label for="pjNacionalidad">Nacionalidad/Pais:</label>
-                        <select id="pjNacionalidad" name="pjNacionalidad" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-weidth">
-                        <label for="pjDepartNac">Departamento de nacimiento::</label>
-                        <select id="jnDepartNac" name="pjDepartNac" class="form-control" required></select>
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pjCiudadNac">Ciudad de nacimiento:</label>
-                        <select id="pjCiudadNac" name="pjCiudadNac" class="form-control" required></select>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" id="submitPjBtn">Guardar Persona Jurídica</button>
                 </div>
             </form>
-
 
             <!--form conocimiento proveedores (tanto para persona natural como juridica)-->
-            <form id="provForm" class="form-section" style="display: none;">
-                <h2>Información Financiera y Tributaria (Persona Natural / Jurídica)</h2>
-                <div class="flex-container">
-                    <div class="form-group half-width">
-                        <label for="pvIngrMens">Ingresos Mensuales $:</label>
-                        <input type="number" id="pvIngrMens" name="pvIngrMens" class="form-control" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pvEgrMens">Egresos Mensuales $:</label>
-                        <input type="number" id="pvEgrMens" name="pvEgrMens" class="form-control" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pvActivos">Activos $:</label>
-                        <input type="number" id="pvActivos" name="pvActivos" class="form-control" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pvPasivos">Pasivos $:</label>
-                        <input type="number" id="pvPasivos" name="pvPasivos" class="form-control" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pvPatrimonio">Patrimonio $:</label>
-                        <input type="number" id="pvPatrimonio" name="pvPatrimonio" class="form-control" required />
-                    </div>
-                    <div class="form-group half-width">
-                        <label for="pvOtrIngr">Otros Ingresos $:</label>
-                        <input type="number" id="pvOtrIngr" name="pvOtrIngr" class="form-control" required />
-                    </div>
-                    <div class="capital-container">
-                        <h3>Origen de capital:</h3>
-                        <div class="form-group half-width">
-                            <label for="pvPorNacional">Porcentaje Nacional (%):</label>
-                            <input type="number" id="pvPorNacional" name="pvPorNacional" class="form-control" required />
+            <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
+
+                <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                    <h3>Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>
+                </div>
+
+                <div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvIngrMens" name="pvIngrMens" class="form-control" required />
+                            <label for="pvIngrMens" class="form-label adaptive-label" placeholder="Ingresos Mensuales $" alt="Ingresos Mensuales $"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvPorExtranjero">Porcentaje Extranjero (%):</label>
-                            <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" required />
-                        </div>
-                        <div class="form-group half-width" style="display:none;">
-                            <label for="pvPorPais">País:</label>
-                            <input type="number" id="pvPorPais" name="pvPorPais" class="form-control" required />
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvEgrMens" name="pvEgrMens" class="form-control" required />
+                            <label for="pvEgrMens" class="form-label adaptive-label" placeholder="Egresos Mensuales $" alt="Egresos Mensuales $"></label>
                         </div>
                     </div>
-                    <div class="infEmpre-container">
-                        <div class="form-group half-width">
-                            <h3>Tipo de Empresa:</h3>
-                            <div class="radio-group">
-                                <label for="pvEmPublica">Pública</label><input type="radio" id="pvEmPublica" name="pvEmPublica" value="EmPublica" />
-                                <label for="pvEmPrivada">Privada</label><input type="radio" id="pvEmPrivada" name="pvEmPrivada" value="EmPrivada" />
-                                <label for="pvEmMixta">Mixta</label><input type="radio" id="pvEmMixta" name="pvEmMixta" value="EmMixta" />
-                                <label for="pvEmOtra">Otra</label><input type="radio" id="pvEmOtra" name="pvEmOtra" value="pvEmOtra" />
+                    
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvActivos" name="pvActivos" class="form-control" required />
+                            <label for="pvActivos" class="form-label adaptive-label" placeholder="Activos $" alt="Activos $"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvPasivos" name="pvPasivos" class="form-control" required />
+                            <label for="pvPasivos" class="form-label adaptive-label" placeholder="Pasivos $" alt="Pasivos $"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvPatrimonio" name="pvPatrimonio" class="form-control" required />
+                            <label for="pvPatrimonio" class="form-label adaptive-label" placeholder="Patrimonio $" alt="Patrimonio $"></label>
+                        </div>
+                        <div class="form-group input-wrapper">
+                            <input type="number" id="pvOtrIngr" name="pvOtrIngr" class="form-control" required />
+                            <label for="pvOtrIngr" class="form-label adaptive-label" placeholder="Otros Ingresos $" alt="Otros Ingresos $"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
+                        <h5>Origen de capital:</h5>
+                        <div class="d-flex">
+                            <div class="form-group input-wrapper">
+                                <input type="number" id="pvPorNacional" name="pvPorNacional" class="form-control" required />
+                                <label for="pvPorNacional" class="form-label adaptive-label" placeholder="Porcentaje Nacional (%)" alt="Porcentaje Nacional (%)"></label>
+                            </div>
+                            <div class="form-group input-wrapper">
+                                <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" />
+                                <label for="pvPorExtranjero" class="form-label adaptive-label" placeholder="Porcentaje Extranjero (%)" alt="Porcentaje Extranjero (%)"></label>
+                            </div>
+                            <div class="form-group input-wrapper d-block custom-input-group">
+                                <label for="pvPorPais" class="form-label">País:</label>
+                                <select id="pvPorPais" name="pvPorPais" class="form-control" required></select>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvAcEconomica">Actividad Económica:</label>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <h6>Tipo de Empresa</h6>
+                        <div class="col form-group form-check">
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvEmPublica" name="pvTipEmp" value="EmPublica" class="form-check-input" /><label for="pvEmPublica" class="form-check-label">Pública</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvEmPrivada" name="pvTipEmp" value="EmPrivada" class="form-check-input" /><label for="pvEmPrivada" class="form-check-label">Privada</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvEmMixta" name="pvTipEmp" value="EmMixta" class="form-check-input" /><label for="pvEmMixta" class="form-check-label">Mixta</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvEmOtra" name="pvTipEmp" value="pvEmOtra" class="form-check-input" /><label for="pvEmOtra" class="form-check-label">Otra</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col form-group input-wrapper">
                             <input type="text" id="pvAcEconomica" name="pvAcEconomica" class="form-control" required />
+                            <label for="pvAcEconomica" class="form-label adaptive-label" placeholder="Actividad Económica" alt="Actividad Económica"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvCodCIIU">Código CIIU:</label>
-                            <input type="number" id="pvCodCIIU" name="pvCodCIIU" class="form-control" required />
+                        <div class="col form-group input-wrapper">
+                            <input type="text" id="pvCodCIIU" name="pvCodCIIU" maxlength="4" class="form-control" required />
+                            <label for="pvCodCIIU" class="form-label adaptive-label" placeholder="Código CIIU" alt="Código CIIU"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvCapSocReg">Capital social registrado:</label>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="form-group input-wrapper">
                             <input type="number" id="pvCapSocReg" name="pvCapSocReg" class="form-control" required />
+                            <label for="pvCapSocReg" class="form-label adaptive-label" placeholder="Capital social registrado" alt="Capital social registrado"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvFechConst">Fecha de Constitución:</label>
+                        <div class="mb-3 form-group input-wrapper">
                             <input type="date" id="pvFechConst" name="pvFechConst" class="form-control" required />
+                            <label for="pvFechConst" class="form-label adaptive-label" placeholder="Fecha de Constitución" alt="Fecha de Constitución"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvFechVen">Fecha Vencimiento:</label>
+                        <div class="mb-3 form-group input-wrapper">
                             <input type="date" id="pvFechVen" name="pvFechVen" class="form-control" required />
+                            <label for="pvFechVen" class="form-label adaptive-label" placeholder="Fecha Vencimiento" alt="Fecha Vencimiento"></label>
                         </div>
                     </div>
-                    <div class="inFinan-container">
-                        <div class="form-group half-width">
-                            <label>Gran Contribuyente:</label>
-                            <div class="radio-group">
-                                <label for="pvGrConSi">Si</label><input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" />
-                                <label for="pvGrConNo">No</label><input type="radio" id="pvGrConNo" name="pvGrCon" value="No" />
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <h6>Gran Contribuyente</h6>
+                        <div class="col-md-2 form-group form-check">
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" class="form-check-input"/><label for="pvGrConSi" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvGrConNo" name="pvGrCon" value="No" class="form-check-input" /><label for="pvGrConNo" class="form-check-label">No</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label>Declarante Industria y Comercio:</label>
-                            <div class="radio-group">
-                                <label for="pvDeclIndComSi">Si</label><input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" />
-                                <label for="pvDeclIndComNo">No</label><input type="radio" id="pvDeclIndComNo" name="pvDeclIndCom" value="No" />
-                            </div>
+                        <div class="col form-group input-wrapper">
+                            <input type="date" id="pvFechResolGC" name="pvFechResolGC" class="form-control no-edit" required />
+                            <label for="pvFechResolGC" class="form-label adaptive-label disabled-label" placeholder="Fecha resolución Gran Contribuyente" alt="Fecha resolución Gran Contribuyente"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label>Auto Retenedor:</label>
-                            <div class="radio-group">
-                                <label for="pvAutRetSi">Si</label><input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" />
-                                <label for="pvAutRetNo">No</label><input type="radio" id="pvAutRetNo" name="pvAutRet" value="No" />
-                            </div>
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pvFechResolucion">Fecha y N° de Resolución:</label>
-                            <input type="date" id="pvFechResolucion" name="pvFechResolucion" class="form-control" required />
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pvCiuResolucion">Ciudad:</label>
-                            <input type="text" id="pvCiuResolucion" name="pvCiuResolucion" class="form-control" required />
-                        </div>
-                        <div class="form-group half-width">
-                            <label for="pvNumResolucionDIAN">N° Resolución DIAN:</label>
-                            <input type="text" id="pvNumResolucionDIAN" name="pvNumResolucionDIAN" class="form-control" required />
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pvNumResolGC" name="pvNumResolGC" class="form-control no-edit" required />
+                            <label for="pvNumResolGC" class="form-label adaptive-label disabled-label" placeholder="Número resolución Gran Contribuyente" alt="Número resolución Gran Contribuyente"></label>
                         </div>
                     </div>
-                    <div class="mer_comExt-conteiner">
-                        <div class="form-group half-width">
-                            <label for="pvForPag">Forma de pago de operaciones comercio exterior:</label>
+
+                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <h6>Declarante Industria y Comercio</h6>
+                        <div class="col-md-2 form-group form-check">
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" class="form-check-input" /><label for="pvDeclIndComSi" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvDeclIndComNo" name="pvDeclIndCom" value="No" class="form-check-input" /><label for="pvDeclIndComNo" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pvDepartDec" class="form-label">Departamento</label>
+                            <select id="pvDepartDec" name="pvDepartDec" class="form-control" required></select>
+                        </div>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pvCiudadDec" class="form-label">Ciudad</label>
+                            <select id="pvCiudadDec" name="pvCiudadDec" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-start align-items-center flex-row m-2 p-2">
+                        <h6>Auto Retenedor:</h6>
+                        <div class="col-md-2 form-group form-check">
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input"/><label for="pvAutRetSi" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvAutRetNo" name="pvAutRet" value="No" class="form-check-input" /><label for="pvAutRetNo" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 form-group input-wrapper">
+                            <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control no-edit" required />
+                            <label for="pvNumResDIAN" class="form-label adaptive-label disabled-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
+                        </div>
+                    </div>
+
+                    <div class="justify-content-around align-items-center m-2 p-2">
+                        <h3>Mercancía y Comercio Exterior</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center m-2 p-2">
+                        <div class="form-group input-wrapper">
                             <input type="text" id="pvForPag" name="pvForPag" class="form-control" required />
+                            <label for="pvForPag" class="form-label adaptive-label" placeholder="Forma de pago de operaciones comercio exterior" alt="Forma de pago de operaciones comercio exterior"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvEntBenef">Personas o empresas beneficiarias de operaciones de comercio exterior:</label>
+                        <div class="form-group input-wrapper">
                             <input type="text" id="pvEntBenef" name="pvEntBenef" class="form-control" required />
+                            <label for="pvEntBenef" class="form-label adaptive-label" placeholder="Personas o empresas beneficiarias de operaciones de comercio exterior" alt="Personas o empresas beneficiarias de operaciones de comercio exterior"></label>
                         </div>
                     </div>
-                    <div class="infCuenPag-container">
-                        <div class="form-group half-width">
-                            <label>Posee cuenta bancaria:</label>
-                            <div class="radio-group">
-                                <label for="pvPosCuBanSi">Si</label><input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" />
-                                <label for="pvPosCuBanNo">No</label><input type="radio" id="pvPosCuBanNo" name="pvPosCuBan" value="No" />
+
+                    <div class="justify-content-around align-items-center m-2 p-2">
+                        <h3>Información de la Cuenta de Pagos</h3>
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                        <div class="col form-group form-check">
+                            <h6>Posee cuenta bancaria:</h6>
+                            <div class="d-flex">
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" class="form-check-input"/><label for="pvPosCuBanSi" class="form-check-label">Si</label>
+                                </div>
+                                <div class="form-check m-2">
+                                    <input type="radio" id="pvPosCuBanNo" name="pvPosCuBan" value="No" class="form-check-input"/><label for="pvPosCuBanNo" class="form-check-label">No</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvEntidad">Entidad:</label>
-                            <input type="text" id="pvEntidad" name="pvEntidad" class="form-control" required />
+                        <div class="col form-group input-wrapper">
+                            <input type="text" id="pvEntidad" name="pvEntidad" class="form-control no-edit" required />
+                            <label for="pvEntidad" class="form-label adaptive-label disabled-label" placeholder="Entidad" alt="Entidad"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvNumCueBanc">N° de cuenta:</label>
-                            <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control" required />
+                    </div>
+
+                    <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                        <div class="col form-group input-wrapper">
+                            <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control no-edit" required />
+                            <label for="pvNumCueBanc" class="form-label adaptive-label disabled-label" placeholder="N° de cuenta" alt="N° de cuenta"></label>
                         </div>
-                        <div class="form-group half-width">
-                            <label for="pvClasCueBan">Clase de cuenta:</label>
-                            <select id="pvClasCueBan" name="pvClasCueBan">
-                                <option value="" disabled selected>-- Seleccione --</option>
+                        <div class="col form-group d-block custom-input-group">
+                            <label for="pvClasCueBan" class="form-label">Clase de cuenta</label>
+                            <select id="pvClasCueBan" name="pvClasCueBan" class="form-control">
+                                <option value="" disabled selected>Seleccione</option>
                                 <option value="Ahorros">Ahorros</option>
                                 <option value="Corriente">Corriente</option>
                             </select>
                         </div>
-                        <p>
-                            Nota: Nos permitimos informar que aceptamos el pago de todas nuestras facturas a través del sistema automático de pagos, para lo cual
+                    </div>
+                    
+                    <div class="justify-content-around align-items-center m-2 p-2">
+                        <p class="sub-header">
+                            <b>Nota:</b> Nos permitimos informar que aceptamos el pago de todas nuestras facturas a través del sistema automático de pagos, para lo cual
                             autorizamos nos consignen a la cuenta y entidad bancaria aquí señalada.
                         </p>
+                    </div>
+                    
+                    <div class="justify-content-around align-items-center m-2 p-2">
+                        <p id="declAutTrigger" class="interactive-text sub-header">
+                            Declaraciones y Autorizaciones. (Hacer click)
+                        </p>
+                    </div>
+
+                    <div class="button-group justify-content-around align-items-center m-2 p-2">
+                        <button type="button" id="submitPrvBtn" class="btn btn-primary">Guardar Proveedor</button>
                     </div>
                 </div>
             </form>
@@ -563,7 +614,7 @@
     </main>
 
     <!--subform de direccion estructurada estandar-->
-    <div id="directionStructure" class="direction-structure">
+    <form id="directionStructure" class="direction-structure" autocomplete="off">
         <div class="direction-structure-content">
             <h4>Ingrese la Dirección siguiendo el estandar del DANE:</h4>
             <div class="structure-field">
@@ -572,44 +623,191 @@
                     <option value="" disabled selected>-- Seleccione --</option>
                     <option value="Autopista">Autopista</option>
                     <option value="Avenida">Avenida</option>
-                    <option value="Calle">Calle</option>
-                    <option value="Carrera">Carrera</option>
-                    <option value="Carretera">Carretera</option>
-                    <option value="Diagonal">Diagonal</option>
-                    <option value="Transversal">Transversal</option>
+					<option value="Calle">Calle</option>
+					<option value="Carrera">Carrera</option>
+					<option value="Carretera">Carretera</option>
+					<option value="Diagonal">Diagonal</option>
+					<option value="Transversal">Transversal</option>
                     <option value="Troncal">Troncal</option>
                 </select>
             </div>
             <div class="structure-field">
                 <label for="vPrincipal">Nom. o N° de la vía principal:</label>
-                <input type="text" id="vPrincipal" name="vPrincipal" />
+				<input type="text" id="vPrincipal" name="vPrincipal"/>
             </div>
             <div class="structure-field">
-                <label for="sufPrincipal">Letra/sufijo principal:</label>
-                <input type="text" id="sufPrincipal" name="sufPrincipal" maxlength="2" />
+				<label for="sufPrincipal">Letra/sufijo principal:</label>
+                <input type="text" id="sufPrincipal" name="sufPrincipal" maxlength="2"/>
             </div>
-            <div class="structure-field">
-                <label for="vSecundaria">Nom. o N° de la vía secundaria:</label>
-                <input type="text" id="vSecundaria" name="vSecundaria" />
-            </div>
-            <div class="structure-field">
+			<div class="structure-field">
+				<label for="vSecundaria">Nom. o N° de la vía secundaria:</label>
+                <input type="text" id="vSecundaria" name="vSecundaria"/>
+			</div>
+			<div class="structure-field">
                 <label for="sufSecundaria">Letra/sufijo secundaria:</label>
-                <input type="text" id="sufSecundaria" name="sufSecundaria" maxlength="2" />
+				<input type="text" id="sufSecundaria" name="sufSecundaria" maxlength="2"/>
             </div>
-            <div class="structure-field">
+			<div class="structure-field">
                 <label for="numPlaca">N° de placa:</label>
-                <input type="number" id="numPlaca" name="numPlaca" />
+				<input type="number" id="numPlaca" name="numPlaca" />
             </div>
             <div class="structure-field">
                 <label for="compleDir">Complemento (opcional):</label>
-                <input type="text" id="compleDir" name="compleDir" />
+				<input type="text" id="compleDir" name="compleDir" />
             </div>
             <div class="structure-actions">
                 <button id="cancelDirBtn" type="button" class="btn btn-secondary">Cancelar</button>
-                <button id="saveDirBtn" type="button" class="btn btn-primary">Guardar Dirección</button>
+				<button id="saveDirBtn" type="button" class="btn btn-primary">Guardar Dirección</button>
             </div>
         </div>
-    </div>
+    </form>
+
+    <!--subform declaraciones y autorizaciones-->
+    <form id="declAutorPanel" class="floating-panel" autocomplete="off">
+        <div class="DeclAut-content">
+            <h4>Declaraciones y Autorizaciones</h4>
+            <div class="panelField">
+                <p>
+                    <b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" class="form-control-input-wrapper" />,
+                    de manera voluntaria y bajo la gravedad del juramento afirmo que todo lo aquí consignado es cierto, veraz y verificable, por lo tanto realizo las siguientes declaraciones: 
+                    a) Los recursos de mi propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social) <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" class="form-control-input-wrapper" />;
+                    b) Mi actividad, profesión u ocupación y/o de la empresa que represento es lícita y se ejerce dentro del marco legal y los recursos no provienen de actividades ilícitas contempladas en el Código Penal; 
+                    c) Que sus socios, accionistas con participación directa o indirecta igual o superior al 5%, o administradores, empleados o beneficiarios finales no presentan registros negativos en las listas tanto 
+                    nacionales como internacionales de control y prevención del riesgo del lavado de activos y/o financiación del terrorismo, así como tampoco en ninguna base de datos de índole privada o pública relacionada con 
+                    actividades ilícitas asociadas a corrupción y/o soborno transnacional y que pueden ser consultadas para este fin; 
+                    d) En desarrollo del objeto social y/o en la ejecución de mi actividad profesional no incurriré en alguna actividad ilícita de las contempladas en el Código Penal o en cualquier otra norma que modifique o 
+                    adicione y en consecuencia me obligo a responder frente a LA EMPRESA y/o terceros por todos los perjuicios que se llegaren a causar como consecuencia del incumplimiento de estas afirmaciones; 
+                    e) Me obligo a actualizar la información personal, corporativa, societaria, según aplique, así como la información financiera cada vez que haya cambios en la misma y en la medida en que la solicite 
+                    LA EMPRESA, suministrando totalidad de los soportes documentales; 
+                    f) Los bienes y/o recursos que se deriven de la presente relación contractual no serán destinados para la ejecución de actividades delictivas, así como tampoco, para la promoción y/o financiación de grupos 
+                    armados al margen de la ley y en general a personas dedicadas a actividades ilícitas; g) No tiene relación alguna con personas asociadas a actividades delictivas. El incumplimiento de cualquiera de estas 
+                    obligaciones aquí contempladas, faculta a LA EMPRESA para terminar de manera inmediata y unilateral el presente contrato y a que éste, efectué de manera inmediata los pagos adeudados a LA EMPRESA.
+                </p>
+            </div>
+            <div class="panelField">
+                <p>
+					<b>AUTORIZACIÓN PARA EL TRATAMIENTO DE DATOS PERSONALES:</b> Mediante el registro de mis datos personales en el presente formulario, autorizo a (marque con x) para que:<br />
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPMotMaqSI" class="form-check-label">SI</label><input type="radio" id="pvTDPMotMaqSI" name="pvTDPMotMaq" value="SI" class="form-check-input" />
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPMotMaqNO" class="form-check-label">NO</label><input type="radio" id="pvTDPMotMaqNO" name="pvTDPMotMaq" value="NO" class="form-check-input" />
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>MOTORES Y MÁQUINAS S.A. BIC - MOTORYSA BIC</b> identificada con NIT 860.019.063-8 ubicada en la dirección
+                                Avenida Carrera 68 No. 68B-61 de Bogotá canal de comunicación <b>seguridad_de_datos@moterysa.com</b>,
+                                Politica de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPCasTorSI" class="form-check-label">SI</label><input type="radio" id="pvTDPCasTorSI" name="pvTDPCasTor" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPCasTorNO" class="form-check-label">NO</label><input type="radio" id="pvTDPCasTorNO" name="pvTDPCasTor" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>CASATORO S.A. BIC</b> identificada con NIT 830.004.993-8 ubicada en la dirección Avenida Boyacá No. 170-97
+                                de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>, Politica de Tratamiento de Datos
+                                Personales publicada en página web <b>www.casatoro.com</b>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPBonapSI" class="form-check-label">SI</label><input type="radio" id="pvTDPBonapSI" name="pvTDPBonap" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPBonapNO" class="form-check-label">NO</label><input type="radio" id="pvTDPBonapNO" name="pvTDPBonap" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>REPUESTOS, ACCESORIOS Y LUBRICANTES BONAPARTE S.A.S. - BONAPARTE RAL</b> identificada con NIT 900.353.939-1
+                                ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>,
+                                Politica de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-check m-2">
+                                <label for="pvTDPBellpiSI" class="form-check-label">SI</label><input type="radio" id="pvTDPBellpiSI" name="pvTDPBellpi" value="SI" class="form-check-input"/>
+                            </div>
+                            <div class="form-check m-2">
+                                <label for="pvTDPBellpiNO" class="form-check-label">NO</label><input type="radio" id="pvTDPBellpiNO" name="pvTDPBellpi" value="NO" class="form-check-input"/>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b>BELLPI S.A.S</b> identificada con NIT 901.389.327-1 ubicada en la dirección Calle 170 #67-42 de Bogotá,
+                                canal de comunicación <b>seguridaddedatos@bellpi.com</b> Politica de Tratamiento de Datos Personales publicada
+                                en página wet <b>www.bellpi.com</b>.
+                            </p>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="panelField">
+                <p>
+                    Guarde, use, almacene, recolecte, transfiera, transmita a nivel nacional, Internacional y realice el tratamiento de mis datos personales, comerciales y financieros recolectados por medio digital o 
+                    escrito con las siguientes finalidades: a) Consultorías, auditorias, asesorías y servicios relacionados; b) Gestión administrativa; c) Gestión de cobros y pagos; d) Gestión de facturación; 
+                    e) Gestión de proveedores, f) Gestión económica y contable; g) Suministrar y transferir información personal, comercial y financiera para que sea conocida y tratada por las personas naturales, 
+                    juridicas y/o accionistas de LA EMPRESA y a sociedades controlantes, controladas, vinculadas, aliadas, o pertenecientes al mismo grupo empresarial y a cualquier aliado comercial; h) realizar el 
+                    tratamiento de datos sensibles como: Huellas dactilares o un cálculo sobre ellas, fotografias, imágenes de video, ubicación espacial, datos de ordenadores, teléfonos y números celulares, VPN, correo 
+                    electrónico, que serán utilizados con fines de autenticación e identificación por medio de la firma electrónica y/o digital con el fin de verificar la autenticidad de la autorización. Dicha 
+                    información será almacenada y utilizada adicionalmente para ofrecer una capa adicional de seguridad. El titular conoce que no está obligado a autorizar el tratamiento de los datos sensibles a menos 
+                    que sea estrictamente necesario para alguno de los fines descritos a requerido por ley, I) Suministrar, transmitir, transferir información personal, comercial y financiera para que sea conocida y 
+                    tratada por las personas naturales o juridicas, filiales, matrices accionistas o vinculados económicos de LA EMPRESA como entidades bancarias, aliados comerciales y/o la Comunidad de la empresa, 
+                    proveedores nacionales o extranjeros, que presten servicios tecnológicos, logisticos y operativos. j) El control y la prevención del fraude; k) Prevención y control de actividades ilicitas incluyendo, 
+                    pero no limitándose al lavado de activos, financiación del terrorismo, soborno transnacional y/o los delitos asociados a corrupción. <br />
+                    Así mismo, declaro que LA EMPRESA me ha informado de manera previa y expresa lo siguiente: i) los datos suministrados en la presente solicitud son recolectados atendiendo las disposiciones legales e
+					instrucciones de las autoridades competentes en materia de protección de datos personales; ii) El responsable del dicho tratamiento es la empresa <b>seleccionada anteriormente</b> según corresponda la vinculación
+					comercial, iii) Que en ciertas situaciones es necesario realizar transferencias Internacionales de mis datos para cumplir con las finalidades del mismo y con las obligaciones contractuales y pos contractuales;
+                    iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles, en consecuencia no he sido obligado a responderias, por lo que 
+                    <input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" class="form-check-input me-1" /><b class="me-1">SI</b> <input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" class="form-check-input me-1" /><b>NO</b> autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes;
+                    v) los derechos que me asisten como titular de los datos son actualizar, conocer, rectificar, conocer sobre el uso que le darán a mis datos, solicitar prueba de la autorización y/o revocar la misma, los 
+                    cuales puedo ejercer a través de los canales de comunicación informados por LA EMPRESA y en la Politica de Tratamiento de Datos Personales, dirigida al encargado de Protección de Datos Personales.<br />
+					<b>CONFIDENCIALIDAD Y RESERVA:</b> Toda la información no pública que sea entregada por LA EMPRESA y/o por cualquiera de sus sociedades vinculadas será considerada como CONFIDENCIAL Y RESERVADA, por lo tanto,
+					gozará de especial protección, razón por la cual todo acto de divulgación, uso indebido de la información y/o falta de seguridad sobre la misma será considerado como un incumplimiento grave. 
+                    El PROVEEDOR reconoce y acepta expresamente que la violación de confidencialidad generará perjuicios graves a LA EMPRESA.<br />
+
+					<b>ÉTICA EMPRESARIAL:</b><br />
+
+                    Declaro que he recibido la información de:<br />
+
+                    <ul>
+						<li>Politica de Transparencia y Anticorrupción</li>
+						<li>Politica de Prevención y Gestión del Riesgo, de Corrupción y Soborno Trasnacional</li>
+						<li>Politica de Derechos Humanos</li>
+						<li>Politica para la Prevención del Consumo de Alcohol y Sustancias Psicoactivas</li>
+						<li>Sistema de Autocontrol y Gestión del Riesgo Integral de LA/FT/FPADM-SAGRILAFT</li>
+                    </ul><br />
+                    
+                    Que conozco en su totalidad su contenido y por lo tanto entiendo las obligaciones, responsabilidades, deberes y derechos alli contenidos, velando por el cabal cumplimiento de lo dispuesto en las politicas - procedimientos
+                    y por lo tanto me comprometo a seguir sus principios y normas de conducta.
+
+                    Si conoce algún hecho contrario al código de conducta, ética y el programa anticorrupción dirijase al canal ético:<br />
+                    <a target="_blank" href="https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379">https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379</a>.
+                </p>
+            </div>
+            <div class="panel-actions">
+                <button id="cancelAutBtn" type="button" class="btn btn-secondary">Cancelar</button>
+                <button id="saveAutBtn" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
 
     <div id="loader-container" style="
         display: none;
@@ -623,17 +821,16 @@
         justify-content: center;
         align-items: center;
         ">
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Cargando...</span>
-        </div>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
     </div>
 
     @Html.Partial("_Footer")
 
+    <script src="~/js/FormUnicProv.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-
-    </script>
 </body>
 </html>
