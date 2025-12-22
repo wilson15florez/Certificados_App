@@ -829,7 +829,7 @@ async function ubicPJuHandler() {
     $(pjRLDepartNac).off('change.ubiNac').off('change.ubiExtrEstado');
 
     //limpia selects y los deshabilita si no es autorellenado
-    const selectClear = [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
+    const selectClear = [pjDepartDirPrincipal, pjCiudadDirPrincipal, pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
     selectClear.forEach(sel => {
         $(sel).empty();
         if (!isAutoFilling) {
@@ -1618,7 +1618,7 @@ personTypeSelect.addEventListener('change', function () {
     alertContainer.innerHTML = '';
 });
 
-//logica para crear select dinamico a sucursal, agregar sucursal (usada por el click y loadFormData) y eliminar sucrsale
+//logica para crear select dinamico a sucursal, agregar sucursal (usada por el click y loadFormData) y eliminar sucursales
 window.initSucursalUbic = async function (index) {
     //asegura que los datos de ubicacion colombiana esten cargados
     await loadUbiData();

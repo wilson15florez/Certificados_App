@@ -59,7 +59,7 @@ saveBtn.addEventListener('click', () => {
     const address = document.getElementById('address-input').value;
     const email = document.getElementById('email-input').value;
     const phone = document.getElementById('phone-input').value;
-    const typePerson = document.getElementById('tipo_Persona');
+    const typePerson = document.getElementById('tipo_Persona').value;
 
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regexTelFijo = /^60[1-9]\d{7}$/;
@@ -81,12 +81,12 @@ saveBtn.addEventListener('click', () => {
         return;
     }
 
-    const provider = {
+    let provider = {
         Nombre: name,
         Direccion: address,
         Correo: email,
         Telefono: phone,
-        TipoPersona: typePerson.value
+        TipoPersona: typePerson
     }
     console.log("Enviando datos: ", provider);
     fetch('/Provider/UpdateProvider', {
