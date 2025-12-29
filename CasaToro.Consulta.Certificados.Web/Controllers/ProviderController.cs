@@ -185,6 +185,9 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        [HttpGet]
+        
+
         [HttpPost]
         public IActionResult UpdatePassword([FromBody] string password)
         {

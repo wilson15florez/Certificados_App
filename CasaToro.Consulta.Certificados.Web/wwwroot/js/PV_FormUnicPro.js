@@ -1603,16 +1603,17 @@ function togglePvCB() {
 }
 
 //logica para mostrar/ocultar los forms al cambiar el tipo de persona
-personTypeSelect.addEventListener('change', function () {
+//personTypeSelect.addEventListener('change', function () {
 
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    provForm.style.display = 'none';
-    idNumInput.value = '';
+//    persNatuForm.style.display = 'none';
+//    persJuriForm.style.display = 'none';
+//    provForm.style.display = 'none';
+//    idNumInput.value = '';
 
-    idSection.style.display = 'flex';
-    alertContainer.innerHTML = '';
-});
+//    idSection.style.display = 'flex';
+//    alertContainer.innerHTML = '';
+//});
+
 
 //logica para crear select dinamico a sucursal, agregar sucursal (usada por el click y loadFormData) y eliminar sucrsale
 window.initSucursalUbic = async function (index) {
@@ -1810,26 +1811,9 @@ saveAutBtn.addEventListener('click', () => {
     activeParagraph = null;
 })
 
-//atajo de consulta con enter
-idNumInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-        e.preventDefault();
-        consultBtn.click();
-    }
-});
-
 //funcion de consulta en el BACKEND
-consultBtn.addEventListener('click', async function (e) {
+document.addEventListener('DOMContentLoaded', async function (e) {
     e.preventDefault();
-
-    const idNum = idNumInput.value.trim();
-    const personType = personTypeSelect.value;
-    alertContainer.innerHTML = '';
-
-    if (!personType || !idNum) {
-        createAlert('Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.', 'danger');
-        return;
-    }
 
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';

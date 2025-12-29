@@ -67,7 +67,7 @@ const pjRLCiudadNac = document.getElementById('pjRLCiudadNac');
 //elementos del formulario de persona juridica para sucursales y tabla de accionistas
 const addSucursalBtn = document.getElementById('addSucursalBtn');
 const sucursalesContainer = document.getElementById('sucursales-container');
-const maxSucursales = 2;
+const maxSucursales = 4;
 const addControlRowBtn = document.getElementById('addControlRowBtn');
 const controlTableBody = document.querySelector('#control-table tbody');
 
@@ -85,6 +85,7 @@ const pvPorExtranjero = document.getElementById('pvPorExtranjero');
 const pvPorPais = document.getElementById('pvPorPais');
 
 const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+const pvOtrTipEmp = document.getElementById('pvOtrTipEmp');
 const pvAcEconomica = document.getElementById('pvAcEconomica');
 const pvCodCIIU = document.getElementById('pvCodCIIU');
 
@@ -134,6 +135,12 @@ const colDMJSON = '/data/ubiNacional/ColombiaDepMun.json'
 const url_COUNTRIES = '/data/ubiExterior/countries.json';
 const url_STATES = '/data/ubiExterior/states.json';
 const url_CITIES = '/data/ubiExterior/cities.json';
+
+//JSON de Códigos CIIU y actividades económicas
+const ciiuJSON = '/data/Cod_CIIU-ActEconomica/codCIIU_ActEco.json';
+
+//JSON de Entidades bancarias
+const bancosJSON = '/data/entBanca/entidades_bcos.json';
 
 //elemento para validacion con parametros
 const regexTelFijo = /^60[1-9]\d{7}$/;
@@ -185,14 +192,54 @@ function initHandlers() {
     });
 
     //handlers para provForm
-    pvCodCIIU.addEventListener('input', ciiuInput);
+    pvTipEmp.forEach(r => r.addEventListener('input', togglePvTE));
     pvPorExtranjero.addEventListener('input', togglePvPais);
     pvGrCon.forEach(r => r.addEventListener('change', togglePvGC));
     pvDeclIndCom.forEach(r => r.addEventListener('change', togglePvDIC));
     pvAutRet.forEach(r => r.addEventListener('change', togglePvAR));
     pvPosCuBan.forEach(r => r.addEventListener('change', togglePvCB));
 
-    console.log("Handlers de nacionalidad inicializados");
+
+    loadCIIUData();
+    //sincroniza actividad economica -> codigo CIIU
+    $(pvAcEconomica).on('change', function () {
+        const selectVal = $(this).val();
+        if (selectVal && $(pvCodCIIU).val() !== selectVal) {
+            $(pvCodCIIU).val(selectVal).trigger('change.select2');
+        }
+    });
+
+    //sincroniza codigo CIIU -> actividad economica
+    $(pvCodCIIU).on('change', function () {
+        const selectVal = $(this).val();
+        if (selectVal && $(pvAcEconomica).val() !== selectVal) {
+            $(pvAcEconomica).val(selectVal).trigger('change.select2');
+        }
+    });
+
+    const moneyInputs = [
+        'pvIngrMens', 'pvEgrMens', 'pvActivos',
+        'pvPasivos', 'pvPatrimonio', 'pvOtrIngr',
+        'pvCapSocReg'
+    ];
+    moneyInputs.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('input', (e) => {
+                let cursorPos = e.target.selectionStart;
+                let oldLength = e.target.value.length;
+
+                e.target.value = formatCurrency(e.target.value);
+
+                let newLength = e.target.value.length;
+                cursorPos += (newLength - oldLength);
+                e.target.setSelectionRange(cursorPos, cursorPos);
+            });
+        }
+    });
+
+
+    loadBancosData();
 }
 
 function waitForSelec2(select, timeout = 800) {
@@ -359,7 +406,7 @@ function validateNaturalForm() {
         'pnNombreCompl', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc',
         'pnFechaNac', 'pnNacionalidad', 'pnEstadoNac', 'pnCiudadNac',
         'pnDiResidencia', 'pnDepRes', 'pnCiudadRes',
-        'pnEmail', 'pnOficProfe', 'pnActividad'
+        'pnEmail', 'pnActividad'
     ];
 
     for (const id of requiredFields) {
@@ -529,6 +576,12 @@ function validateJuridicaForm() {
         totalPorc += porcentaje;
     }
 
+    if (totalPorc < 100) {
+        createAlert(`La suma total de los porcentajes de participación es: (${totalPorc.toFixed(2)}%), es menor al 100%.
+                    Por favor ajuste los valores antes de guardar.`, 'danger');
+        return false;
+    }
+
     if (totalPorc > 100) {
         createAlert(`La suma total de los porcentajes de participación es: (${totalPorc.toFixed(2)}%), supera el 100%.
                     Por favor ajuste los valores antes de guardar.`, 'danger');
@@ -554,7 +607,6 @@ function validateJuridicaForm() {
 
 //validacion de campos del form formato unico
 function validateProvForm() {
-    console.log(">>> validateProvForm START");
 
     const form = document.getElementById('provForm');
     alertContainer.innerHTML = '';
@@ -562,16 +614,16 @@ function validateProvForm() {
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
         'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos',
-        'pvPatrimonio', 'pvOtrIngr', 'pvPorNacional', 'pvPorPais',
+        'pvPatrimonio', 'pvOtrIngr', 'pvOtrTipEmp', 'pvPorNacional', 'pvPorPais',
         'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst',
         'pvFechVen', 'pvFechResolGC', 'pvNumResolGC', 'pvDepartDec', 
-        'pvCiudadDec', 'pvNumResDIAN', 'pvForPag', 'pvEntBenef', 'pvEntidad', 
+        'pvCiudadDec', 'pvNumResDIAN', 'pvEntidad', 
         'pvNumCueBanc', 'pvClasCueBan', 'pvDeAuRepresentacion', 'pvFuenteRecur'
     ];
 
     for (const id of requiredFields) {
         const el = document.getElementById(id);
-        if (!el || el.disabled) continue;
+        if (!el || el.disabled || !el.required) continue;
         if (!el.value.trim()) {
             const label = document.querySelector(`label[for="${id}"]`);
             const labelText = label ? label.textContent.replace(':', '').trim() : id;
@@ -581,16 +633,28 @@ function validateProvForm() {
         }
     }
 
-    //verifica tipo de empresa
-    if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
-        createAlert('Por favor seleccione el tipo de empresa.', 'danger');
+    //verifica porcentaje capital nacional y/o extranjero
+    let totalPorc = 0;
+    const porcNac = parseFloat(pvPorNacional.value.trim() || 0);
+    const porcExtr = parseFloat(pvPorExtranjero.value.trim() || 0);
+    if (porcNac == 0) {
+        createAlert('El porcentaje de capital nacional no puede ser cero (0).', 'danger');
+        return false;
+    }
+    if (porcExtr != 0) {
+        totalPorc = porcNac + porcExtr;
+        if (totalPorc !== 100) {
+            createAlert('La suma del porcentaje de capital nacional y extranjero debe ser igual a cien (100).', 'danger');
+            return false;
+        }
+    } else if (porcNac !== 100) {
+        createAlert('El porcentaje de capital nacional debe ser igual a cien (100) si no hay capital extranjero.', 'danger');
         return false;
     }
 
-    //verifica codigo CIIU
-    if (pvCodCIIU.value.trim().length > 0 && pvCodCIIU.value.length < 4) {
-        createAlert('El código CIIU debe tener 4 dígitos.', 'danger');
-        pvCodCIIU.focus();
+    //verifica tipo de empresa
+    if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
+        createAlert('Por favor seleccione el tipo de empresa.', 'danger');
         return false;
     }
 
@@ -644,9 +708,33 @@ function validateProvForm() {
         return false;
     }
 
-    console.log(">>> validateProvForm PASÓ TODAS LAS VALIDACIONES");
-
     return true;
+}
+
+//funcion para cargar Codigo CIIU y actividades economicas
+async function loadCIIUData() {
+    try {
+        const res = await fetch(ciiuJSON);
+        const data = await res.json();
+
+        fillSelect2(pvAcEconomica, data, 'Seleccione actividad económica', 'Código CIIU', 'Actividad Economica');
+
+        fillSelect2(pvCodCIIU, data, 'Seleccione código CIIU', 'Código CIIU', 'Código CIIU');
+
+    } catch (error) {
+        console.error("Error al cargar datos de CIIU:", error);
+    }
+}
+
+async function loadBancosData() {
+    try {
+        const res = await fetch(bancosJSON);
+        const data = await res.json();
+
+        fillSelect2(pvEntidad, data, 'Seleccione entidad bancaria', 'Código', 'Nombre');
+    } catch (error) {
+        console.error("Error al cargar datos de entidades bancarias:", error);
+    }
 }
 
 //funcion para cargar departamentos y municipios colombianos
@@ -902,11 +990,18 @@ async function ubicPJuHandler() {
 //funcion que gestiona los select de ubicacion del provForm
 async function ubicProvFormHandler() {
 
-    //si es autorellenado no limpia
+    //si es autorellenado no limpia los selects de ubicacion
     if (!isAutoFilling) {
         [pvPorPais, pvDepartDec, pvCiudadDec].forEach(sel => {
             $(sel).empty().prop("disabled", true);
         });
+    }
+
+    //limpia actividad economica y codigo CIIU si no es autorellenado o si lo es
+    if (!isAutoFilling || isAutoFilling) {
+        [pvAcEconomica, pvCodCIIU, pvEntidad].forEach(sel => {
+            $(sel).val(null).trigger('change');
+        })
     }
 
     //carga pais extranjero de porcentaje origen de capital
@@ -1106,7 +1201,7 @@ async function loadFormData_Juridica(data) {
             if (i > maxSucursales) break;
 
             if (i > 1) {
-                addSucursalInternal(i);
+                /*addSucursalInternal(i);*/
                 await awaitOpt(document.getElementById(`pjDepartDirSucursal_${i}`));
             }
 
@@ -1270,9 +1365,23 @@ async function loadProvFormData(data) {
         await setSelect2Val(pvCiudadDec, data.pvCiudadDec);
     }
 
-    //asigna los campos simples excepto los que rquieren logica especial
+    //actividad economica y codigo CIIU
+    if (data.pvAcEconomica) {
+        await setSelect2Val(pvAcEconomica, data.pvAcEconomica);
+    }
+    if (data.pvCodCIIU) {
+        await setSelect2Val(pvCodCIIU, data.pvCodCIIU);
+    }
+
+    //entidad bancaria
+    if (data.pvEntidad) {
+        await setSelect2Val(pvEntidad, data.pvEntidad);
+    }
+
+    //asigna los campos simples excepto los que requieren logica especial
     const skipCampos = [
-        'pvPorPais', 'pvDepartDec', 'pvCiudadDec'
+        'pvPorPais', 'pvDepartDec', 'pvCiudadDec',
+        'pvAcEconomica', 'pvCodCIIU', 'pvEntidad'
     ];
 
     for (const key in data) {
@@ -1281,6 +1390,19 @@ async function loadProvFormData(data) {
             if (el && data[key] != null) el.value = data[key];
         }
     }
+
+    //campos numericos con formato dinero
+    const skpCamposDinero = [
+        'pvIngrMens', 'pvEgrMens', 'pvActivos',
+        'pvPasivos', 'pvPatrimonio', 'pvOtrIngr',
+        'pvCapSocReg'
+    ];
+    skpCamposDinero.forEach(campo => {
+        const el = document.getElementById(campo);
+        if (el && data[campo]) {
+            el.value = formatCurrency(data[campo]);
+        }
+    });
 
     //radios
     if (data.pvTipEmp) {
@@ -1324,6 +1446,7 @@ async function loadProvFormData(data) {
         if (r) r.checked = true;
     }
 
+    togglePvTE();
     togglePvPais();
     togglePvGC();
     togglePvDIC();
@@ -1531,19 +1654,48 @@ function collectProvFormData() {
         if (!data[name] || data[name] === "") data[name] = null;
     });
 
+    //formatea campos de dinero a solo numeros
+    const skpCamposDinero = [
+        'pvIngrMens', 'pvEgrMens', 'pvActivos',
+        'pvPasivos', 'pvPatrimonio', 'pvOtrIngr',
+        'pvCapSocReg'
+    ];
+    skpCamposDinero.forEach(campo => {
+        const el = document.getElementById(campo).value;
+        data[campo] = unformatCurrency(el);
+    });
+
     return data;
 }
 
 //logica para campos form general (provForm)
-function ciiuInput() {
-    let value = pvCodCIIU.value;
+const formatCurrency = (value) => {
+    if (!value) return '';
 
-    value = value.replace(/\D/g, '');
-
-    if (value.length > 4) {
-        value = value.slice(0, 4);
+    const cleanValue = value.toString().replace(/\D/g, '');
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    }).format(cleanValue);
+};
+const unformatCurrency = (value) => {
+    return value.replace(/\D/g, '');
+};
+function togglePvTE() {
+    const siOtra = document.getElementById('pvEmOtra').checked;
+    const inpTE = document.getElementById('pvOtrTipEmp');
+    const labTE = document.querySelector('label[for="pvOtrTipEmp"]');
+    if (siOtra) {
+        inpTE.classList.remove('no-edit');
+        labTE.classList.remove('disabled-label');
+        inpTE.required = true;
+    } else {
+        pvOtrTipEmp.value = '';
+        inpTE.classList.add('no-edit');
+        labTE.classList.add('disabled-label');
+        inpTE.required = false;
     }
-    pvCodCIIU.value = value;
 }
 function togglePvPais() {
     const hasValue = pvPorExtranjero.value.trim().length > 0;
@@ -1559,20 +1711,25 @@ function togglePvGC() {
     if (si) {
         inpGC.forEach(el => el.classList.remove('no-edit'));
         labGC.forEach(el => el.classList.remove('disabled-label'));
+        inpGC.forEach(el => el.required = true);
     } else {
         pvFechResolGC.value = '';
         pvNumResolGC.value = '';
         inpGC.forEach(el => el.classList.add('no-edit'));
         labGC.forEach(el => el.classList.add('disabled-label'));
+        inpGC.forEach(el => el.required = false);
     }
 }
 function togglePvDIC() {
     const si = document.getElementById('pvDeclIndComSi').checked;
-    $(pvDepartDec).prop('disabled', !si).trigger('change.select2');
-    $(pvCiudadDec).prop('disabled', !si).trigger('change.select2');
-    if (!si) {
-        $(pvDepartDec).val(null).trigger('change.select2');
-        $(pvCiudadDec).val(null).trigger('change.select2');
+    const selDIC = [document.getElementById('pvDepartDec'), document.getElementById('pvCiudadDec')];
+    if (si) {
+        selDIC.forEach(el => $(el).prop('disabled', false).trigger('change.select2'));
+        selDIC.forEach(el => $(el).required = true);
+    } else {
+        selDIC.forEach(el => $(el).prop('disabled', true).trigger('change.select2'));
+        selDIC.forEach(el => $(el).val(null).trigger('change.select2'));
+        selDIC.forEach(el => $(el).required = false);
     }
 }
 function togglePvAR() {
@@ -1582,27 +1739,38 @@ function togglePvAR() {
     if (si) {
         inpAR.classList.remove('no-edit');
         labAR.classList.remove('disabled-label');
+        inpAR.required = true;
     } else {
         pvNumResDIAN.value = '';
         inpAR.classList.add('no-edit');
         labAR.classList.add('disabled-label');
+        inpAR.required = false;
     }
 }
 function togglePvCB() {
     const si = document.getElementById('pvPosCuBanSi').checked;
-    const inpCB = [document.getElementById('pvEntidad'), document.getElementById('pvNumCueBanc')];
-    const labCB = [document.querySelector('label[for="pvEntidad"]'), document.querySelector('label[for="pvNumCueBanc"]')];
-    $(pvClasCueBan).prop('disabled', !si).trigger('change');
-
+    const inpCB = document.getElementById('pvNumCueBanc');
+    const labCB = document.querySelector('label[for="pvNumCueBanc"]');
+    
     if (si) {
-        inpCB.forEach(el => el.classList.remove('no-edit'));
-        labCB.forEach(el => el.classList.remove('disabled-label'));
+        inpCB.classList.remove('no-edit');
+        labCB.classList.remove('disabled-label');
+        inpCB.required = true;
+        $(pvEntidad).prop('disabled', false).trigger('change.select2');
+        pvEntidad.required = true;
+        $(pvClasCueBan).prop('disabled', false).trigger('change');
+        pvClasCueBan.required = true;
     } else {
-        pvEntidad.value = '';
         pvNumCueBanc.value = '';
-        inpCB.forEach(el => el.classList.add('no-edit'));
-        labCB.forEach(el => el.classList.add('disabled-label'));
+        inpCB.classList.add('no-edit');
+        labCB.classList.add('disabled-label');
+        inpCB.required = false;
+        $(pvEntidad).prop('disabled', true).trigger('change.select2');
+        $(pvEntidad).val(null).trigger('change.select2');
+        pvEntidad.required = false;
+        $(pvClasCueBan).prop('disabled', true).trigger('change');
         $(pvClasCueBan).val(null).trigger('change');
+        pvClasCueBan.required = false;
     }
 }
 
@@ -1642,7 +1810,7 @@ function addSucursalInternal(newIndex) {
     newIndex = currentSucursales + 1;
 
     if (newIndex > maxSucursales) {
-        createAlert(`Máximo ${maxSucursales} sucursales permitidas (incluyendo la principal).`, 'warning');
+        createAlert(`Máximo ${maxSucursales} sucursales permitidas.`, 'warning');
         return;
     }
     alertContainer.innerHTML = '';
@@ -1655,25 +1823,25 @@ function addSucursalInternal(newIndex) {
                     <div class="d-flex">
                         <div class="form-group input-wrapper">
                             <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="off" required />
-                            <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal" alt="Dirección Sucursal"></label>
+                            <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal *" alt="Dirección Sucursal *"></label>
                         </div>
                         <div class="form-group d-block custom-input-group">
-                            <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento:</label>
+                            <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento *</label>
                             <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                         <div class="form-group d-block custom-input-group">
-                            <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad:</label>
+                            <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad *</label>
                             <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="form-group input-wrapper">
                             <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
-                            <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail" alt="E-mail"></label>
+                            <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
                         <div class="form-group input-wrapper">
                             <input type="number" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
-                            <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono" alt="Teléfono"></label>
+                            <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
                         <div class="form-group">
                             <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
@@ -1715,7 +1883,7 @@ sucursalesContainer.addEventListener('click', function (e) {
             });
 
             //oculta mensaje del limite si se elimino una sucursal y quedo menos del maximo
-            if (sucursales.length < 3) {
+            if (sucursales.length < maxSucursales) {
                 createAlert('');
             }
         }
@@ -1780,7 +1948,7 @@ document.getElementById('saveDirBtn').addEventListener('click', () => {
 
     //construye la direccion
     let direcc = `${tipoVia} ${vPrincipal}${sufPrincipal ? sufPrincipal : ''}  # ${vSecundaria}${sufSecundaria ? sufSecundaria : ''} - ${numPlaca}`;
-    if (compleDir) direcc = ` ${compleDir}`;
+    if (compleDir) direcc += `, ${compleDir}`;
 
     //asigna la direccion al input
     if (activeDirecform) {
@@ -1865,7 +2033,7 @@ consultBtn.addEventListener('click', async function (e) {
 
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
-            createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Conplete y/o actualice la informacion.`, 'info');
+            createAlert(`Proveedor con ID: ${idNum} encontrado en la base de datos basica. Complete y/o actualice la informacion.`, 'info');
 
             isNewRegister = true;
 

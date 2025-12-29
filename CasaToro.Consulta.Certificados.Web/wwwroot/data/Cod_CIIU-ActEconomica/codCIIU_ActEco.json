@@ -1,0 +1,2014 @@
+[
+  {
+    "Código CIIU": "0111",
+    "Actividad Economica": "Cultivo de cereales (excepto arroz), legumbres y semillas oleaginosas."
+  },
+  {
+    "Código CIIU": "0112",
+    "Actividad Economica": "Cultivo de arroz."
+  },
+  {
+    "Código CIIU": "0113",
+    "Actividad Economica": "Cultivo de hortalizas, raíces y tubérculos."
+  },
+  {
+    "Código CIIU": "0114",
+    "Actividad Economica": "Cultivo de tabaco."
+  },
+  {
+    "Código CIIU": "0115",
+    "Actividad Economica": "Cultivo de plantas textiles."
+  },
+  {
+    "Código CIIU": "0119",
+    "Actividad Economica": "Otros cultivos transitorios n.c.p."
+  },
+  {
+    "Código CIIU": "0121",
+    "Actividad Economica": "Cultivo de frutas tropicales y subtropicales."
+  },
+  {
+    "Código CIIU": "0122",
+    "Actividad Economica": "Cultivo de plátano y banano."
+  },
+  {
+    "Código CIIU": "0123",
+    "Actividad Economica": "Cultivo de café."
+  },
+  {
+    "Código CIIU": "0124",
+    "Actividad Economica": "Cultivo de caña de azúcar."
+  },
+  {
+    "Código CIIU": "0125",
+    "Actividad Economica": "Cultivo de flor de corte."
+  },
+  {
+    "Código CIIU": "0126",
+    "Actividad Economica": "Cultivo de palma para aceite (palma africana) y otros frutos oleaginosos."
+  },
+  {
+    "Código CIIU": "0127",
+    "Actividad Economica": "Cultivo de plantas con las que se preparan bebidas."
+  },
+  {
+    "Código CIIU": "0128",
+    "Actividad Economica": "Cultivo de especias y de plantas aromáticas y medicinales."
+  },
+  {
+    "Código CIIU": "0129",
+    "Actividad Economica": "Otros cultivos permanentes n.c.p."
+  },
+  {
+    "Código CIIU": "0130",
+    "Actividad Economica": "Propagación de plantas (actividades de los viveros, excepto viveros forestales)."
+  },
+  {
+    "Código CIIU": "0141",
+    "Actividad Economica": "Cría de ganado bovino y bufalino."
+  },
+  {
+    "Código CIIU": "0142",
+    "Actividad Economica": "Cría de caballos y otros equinos."
+  },
+  {
+    "Código CIIU": "0143",
+    "Actividad Economica": "Cría de ovejas y cabras."
+  },
+  {
+    "Código CIIU": "0144",
+    "Actividad Economica": "Cría de ganado porcino."
+  },
+  {
+    "Código CIIU": "0145",
+    "Actividad Economica": "Cría de aves de corral."
+  },
+  {
+    "Código CIIU": "0149",
+    "Actividad Economica": "Cría de otros animales n.c.p."
+  },
+  {
+    "Código CIIU": "0150",
+    "Actividad Economica": "Explotación mixta (agrícola y pecuaria)."
+  },
+  {
+    "Código CIIU": "0161",
+    "Actividad Economica": "Actividades de apoyo a la agricultura."
+  },
+  {
+    "Código CIIU": "0162",
+    "Actividad Economica": "Actividades de apoyo a la ganadería."
+  },
+  {
+    "Código CIIU": "0163",
+    "Actividad Economica": "Actividades posteriores a la cosecha."
+  },
+  {
+    "Código CIIU": "0164",
+    "Actividad Economica": "Tratamiento de semillas para propagación."
+  },
+  {
+    "Código CIIU": "0170",
+    "Actividad Economica": "Caza ordinaria y mediante trampas y actividades de servicios conexas."
+  },
+  {
+    "Código CIIU": "0210",
+    "Actividad Economica": "Silvicultura y otras actividades forestales."
+  },
+  {
+    "Código CIIU": "0220",
+    "Actividad Economica": "Extracción de madera."
+  },
+  {
+    "Código CIIU": "0230",
+    "Actividad Economica": "Recolección de productos forestales diferentes a la madera."
+  },
+  {
+    "Código CIIU": "0240",
+    "Actividad Economica": "Servicios de apoyo a la silvicultura."
+  },
+  {
+    "Código CIIU": "0311",
+    "Actividad Economica": "Pesca marítima."
+  },
+  {
+    "Código CIIU": "0312",
+    "Actividad Economica": "Pesca de agua dulce."
+  },
+  {
+    "Código CIIU": "0321",
+    "Actividad Economica": "Acuicultura marítima."
+  },
+  {
+    "Código CIIU": "0322",
+    "Actividad Economica": "Acuicultura de agua dulce."
+  },
+  {
+    "Código CIIU": "0510",
+    "Actividad Economica": "Extracción de hulla (carbón de piedra)."
+  },
+  {
+    "Código CIIU": "0520",
+    "Actividad Economica": "Extracción de carbón lignito."
+  },
+  {
+    "Código CIIU": "0610",
+    "Actividad Economica": "Extracción de petróleo crudo."
+  },
+  {
+    "Código CIIU": "0710",
+    "Actividad Economica": "Extracción de minerales de hierro."
+  },
+  {
+    "Código CIIU": "0721",
+    "Actividad Economica": "Extracción de minerales de uranio y de torio."
+  },
+  {
+    "Código CIIU": "0722",
+    "Actividad Economica": "Extracción de oro y otros metales preciosos."
+  },
+  {
+    "Código CIIU": "0723",
+    "Actividad Economica": "Extracción de minerales de níquel."
+  },
+  {
+    "Código CIIU": "0729",
+    "Actividad Economica": "Extracción de otros minerales metalíferos no ferrosos n.c.p."
+  },
+  {
+    "Código CIIU": "0811",
+    "Actividad Economica": "Extracción de piedra, arena, arcillas comunes, yeso y anhidrita."
+  },
+  {
+    "Código CIIU": "0812",
+    "Actividad Economica": "Extracción de arcillas de uso industrial, caliza, caolín y bentonitas."
+  },
+  {
+    "Código CIIU": "0820",
+    "Actividad Economica": "Extracción de esmeraldas, piedras preciosas y semipreciosas."
+  },
+  {
+    "Código CIIU": "0891",
+    "Actividad Economica": "Extracción de minerales para la fabricación de abonos y productos químicos."
+  },
+  {
+    "Código CIIU": "0892",
+    "Actividad Economica": "Extracción de halita (sal)."
+  },
+  {
+    "Código CIIU": "0899",
+    "Actividad Economica": "Extracción de otros minerales no metálicos n.c.p."
+  },
+  {
+    "Código CIIU": "0910",
+    "Actividad Economica": "Actividades de apoyo para la extracción de petróleo y de gas natural."
+  },
+  {
+    "Código CIIU": "0990",
+    "Actividad Economica": "Actividades de apoyo para otras actividades de explotación de minas y canteras."
+  },
+  {
+    "Código CIIU": "1011",
+    "Actividad Economica": "Procesamiento y conservación de carne y productos cárnicos."
+  },
+  {
+    "Código CIIU": "1012",
+    "Actividad Economica": "Procesamiento y conservación de pescados, crustáceos y moluscos."
+  },
+  {
+    "Código CIIU": "1020",
+    "Actividad Economica": "Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos."
+  },
+  {
+    "Código CIIU": "1030",
+    "Actividad Economica": "Elaboración de aceites y grasas de origen vegetal y animal."
+  },
+  {
+    "Código CIIU": "1040",
+    "Actividad Economica": "Elaboración de productos lácteos."
+  },
+  {
+    "Código CIIU": "1051",
+    "Actividad Economica": "Elaboración de productos de molinería."
+  },
+  {
+    "Código CIIU": "1052",
+    "Actividad Economica": "Elaboración de almidones y productos derivados del almidón."
+  },
+  {
+    "Código CIIU": "1061",
+    "Actividad Economica": "Trilla de café."
+  },
+  {
+    "Código CIIU": "1062",
+    "Actividad Economica": "Descafeinado, tostión y molienda del café."
+  },
+  {
+    "Código CIIU": "1063",
+    "Actividad Economica": "Otros derivados del café."
+  },
+  {
+    "Código CIIU": "1071",
+    "Actividad Economica": "Elaboración y refinación de azúcar."
+  },
+  {
+    "Código CIIU": "1072",
+    "Actividad Economica": "Elaboración de panela."
+  },
+  {
+    "Código CIIU": "1081",
+    "Actividad Economica": "Elaboración de productos de panadería."
+  },
+  {
+    "Código CIIU": "1082",
+    "Actividad Economica": "Elaboración de cacao, chocolate y productos de confitería."
+  },
+  {
+    "Código CIIU": "1083",
+    "Actividad Economica": "Elaboración de macarrones, fideos, alcuzcuz y productos farináceos similares."
+  },
+  {
+    "Código CIIU": "1084",
+    "Actividad Economica": "Elaboración de comidas y platos preparados."
+  },
+  {
+    "Código CIIU": "1089",
+    "Actividad Economica": "Elaboración de otros productos alimenticios n.c.p."
+  },
+  {
+    "Código CIIU": "1090",
+    "Actividad Economica": "Elaboración de alimentos preparados para animales."
+  },
+  {
+    "Código CIIU": "1101",
+    "Actividad Economica": "Destilación, rectificación y mezcla de bebidas alcohólicas."
+  },
+  {
+    "Código CIIU": "1102",
+    "Actividad Economica": "Elaboración de bebidas fermentadas no destiladas."
+  },
+  {
+    "Código CIIU": "1103",
+    "Actividad Economica": "Producción de malta, elaboración de cervezas y otras bebidas malteadas."
+  },
+  {
+    "Código CIIU": "1104",
+    "Actividad Economica": "Elaboración  de  bebidas  no  alcohólicas,  producción  de  aguas  minerales  y  otras aguas embotelladas."
+  },
+  {
+    "Código CIIU": "1200",
+    "Actividad Economica": "Elaboración de productos de tabaco."
+  },
+  {
+    "Código CIIU": "1311",
+    "Actividad Economica": "Preparación e hilatura de fibras textiles."
+  },
+  {
+    "Código CIIU": "1312",
+    "Actividad Economica": "Tejeduría de productos textiles."
+  },
+  {
+    "Código CIIU": "1313",
+    "Actividad Economica": "Acabado de productos textiles."
+  },
+  {
+    "Código CIIU": "1391",
+    "Actividad Economica": "Fabricación de tejidos de punto y ganchillo."
+  },
+  {
+    "Código CIIU": "1392",
+    "Actividad Economica": "Confección de artículos con materiales textiles, excepto prendas de vestir."
+  },
+  {
+    "Código CIIU": "1393",
+    "Actividad Economica": "Fabricación de tapetes y alfombras para pisos."
+  },
+  {
+    "Código CIIU": "1394",
+    "Actividad Economica": "Fabricación de cuerdas, cordeles, cables, bramantes y redes."
+  },
+  {
+    "Código CIIU": "1399",
+    "Actividad Economica": "Fabricación de otros artículos textiles n.c.p."
+  },
+  {
+    "Código CIIU": "1410",
+    "Actividad Economica": "Confección de prendas de vestir, excepto prendas de piel."
+  },
+  {
+    "Código CIIU": "1420",
+    "Actividad Economica": "Fabricación de artículos de piel."
+  },
+  {
+    "Código CIIU": "1430",
+    "Actividad Economica": "Fabricación de artículos de punto y ganchillo."
+  },
+  {
+    "Código CIIU": "1511",
+    "Actividad Economica": "Curtido y recurtido de cueros; recurtido y teñido de pieles."
+  },
+  {
+    "Código CIIU": "1512",
+    "Actividad Economica": "Fabricación de artículos de viaje, bolsos de mano y artículos similares elaborados en cuero, y fabricación de artículos de talabartería y guarnicionería."
+  },
+  {
+    "Código CIIU": "1513",
+    "Actividad Economica": "Fabricación de artículos de viaje, bolsos de mano y artículos similares; artículos de talabartería y guarnicionería elaborados en otros materiales."
+  },
+  {
+    "Código CIIU": "1521",
+    "Actividad Economica": "Fabricación de calzado de cuero y piel, con cualquier tipo de suela."
+  },
+  {
+    "Código CIIU": "1522",
+    "Actividad Economica": "Fabricación de otros tipos de calzado, excepto calzado de cuero y piel."
+  },
+  {
+    "Código CIIU": "1523",
+    "Actividad Economica": "Fabricación de partes del calzado."
+  },
+  {
+    "Código CIIU": "1610",
+    "Actividad Economica": "Aserrado, acepillado e impregnación de la madera."
+  },
+  {
+    "Código CIIU": "1620",
+    "Actividad Economica": "Fabricación   de   hojas   de   madera   para   enchapado;   fabricación   de   tableros contrachapados,  tableros  laminados,  tableros  de  partículas  y  otros  tableros  y paneles."
+  },
+  {
+    "Código CIIU": "1630",
+    "Actividad Economica": "Fabricación  de  partes  y  piezas  de  madera,  de  carpintería  y  ebanistería  para  la construcción."
+  },
+  {
+    "Código CIIU": "1640",
+    "Actividad Economica": "Fabricación de recipientes de madera."
+  },
+  {
+    "Código CIIU": "1690",
+    "Actividad Economica": "Fabricación  de  otros  productos  de  madera;  fabricación  de  artículos  de  corcho, cestería y espartería."
+  },
+  {
+    "Código CIIU": "1701",
+    "Actividad Economica": "Fabricación de pulpas (pastas) celulósicas; papel y cartón."
+  },
+  {
+    "Código CIIU": "1702",
+    "Actividad Economica": "Fabricación  de  papel  y  cartón  ondulado  (corrugado);  fabricación  de  envases, empaques y de embalajes de papel y cartón."
+  },
+  {
+    "Código CIIU": "1709",
+    "Actividad Economica": "Fabricación de otros artículos de papel y cartón."
+  },
+  {
+    "Código CIIU": "1811",
+    "Actividad Economica": "Actividades de impresión."
+  },
+  {
+    "Código CIIU": "1812",
+    "Actividad Economica": "Actividades de servicios relacionados con la impresión."
+  },
+  {
+    "Código CIIU": "1820",
+    "Actividad Economica": "Producción de copias a partir de grabaciones originales."
+  },
+  {
+    "Código CIIU": "1910",
+    "Actividad Economica": "Fabricación de productos de hornos de coque."
+  },
+  {
+    "Código CIIU": "1921",
+    "Actividad Economica": "Fabricación de productos de la refinación del petróleo."
+  },
+  {
+    "Código CIIU": "1922",
+    "Actividad Economica": "Actividad de mezcla de combustibles."
+  },
+  {
+    "Código CIIU": "2011",
+    "Actividad Economica": "Fabricación de sustancias y productos químicos básicos."
+  },
+  {
+    "Código CIIU": "2012",
+    "Actividad Economica": "Fabricación de abonos y compuestos inorgánicos nitrogenados."
+  },
+  {
+    "Código CIIU": "2013",
+    "Actividad Economica": "Fabricación de plásticos en formas primarias."
+  },
+  {
+    "Código CIIU": "2014",
+    "Actividad Economica": "Fabricación de caucho sintético en formas primarias."
+  },
+  {
+    "Código CIIU": "2021",
+    "Actividad Economica": "Fabricación de plaguicidas y otros productos químicos de uso agropecuario."
+  },
+  {
+    "Código CIIU": "2022",
+    "Actividad Economica": "Fabricación de pinturas, barnices y revestimientos similares, tintas para impresión y masillas."
+  },
+  {
+    "Código CIIU": "2023",
+    "Actividad Economica": "Fabricación de jabones y detergentes, preparados para limpiar y pulir; perfumes y preparados de tocador."
+  },
+  {
+    "Código CIIU": "2029",
+    "Actividad Economica": "Fabricación de otros productos químicos n.c.p."
+  },
+  {
+    "Código CIIU": "2030",
+    "Actividad Economica": "Fabricación de fibras sintéticas y artificiales."
+  },
+  {
+    "Código CIIU": "2100",
+    "Actividad Economica": "Fabricación   de   productos   farmacéuticos,   sustancias   químicas   medicinales   y productos botánicos de uso farmacéutico."
+  },
+  {
+    "Código CIIU": "2211",
+    "Actividad Economica": "Fabricación de llantas y neumáticos de caucho"
+  },
+  {
+    "Código CIIU": "2212",
+    "Actividad Economica": "Reencauche de llantas usadas"
+  },
+  {
+    "Código CIIU": "2219",
+    "Actividad Economica": "Fabricación de formas básicas de caucho y otros productos de caucho n.c.p."
+  },
+  {
+    "Código CIIU": "2221",
+    "Actividad Economica": "Fabricación de formas básicas de plástico."
+  },
+  {
+    "Código CIIU": "2229",
+    "Actividad Economica": "Fabricación de artículos de plástico n.c.p."
+  },
+  {
+    "Código CIIU": "2310",
+    "Actividad Economica": "Fabricación de vidrio y productos de vidrio."
+  },
+  {
+    "Código CIIU": "2391",
+    "Actividad Economica": "Fabricación de productos refractarios."
+  },
+  {
+    "Código CIIU": "2392",
+    "Actividad Economica": "Fabricación de materiales de arcilla para la construcción."
+  },
+  {
+    "Código CIIU": "2393",
+    "Actividad Economica": "Fabricación de otros productos de cerámica y porcelana."
+  },
+  {
+    "Código CIIU": "2394",
+    "Actividad Economica": "Fabricación de cemento, cal y yeso."
+  },
+  {
+    "Código CIIU": "2395",
+    "Actividad Economica": "Fabricación de artículos de hormigón, cemento y yeso."
+  },
+  {
+    "Código CIIU": "2396",
+    "Actividad Economica": "Corte, tallado y acabado de la piedra."
+  },
+  {
+    "Código CIIU": "2399",
+    "Actividad Economica": "Fabricación de otros productos minerales no metálicos n.c.p."
+  },
+  {
+    "Código CIIU": "2410",
+    "Actividad Economica": "Industrias básicas de hierro y de acero."
+  },
+  {
+    "Código CIIU": "2421",
+    "Actividad Economica": "Industrias básicas de metales preciosos."
+  },
+  {
+    "Código CIIU": "2429",
+    "Actividad Economica": "Industrias básicas de otros metales no ferrosos."
+  },
+  {
+    "Código CIIU": "2431",
+    "Actividad Economica": "Fundición de hierro y de acero."
+  },
+  {
+    "Código CIIU": "2432",
+    "Actividad Economica": "Fundición de metales no ferrosos."
+  },
+  {
+    "Código CIIU": "2511",
+    "Actividad Economica": "Fabricación de productos metálicos para uso estructural."
+  },
+  {
+    "Código CIIU": "2512",
+    "Actividad Economica": "Fabricación  de  tanques,  depósitos  y  recipientes  de  metal,  excepto  los  utilizados para el envase o el transporte de mercancías."
+  },
+  {
+    "Código CIIU": "2513",
+    "Actividad Economica": "Fabricación  de  generadores  de  vapor,  excepto  calderas  de  agua  caliente  para calefacción central."
+  },
+  {
+    "Código CIIU": "2520",
+    "Actividad Economica": "Fabricación de armas y municiones."
+  },
+  {
+    "Código CIIU": "2591",
+    "Actividad Economica": "Forja, prensado, estampado y laminado de metal; pulvimetalurgia."
+  },
+  {
+    "Código CIIU": "2592",
+    "Actividad Economica": "Tratamiento y revestimiento de metales; mecanizado."
+  },
+  {
+    "Código CIIU": "2593",
+    "Actividad Economica": "Fabricación  de  artículos  de  cuchillería,  herramientas  de  mano  y  artículos  de ferretería."
+  },
+  {
+    "Código CIIU": "2599",
+    "Actividad Economica": "Fabricación de otros productos elaborados de metal n.c.p."
+  },
+  {
+    "Código CIIU": "2610",
+    "Actividad Economica": "Fabricación de componentes y tableros electrónicos."
+  },
+  {
+    "Código CIIU": "2620",
+    "Actividad Economica": "Fabricación de computadoras y de equipo periférico."
+  },
+  {
+    "Código CIIU": "2630",
+    "Actividad Economica": "Fabricación de equipos de comunicación."
+  },
+  {
+    "Código CIIU": "2640",
+    "Actividad Economica": "Fabricación de aparatos electrónicos de consumo."
+  },
+  {
+    "Código CIIU": "2651",
+    "Actividad Economica": "Fabricación de equipo de medición, prueba, navegación y control."
+  },
+  {
+    "Código CIIU": "2652",
+    "Actividad Economica": "Fabricación de relojes."
+  },
+  {
+    "Código CIIU": "2660",
+    "Actividad Economica": "Fabricación  de  equipo  de  irradiación  y  equipo  electrónico  de  uso  médico  y terapéutico."
+  },
+  {
+    "Código CIIU": "2670",
+    "Actividad Economica": "Fabricación de instrumentos ópticos y equipo fotográfico."
+  },
+  {
+    "Código CIIU": "2680",
+    "Actividad Economica": "Fabricación de medios magnéticos y ópticos para almacenamiento de datos."
+  },
+  {
+    "Código CIIU": "2711",
+    "Actividad Economica": "Fabricación de motores, generadores y transformadores eléctricos."
+  },
+  {
+    "Código CIIU": "2712",
+    "Actividad Economica": "Fabricación de aparatos de distribución y control de la energía eléctrica."
+  },
+  {
+    "Código CIIU": "2720",
+    "Actividad Economica": "Fabricación de pilas, baterías y acumuladores eléctricos."
+  },
+  {
+    "Código CIIU": "2731",
+    "Actividad Economica": "Fabricación de hilos y cables eléctricos y de fibra óptica."
+  },
+  {
+    "Código CIIU": "2732",
+    "Actividad Economica": "Fabricación de dispositivos de cableado."
+  },
+  {
+    "Código CIIU": "2740",
+    "Actividad Economica": "Fabricación de equipos eléctricos de iluminación."
+  },
+  {
+    "Código CIIU": "2750",
+    "Actividad Economica": "Fabricación de aparatos de uso doméstico."
+  },
+  {
+    "Código CIIU": "2790",
+    "Actividad Economica": "Fabricación de otros tipos de equipo eléctrico n.c.p."
+  },
+  {
+    "Código CIIU": "2811",
+    "Actividad Economica": "Fabricación de motores, turbinas, y partes para motores de combustión interna."
+  },
+  {
+    "Código CIIU": "2812",
+    "Actividad Economica": "Fabricación de equipos de potencia hidráulica y neumática."
+  },
+  {
+    "Código CIIU": "2813",
+    "Actividad Economica": "Fabricación de otras bombas, compresores, grifos y válvulas."
+  },
+  {
+    "Código CIIU": "2814",
+    "Actividad Economica": "Fabricación   de   cojinetes,   engranajes,   trenes   de   engranajes   y   piezas   de transmisión."
+  },
+  {
+    "Código CIIU": "2815",
+    "Actividad Economica": "Fabricación de hornos, hogares y quemadores industriales."
+  },
+  {
+    "Código CIIU": "2816",
+    "Actividad Economica": "Fabricación de equipo de elevación y manipulación."
+  },
+  {
+    "Código CIIU": "2817",
+    "Actividad Economica": "Fabricación  de  maquinaria  y  equipo  de  oficina  (excepto  computadoras  y  equipo periférico)."
+  },
+  {
+    "Código CIIU": "2818",
+    "Actividad Economica": "Fabricación de herramientas manuales con motor."
+  },
+  {
+    "Código CIIU": "2819",
+    "Actividad Economica": "Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p."
+  },
+  {
+    "Código CIIU": "2821",
+    "Actividad Economica": "Fabricación de maquinaria agropecuaria y forestal."
+  },
+  {
+    "Código CIIU": "2822",
+    "Actividad Economica": "Fabricación de máquinas formadoras de metal y de máquinas herramienta."
+  },
+  {
+    "Código CIIU": "2823",
+    "Actividad Economica": "Fabricación de maquinaria para la metalurgia."
+  },
+  {
+    "Código CIIU": "2824",
+    "Actividad Economica": "Fabricación de maquinaria para explotación de minas y canteras y para obras  de construcción."
+  },
+  {
+    "Código CIIU": "2825",
+    "Actividad Economica": "Fabricación de maquinaria para la elaboración de alimentos, bebidas y tabaco."
+  },
+  {
+    "Código CIIU": "2826",
+    "Actividad Economica": "Fabricación  de  maquinaria  para  la  elaboración  de  productos  textiles,  prendas  de vestir y cueros."
+  },
+  {
+    "Código CIIU": "2829",
+    "Actividad Economica": "Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p."
+  },
+  {
+    "Código CIIU": "2910",
+    "Actividad Economica": "Fabricación de vehículos automotores y sus motores."
+  },
+  {
+    "Código CIIU": "2920",
+    "Actividad Economica": "Fabricación de carrocerías para vehículos automotores; fabricación de remolques y semirremolques."
+  },
+  {
+    "Código CIIU": "2930",
+    "Actividad Economica": "Fabricación  de  partes,  piezas  (autopartes)  y  accesorios  (lujos)  para  vehículos automotores."
+  },
+  {
+    "Código CIIU": "3011",
+    "Actividad Economica": "Construcción de barcos y de estructuras flotantes."
+  },
+  {
+    "Código CIIU": "3012",
+    "Actividad Economica": "Construcción de embarcaciones de recreo y deporte."
+  },
+  {
+    "Código CIIU": "3020",
+    "Actividad Economica": "Fabricación de locomotoras y de material rodante para ferrocarriles."
+  },
+  {
+    "Código CIIU": "3030",
+    "Actividad Economica": "Fabricación de aeronaves, naves espaciales y de maquinaria conexa."
+  },
+  {
+    "Código CIIU": "3040",
+    "Actividad Economica": "Fabricación de vehículos militares de combate."
+  },
+  {
+    "Código CIIU": "3091",
+    "Actividad Economica": "Fabricación de motocicletas."
+  },
+  {
+    "Código CIIU": "3092",
+    "Actividad Economica": "Fabricación de bicicletas y de sillas de ruedas para personas con discapacidad."
+  },
+  {
+    "Código CIIU": "3099",
+    "Actividad Economica": "Fabricación de otros tipos de equipo de transporte n.c.p."
+  },
+  {
+    "Código CIIU": "3110",
+    "Actividad Economica": "Fabricación de muebles."
+  },
+  {
+    "Código CIIU": "3120",
+    "Actividad Economica": "Fabricación de colchones y somieres."
+  },
+  {
+    "Código CIIU": "3210",
+    "Actividad Economica": "Fabricación de joyas, bisutería y artículos conexos."
+  },
+  {
+    "Código CIIU": "3220",
+    "Actividad Economica": "Fabricación de instrumentos musicales."
+  },
+  {
+    "Código CIIU": "3230",
+    "Actividad Economica": "Fabricación de artículos y equipo para la práctica del deporte."
+  },
+  {
+    "Código CIIU": "3240",
+    "Actividad Economica": "Fabricación de juegos, juguetes y rompecabezas."
+  },
+  {
+    "Código CIIU": "3250",
+    "Actividad Economica": "Fabricación  de  instrumentos,  aparatos  y  materiales  médicos  y  odontológicos (incluido mobiliario)."
+  },
+  {
+    "Código CIIU": "3290",
+    "Actividad Economica": "Otras industrias manufactureras n.c.p."
+  },
+  {
+    "Código CIIU": "3311",
+    "Actividad Economica": "Mantenimiento y reparación especializado de productos elaborados en metal."
+  },
+  {
+    "Código CIIU": "3312",
+    "Actividad Economica": "Mantenimiento y reparación especializado de maquinaria y equipo."
+  },
+  {
+    "Código CIIU": "3313",
+    "Actividad Economica": "Mantenimiento y reparación especializado de equipo electrónico y óptico."
+  },
+  {
+    "Código CIIU": "3314",
+    "Actividad Economica": "Mantenimiento y reparación especializado de equipo eléctrico."
+  },
+  {
+    "Código CIIU": "3315",
+    "Actividad Economica": "Mantenimiento  y  reparación  especializado  de  equipo  de  transporte,  excepto  los vehículos automotores, motocicletas y bicicletas."
+  },
+  {
+    "Código CIIU": "3319",
+    "Actividad Economica": "Mantenimiento y reparación de otros tipos de equipos y sus componentes n.c.p."
+  },
+  {
+    "Código CIIU": "3320",
+    "Actividad Economica": "Instalación especializada de maquinaria y equipo industrial."
+  },
+  {
+    "Código CIIU": "3511",
+    "Actividad Economica": "Generación de energía eléctrica."
+  },
+  {
+    "Código CIIU": "3512",
+    "Actividad Economica": "Transmisión de energía eléctrica."
+  },
+  {
+    "Código CIIU": "3513",
+    "Actividad Economica": "Distribución de energía eléctrica."
+  },
+  {
+    "Código CIIU": "3514",
+    "Actividad Economica": "Comercialización de energía eléctrica."
+  },
+  {
+    "Código CIIU": "3520",
+    "Actividad Economica": "Producción de gas; distribución de combustibles gaseosos por tuberías."
+  },
+  {
+    "Código CIIU": "3530",
+    "Actividad Economica": "Suministro de vapor y aire acondicionado."
+  },
+  {
+    "Código CIIU": "3600",
+    "Actividad Economica": "Captación, tratamiento y distribución de agua."
+  },
+  {
+    "Código CIIU": "3700",
+    "Actividad Economica": "Evacuación y tratamiento de aguas residuales."
+  },
+  {
+    "Código CIIU": "3811",
+    "Actividad Economica": "Recolección de desechos no peligrosos."
+  },
+  {
+    "Código CIIU": "3812",
+    "Actividad Economica": "Recolección de desechos peligrosos."
+  },
+  {
+    "Código CIIU": "3821",
+    "Actividad Economica": "Tratamiento y disposición de desechos no peligrosos."
+  },
+  {
+    "Código CIIU": "3822",
+    "Actividad Economica": "Tratamiento y disposición de desechos peligrosos."
+  },
+  {
+    "Código CIIU": "3830",
+    "Actividad Economica": "Recuperación de materiales."
+  },
+  {
+    "Código CIIU": "3900",
+    "Actividad Economica": "Actividades de saneamiento ambiental y otros servicios de gestión de desechos."
+  },
+  {
+    "Código CIIU": "4111",
+    "Actividad Economica": "Construcción de edificios residenciales."
+  },
+  {
+    "Código CIIU": "4112",
+    "Actividad Economica": "Construcción de edificios no residenciales."
+  },
+  {
+    "Código CIIU": "4210",
+    "Actividad Economica": "Construcción de carreteras y vías de ferrocarril."
+  },
+  {
+    "Código CIIU": "4220",
+    "Actividad Economica": "Construcción de proyectos de servicio público."
+  },
+  {
+    "Código CIIU": "4290",
+    "Actividad Economica": "Construcción de otras obras de ingeniería civil."
+  },
+  {
+    "Código CIIU": "4311",
+    "Actividad Economica": "Demolición."
+  },
+  {
+    "Código CIIU": "4312",
+    "Actividad Economica": "Preparación del terreno."
+  },
+  {
+    "Código CIIU": "4321",
+    "Actividad Economica": "Instalaciones eléctricas."
+  },
+  {
+    "Código CIIU": "4322",
+    "Actividad Economica": "Instalaciones de fontanería, calefacción y aire acondicionado."
+  },
+  {
+    "Código CIIU": "4329",
+    "Actividad Economica": "Otras instalaciones especializadas."
+  },
+  {
+    "Código CIIU": "4330",
+    "Actividad Economica": "Terminación y acabado de edificios y obras de ingeniería civil."
+  },
+  {
+    "Código CIIU": "4390",
+    "Actividad Economica": "Otras  actividades  especializadas  para  la  construcción  de  edificios  y  obras  de ingeniería civil."
+  },
+  {
+    "Código CIIU": "4511",
+    "Actividad Economica": "Comercio de vehículos automotores nuevos."
+  },
+  {
+    "Código CIIU": "4512",
+    "Actividad Economica": "Comercio de vehículos automotores usados."
+  },
+  {
+    "Código CIIU": "4520",
+    "Actividad Economica": "Mantenimiento y reparación de vehículos automotores."
+  },
+  {
+    "Código CIIU": "4530",
+    "Actividad Economica": "Comercio  de  partes,  piezas  (autopartes)  y   accesorios  (lujos)   para  vehículos automotores."
+  },
+  {
+    "Código CIIU": "4541",
+    "Actividad Economica": "Comercio de motocicletas y de sus partes, piezas y accesorios."
+  },
+  {
+    "Código CIIU": "4542",
+    "Actividad Economica": "Mantenimiento y reparación de motocicletas y de sus partes y piezas."
+  },
+  {
+    "Código CIIU": "4610",
+    "Actividad Economica": "Comercio al por mayor a cambio de una retribución o por contrata."
+  },
+  {
+    "Código CIIU": "4620",
+    "Actividad Economica": "Comercio al por mayor de materias primas agropecuarias; animales vivos."
+  },
+  {
+    "Código CIIU": "4631",
+    "Actividad Economica": "Comercio al por mayor de productos alimenticios."
+  },
+  {
+    "Código CIIU": "4632",
+    "Actividad Economica": "Comercio al por mayor de bebidas y tabaco."
+  },
+  {
+    "Código CIIU": "4641",
+    "Actividad Economica": "Comercio al por mayor de productos textiles, productos confeccionados para  uso doméstico."
+  },
+  {
+    "Código CIIU": "4642",
+    "Actividad Economica": "Comercio al por mayor de prendas de vestir."
+  },
+  {
+    "Código CIIU": "4643",
+    "Actividad Economica": "Comercio al por mayor de calzado."
+  },
+  {
+    "Código CIIU": "4644",
+    "Actividad Economica": "Comercio al por mayor de aparatos y equipo de uso doméstico."
+  },
+  {
+    "Código CIIU": "4645",
+    "Actividad Economica": "Comercio al por mayor de productos farmacéuticos, medicinales, cosméticos y de tocador."
+  },
+  {
+    "Código CIIU": "4649",
+    "Actividad Economica": "Comercio al por mayor de otros utensilios domésticos n.c.p."
+  },
+  {
+    "Código CIIU": "4651",
+    "Actividad Economica": "Comercio  al  por  mayor  de  computadores,  equipo  periférico  y  programas  de informática."
+  },
+  {
+    "Código CIIU": "4652",
+    "Actividad Economica": "Comercio   al   por   mayor   de   equipo,   partes   y   piezas   electrónicos   y   de telecomunicaciones."
+  },
+  {
+    "Código CIIU": "4653",
+    "Actividad Economica": "Comercio al por mayor de maquinaria y equipo agropecuarios."
+  },
+  {
+    "Código CIIU": "4659",
+    "Actividad Economica": "Comercio al por mayor de otros tipos de maquinaria y equipo n.c.p."
+  },
+  {
+    "Código CIIU": "4661",
+    "Actividad Economica": "Comercio  al  por  mayor  de  combustibles  sólidos,  líquidos,  gaseosos  y  productos conexos."
+  },
+  {
+    "Código CIIU": "4662",
+    "Actividad Economica": "Comercio al por mayor de metales y productos metalíferos."
+  },
+  {
+    "Código CIIU": "4663",
+    "Actividad Economica": "Comercio  al  por  mayor  de  materiales  de  construcción,  artículos  de  ferretería, pinturas, productos de vidrio, equipo y materiales de fontanería y calefacción. "
+  },
+  {
+    "Código CIIU": "4664",
+    "Actividad Economica": "Comercio  al  por  mayor  de  productos  químicos  básicos,  cauchos  y  plásticos  en formas primarias y productos químicos de uso agropecuario."
+  },
+  {
+    "Código CIIU": "4665",
+    "Actividad Economica": "Comercio al por mayor de desperdicios, desechos y chatarra."
+  },
+  {
+    "Código CIIU": "4669",
+    "Actividad Economica": "Comercio al por mayor de otros productos n.c.p."
+  },
+  {
+    "Código CIIU": "4690",
+    "Actividad Economica": "Comercio al por mayor no especializado."
+  },
+  {
+    "Código CIIU": "4711",
+    "Actividad Economica": "Comercio   al   por   menor   en   establecimientos   no   especializados   con   surtido compuesto principalmente por alimentos, bebidas (alcohólicas y no alcohólicas) o tabaco."
+  },
+  {
+    "Código CIIU": "4719",
+    "Actividad Economica": "Comercio   al   por   menor   en   establecimientos   no   especializados,   con   surtido compuesto  principalmente  por  productos  diferentes  de  alimentos  (víveres  en general), bebidas (alcohólicas y no alcohólicas) y tabaco."
+  },
+  {
+    "Código CIIU": "4721",
+    "Actividad Economica": "Comercio al por    menor    de    productos    agrícolas    para    el    consumo    en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4722",
+    "Actividad Economica": "Comercio al por menor de leche, productos lácteos y huevos, en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4723",
+    "Actividad Economica": "Comercio  al  por  menor  de  carnes  (incluye  aves  de  corral),  productos  cárnicos, pescados y productos de mar, en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4724",
+    "Actividad Economica": "Comercio  al  por  menor  de  bebidas  y  productos  del  tabaco,  en  establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4729",
+    "Actividad Economica": "Comercio al por menor de otros productos alimenticios n.c.p., en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4731",
+    "Actividad Economica": "Comercio al por menor de combustible para automotores."
+  },
+  {
+    "Código CIIU": "4732",
+    "Actividad Economica": "Comercio  al  por  menor  de  lubricantes  (aceites,  grasas),  aditivos  y  productos  de limpieza para vehículos automotores."
+  },
+  {
+    "Código CIIU": "4741",
+    "Actividad Economica": "Comercio  al  por  menor  de  computadores,  equipos  periféricos,  programas  de informática y equipos de telecomunicaciones en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4742",
+    "Actividad Economica": "Comercio   al   por   menor   de   equipos   y   aparatos   de   sonido   y   de   video,   en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4751",
+    "Actividad Economica": "Comercio al por menor de productos textiles en establecimientos especializados.    "
+  },
+  {
+    "Código CIIU": "4752",
+    "Actividad Economica": "Comercio al por menor de artículos de ferretería, pinturas y productos de vidrio en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4753",
+    "Actividad Economica": "Comercio al por menor de tapices, alfombras y recubrimientos para paredes y pisos en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4754",
+    "Actividad Economica": "Comercio al por menor de electrodomésticos y gasodomésticos de uso doméstico, muebles y equipos de iluminación en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4755",
+    "Actividad Economica": "Comercio   al   por   menor   de   artículos   y   utensilios   de   uso   doméstico   en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4759",
+    "Actividad Economica": "Comercio   al   por   menor   de   otros   artículos   domésticos   en   establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4761",
+    "Actividad Economica": "Comercio al por menor de libros, periódicos, materiales y artículos de papelería y escritorio, en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4762",
+    "Actividad Economica": "Comercio al por menor de artículos deportivos, en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4769",
+    "Actividad Economica": "Comercio al por menor de otros artículos culturales y de entretenimiento n.c.p. en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4771",
+    "Actividad Economica": "Comercio al por menor de prendas de vestir y sus accesorios (incluye artículos de piel) en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4772",
+    "Actividad Economica": "Comercio al por menor de todo tipo de calzado y artículos de cuero y sucedáneos del cuero en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4773",
+    "Actividad Economica": "Comercio  al  por  menor  de  productos  farmacéuticos  y  medicinales,  cosméticos  y artículos de tocador en establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4774",
+    "Actividad Economica": "Comercio   al   por   menor   de   otros   productos   nuevos   en   establecimientos especializados."
+  },
+  {
+    "Código CIIU": "4775",
+    "Actividad Economica": "Comercio al por menor de artículos de segunda mano."
+  },
+  {
+    "Código CIIU": "4781",
+    "Actividad Economica": "Comercio  al  por  menor  de  alimentos,  bebidas  y  tabaco,  en  puestos  de  venta móviles."
+  },
+  {
+    "Código CIIU": "4782",
+    "Actividad Economica": "Comercio  al  por  menor  de  productos  textiles,  prendas  de  vestir  y  calzado,  en puestos de venta móviles."
+  },
+  {
+    "Código CIIU": "4789",
+    "Actividad Economica": "Comercio al por menor de otros productos en puestos de venta móviles."
+  },
+  {
+    "Código CIIU": "4791",
+    "Actividad Economica": "Comercio al por menor realizado a través de Internet."
+  },
+  {
+    "Código CIIU": "4792",
+    "Actividad Economica": "Comercio al por menor realizado a través de casas de venta o por correo."
+  },
+  {
+    "Código CIIU": "4799",
+    "Actividad Economica": "Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados."
+  },
+  {
+    "Código CIIU": "4911",
+    "Actividad Economica": "Transporte férreo de pasajeros."
+  },
+  {
+    "Código CIIU": "4912",
+    "Actividad Economica": "Transporte férreo de carga."
+  },
+  {
+    "Código CIIU": "4921",
+    "Actividad Economica": "Transporte de pasajeros."
+  },
+  {
+    "Código CIIU": "4922",
+    "Actividad Economica": "Transporte mixto."
+  },
+  {
+    "Código CIIU": "4923",
+    "Actividad Economica": "Transporte de carga por carretera."
+  },
+  {
+    "Código CIIU": "4930",
+    "Actividad Economica": "Transporte por tuberías."
+  },
+  {
+    "Código CIIU": "5011",
+    "Actividad Economica": "Transporte de pasajeros marítimo y de cabotaje."
+  },
+  {
+    "Código CIIU": "5012",
+    "Actividad Economica": "Transporte de carga marítimo y de cabotaje."
+  },
+  {
+    "Código CIIU": "5021",
+    "Actividad Economica": "Transporte fluvial de pasajeros."
+  },
+  {
+    "Código CIIU": "5022",
+    "Actividad Economica": "Transporte fluvial de carga."
+  },
+  {
+    "Código CIIU": "5111",
+    "Actividad Economica": "Transporte aéreo nacional de pasajeros."
+  },
+  {
+    "Código CIIU": "5112",
+    "Actividad Economica": "Transporte aéreo internacional de pasajeros."
+  },
+  {
+    "Código CIIU": "5121",
+    "Actividad Economica": "Transporte aéreo nacional de carga."
+  },
+  {
+    "Código CIIU": "5122",
+    "Actividad Economica": "Transporte aéreo internacional de carga."
+  },
+  {
+    "Código CIIU": "5210",
+    "Actividad Economica": "Almacenamiento y depósito."
+  },
+  {
+    "Código CIIU": "5221",
+    "Actividad Economica": "Actividades  de  estaciones,  vías  y  servicios  complementarios  para  el  transporte terrestre."
+  },
+  {
+    "Código CIIU": "5222",
+    "Actividad Economica": "Actividades de puertos y servicios complementarios para el transporte acuático."
+  },
+  {
+    "Código CIIU": "5223",
+    "Actividad Economica": "Actividades  de  aeropuertos,  servicios  de  navegación  aérea  y  demás  actividades conexas al transporte aéreo."
+  },
+  {
+    "Código CIIU": "5224",
+    "Actividad Economica": "Manipulación de carga."
+  },
+  {
+    "Código CIIU": "5229",
+    "Actividad Economica": "Otras actividades complementarias al transporte."
+  },
+  {
+    "Código CIIU": "5310",
+    "Actividad Economica": "Actividades postales nacionales."
+  },
+  {
+    "Código CIIU": "5320",
+    "Actividad Economica": "Actividades de mensajería."
+  },
+  {
+    "Código CIIU": "5511",
+    "Actividad Economica": "Alojamiento en hoteles."
+  },
+  {
+    "Código CIIU": "5512",
+    "Actividad Economica": "Alojamiento en apartahoteles."
+  },
+  {
+    "Código CIIU": "5513",
+    "Actividad Economica": "Alojamiento en centros vacacionales."
+  },
+  {
+    "Código CIIU": "5514",
+    "Actividad Economica": "Alojamiento rural."
+  },
+  {
+    "Código CIIU": "5519",
+    "Actividad Economica": "Otros tipos de alojamiento para visitantes."
+  },
+  {
+    "Código CIIU": "5520",
+    "Actividad Economica": "Actividades de zonas de camping y parques para vehículos recreacionales."
+  },
+  {
+    "Código CIIU": "5530",
+    "Actividad Economica": "Servicio de estancia por horas."
+  },
+  {
+    "Código CIIU": "5590",
+    "Actividad Economica": "Otros tipos de alojamiento n.c.p."
+  },
+  {
+    "Código CIIU": "5611",
+    "Actividad Economica": "Expendio a la mesa de comidas preparadas."
+  },
+  {
+    "Código CIIU": "5612",
+    "Actividad Economica": "Expendio por autoservicio de comidas preparadas."
+  },
+  {
+    "Código CIIU": "5613",
+    "Actividad Economica": "Expendio de comidas preparadas en cafeterías."
+  },
+  {
+    "Código CIIU": "5619",
+    "Actividad Economica": "Otros tipos de expendio de comidas preparadas n.c.p."
+  },
+  {
+    "Código CIIU": "5621",
+    "Actividad Economica": "Catering para eventos."
+  },
+  {
+    "Código CIIU": "5629",
+    "Actividad Economica": "Actividades de otros servicios de comidas."
+  },
+  {
+    "Código CIIU": "5630",
+    "Actividad Economica": "Expendio de bebidas alcohólicas para el consumo dentro del establecimiento."
+  },
+  {
+    "Código CIIU": "5811",
+    "Actividad Economica": "Edición de libros."
+  },
+  {
+    "Código CIIU": "5812",
+    "Actividad Economica": "Edición de directorios y listas de correo."
+  },
+  {
+    "Código CIIU": "5813",
+    "Actividad Economica": "Edición de periódicos, revistas y otras publicaciones periódicas."
+  },
+  {
+    "Código CIIU": "5819",
+    "Actividad Economica": "Otros trabajos de edición."
+  },
+  {
+    "Código CIIU": "5820",
+    "Actividad Economica": "Edición de programas de informática (software)."
+  },
+  {
+    "Código CIIU": "5911",
+    "Actividad Economica": "Actividades   de   producción   de   películas   cinematográficas,   videos,   programas, anuncios y comerciales de televisión."
+  },
+  {
+    "Código CIIU": "5912",
+    "Actividad Economica": "Actividades  de  postproducción  de  películas  cinematográficas,  videos,  programas, anuncios y comerciales de televisión."
+  },
+  {
+    "Código CIIU": "5913",
+    "Actividad Economica": "Actividades  de  distribución  de  películas  cinematográficas,  videos,  programas, anuncios y comerciales de televisión."
+  },
+  {
+    "Código CIIU": "5914",
+    "Actividad Economica": "Actividades de exhibición de películas cinematográficas y videos."
+  },
+  {
+    "Código CIIU": "5920",
+    "Actividad Economica": "Actividades de grabación de sonido y edición de música."
+  },
+  {
+    "Código CIIU": "6010",
+    "Actividad Economica": "Actividades de programación y transmisión en el servicio de radiodifusión sonora."
+  },
+  {
+    "Código CIIU": "6020",
+    "Actividad Economica": "Actividades de programación y transmisión de televisión."
+  },
+  {
+    "Código CIIU": "6110",
+    "Actividad Economica": "Actividades de telecomunicaciones alámbricas."
+  },
+  {
+    "Código CIIU": "6120",
+    "Actividad Economica": "Actividades de telecomunicaciones inalámbricas."
+  },
+  {
+    "Código CIIU": "6130",
+    "Actividad Economica": "Actividades de telecomunicación satelital."
+  },
+  {
+    "Código CIIU": "6190",
+    "Actividad Economica": "Otras actividades de telecomunicaciones."
+  },
+  {
+    "Código CIIU": "6201",
+    "Actividad Economica": "Actividades de desarrollo de sistemas informáticos (planificación, análisis,  diseño, programación, pruebas)."
+  },
+  {
+    "Código CIIU": "6202",
+    "Actividad Economica": "Actividades   de   consultoría   informática   y   actividades   de   administración   de instalaciones informáticas."
+  },
+  {
+    "Código CIIU": "6209",
+    "Actividad Economica": "Otras   actividades   de   tecnologías   de   información   y   actividades   de   servicios informáticos."
+  },
+  {
+    "Código CIIU": "6311",
+    "Actividad Economica": "Procesamiento de datos, alojamiento (hosting) y actividades relacionadas."
+  },
+  {
+    "Código CIIU": "6312",
+    "Actividad Economica": "Portales web."
+  },
+  {
+    "Código CIIU": "6391",
+    "Actividad Economica": "Actividades de agencias de noticias."
+  },
+  {
+    "Código CIIU": "6399",
+    "Actividad Economica": "Otras actividades de servicios de información n.c.p."
+  },
+  {
+    "Código CIIU": "6411",
+    "Actividad Economica": "Banco Central."
+  },
+  {
+    "Código CIIU": "6412",
+    "Actividad Economica": "Bancos comerciales."
+  },
+  {
+    "Código CIIU": "6421",
+    "Actividad Economica": "Actividades de las corporaciones financieras."
+  },
+  {
+    "Código CIIU": "6422",
+    "Actividad Economica": "Actividades de las compañías de financiamiento."
+  },
+  {
+    "Código CIIU": "6423",
+    "Actividad Economica": "Banca de segundo piso."
+  },
+  {
+    "Código CIIU": "6424",
+    "Actividad Economica": "Actividades de las cooperativas financieras."
+  },
+  {
+    "Código CIIU": "6431",
+    "Actividad Economica": "Fideicomisos, fondos y entidades financieras similares."
+  },
+  {
+    "Código CIIU": "6432",
+    "Actividad Economica": "Fondos de cesantías."
+  },
+  {
+    "Código CIIU": "6491",
+    "Actividad Economica": "Leasing financiero (arrendamiento financiero)."
+  },
+  {
+    "Código CIIU": "6492",
+    "Actividad Economica": "Actividades  financieras  de  fondos  de  empleados  y  otras  formas  asociativas  del sector solidario."
+  },
+  {
+    "Código CIIU": "6493",
+    "Actividad Economica": "Actividades de compra de cartera o factoring."
+  },
+  {
+    "Código CIIU": "6494",
+    "Actividad Economica": "Otras actividades de distribución de fondos."
+  },
+  {
+    "Código CIIU": "6495",
+    "Actividad Economica": "Instituciones especiales oficiales."
+  },
+  {
+    "Código CIIU": "6496",
+    "Actividad Economica": "Capitalización."
+  },
+  {
+    "Código CIIU": "6499",
+    "Actividad Economica": "Otras actividades de servicio financiero, excepto las de seguros y pensiones n.c.p."
+  },
+  {
+    "Código CIIU": "6511",
+    "Actividad Economica": "Seguros generales."
+  },
+  {
+    "Código CIIU": "6512",
+    "Actividad Economica": "Seguros de vida."
+  },
+  {
+    "Código CIIU": "6513",
+    "Actividad Economica": "Reaseguros."
+  },
+  {
+    "Código CIIU": "6515",
+    "Actividad Economica": "Seguros de salud."
+  },
+  {
+    "Código CIIU": "6521",
+    "Actividad Economica": "Servicios de seguros sociales de salud."
+  },
+  {
+    "Código CIIU": "6522",
+    "Actividad Economica": "Servicios de seguros sociales en riesgos laborales."
+  },
+  {
+    "Código CIIU": "6523",
+    "Actividad Economica": "Servicios de seguros sociales en riesgos familia."
+  },
+  {
+    "Código CIIU": "6531",
+    "Actividad Economica": "Régimen de prima media con prestación definida (RPM).    "
+  },
+  {
+    "Código CIIU": "6532",
+    "Actividad Economica": "Régimen de ahorro con solidaridad (RAIS)."
+  },
+  {
+    "Código CIIU": "6611",
+    "Actividad Economica": "Administración de mercados financieros."
+  },
+  {
+    "Código CIIU": "6612",
+    "Actividad Economica": "Corretaje de valores y de contratos de productos básicos."
+  },
+  {
+    "Código CIIU": "6613",
+    "Actividad Economica": "Otras actividades relacionadas con el mercado de valores."
+  },
+  {
+    "Código CIIU": "6614",
+    "Actividad Economica": "Actividades   de   las   sociedades   de   intermediación   cambiaria   y   de   servicios financieros especiales."
+  },
+  {
+    "Código CIIU": "6615",
+    "Actividad Economica": "Actividades de los profesionales de compra y venta de divisas."
+  },
+  {
+    "Código CIIU": "6619",
+    "Actividad Economica": "Otras actividades auxiliares de las actividades de servicios financieros n.c.p."
+  },
+  {
+    "Código CIIU": "6621",
+    "Actividad Economica": "Actividades de agentes y corredores de seguros."
+  },
+  {
+    "Código CIIU": "6629",
+    "Actividad Economica": "Evaluación de riesgos y daños, y otras actividades de servicios auxiliares."
+  },
+  {
+    "Código CIIU": "6630",
+    "Actividad Economica": "Actividades de administración de fondos."
+  },
+  {
+    "Código CIIU": "6810",
+    "Actividad Economica": "Actividades inmobiliarias realizadas con bienes propios o arrendados."
+  },
+  {
+    "Código CIIU": "6820",
+    "Actividad Economica": "Actividades inmobiliarias realizadas a cambio de una retribución o por contrata."
+  },
+  {
+    "Código CIIU": "6910",
+    "Actividad Economica": "Actividades jurídicas."
+  },
+  {
+    "Código CIIU": "6920",
+    "Actividad Economica": "Actividades  de  contabilidad,  teneduría  de  libros,  auditoría  financiera  y  asesoría tributaria."
+  },
+  {
+    "Código CIIU": "7010",
+    "Actividad Economica": "Actividades de administración empresarial."
+  },
+  {
+    "Código CIIU": "7020",
+    "Actividad Economica": "Actividades de consultoría de gestión."
+  },
+  {
+    "Código CIIU": "7111",
+    "Actividad Economica": "Actividades de arquitectura."
+  },
+  {
+    "Código CIIU": "7112",
+    "Actividad Economica": "Actividades de ingeniería y otras actividades conexas de consultoría técnica."
+  },
+  {
+    "Código CIIU": "7120",
+    "Actividad Economica": "Ensayos y análisis técnicos."
+  },
+  {
+    "Código CIIU": "7210",
+    "Actividad Economica": "Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería."
+  },
+  {
+    "Código CIIU": "7220",
+    "Actividad Economica": "Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades."
+  },
+  {
+    "Código CIIU": "7310",
+    "Actividad Economica": "Publicidad."
+  },
+  {
+    "Código CIIU": "7320",
+    "Actividad Economica": "Estudios de mercado y realización de encuestas de opinión pública."
+  },
+  {
+    "Código CIIU": "7410",
+    "Actividad Economica": "Actividades especializadas de diseño."
+  },
+  {
+    "Código CIIU": "7420",
+    "Actividad Economica": "Actividades de fotografía."
+  },
+  {
+    "Código CIIU": "7490",
+    "Actividad Economica": "Otras actividades profesionales, científicas y técnicas n.c.p."
+  },
+  {
+    "Código CIIU": "7500",
+    "Actividad Economica": "Actividades veterinarias."
+  },
+  {
+    "Código CIIU": "7710",
+    "Actividad Economica": "Alquiler y arrendamiento de vehículos automotores."
+  },
+  {
+    "Código CIIU": "7721",
+    "Actividad Economica": "Alquiler y arrendamiento de equipo recreativo y deportivo."
+  },
+  {
+    "Código CIIU": "7722",
+    "Actividad Economica": "Alquiler de videos y discos."
+  },
+  {
+    "Código CIIU": "7729",
+    "Actividad Economica": "Alquiler y arrendamiento de otros efectos personales y enseres domésticos n.c.p."
+  },
+  {
+    "Código CIIU": "7730",
+    "Actividad Economica": "Alquiler  y  arrendamiento  de  otros  tipos  de maquinaria,  equipo  y  bienes  tangibles n.c.p."
+  },
+  {
+    "Código CIIU": "7740",
+    "Actividad Economica": "Arrendamiento  de  propiedad  intelectual  y   productos  similares,  excepto  obras protegidas por derechos de autor."
+  },
+  {
+    "Código CIIU": "7810",
+    "Actividad Economica": "Actividades de agencias de gestión y colocación empleo."
+  },
+  {
+    "Código CIIU": "7820",
+    "Actividad Economica": "Actividades de empresas de servicios temporales."
+  },
+  {
+    "Código CIIU": "7830",
+    "Actividad Economica": "Otras actividades de provisión de talento humano."
+  },
+  {
+    "Código CIIU": "7911",
+    "Actividad Economica": "Actividades de las agencias de viaje."
+  },
+  {
+    "Código CIIU": "7912",
+    "Actividad Economica": "Actividades de operadores turísticos."
+  },
+  {
+    "Código CIIU": "7990",
+    "Actividad Economica": "Otros servicios de reserva y actividades relacionadas."
+  },
+  {
+    "Código CIIU": "8010",
+    "Actividad Economica": "Actividades de seguridad privada."
+  },
+  {
+    "Código CIIU": "8020",
+    "Actividad Economica": "Actividades de servicios de sistemas de seguridad."
+  },
+  {
+    "Código CIIU": "8030",
+    "Actividad Economica": "Actividades de detectives e investigadores privados."
+  },
+  {
+    "Código CIIU": "8110",
+    "Actividad Economica": "Actividades combinadas de apoyo a instalaciones."
+  },
+  {
+    "Código CIIU": "8121",
+    "Actividad Economica": "Limpieza general interior de edificios."
+  },
+  {
+    "Código CIIU": "8129",
+    "Actividad Economica": "Otras actividades de limpieza de edificios e instalaciones industriales."
+  },
+  {
+    "Código CIIU": "8130",
+    "Actividad Economica": "Actividades de paisajismo y servicios de mantenimiento conexos."
+  },
+  {
+    "Código CIIU": "8211",
+    "Actividad Economica": "Actividades combinadas de servicios administrativos de oficina."
+  },
+  {
+    "Código CIIU": "8219",
+    "Actividad Economica": "Fotocopiado,  preparación  de  documentos  y  otras  actividades  especializadas de apoyo a oficina."
+  },
+  {
+    "Código CIIU": "8220",
+    "Actividad Economica": "Actividades de centros de llamadas (call center)."
+  },
+  {
+    "Código CIIU": "8230",
+    "Actividad Economica": "Organización de convenciones y eventos comerciales."
+  },
+  {
+    "Código CIIU": "8291",
+    "Actividad Economica": "Actividades de agencias de cobranza y oficinas de calificación crediticia."
+  },
+  {
+    "Código CIIU": "8292",
+    "Actividad Economica": "Actividades de envase y empaque."
+  },
+  {
+    "Código CIIU": "8299",
+    "Actividad Economica": "Otras actividades de servicio de apoyo a las empresas n.c.p."
+  },
+  {
+    "Código CIIU": "8411",
+    "Actividad Economica": "Actividades legislativas de la administración pública."
+  },
+  {
+    "Código CIIU": "8412",
+    "Actividad Economica": "Actividades ejecutivas de la administración pública."
+  },
+  {
+    "Código CIIU": "8413",
+    "Actividad Economica": "Regulación  de  las  actividades  de  organismos  que  prestan  servicios  de  salud, educativos,  culturales  y  otros  servicios  sociales,  excepto  servicios  de  seguridad social."
+  },
+  {
+    "Código CIIU": "8414",
+    "Actividad Economica": "Actividades reguladoras y facilitadoras de la actividad económica."
+  },
+  {
+    "Código CIIU": "8415",
+    "Actividad Economica": "Actividades de los órganos de control y otras instituciones."
+  },
+  {
+    "Código CIIU": "8421",
+    "Actividad Economica": "Relaciones exteriores."
+  },
+  {
+    "Código CIIU": "8422",
+    "Actividad Economica": "Actividades de defensa."
+  },
+  {
+    "Código CIIU": "8423",
+    "Actividad Economica": "Orden público y actividades de seguridad."
+  },
+  {
+    "Código CIIU": "8424",
+    "Actividad Economica": "Administración de justicia."
+  },
+  {
+    "Código CIIU": "8430",
+    "Actividad Economica": "Actividades de planes de seguridad social de afiliación obligatoria."
+  },
+  {
+    "Código CIIU": "8511",
+    "Actividad Economica": "Educación de la primera infancia."
+  },
+  {
+    "Código CIIU": "8512",
+    "Actividad Economica": "Educación preescolar."
+  },
+  {
+    "Código CIIU": "8513",
+    "Actividad Economica": "Educación básica primaria."
+  },
+  {
+    "Código CIIU": "8521",
+    "Actividad Economica": "Educación básica secundaria."
+  },
+  {
+    "Código CIIU": "8522",
+    "Actividad Economica": "Educación media académica."
+  },
+  {
+    "Código CIIU": "8523",
+    "Actividad Economica": "Educación media técnica."
+  },
+  {
+    "Código CIIU": "8530",
+    "Actividad Economica": "Establecimientos que combinan diferentes niveles de educación."
+  },
+  {
+    "Código CIIU": "8541",
+    "Actividad Economica": "Educación técnica profesional."
+  },
+  {
+    "Código CIIU": "8542",
+    "Actividad Economica": "Educación tecnológica."
+  },
+  {
+    "Código CIIU": "8543",
+    "Actividad Economica": "Educación de instituciones universitarias o de escuelas tecnológicas."
+  },
+  {
+    "Código CIIU": "8544",
+    "Actividad Economica": "Educación de universidades."
+  },
+  {
+    "Código CIIU": "8551",
+    "Actividad Economica": "Formación para el trabajo."
+  },
+  {
+    "Código CIIU": "8552",
+    "Actividad Economica": "Enseñanza deportiva y recreativa."
+  },
+  {
+    "Código CIIU": "8553",
+    "Actividad Economica": "Enseñanza cultural."
+  },
+  {
+    "Código CIIU": "8559",
+    "Actividad Economica": "Otros tipos de educación n.c.p."
+  },
+  {
+    "Código CIIU": "8560",
+    "Actividad Economica": "Actividades de apoyo a la educación."
+  },
+  {
+    "Código CIIU": "8610",
+    "Actividad Economica": "Actividades de hospitales y clínicas, con internación."
+  },
+  {
+    "Código CIIU": "8621",
+    "Actividad Economica": "Actividades de la práctica médica, sin internación."
+  },
+  {
+    "Código CIIU": "8622",
+    "Actividad Economica": "Actividades de la práctica odontológica."
+  },
+  {
+    "Código CIIU": "8691",
+    "Actividad Economica": "Actividades de apoyo diagnóstico."
+  },
+  {
+    "Código CIIU": "8692",
+    "Actividad Economica": "Actividades de apoyo terapéutico."
+  },
+  {
+    "Código CIIU": "8699",
+    "Actividad Economica": "Otras actividades de atención de la salud humana."
+  },
+  {
+    "Código CIIU": "8710",
+    "Actividad Economica": "Actividades de atención residencial medicalizada de tipo general."
+  },
+  {
+    "Código CIIU": "8720",
+    "Actividad Economica": "Actividades  de  atención  residencial,  para  el  cuidado  de  pacientes  con  retardo mental, enfermedad mental y consumo de sustancias psicoactivas."
+  },
+  {
+    "Código CIIU": "8730",
+    "Actividad Economica": "Actividades de atención en instituciones para el cuidado de personas mayores y\/o discapacitadas."
+  },
+  {
+    "Código CIIU": "8790",
+    "Actividad Economica": "Otras actividades de atención en instituciones con alojamiento."
+  },
+  {
+    "Código CIIU": "8810",
+    "Actividad Economica": "Actividades   de   asistencia   social   sin   alojamiento   para   personas   mayores   y discapacitadas."
+  },
+  {
+    "Código CIIU": "8891",
+    "Actividad Economica": "Actividades de guarderías para niños y niñas."
+  },
+  {
+    "Código CIIU": "8899",
+    "Actividad Economica": "Otras actividades de asistencia social n.c.p."
+  },
+  {
+    "Código CIIU": "9001",
+    "Actividad Economica": "Creación literaria."
+  },
+  {
+    "Código CIIU": "9002",
+    "Actividad Economica": "Creación musical."
+  },
+  {
+    "Código CIIU": "9003",
+    "Actividad Economica": "Creación teatral."
+  },
+  {
+    "Código CIIU": "9004",
+    "Actividad Economica": "Creación audiovisual."
+  },
+  {
+    "Código CIIU": "9005",
+    "Actividad Economica": "Artes plásticas y visuales."
+  },
+  {
+    "Código CIIU": "9006",
+    "Actividad Economica": "Actividades teatrales."
+  },
+  {
+    "Código CIIU": "9007",
+    "Actividad Economica": "Actividades de espectáculos musicales en vivo."
+  },
+  {
+    "Código CIIU": "9008",
+    "Actividad Economica": "Otras actividades de espectáculos en vivo n.c.p."
+  },
+  {
+    "Código CIIU": "9101",
+    "Actividad Economica": "Actividades de bibliotecas y archivos."
+  },
+  {
+    "Código CIIU": "9102",
+    "Actividad Economica": "Actividades   y   funcionamiento   de   museos,   conservación   de   edificios   y   sitios históricos."
+  },
+  {
+    "Código CIIU": "9103",
+    "Actividad Economica": "Actividades de jardines botánicos, zoológicos y reservas naturales."
+  },
+  {
+    "Código CIIU": "9200",
+    "Actividad Economica": "Actividades de juegos de azar y apuestas."
+  },
+  {
+    "Código CIIU": "9311",
+    "Actividad Economica": "Gestión de instalaciones deportivas."
+  },
+  {
+    "Código CIIU": "9312",
+    "Actividad Economica": "Actividades de clubes deportivos."
+  },
+  {
+    "Código CIIU": "9319",
+    "Actividad Economica": "Otras actividades deportivas."
+  },
+  {
+    "Código CIIU": "9321",
+    "Actividad Economica": "Actividades de parques de atracciones y parques temáticos."
+  },
+  {
+    "Código CIIU": "9329",
+    "Actividad Economica": "Otras actividades recreativas y de esparcimiento n.c.p."
+  },
+  {
+    "Código CIIU": "9411",
+    "Actividad Economica": "Actividades de asociaciones empresariales y de empleadores."
+  },
+  {
+    "Código CIIU": "9412",
+    "Actividad Economica": "Actividades de asociaciones profesionales."
+  },
+  {
+    "Código CIIU": "9420",
+    "Actividad Economica": "Actividades de sindicatos de empleados."
+  },
+  {
+    "Código CIIU": "9491",
+    "Actividad Economica": "Actividades de asociaciones religiosas."
+  },
+  {
+    "Código CIIU": "9492",
+    "Actividad Economica": "Actividades de asociaciones políticas."
+  },
+  {
+    "Código CIIU": "9499",
+    "Actividad Economica": "Actividades de otras asociaciones n.c.p."
+  },
+  {
+    "Código CIIU": "9511",
+    "Actividad Economica": "Mantenimiento y reparación de computadores y de equipo periférico."
+  },
+  {
+    "Código CIIU": "9512",
+    "Actividad Economica": "Mantenimiento y reparación de equipos de comunicación."
+  },
+  {
+    "Código CIIU": "9521",
+    "Actividad Economica": "Mantenimiento y reparación de aparatos electrónicos de consumo."
+  },
+  {
+    "Código CIIU": "9522",
+    "Actividad Economica": "Mantenimiento y reparación de aparatos y equipos domésticos y de jardinería."
+  },
+  {
+    "Código CIIU": "9523",
+    "Actividad Economica": "Reparación de calzado y artículos de cuero."
+  },
+  {
+    "Código CIIU": "9524",
+    "Actividad Economica": "Reparación de muebles y accesorios para el hogar."
+  },
+  {
+    "Código CIIU": "9529",
+    "Actividad Economica": "Mantenimiento y reparación de otros efectos personales y enseres domésticos."
+  },
+  {
+    "Código CIIU": "9601",
+    "Actividad Economica": "Lavado y limpieza, incluso la limpieza en seco, de productos textiles y de piel.    "
+  },
+  {
+    "Código CIIU": "9602",
+    "Actividad Economica": "Peluquería y otros tratamientos de belleza."
+  },
+  {
+    "Código CIIU": "9603",
+    "Actividad Economica": "Pompas fúnebres y actividades relacionadas.    "
+  },
+  {
+    "Código CIIU": "9609",
+    "Actividad Economica": "Otras actividades de servicios personales n.c.p."
+  },
+  {
+    "Código CIIU": "9700",
+    "Actividad Economica": "Actividades de los hogares individuales como empleadores de personal doméstico."
+  },
+  {
+    "Código CIIU": "9810",
+    "Actividad Economica": "Actividades  no  diferenciadas  de  los  hogares  individuales  como  productores  de bienes para uso propio."
+  },
+  {
+    "Código CIIU": "9820",
+    "Actividad Economica": "Actividades  no  diferenciadas  de  los  hogares  individuales  como  productores  de servicios para uso propio."
+  },
+  {
+    "Código CIIU": "9900",
+    "Actividad Economica": "Actividades de organizaciones y entidades extraterritoriales."
+  },
+  {
+    "Código CIIU": "0010",
+    "Actividad Economica": "Asalariados."
+  },
+  {
+    "Código CIIU": "0020",
+    "Actividad Economica": "Pensionados."
+  },
+  {
+    "Código CIIU": "0081",
+    "Actividad Economica": "Personas naturales y sucesiones ilíquidas sin actividad económica."
+  },
+  {
+    "Código CIIU": "0082",
+    "Actividad Economica": "Personas naturales subsidiadas por terceros."
+  },
+  {
+    "Código CIIU": "0090",
+    "Actividad Economica": "Rentistas de Capital, solo para personas naturales y sucesiones ilíquidas."
+  }
+]

@@ -108,9 +108,9 @@
                                 <div class="form-group custom-input-group input-wrapper">
                                     <label for="tipo_Persona" class="form-label">Tipo de persona</label>
                                     <select id="tipo_Persona" class="form-control">
-                                        <option value="" disabled selected>Seleccione una opcion</option>
-                                        <option value="Natural">Natural</option>
-                                        <option value="Juridica">Juridica</option>
+                                        <option value="" disabled @(Model.Provider.TipoPersona == null ? "selected" : "")>Seleccione una opcion</option>
+                                        <option value="Natural" @(Model.Provider.TipoPersona == "Natural" ? "selected" : "")>Natural</option>
+                                        <option value="Juridica" @(Model.Provider.TipoPersona == "Juridica" ? "selected" : "")>Juridica</option>
                                     </select>
                                 </div>
                             </div>

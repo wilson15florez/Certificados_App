@@ -1,0 +1,152 @@
+[
+ {
+  "Tipo": 1,
+  "Código": 1,
+  "Nombre": "Banco de Bogotá"
+ },
+ {
+  "Tipo": 1,
+  "Código": 2,
+  "Nombre": "Banco Popular S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 6,
+  "Nombre": "Itaú Colombia S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 7,
+  "Nombre": "Bancolombia S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 9,
+  "Nombre": "Citibank-Colombia"
+ },
+ {
+  "Tipo": 1,
+  "Código": 12,
+  "Nombre": "BANCO GNB SUDAMERIS S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 13,
+  "Nombre": "BBVA Colombia"
+ },
+ {
+  "Tipo": 1,
+  "Código": 23,
+  "Nombre": "Banco de Occidente"
+ },
+ {
+  "Tipo": 1,
+  "Código": 30,
+  "Nombre": "BANCO CAJA SOCIAL S.A.  "
+ },
+ {
+  "Tipo": 1,
+  "Código": 39,
+  "Nombre": "Banco Davivienda S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 42,
+  "Nombre": "BANCO DAVIBANK S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 43,
+  "Nombre": "BANCO AGRARIO DE COLOMBIA S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 49,
+  "Nombre": "Banco AV Villas S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 51,
+  "Nombre": "BAN100 S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 52,
+  "Nombre": "Bancamía S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 53,
+  "Nombre": "Banco W S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 54,
+  "Nombre": "Banco Coomeva S.A. (BANCOOMEVA)"
+ },
+ {
+  "Tipo": 1,
+  "Código": 55,
+  "Nombre": "Banco Finandina S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 56,
+  "Nombre": "Banco Falabella S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 57,
+  "Nombre": "Banco Pichincha S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 58,
+  "Nombre": "El Banco Cooperativo Coopcentral (COOPCENTRAL)"
+ },
+ {
+  "Tipo": 1,
+  "Código": 59,
+  "Nombre": "BANCO SANTANDER COLOMBIA S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 60,
+  "Nombre": "BANCO MUNDO MUJER S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 62,
+  "Nombre": "Banco de la Microempresa de Colombia S.A. (Mibanco S.A.)"
+ },
+ {
+  "Tipo": 1,
+  "Código": 63,
+  "Nombre": "BANCO SERFINANZA S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 64,
+  "Nombre": "BANCO J.P. MORGAN COLOMBIA S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 65,
+  "Nombre": "Lulo Bank S.A."
+ },
+ {
+  "Tipo": 1,
+  "Código": 66,
+  "Nombre": "Banco BTG Pactual Colombia S.A.,"
+ },
+ {
+  "Tipo": "1",
+  "Código": "67",
+  "Nombre": "BANCO UNIÓN S.A."
+ },
+ {
+  "Tipo": "1",
+  "Código": "68",
+  "Nombre": "BANCO CONTACTAR S.A."
+ }
+]

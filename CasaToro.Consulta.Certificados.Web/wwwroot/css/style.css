@@ -464,7 +464,7 @@ body {
 .custom-input-group select {
     border-radius: 2rem;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     outline: none;
     appearance: none;
@@ -680,6 +680,7 @@ body {
 .input-wrapper input[type="email"],
 .input-wrapper input[type="date"],
 .input-wrapper input[type="number"],
+.input-wrapper input[type="tel"],
 .input-wrapper input[type="password"]{
     width: 100%;
     height: 2rem;

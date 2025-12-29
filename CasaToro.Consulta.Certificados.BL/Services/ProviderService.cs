@@ -139,6 +139,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvPorExtranjero", fucpData.pvPorExtranjero },
                     { "pvPorPais", fucpData.pvPorPais },
                     { "pvTipEmp", fucpData.pvTipEmp },
+                    { "pvOtrTipEmp", fucpData.pvOtrTipEmp },
                     { "pvAcEconomica", fucpData.pvAcEconomica },
                     { "pvCodCIIU", fucpData.pvCodCIIU },
                     { "pvCapSocReg", fucpData.pvCapSocReg },
@@ -526,6 +527,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingFUCP.pvPorExtranjero = providerData.pvPorExtranjero;
                         existingFUCP.pvPorPais = providerData.pvPorPais;
                         existingFUCP.pvTipEmp = providerData.pvTipEmp;
+                        existingFUCP.pvOtrTipEmp = providerData.pvOtrTipEmp;
                         existingFUCP.pvAcEconomica = providerData.pvAcEconomica;
                         existingFUCP.pvCodCIIU = providerData.pvCodCIIU;
                         existingFUCP.pvCapSocReg = providerData.pvCapSocReg;

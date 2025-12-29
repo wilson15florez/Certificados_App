@@ -431,6 +431,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pvNumResDIAN).HasMaxLength(100);
             entity.Property(e => e.pvNumResolGC).HasMaxLength(100);
             entity.Property(e => e.pvOtrIngr).HasMaxLength(50);
+            entity.Property(e => e.pvOtrTipEmp).HasMaxLength(255);
             entity.Property(e => e.pvPasivos).HasMaxLength(50);
             entity.Property(e => e.pvPatrimonio).HasMaxLength(50);
             entity.Property(e => e.pvPorExtranjero).HasMaxLength(3);
