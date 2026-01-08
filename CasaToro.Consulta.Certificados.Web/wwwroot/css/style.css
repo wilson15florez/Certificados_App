@@ -275,7 +275,7 @@ body {
 }
 
 .form-section {
-    width: 100%;
+    width: 70%;
 }
 
 .menu-header {
@@ -681,6 +681,7 @@ body {
 .input-wrapper input[type="date"],
 .input-wrapper input[type="number"],
 .input-wrapper input[type="tel"],
+.input-wrapper input[type="file"],
 .input-wrapper input[type="password"]{
     width: 100%;
     height: 2rem;
