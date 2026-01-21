@@ -361,5 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/CasaToro.Consulta.Certificados.Entities/AccionistContrPJ.cs
 /CasaToro.Consulta.Certificados.Web/wwwroot/docAnexa/Proveedores/PersonaNatural/10190130580

@@ -82,4 +82,6 @@ public partial class Proveedores_FUCP
     public string? pvTDPBellpi { get; set; }
 
     public string? pvRadAut { get; set; }
+
+    public string? upIsOEA { get; set; }
 }

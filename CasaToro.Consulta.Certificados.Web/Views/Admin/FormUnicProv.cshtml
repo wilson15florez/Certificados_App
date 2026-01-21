@@ -14,6 +14,8 @@
     <title>Proveedores USC</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <!-- Ajuste para que el input ocupe todo el ancho con el selector de país -->
     <style>.iti { width: 100%; display: block; }</style>
 
@@ -35,24 +37,10 @@
 				<h1>Formato Único de Conocimiento de Proveedores</h1>
             </div>
 
-            <!-- Sub nav de acciones-->
-            <div class="row d-flex justify-content-around align-items-center card flex-row m-2 p-2">
-                <div class="col form-group">
-                    <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Informacion del Formato</button>
-                </div>
-                <div class="col form-group">
-                    <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
-                </div>
-                <div class="col form-group">
-                    <button id="printFormatBtn" type="button" class="btn btn-primary">imprimir Formato</button>
-                </div>
-            </div>
-
-            @* Contenido de openForms *@
             <!-- bloque de consulta-->
-            <div id="consultForm" class="form-section" style="display:none;">
-                <div class="row d-flex justify-content-center align-items-center card flex-row m-2 p-2">
-                    <div class="col form-group d-block custom-input-group">
+            <div id="consultForm" class="form-section">
+                <div class="d-flex justify-content-center align-items-center card flex-row m-2 p-2">
+                    <div class="col-md-4 form-group d-block custom-input-group">
                         <label for="personType" class="form-label">Seleccione el Tipo de Persona *</label>
                         <select id="personType" class="form-control">
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -60,17 +48,35 @@
                             <option value="juridica">Persona Jurídica</option>
                         </select>
                     </div>
-                    <div id="idSection" class="col form-group d-block input-wrapper">
-                        <input type="number" id="idNum" name="idNum" class="form-control" />
+                    <div id="idSection" class="col-md-4 form-group d-block input-wrapper">
+                        <input type="number" id="idNum" name="idNum" class="form-control"/>
                         <label for="idNum" class="form-label adaptive-label" placeholder="Número de Identificación *" alt="Número de Identificación *"></label>
                     </div>
-                    <div class="col-1 form-group d-block">
+                    <div class="col-md-4 form-group d-block">
                         <button id="consultBtn" type="button" class="btn btn-primary">Consultar</button>
                     </div>
                 </div>
             </div>
-            
+
             <div id="alertContainer"></div>
+
+            <!-- Sub nav de acciones-->
+            <div id="subNavConteiner" class="form-section" style="display:none;">
+                <div class="row d-flex justify-content-around align-items-center card flex-row m-2 p-2">
+                    <div class="col-md-4 form-group">
+                        <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Informacion del Formato</button>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <button id="printFormatBtn" type="button" class="btn btn-primary">imprimir Formato</button>
+                    </div>
+                </div>
+            </div>
+            
+            @* Contenido de openForms *@
+
             <!-- form de persona natural-->
             <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
 
@@ -87,7 +93,7 @@
                     </div>
 
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pnTipoNacionalidad" class="form-label">Tipo de Nacionalidad *</label>
                             <select id="pnTipoNacionalidad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opcion</option>
@@ -95,88 +101,92 @@
                                 <option value="Extranjero">Extranjero</option>
                             </select>
                         </div>
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pnTipoDoc" class="form-label">Tipo de Documento *</label>
                             <select id="pnTipoDoc" class="form-control">
                                 <option value="" disabled selected>Seleccione un documento</option>
                             </select>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="number" id="pnNumId" name="pnDocNum" class="form-control no-edit" required />
                             <label for="pnNumId" class="form-label adaptive-label disabled-label" placeholder="Número de documento *" alt="Número de documento *"></label>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col-5 mb-3 form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="date" id="pnFechaExpDoc" name="pnFechaExpDoc" class="form-control" required />
                             <label for="pnFechaExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento *" alt="Fecha de Expedición de Documento *"></label>
                         </div>
-                        <div class="col mb-3 form-group d-block custom-input-group">
-                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición de Documento *</label>
-                            <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" required></select>
+                        <div class="col-md-4 form-group d-block custom-input-group">
+                            <label for="pnDepExpDoc" class="form-label">Departamento de Expedición *</label>
+                            <select id="pnDepExpDoc" name="pnDepExpDoc" class="form-control" title="Departamento de Expedición de Documento" required></select>
                         </div>
-                        <div class="col mb-3 form-group d-block custom-input-group">
-                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición de Documento *</label>
-                            <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" required></select>
+                        <div class="col-md-4 form-group d-block custom-input-group">
+                            <label for="pnCiuExpDoc" class="form-label">Ciudad de Expedición *</label>
+                            <select id="pnCiuExpDoc" name="pnCiuExpDoc" class="form-control" title="Ciudad de Expedición de Documento" required></select>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group d-block custom-input-group">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pnNacionalidad" class="form-label">Nacionalidad/Pais Origen *</label>
                             <select id="pnNacionalidad" name="pnNacionalidad" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pnEstadoNac" class="form-label">Departamento de nacimiento *</label>
                             <select id="pnEstadoNac" name="pnEstadoNac" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pnCiudadNac" class="form-label">Ciudad de nacimiento *</label>
                             <select id="pnCiudadNac" name="pnCiudadNac" class="form-control" required></select>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col mb-3 form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="date" id="pnFechaNac" name="pnFechaNac" class="form-control" required />
                             <label for="pnFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento *" alt="Fecha de Nacimiento *"></label>
                         </div>
-                        <div class="col form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pnDiResidencia" name="pnDiResidencia" class="form-control" required />
                             <label for="pnDiResidencia" class="form-label adaptive-label" placeholder="Dirección de Residencia *" alt="Dirección de Residencia *"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group d-block custom-input-group">
                             <label for="pnDepRes" class="form-label">Departamento de Residencia *</label>
                             <select id="pnDepRes" name="pnDepRes" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-6 form-group d-block custom-input-group">
                             <label for="pnCiudadRes" class="form-label">Ciudad de Residencia *</label>
                             <select id="pnCiudadRes" name="pnCiudadRes" class="form-control" required></select>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="tel" id="pnTelefono" name="pnTelefono" class="form-control" autocomplete="new-password"/>
                             <label for="pnTelefono" class="form-label adaptive-label" placeholder="Teléfono Fijo" alt="Teléfono Fijo"></label>
                         </div>
-                        <div class="col form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="tel" id="pnCelular" name="pnCelular" class="form-control" autocomplete="new-password" required/>
                             <label for="pnCelular" class="form-label adaptive-label" placeholder="Teléfono Celular *" alt="Teléfono Celular *"></label>
                         </div>
-                        <div class="col form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="email" id="pnEmail" name="pnEmail" class="form-control" required/>
                             <label for="pnEmail" class="form-label adaptive-label" placeholder="Correo Electrónico *" alt="Correo Electrónico *"></label>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pnOficProfe" name="pnOficProfe" class="form-control"/>
                             <label for="pnOficProfe" class="form-label adaptive-label" placeholder="Oficio o Profesión" alt="Oficio o Profesión"></label>
                         </div>
-                        <div class="col mb-3 form-group d-block custom-input-group">
+                        <div class="col-md-6 form-group d-block custom-input-group">
                             <label for="pnActividad" class="form-label">Actividad *</label>
                             <select id="pnActividad" name="pnActividad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -188,8 +198,8 @@
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <h4 class="sub-header">Marque según su perfil, cargo y/u ocupación</h4>
-                        <div class="row d-flex">
-                            <div class="col form-group input-wrapper form-check">
+                        <div class="d-flex">
+                            <div class="col-md-6 form-group input-wrapper form-check">
 						        <label>Goza de Reconocimiento Público *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -200,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col form-group input-wrapper form-check">
+                            <div class="col-md-6 form-group input-wrapper form-check">
                                 <label>Maneja Recursos Públicos *</label>
 						        <div class="d-flex">
                                     <div class="form-check m-2">
@@ -212,8 +222,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row d-flex">
-                            <div class="col form-group input-wrapper form-check">
+                        <div class="d-flex">
+                            <div class="col-md-6 form-group input-wrapper form-check">
                                 <label>Es Persona Expuesta Politicamente *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -224,7 +234,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col form-group input-wrapper form-check" id="pnPEPtypeGroup" style="display:none;">
+                            <div class="col-md-6 form-group input-wrapper form-check" id="pnPEPtypeGroup" style="display:none;">
                                 <label>Tipo de PEP *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -238,7 +248,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group input-wrapper" id="pnPEP_Entidad_Container" style="display:none;">
+                            
+                        </div>
+                        <div class="d-flex">
+                            <div class="col-md-6 form-group input-wrapper" id="pnPEP_Entidad_Container" style="display:none;">
                                 <input type="text" id="pnPEP_Entidad" name="pnPEP_Entidad" class="form-control" required />
                                 <label for="pnPEP_Entidad" class="form-label adaptive-label" placeholder="Entidad a la que pertenece *" alt="Entidad a la que pertenece *"></label>
                             </div>
@@ -256,11 +269,11 @@
                 
                 <div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pjRazSocial" name="pjRazSocial" class="form-control" required />
                             <label for="pjRazSocial" class="form-label adaptive-label" placeholder="Razón Social *" alt="Razón Social *"></label>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required />
                             <label for="pjNIT" class="form-label adaptive-label disabled-label" placeholder="NIT *" alt="NIT *"></label>
                         </div>
@@ -269,25 +282,25 @@
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <h3 class="sub-header">Direcciones</h3>
                         <div class="d-flex">
-                            <div class="form-group input-wrapper">
+                            <div class="col-md-4 form-group input-wrapper">
                                 <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" autocomplete="off" required />
                                 <label for="pjDirPrincipal" class="form-label adaptive-label" placeholder="Dirección Oficina Principal *" alt="Dirección Oficina Principal *"></label>
                             </div>
-                            <div class="form-group d-block custom-input-group">
+                            <div class="col-md-4 form-group d-block custom-input-group">
                                 <label for="pjDepartDirPrincipal" class="form-label">Departamento *</label>
                                 <select id="pjDepartDirPrincipal" name="pjDepartDirPrincipal" class="form-control" required></select>
                             </div>
-                            <div class="form-group d-block custom-input-group">
+                            <div class="col-md-4 form-group d-block custom-input-group">
                                 <label for="pjCiudadDirPrincipal" class="form-label">Ciudad *</label>
                                 <select id="pjCiudadDirPrincipal" name="pjCiudadDirPrincipal" class="form-control" required></select>
                             </div>
                         </div>
                         <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                            <div class="form-group input-wrapper">
+                            <div class="col-md-6 form-group input-wrapper">
                                 <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" class="form-control" required />
                                 <label for="pjEmailDirPrincipal" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                             </div>
-                            <div class="form-group input-wrapper">
+                            <div class="col-md-6 form-group input-wrapper">
                                 <input type="tel" id="pjTelDirPrincipal" name="pjTelDirPrincipal" class="form-control" autocomplete="new-password" required />
                                 <label for="pjTelDirPrincipal" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                             </div>
@@ -357,7 +370,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjRLTipNacionalidad" class="form-label">Tipo de Nacionalidad *</label>
                             <select id="pjRLTipNacionalidad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opcion</option>
@@ -365,47 +378,47 @@
                                 <option value="Extranjero">Extranjero</option>
                             </select>
                         </div>
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjRLTipoDoc" class="form-label">Tipo de Documento *</label>
                             <select id="pjRLTipoDoc" class="form-control">
                                 <option value="" disabled selected>Seleccione un documento</option>
                             </select>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="number" id="pjRLDocNum" name="pjRLDocNum" class="form-control" required />
                             <label for="pjRLDocNum" class="form-label adaptive-label" placeholder="Número de documento *" alt="Número de documento *"></label>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col mb-3 form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="date" id="pjRLFechExpDoc" name="pjRLFechExpDoc" class="form-control" required />
                             <label for="pjRLFechExpDoc" class="form-label adaptive-label" placeholder="Fecha de Expedición de Documento *" alt="Fecha de Expedición de Documento *"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjRLDepExpDoc" class="form-label">Departamento de Expedición de Documento *</label>
                             <select id="pjRLDepExpDoc" name="pjRLDepExpDoc" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjRLCiuExpDoc" class="form-label">Ciudad de Expedición de Documento *</label>
                             <select id="pjRLCiuExpDoc" name="pjRLCiuExpDoc" class="form-control" required></select>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col mb-3 form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-3 form-group input-wrapper">
                             <input type="date" id="pjRLFechaNac" name="pjRLFechaNac" class="form-control" required />
                             <label for="pjRLFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento *" alt="Fecha de Nacimiento *"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-3 form-group d-block custom-input-group">
                             <label for="pjRLNacionalidad" class="form-label">Nacionalidad/Pais Origen *</label>
                             <select id="pjRLNacionalidad" name="pjRLNacionalidad" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-3 form-group d-block custom-input-group">
                             <label for="pjRLDepartNac" class="form-label">Departamento de nacimiento *</label>
                             <select id="pjRLDepartNac" name="pjRLDepartNac" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-3 form-group d-block custom-input-group">
                             <label for="pjRLCiudadNac" class="form-label">Ciudad de nacimiento *</label>
                             <select id="pjRLCiudadNac" name="pjRLCiudadNac" class="form-control" required></select>
                         </div>
@@ -422,33 +435,33 @@
 
                 <div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvIngrMens" name="pvIngrMens" class="form-control" required />
                             <label for="pvIngrMens" class="form-label adaptive-label" placeholder="Ingresos Mensuales $ *" alt="Ingresos Mensuales $ *"></label>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvEgrMens" name="pvEgrMens" class="form-control" required />
                             <label for="pvEgrMens" class="form-label adaptive-label" placeholder="Egresos Mensuales $ *" alt="Egresos Mensuales $ *"></label>
                         </div>
                     </div>
                     
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvActivos" name="pvActivos" class="form-control" required />
                             <label for="pvActivos" class="form-label adaptive-label" placeholder="Activos $ *" alt="Activos $ *"></label>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvPasivos" name="pvPasivos" class="form-control" required />
                             <label for="pvPasivos" class="form-label adaptive-label" placeholder="Pasivos $ *" alt="Pasivos $ *"></label>
                         </div>
                     </div>
                     
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvPatrimonio" name="pvPatrimonio" class="form-control" required />
                             <label for="pvPatrimonio" class="form-label adaptive-label" placeholder="Patrimonio $ *" alt="Patrimonio $ *"></label>
                         </div>
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvOtrIngr" name="pvOtrIngr" class="form-control" required />
                             <label for="pvOtrIngr" class="form-label adaptive-label" placeholder="Otros Ingresos $ *" alt="Otros Ingresos $ *"></label>
                         </div>
@@ -457,15 +470,15 @@
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <h5>Origen de capital:</h5>
                         <div class="d-flex">
-                            <div class="form-group input-wrapper">
+                            <div class="col-md-4 form-group input-wrapper">
                                 <input type="number" id="pvPorNacional" name="pvPorNacional" class="form-control" required />
                                 <label for="pvPorNacional" class="form-label adaptive-label" placeholder="Porcentaje Nacional (%) *" alt="Porcentaje Nacional (%) *"></label>
                             </div>
-                            <div class="form-group input-wrapper">
+                            <div class="col-md-4 form-group input-wrapper">
                                 <input type="number" id="pvPorExtranjero" name="pvPorExtranjero" class="form-control" />
                                 <label for="pvPorExtranjero" class="form-label adaptive-label" placeholder="Porcentaje Extranjero (%) *" alt="Porcentaje Extranjero (%) *"></label>
                             </div>
-                            <div class="form-group d-block custom-input-group">
+                            <div class="col-md-4 form-group custom-input-group">
                                 <label for="pvPorPais" class="form-label">País</label>
                                 <select id="pvPorPais" name="pvPorPais" class="form-control" required></select>
                             </div>
@@ -477,54 +490,59 @@
                                 <div class="remPorPais">
                                 </div>
                             </div> *@
-                            <div class="form-group">
+                            @* <div class="form-group">
                                 <button id="addPorcPais" type="button" class="button-group btn btn-primary">Agregar País</button>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <h6>Tipo de Empresa *</h6>
-                        <div class="col form-group form-check">
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvEmPublica" name="pvTipEmp" value="EmPublica" class="form-check-input" /><label for="pvEmPublica" class="form-check-label">Pública</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvEmPrivada" name="pvTipEmp" value="EmPrivada" class="form-check-input" /><label for="pvEmPrivada" class="form-check-label">Privada</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvEmMixta" name="pvTipEmp" value="EmMixta" class="form-check-input" /><label for="pvEmMixta" class="form-check-label">Mixta</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvEmOtra" name="pvTipEmp" value="pvEmOtra" class="form-check-input" /><label for="pvEmOtra" class="form-check-label">Otra</label>
+                        <div class="d-flex">
+                            <div class="col-md-6 form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvEmPublica" name="pvTipEmp" value="EmPublica" class="form-check-input" /><label for="pvEmPublica" class="form-check-label">Pública</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvEmPrivada" name="pvTipEmp" value="EmPrivada" class="form-check-input" /><label for="pvEmPrivada" class="form-check-label">Privada</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvEmMixta" name="pvTipEmp" value="EmMixta" class="form-check-input" /><label for="pvEmMixta" class="form-check-label">Mixta</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvEmOtra" name="pvTipEmp" value="pvEmOtra" class="form-check-input" /><label for="pvEmOtra" class="form-check-label">Otra</label>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-6 form-group input-wrapper">
+                                <input type="text" id="pvOtrTipEmp" name="pvOtrTipEmp" class="form-control no-edit" />
+                                <label for="pvOtrTipEmp" class="form-label adaptive-label disabled-label" placeholder="Indique que otro tipo" alt="Indique que otro tipo"></label>
+                            </div>
                         </div>
-                        <div class="col form-group input-wrapper">
-                            <input type="text" id="pvOtrTipEmp" name="pvOtrTipEmp" class="form-control no-edit" />
-                            <label for="pvOtrTipEmp" class="form-label adaptive-label disabled-label" placeholder="Indique que otro tipo" alt="Indique que otro tipo"></label>
-                        </div>
-                        <div class="col form-group d-block custom-input-group">
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-8 form-group d-block custom-input-group">
                             <label for="pvAcEconomica" class="form-label">Actividad Económica *</label>
                             <select id="pvAcEconomica" name="pvAcEconomica" class="form-control" required></select>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pvCodCIIU" class="form-label">Código CIIU *</label>
                             <select id="pvCodCIIU" name="pvCodCIIU" class="form-control" required></select>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="text" id="pvCapSocReg" name="pvCapSocReg" class="form-control" required />
                             <label for="pvCapSocReg" class="form-label adaptive-label" placeholder="Capital social registrado $ *" alt="Capital social registrado $ *"></label>
                         </div>
-                        <div class="mb-3 form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="date" id="pvFechConst" name="pvFechConst" class="form-control" required />
                             <label for="pvFechConst" class="form-label adaptive-label" placeholder="Fecha de Constitución *" alt="Fecha de Constitución *"></label>
                         </div>
-                        <div class="mb-3 form-group input-wrapper">
+                        <div class="col-md-4 form-group input-wrapper">
                             <input type="date" id="pvFechVen" name="pvFechVen" class="form-control" required />
                             <label for="pvFechVen" class="form-label adaptive-label" placeholder="Fecha Vencimiento *" alt="Fecha Vencimiento *"></label>
                         </div>
@@ -532,63 +550,69 @@
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <h6>Gran Contribuyente *</h6>
-                        <div class="col-md-2 form-group form-check">
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" class="form-check-input"/><label for="pvGrConSi" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvGrConNo" name="pvGrCon" value="No" class="form-check-input" /><label for="pvGrConNo" class="form-check-label">No</label>
+                        <div class="d-flex">
+                            <div class="col-md-4 form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" class="form-check-input" /><label for="pvGrConSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvGrConNo" name="pvGrCon" value="No" class="form-check-input" /><label for="pvGrConNo" class="form-check-label">No</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col form-group input-wrapper">
-                            <input type="date" id="pvFechResolGC" name="pvFechResolGC" class="form-control no-edit" />
-                            <label for="pvFechResolGC" class="form-label adaptive-label disabled-label" placeholder="Fecha resolución Gran Contribuyente" alt="Fecha resolución Gran Contribuyente"></label>
-                        </div>
-                        <div class="col form-group input-wrapper">
-                            <input type="number" id="pvNumResolGC" name="pvNumResolGC" class="form-control no-edit"  />
-                            <label for="pvNumResolGC" class="form-label adaptive-label disabled-label" placeholder="Número resolución Gran Contribuyente" alt="Número resolución Gran Contribuyente"></label>
+                            <div class="col-md-4 form-group input-wrapper">
+                                <input type="date" id="pvFechResolGC" name="pvFechResolGC" class="form-control no-edit" />
+                                <label for="pvFechResolGC" class="form-label adaptive-label disabled-label" placeholder="Fecha resolución Gran Contribuyente" alt="Fecha resolución Gran Contribuyente"></label>
+                            </div>
+                            <div class="col-md-4 form-group input-wrapper">
+                                <input type="number" id="pvNumResolGC" name="pvNumResolGC" class="form-control no-edit" />
+                                <label for="pvNumResolGC" class="form-label adaptive-label disabled-label" placeholder="Número resolución Gran Contribuyente" alt="Número resolución Gran Contribuyente"></label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <h6>Declarante Industria y Comercio *</h6>
-                        <div class="col-md-2 form-group form-check">
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" class="form-check-input" /><label for="pvDeclIndComSi" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvDeclIndComNo" name="pvDeclIndCom" value="No" class="form-check-input" /><label for="pvDeclIndComNo" class="form-check-label">No</label>
+                        <div class="d-flex">
+                            <div class="col-md-4 form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" class="form-check-input" /><label for="pvDeclIndComSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvDeclIndComNo" name="pvDeclIndCom" value="No" class="form-check-input" /><label for="pvDeclIndComNo" class="form-check-label">No</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col form-group d-block custom-input-group">
-                            <label for="pvDepartDec" class="form-label">Departamento</label>
-                            <select id="pvDepartDec" name="pvDepartDec" class="form-control" ></select>
-                        </div>
-                        <div class="col form-group d-block custom-input-group">
-                            <label for="pvCiudadDec" class="form-label">Ciudad</label>
-                            <select id="pvCiudadDec" name="pvCiudadDec" class="form-control" ></select>
+                            <div class="col-md-4 form-group d-block custom-input-group">
+                                <label for="pvDepartDec" class="form-label">Departamento</label>
+                                <select id="pvDepartDec" name="pvDepartDec" class="form-control"></select>
+                            </div>
+                            <div class="col-md-4 form-group d-block custom-input-group">
+                                <label for="pvCiudadDec" class="form-label">Ciudad</label>
+                                <select id="pvCiudadDec" name="pvCiudadDec" class="form-control"></select>
+                            </div>
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-start align-items-center flex-row m-2 p-2">
                         <h6>Auto Retenedor *</h6>
-                        <div class="col-md-2 form-group form-check">
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input"/><label for="pvAutRetSi" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvAutRetNo" name="pvAutRet" value="No" class="form-check-input" /><label for="pvAutRetNo" class="form-check-label">No</label>
+                        <div class="d-flex">
+                            <div class="col-md-6 form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input" /><label for="pvAutRetSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvAutRetNo" name="pvAutRet" value="No" class="form-check-input" /><label for="pvAutRetNo" class="form-check-label">No</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-5 form-group input-wrapper">
-                            <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control no-edit"  />
-                            <label for="pvNumResDIAN" class="form-label adaptive-label disabled-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
+                            <div class="col-md-6 form-group input-wrapper">
+                                <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control no-edit" />
+                                <label for="pvNumResDIAN" class="form-label adaptive-label disabled-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
+                            </div>
                         </div>
                     </div>
 
@@ -597,13 +621,13 @@
                     </div>
 
                     <div class="d-flex justify-content-around align-items-center m-2 p-2">
-                        <div class="form-group input-wrapper">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvForPag" name="pvForPag" class="form-control" />
                             <label for="pvForPag" class="form-label adaptive-label" placeholder="Forma de pago de operaciones comercio exterior" alt="Forma de pago de operaciones comercio exterior"></label>
                         </div>
-                        <div class="form-group input-wrapper">
-                            <input type="text" id="pvEntBenef" name="pvEntBenef" class="form-control" />
-                            <label for="pvEntBenef" class="form-label adaptive-label" placeholder="Personas o empresas beneficiarias de operaciones de comercio exterior" alt="Personas o empresas beneficiarias de operaciones de comercio exterior"></label>
+                        <div class="col-md-6 form-group input-wrapper">
+                            <input type="text" id="pvEntBenef" name="pvEntBenef" class="form-control" title="Personas o empresas beneficiarias de operaciones de comercio exterior" />
+                            <label for="pvEntBenef" class="form-label adaptive-label" placeholder="Beneficiarios de operaciones de comercio exterior" alt="Beneficiarios de operaciones de comercio exterior"></label>
                         </div>
                     </div>
 
@@ -612,29 +636,31 @@
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center m-2 p-2">
-                        <div class="col form-group form-check">
-                            <h6>Posee cuenta bancaria *</h6>
-                            <div class="d-flex">
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" class="form-check-input"/><label for="pvPosCuBanSi" class="form-check-label">Si</label>
-                                </div>
-                                <div class="form-check m-2">
-                                    <input type="radio" id="pvPosCuBanNo" name="pvPosCuBan" value="No" class="form-check-input"/><label for="pvPosCuBanNo" class="form-check-label">No</label>
+                        <h6>Posee cuenta bancaria *</h6>
+                        <div class="d-flex">
+                            <div class="col-md-6  form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" class="form-check-input" /><label for="pvPosCuBanSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvPosCuBanNo" name="pvPosCuBan" value="No" class="form-check-input" /><label for="pvPosCuBanNo" class="form-check-label">No</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col form-group d-block custom-input-group">
-                            <label for="pvEntidad" class="form-label">Entidad bancaria</label>
-                            <select id="pvEntidad" name="pvEntidad" class="form-control"></select>
+                            <div class="col-md-6 form-group d-block custom-input-group">
+                                <label for="pvEntidad" class="form-label">Entidad bancaria</label>
+                                <select id="pvEntidad" name="pvEntidad" class="form-control"></select>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-around align-items-center m-2 p-2">
-                        <div class="col form-group input-wrapper">
+                    <div class="d-flex justify-content-around align-items-center m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
                             <input type="number" id="pvNumCueBanc" name="pvNumCueBanc" class="form-control no-edit" />
                             <label for="pvNumCueBanc" class="form-label adaptive-label disabled-label" placeholder="N° de cuenta" alt="N° de cuenta"></label>
                         </div>
-                        <div class="col form-group d-block custom-input-group">
+                        <div class="col-md-6 form-group d-block custom-input-group">
                             <label for="pvClasCueBan" class="form-label">Clase de cuenta</label>
                             <select id="pvClasCueBan" name="pvClasCueBan" class="form-control">
                                 <option value="" disabled selected>Seleccione</option>
@@ -669,8 +695,8 @@
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <h4>Ingrese la Dirección siguiendo el estandar del DANE</h4>
                     </div>
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col-5 form-group d-block custom-input-group structure-field">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-4 form-group d-block custom-input-group structure-field">
                             <label for="tipoVia" class="form-label">Tipo de vía</label>
                             <select id="tipoVia" class="form-control">
                                 <option value="" disabled selected>Seleccione</option>
@@ -684,29 +710,29 @@
                                 <option value="Troncal">Troncal</option>
                             </select>
                         </div>
-                        <div class="col form-group input-wrapper structure-field">
+                        <div class="col-md-4 form-group input-wrapper structure-field">
                             <input type="text" id="vPrincipal" name="vPrincipal" class="form-control" />
                             <label for="vPrincipal" class="form-label adaptive-label" placeholder="Vía principal" alt="Vía principal"></label>
                         </div>
-                        <div class="col form-group input-wrapper structure-field">
+                        <div class="col-md-4 form-group input-wrapper structure-field">
                             <input type="text" id="sufPrincipal" name="sufPrincipal" class="form-control" maxlength="3" />
                             <label for="sufPrincipal" class="form-label adaptive-label" placeholder="Letra principal" alt="Letra principal"></label>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col form-group input-wrapper structure-field">
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-3 form-group input-wrapper structure-field">
                             <input type="text" id="vSecundaria" name="vSecundaria" class="form-control" />
                             <label for="vSecundaria" class="form-label adaptive-label" placeholder="Vía secundaria" alt="Vía secundaria"></label>
                         </div>
-                        <div class="col form-group input-wrapper structure-field">
+                        <div class="col-md-3 form-group input-wrapper structure-field">
                             <input type="text" id="sufSecundaria" name="sufSecundaria" class="form-control" maxlength="3" />
                             <label for="sufSecundaria" class="form-label adaptive-label" placeholder="Letra secundaria" alt="Letra secundaria"></label>
                         </div>
-                        <div class="col form-group input-wrapper structure-field">
+                        <div class="col-md-3 form-group input-wrapper structure-field">
                             <input type="number" id="numPlaca" name="numPlaca" class="form-control" />
                             <label for="numPlaca" class="form-label adaptive-label" placeholder="N° de placa" alt="N° de placa"></label>
                         </div>
-                        <div class="col-5 form-group input-wrapper structure-field">
+                        <div class="col-md-3 form-group input-wrapper structure-field">
                             <input type="text" id="compleDir" name="compleDir" class="form-control" />
                             <label for="compleDir" class="form-label adaptive-label" placeholder="Complemento (opcional)" alt="Complemento (opcional)"></label>
                         </div>
@@ -871,100 +897,143 @@
             <!-- form para subir documentos-->
             <form id="uploadDocsForm" enctype="multipart/form-data" class="form-section card flex-row" style="display:none;">
                 <h2 class="m-2 p-2"> Documentos Anexos </h2>
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upCeCamCom">
-                            <label for="upCeCamCom" class="form-label adaptive-label" placeholder="Certificado de Cámara y Comercio (no mayor a 30 días) *" alt="Certificado de Cámara y Comercio (no mayor a 30 días) *"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upCeBanc">
-                            <label for="upCeBanc" class="form-label adaptive-label" placeholder="Certificación Bancaria *" alt="Certificación Bancaria *"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upRUTAct">
-                            <label for="upRUTAct" class="form-label adaptive-label" placeholder="RUT Actualizado *" alt="RUT Actualizado *"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upCeComAcc">
-                            <label for="upCeComAcc" class="form-label adaptive-label" placeholder="Certificado Composición Accionaria *" alt="Certificado Composición Accionaria *"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upFotCC">
-                            <label for="upFotCC" class="form-label adaptive-label" placeholder="Fotocopia C.C. del Representante Legal o Persona Natuaral *" alt="Fotocopia C.C. del Representante Legal o Persona Natuaral *"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upRefCom" multiple>
-                            <label for="upRefCom" class="form-label adaptive-label" placeholder="Dos (2) Referencias Comerciales (no mayor a 90 días) *" alt="Dos (2) Referencias Comerciales (no mayor a 90 días) *"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upEstFinan">
-                            <label for="upEstFinan" class="form-label adaptive-label" placeholder="Estados Financieros de los dos Últimos Años *" alt="Estados Financieros de los dos Últimos Años *"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="upCertificaciones">
-                            <label for="upCertificaciones" class="form-label adaptive-label" placeholder="Certificaciones (ISO, BASC, ...) *" alt="Certificaciones (ISO, BASC, ...) *"></label>
-                        </div>
-                    </div>
-                </div>
-
-                <h5 class="m-2 p-2"> Únicamente para proveedores de la cadena de suministro internacional (OEA)**</h5>
-
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="formFile">
-                            <label for="formFile" class="form-label adaptive-label" placeholder="Plan de Contingencia en Medio Magnético" alt="Plan de Contingencia en Medio Magnético"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="formFile">
-                            <label for="formFile" class="form-label adaptive-label" placeholder="Plan de Contingencia Firmado (proveedores sin plan)" alt="Plan de Contingencia Firmado (proveedores sin plan)"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="formFile">
-                            <label for="formFile" class="form-label adaptive-label" placeholder="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)" alt="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)"></label>
-                        </div>
-                    </div>
-                    <div class="col form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="formFile">
-                            <label for="formFile" class="form-label adaptive-label" placeholder="Certificado de Operador Economico Autorizado - OEA" alt="Certificado de Operador Economico Autorizado - OEA"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-start align-items-center flex-row m-2 p-2">
+                <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                     <div class="col-md-6 form-group input-wrapper">
-                        <div class="mb-3 form-group input-wrapper">
-                            <input class="form-control" type="file" id="formFile">
-                            <label for="formFile" class="form-label adaptive-label" placeholder="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad" alt="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad"></label>
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upCamaraComercio" accept=".pdf" required>
+                            <label for="upCamaraComercio" class="form-label adaptive-label" placeholder="Certificado de Cámara y Comercio (no mayor a 30 días) *" alt="Certificado de Cámara y Comercio (no mayor a 30 días) *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
                         </div>
                     </div>
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upCertifiBancaria" accept=".pdf" required>
+                            <label for="upCertifiBancaria" class="form-label adaptive-label" placeholder="Certificación Bancaria *" alt="Certificación Bancaria *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upRUTActualizado" accept=".pdf" required>
+                            <label for="upRUTActualizado" class="form-label adaptive-label" placeholder="RUT Actualizado *" alt="RUT Actualizado *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upComposicionAccionaria" accept=".pdf">
+                            <label for="upComposicionAccionaria" class="form-label adaptive-label" placeholder="Certificado Composición Accionaria *" alt="Certificado Composición Accionaria *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upFotocopiaCC" accept=".pdf" required>
+                            <label for="upFotocopiaCC" class="form-label adaptive-label" placeholder="Fotocopia C.C. del Representante Legal o Persona Natural *" alt="Fotocopia C.C. del Representante Legal o Persona Natural *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upRefeComerciales" multiple accept=".pdf" required>
+                            <label for="upRefeComerciales" class="form-label adaptive-label" placeholder="Dos (2) Referencias Comerciales (no mayor a 90 días) *" alt="Dos (2) Referencias Comerciales (no mayor a 90 días) *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upEstadoFinanciero" accept=".pdf" required>
+                            <label for="upEstadoFinanciero" class="form-label adaptive-label" placeholder="Estados Financieros de los dos Últimos Años *" alt="Estados Financieros de los dos Últimos Años *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upCertificacionesVarias" multiple accept=".pdf">
+                            <label for="upCertificacionesVarias" class="form-label adaptive-label" placeholder="Certificaciones (ISO, BASC, ...) *" alt="Certificaciones (ISO, BASC, ...) *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group input-wrapper form-check">
+                    <label>¿Es Proveedor OEA? *</label>
+                    <div class="d-flex">
+                        <div class="form-check m-2">
+                            <input type="radio" id="upOEAsi" name="upOEA" value="Si" class="form-check-input" /><label for="upOEAsi" class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check m-2">
+                            <input type="radio" id="upOEAno" name="upOEA" value="No" class="form-check-input" /><label for="upOEAno" class="form-check-label">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sectionOEA" style="display: none;">
+                    <h5 class="m-2 p-2"> Únicamente para proveedores de la cadena de suministro internacional (OEA)**</h5>
+
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control file-hidden" type="file" id="upContingMeMagnetico" accept=".pdf">
+                                <label for="upContingMeMagnetico" class="form-label adaptive-label" placeholder="Plan de Contingencia en Medio Magnético" alt="Plan de Contingencia en Medio Magnético"></label>
+                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control file-hidden" type="file" id="upContingFirmada" accept=".pdf">
+                                <label for="upContingFirmada" class="form-label adaptive-label" placeholder="Plan de Contingencia Firmado (proveedores sin plan)" alt="Plan de Contingencia Firmado (proveedores sin plan)"></label>
+                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control file-hidden" type="file" id="upManifestacionSeguridad" accept=".pdf">
+                                <label for="upManifestacionSeguridad" class="form-label adaptive-label" placeholder="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)" alt="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)"></label>
+                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control file-hidden" type="file" id="upCertifiOEA" accept=".pdf">
+                                <label for="upCertifiOEA" class="form-label adaptive-label" placeholder="Certificado de Operador Económico Autorizado - OEA" alt="Certificado de Operador Económico Autorizado - OEA"></label>
+                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control file-hidden" type="file" id="upAcuerdoSeguridad" accept=".pdf">
+                                <label for="upAcuerdoSeguridad" class="form-label adaptive-label" placeholder="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad" alt="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad"></label>
+                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-group justify-content-around align-items-center m-2 p-2">
+                    <button type="button" id="submitDocsBtn" class="btn btn-primary">Subir Documentos</button>
                 </div>
             </form>
 

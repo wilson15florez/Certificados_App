@@ -23,7 +23,9 @@ let activeDirecform = null;
 //funcion de inicializacion de handlers
 function initHandlers() {
 
-    UI.firstBlock()
+    
+    UI.firstBlock();
+    UI.fileHandler();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
     $(pnTipoNacionalidad).off("change.pnTipoNac").on("change.pnTipoNac", async function () {
@@ -156,60 +158,17 @@ function initHandlers() {
     if (pnPEPYes) pnPEPYes.addEventListener('change', UI.handlePEPChange);
     if (pnPEPNo) pnPEPNo.addEventListener('change', UI.handlePEPChange);
 
+    const upOEA = document.querySelectorAll('input[name="upOEA"]');
+    upOEA.forEach(r => r.addEventListener('change', UI.toggleOEA));
+
     //carga de datos de bancos
     API.loadBancosData();
+
+
+    UI.hasValue();
 }
 
 
-//logica para mostrar/ocultar entre acciones de la sub nav
-openFormsBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    alertContainer.innerHTML = '';
-    uploadDocsForm.style.display = 'none';
-
-
-    consultForm.style.display = 'block';
-});
-uploadDocsBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    alertContainer.innerHTML = '';
-    consultForm.style.display = 'none';
-    if (consultForm.style.display = 'none') {
-        persNatuForm.style.display = 'none';
-        persJuriForm.style.display = 'none';
-        provForm.style.display = 'none';
-        personTypeSelect.value = '';
-        idNumInput.value = null;
-    }
-
-    uploadDocsForm.style.display = 'block';
-});
-printFormatBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    alertContainer.innerHTML = '';
-    consultForm.style.display = 'none';
-    if (consultForm.style.display = 'none') {
-        persNatuForm.style.display = 'none';
-        persJuriForm.style.display = 'none';
-        provForm.style.display = 'none';
-        personTypeSelect.value = '';
-        idNumInput.value = null;
-    }
-    uploadDocsForm.style.display = 'none';
-
-
-});
-
-//logica para mostrar/ocultar los forms al cambiar el tipo de persona
-personTypeSelect.addEventListener('change', function () {
-
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    provForm.style.display = 'none';
-    idNumInput.value = '';
-
-    alertContainer.innerHTML = '';
-});
 
 //logica del subformulario de direccion (despliega subform, botones cancelar y guardar)
 document.addEventListener('focusin', (e) => {
@@ -218,30 +177,6 @@ document.addEventListener('focusin', (e) => {
         document.getElementById('directionStructure').style.display = 'flex';
     }
 });
-
-//logica del subformulario de declaraciones y autorizaciones (despliega subform, botones cancelar y guardar)
-declAutTrigger.addEventListener('click', () => {
-    declAutorPanel.style.display = 'flex';
-    activeParagraph = declAutTrigger;
-});
-cancelAutBtn.addEventListener('click', () => {
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
-saveAutBtn.addEventListener('click', () => {
-    const pvDeAuRepresentacion = document.getElementById('pvDeAuRepresentacion').value.trim();
-    const pvFuenteRecur = document.getElementById('pvFuenteRecur').value.trim();
-    const pvTDPMotMaq = document.getElementById('input[name="pvTDPMotMaq"]');
-    const pvTDPCasTor = document.getElementById('input[name="pvTDPCasTor"]');
-    const pvTDPBonap = document.getElementById('input[name="pvTDPBonap"]');
-    const pvTDPBellpi = document.getElementById('input[name="pvTDPBellpi"]');
-    const pvRadAut = document.getElementById('input[name="pvRadAut"]');
-
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
-
-
 document.getElementById('cancelDirBtn').addEventListener('click', () => {
     document.getElementById('directionStructure').style.display = 'none';
     activeDirecform = null;
@@ -274,7 +209,27 @@ document.getElementById('saveDirBtn').addEventListener('click', () => {
     activeDirecform = null;
 });
 
+//logica del subformulario de declaraciones y autorizaciones (despliega subform, botones cancelar y guardar)
+declAutTrigger.addEventListener('click', () => {
+    declAutorPanel.style.display = 'flex';
+    activeParagraph = declAutTrigger;
+});
+cancelAutBtn.addEventListener('click', () => {
+    declAutorPanel.style.display = 'none';
+    activeParagraph = null;
+});
+saveAutBtn.addEventListener('click', () => {
+    const pvDeAuRepresentacion = document.getElementById('pvDeAuRepresentacion').value.trim();
+    const pvFuenteRecur = document.getElementById('pvFuenteRecur').value.trim();
+    const pvTDPMotMaq = document.getElementById('input[name="pvTDPMotMaq"]');
+    const pvTDPCasTor = document.getElementById('input[name="pvTDPCasTor"]');
+    const pvTDPBonap = document.getElementById('input[name="pvTDPBonap"]');
+    const pvTDPBellpi = document.getElementById('input[name="pvTDPBellpi"]');
+    const pvRadAut = document.getElementById('input[name="pvRadAut"]');
 
+    declAutorPanel.style.display = 'none';
+    activeParagraph = null;
+});
 
 //atajo de consulta con enter
 idNumInput.addEventListener("keydown", function (e) {
@@ -284,8 +239,20 @@ idNumInput.addEventListener("keydown", function (e) {
     }
 });
 //funcion de consulta en el BACKEND
-consultBtn.addEventListener('click', async function (e) {
+consultBtn.addEventListener('click', function (e) {
     e.preventDefault();
+
+    const subNavConteiner = document.getElementById('subNavConteiner');
+
+    subNavConteiner.style.display = 'block';
+    //UI.hasvalue();
+});
+
+//logica para mostrar/ocultar entre acciones de la sub nav
+openFormsBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+    alertContainer.innerHTML = '';
+    uploadDocsForm.style.display = 'none';
 
     const idNum = idNumInput.value.trim();
     const personType = personTypeSelect.value;
@@ -339,18 +306,32 @@ consultBtn.addEventListener('click', async function (e) {
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block';
 
-                //UI.loadFormData_Natural({});
+                UI.loadFormData_Natural({});
                 UI.loadProvFormData({});
-                UI.loadMasterData(masterData, 'persNatuForm', idNum);
+
+                setTimeout(async () => {
+                    await UI.loadMasterData(masterData, 'persNatuForm', idNum);
+                    UI.hasValue();
+                }, 100);
+
+                
             } else {
                 persJuriForm.style.display = 'block';
                 provForm.style.display = 'block'
                 UI.loadFormData_Juridica({});
                 UI.loadProvFormData({});
-                UI.loadMasterData(masterData, 'persJuriForm', idNum);
+
+                setTimeout(async () => {
+                    await UI.loadMasterData(masterData, 'persJuriForm', idNum);
+                    UI.hasValue();
+                }, 100);
+
+                
             }
 
             await UI.ubicProvFormHandler();
+
+            
 
             return;
         }
@@ -389,6 +370,8 @@ consultBtn.addEventListener('click', async function (e) {
                 await UI.loadProvFormData(formData.fucp);
             }
 
+            UI.hasValue();
+
             return;
         }
 
@@ -398,10 +381,51 @@ consultBtn.addEventListener('click', async function (e) {
         console.error('Error de Fetch:', error);
     }
 });
+uploadDocsBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+    alertContainer.innerHTML = '';
+
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+
+    const idNum = idNumInput.value.trim();
+    alertContainer.innerHTML = '';
+
+    uploadDocsForm.style.display = 'block';
+
+    try {
+        const result = await API.getProvDocuments(idNum);
+        if (result.status === 'success' && result.data.length > 0 && result.isOEA) {
+            UI.loadDocsForm(result.data || [], result.isOEA);
+        }
+    }
+    catch (err) {
+        console.error("Error cargando archivos guardados: ", err);
+    }
+});
+printFormatBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    alertContainer.innerHTML = '';
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+    uploadDocsForm.style.display = 'none';
+});
+
+//logica para mostrar/ocultar los forms al cambiar el tipo de persona
+personTypeSelect.addEventListener('change', function () {
+
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+    idNumInput.value = '';
+
+    alertContainer.innerHTML = '';
+});
 
 //listener de envio de forms
-submitPrvBtn.addEventListener("click", submitPrvBtnHandler);
-async function submitPrvBtnHandler(e) {
+submitPrvBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
     let dataProNJ = null;
@@ -437,6 +461,25 @@ async function submitPrvBtnHandler(e) {
         console.log('Error al guardar proveedor: ', +err);
         alert("Error al guardar: " + (err.message || err));
     }
-};
+});
+
+//listener de envio de documentos
+submitDocsBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    if (!Validator.validateDocsForm()) return;
+
+    const docFormData = Collector.collectDocsForm();
+
+    try {
+        await API.sendFiles(docFormData, '/Admin/UploadDocuments');
+
+        alert("Documentos cargados correctamente.")
+    }
+    catch (err) {
+        console.log('Error al cargar proveedores: ', +err);
+        alert("Error al cargar: " + (err.message || err));
+    }
+});
 
 initHandlers()

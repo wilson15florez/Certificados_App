@@ -8,6 +8,8 @@ let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
 
+
+
 //funcion para bloquear los selects al iniciar la carga de la pagina
 export function firstBlock() {
     //bloqueo inicial form persona natural
@@ -280,7 +282,7 @@ export function handlePEPChange() {
     const pnPEPChk = document.querySelectorAll('input[name="pnPEPType"]');
 
     if (pnPEPYes && pnPEPYes.checked) {
-        pnPEPtypeGroup.style.display = 'flex';
+        pnPEPtypeGroup.style.display = 'block';
         pnPEP_Entidad_Cont.style.display = 'block';
 
         pnPEPChk.forEach(chk => chk.checked = originalPEPTypes.includes(parseInt(chk.value)));
@@ -374,6 +376,27 @@ export async function ubicPJuHandler() {
     }
 }
 
+//logica para animacion visual de labels
+export function hasValue() {
+    document.querySelectorAll('.form-control').forEach(input => {
+        // Verificar al cargar la página (por si hay valores previos)
+        if (input.value.trim() !== "") {
+            input.classList.add('has-value');
+        } else {
+            input.classList.remove('has-value');
+        }
+
+        // Escuchar cuando el usuario interactúa
+        input.addEventListener('blur', () => {
+            if (input.value.trim() !== "") {
+                input.classList.add('has-value');
+            } else {
+                input.classList.remove('has-value');
+            }
+        });
+    });
+}
+
 //funcion que gestiona los select de ubicacion del provForm
 export async function ubicProvFormHandler() {
 
@@ -415,7 +438,7 @@ export async function ubicProvFormHandler() {
     }
 
     console.log("ubicProvFormHandler ejecutado");
-
+    
     togglePvPais();
     togglePvDIC();
 }
@@ -851,56 +874,48 @@ export async function loadProvFormData(data) {
 //funcion para precargar datos de proveedores_Master
 export async function loadMasterData(masterData, formId, idNum) {
 
-    //Precarga el resto de la data de proveedores_Master (si existe)
-    if (masterData) {
+    //let rawTel = masterData.telefono ? masterData.telefono.trim() : "";
+    //let cleanTel = rawTel.replace(/\s+/g, '');
 
-        try {
+    const cleanTel = masterData.telefono ? masterData.telefono.replace(/\s+/g, '') : "";
 
-            let rawTel = masterData.telefono ? masterData.telefono.trim() : "";
-            let cleanTel = rawTel.replace(/\s+/g, '');
+    if (formId === 'persNatuForm') {
+        //precarga los campos que coincida con la data de master
+        document.getElementById('pnNombreCompl').value = masterData.nombre || '';
+        document.getElementById('pnDiResidencia').value = masterData.direccion || '';
+        document.getElementById('pnEmail').value = masterData.correo || '';
 
-            if (!cleanTel) return;
+        const pnInpNumId = document.getElementById('pnNumId');
+        if (pnInpNumId) {
+            document.getElementById('pnNumId').value = idNum;
+        }
 
-            if (formId === 'persNatuForm') {
-                //precarga los campos que coincida con la data de master
-                document.getElementById('pnNombreCompl').value = masterData.nombre || '';
-                document.getElementById('pnDiResidencia').value = masterData.direccion || '';
-                document.getElementById('pnEmail').value = masterData.correo || '';
+        const isFijo = cleanTel.startsWith('60') || cleanTel.startsWith('+5760');
 
-                const pnInpNumId = document.getElementById('pnNumId');
-                if (pnInpNumId) {
-                    document.getElementById('pnNumId').value = idNum;
-                }
+        //asigna el telefono al campo correspondiente
+        if (isFijo) {
+            await waitSafeSetPhone('pnTelefono', cleanTel);
+            await waitSafeSetPhone('pnCelular', '');
+        } else {
+            await waitSafeSetPhone('pnCelular', cleanTel);
+            await waitSafeSetPhone('pnTelefono', '');
+        }
+    }
+    else if (formId === 'persJuriForm') {
+        //precarga los campos que coincida con la data de master
+        document.getElementById('pjRazSocial').value = masterData.nombre || '';
+        document.getElementById('pjDirPrincipal').value = masterData.direccion || '';
+        document.getElementById('pjEmailDirPrincipal').value = masterData.correo || '';
 
-                const isFijo = cleanTel.startsWith('60') || cleanTel.startsWith('+5760');
+        await waitSafeSetPhone('pjTelDirPrincipal', cleanTel);
 
-                //asigna el telefono al campo correspondiente
-                if (isFijo) {
-                    await waitSafeSetPhone('pnTelefono', cleanTel);
-                    await waitSafeSetPhone('pnCelular', '');
-                } else {
-                    await waitSafeSetPhone('pnCelular', cleanTel);
-                    await waitSafeSetPhone('pnTelefono', '');
-                }
-            }
-            else if (formId === 'persJuriForm') {
-                //precarga los campos que coincida con la data de master
-                document.getElementById('pjRazSocial').value = masterData.nombre || '';
-                document.getElementById('pjDirPrincipal').value = masterData.direccion || '';
-                document.getElementById('pjEmailDirPrincipal').value = masterData.correo || '';
-
-                await waitSafeSetPhone('pjTelDirPrincipal', cleanTel);
-
-                const pjInpNumId = document.getElementById('pjNIT');
-                if (pjInpNumId) {
-                    document.getElementById('pjNIT').value = idNum;
-                }
-            }
-        } catch (error) {
-            console.error("Error al precargar datos de proveedores_Master:", error);
+        const pjInpNumId = document.getElementById('pjNIT');
+        if (pjInpNumId) {
+            document.getElementById('pjNIT').value = idNum;
         }
     }
 }
+
 
 //logica para campos form general (provForm)
 export const formatCurrency = (value) => {
@@ -1008,7 +1023,7 @@ export function togglePvCB() {
     }
 }
 
-//logica para crear select dinamico a sucursal, agregar sucursal (usada por el click y loadFormData) y eliminar sucursales
+//logica para crear select dinamico a sucursal y agregar sucursal (usada por el click y loadFormData)
 window.initSucursalUbic = async function (index) {
     //asegura que los datos de ubicacion colombiana esten cargados
     await API.loadUbiData();
@@ -1044,26 +1059,26 @@ export function addSucursalInternal(newIndex) {
     newSucursalDiv.innerHTML = `
                     <h4>Dirección sucursal ${newIndex}</h4>
                     <div class="d-flex">
-                        <div class="form-group input-wrapper">
-                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="off" required />
+                        <div class="col-md-4 form-group input-wrapper">
+                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" autocomplete="off" required />
                             <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal *" alt="Dirección Sucursal *"></label>
                         </div>
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento *</label>
-                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
+                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" required></select>
                         </div>
-                        <div class="form-group d-block custom-input-group">
+                        <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad *</label>
-                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
+                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" required></select>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="form-group input-wrapper">
-                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
+                        <div class="col-md-6 form-group input-wrapper">
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" required />
                             <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
-                        <div class="form-group input-wrapper">
-                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
+                        <div class="col-md-6 form-group input-wrapper">
+                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" required />
                             <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
                         <div class="form-group">
@@ -1106,82 +1121,88 @@ export function addControlRow() {
 }
 
 
-//logica para el select2 dinamico de paises para porcentaje de origen de capital (provForm)
-//window.initPorcPaisUbic = async function (index) {
-//    //asegura que los datos de paises esten cargados
-//    const countries = await loadUbiExt();
+//funcion para precargar nombres de los docs de uploadDocsForm
+export function loadDocsForm(data, isOEAValue) {
+    const form = document.getElementById('uploadDocsForm');
 
-//    const paisSelect = document.getElementById(`pvPorPais_${index}`);
-//    if (!paisSelect) return;
+    if (isOEAValue) {
+        const r = form.querySelector(`input[name="upOEA"][value="${isOEAValue}"]`);
+        if (r) r.checked = true;
+        toggleOEA();
+    }
 
-//    fillSelect2(paisSelect, countries, 'Seleccione país', 'id', 'name');
-//};
-//function addPorcentajePais() {
-//    const currentPais = porcPaisContainer.querySelectorAll('.pais-item').length;
-//    const newIndex = currentPais + 1;
+    data.forEach(doc => {
+        const categoria = doc.categoriaDOC || doc.CategoriaDOC;
+        const nombre = doc.nombreArchivo || doc.NombreArchivo;
 
-//    if (newIndex > maxPorcPais) {
-//        createAlert(`Máximo ${maxPorcPais} países permitidos.`, 'warning');
-//        return;
-//    }
-//    alertContainer.innerHTML = '';
+        const input = document.getElementById(categoria);
+        if (input) {
 
-//    const newPaisDiv = document.createElement('div');
-//    newPaisDiv.className = 'pais-item';
-//    newPaisDiv.id = `porcentajePais_${newIndex}`;
-//    newPaisDiv.innerHTML = `
-//                    <div class="form-group d-block custom-input-group">
-//                        <label for="pvPorPais_${newIndex}" class="form-label">País</label>
-//                        <select id="pvPorPais_${newIndex}" name="pvPorPais_${newIndex}" class="form-control" required></select>
-//                    </div>
-//                `;
-//    porcPaisContainer.appendChild(newPaisDiv);
+            input.setAttribute('data-file-name', nombre);
+            input.classList.add('file-existing');
 
-//    //inicializa el select de pais
-//    window.initPorcPaisUbic(newIndex);
+            const container = input.closest('.custom-file-container');
+            const btn = container.querySelector('.btn-clear-file');
 
-//    const currentRemoveBtn = removPrPaisContainer.querySelector('removePorPais-container');
+            if (btn) btn.style.display = 'flex';
+        }
+    });
 
+}
 
-//    const addRemoveBtn = document.createElement('div');
-//    addRemoveBtn.className = 'remPorPais';
-//    addRemoveBtn.id = `remPorPaisBtn`;
-//    addRemoveBtn.innerHTML = `
-//                    <div class="form-group">
-//                        <button type="button" class="remove-porcPais-btn button-group btn btn-primary">Remover país</button>
-//                    </div>
-//                `;
-//    removPrPaisContainer.appendChild(addRemoveBtn);
-//}
-//addPorcPaisBtn.addEventListener('click', function () {
-//    addPorcentajePais();
-//});
-//porcPaisContainer.addEventListener('click', function (e) {
-//    if (e.target.classList.contains('remove-porcPais-btn')) {
-//        const paisItem = e.target.closest('.pais-item');
-//        if (paisItem) {
-//            paisItem.remove();
+//logica para visualizacion de campos de uploadDocsForm y boton "x"
+export function fileHandler() {
+    const form = document.getElementById('uploadDocsForm');
+    if (!form) return;
 
-//            const paises = porcPaisContainer.querySelectorAll('.pais-item');
-//            paises.forEach((pais, index) => {
-//                const newIndex = index + 1;
-//                pais.id = `pvPorPais_${newIndex}`;
+    const fileContainers = form.querySelectorAll('.custom-file-container');
 
-//                pais.querySelectorAll('label, select').forEach(element => {
-//                    const oldId = element.id;
-//                    const newId = oldId ? oldId.replace(/\d+/, newIndex) : null;
-//                    if (newId) element.id = newId;
+    fileContainers.forEach(f => {
+        const input = f.querySelector('input[type="file"]');
+        const btnClear = f.querySelector('.btn-clear-file');
 
-//                    const oldFor = element.getAttribute('for');
-//                    const newFor = oldFor ? oldFor.replace(/\d+/, newIndex) : null;
-//                    if (newFor) element.setAttribute('for', newFor);
-//                });
-//            });
+        input.addEventListener('change', (e) => {
+            const files = e.target.files;
 
-//            //oculta mensaje del limite si se elimino un pais y quedo menos del maximo
-//            if (paises.length < maxPorcPais) {
-//                createAlert('');
-//            }
-//        }
-//    }
-//});
+            if (files.length > 0) {
+
+                let displaytext = files.length > 1
+                    ? `${files.length} archivos seleccionados`
+                    : files[0].name;
+
+                input.setAttribute('data-file-name', displaytext);
+                input.classList.add('file-existing');
+
+                if (btnClear) btnClear.style.display = 'flex';
+            }
+        });
+
+        if (btnClear) {
+            btnClear.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                input.value = '';
+                input.classList.remove('file-existing');
+                input.removeAttribute('data-file-name');
+                hasValue();
+                btnClear.style.display = 'none';
+            });
+        }
+    })
+
+    
+}
+
+export function toggleOEA() {
+    const si = document.getElementById('upOEAsi').checked;
+    const containerOEA = document.getElementById('sectionOEA');
+    if (si) {
+        $(containerOEA).fadeIn();
+        containerOEA.querySelectorAll('input').forEach(i => i.required = true);
+    } else {
+        $(containerOEA).fadeOut();
+        containerOEA.querySelectorAll('input').forEach(i => i.value = '');
+        containerOEA.querySelectorAll('input').forEach(i => i.required = false);
+    }
+}

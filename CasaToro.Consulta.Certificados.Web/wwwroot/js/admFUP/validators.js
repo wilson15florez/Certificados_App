@@ -332,3 +332,95 @@ export function validateProvForm() {
 
     return true;
 }
+
+//validacion de documentos cargados en form documentos
+export function validateDocsForm() {
+    const form = document.getElementById('uploadDocsForm');
+    const files = form.querySelectorAll('input[type="file"]');
+    const maxSizeMB = 4 * 1024 * 1024;
+    const exptensionVal = /(\.pdf)$/i;
+
+    //verifica que los inputs esten llenos
+    const requiredFields = [
+        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 
+        'upComposicionAccionaria', 'upFotocopiaCC', 'upEstadoFinanciero', 'upCertificacionesVarias'
+    ];
+
+    for (const id of requiredFields) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const hasNewFile = el.files.length > 0;
+        const hasExistFile = el.classList.contains('file-existing');
+
+        if (!hasNewFile && !hasExistFile) {
+            const label = document.querySelector(`label[for="${id}"]`);
+            const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
+            createAlert(`El campo "${labelText}" es obligatorio.`, 'danger');
+            el.focus();
+            return false;
+        }
+    }
+
+    //verifica que sean dos referencias comerciales
+    const refComerc = document.getElementById('upRefeComerciales');
+    if (!refComerc.classList.contains('file-existing') && refComerc.files.length !== 2) {
+        if (refComerc.files.length > 0 && refComerc.files.length !== 2) {
+            createAlert('Por favor ingrese dos (2) referencias comerciales', 'danger');
+            return false;
+        }
+    }
+
+    //verifica si es OEA y de ser asi verifica documentos
+    if (!form.querySelector('input[name="upOEA"]:checked')) {
+        createAlert('Por favor seleccione si es Operador Económico Autorizado (OEA).', 'danger');
+        return false;
+    }
+
+    const siOEA = document.getElementById('upOEAsi').checked;
+    if (siOEA) {
+        const requiredOEAFields = [
+            'upContingMeMagnetico', 'upContingFirmada', 'upManifestacionSeguridad',
+            'upCertifiOEA', 'upAcuerdoSeguridad'
+        ];
+
+        for (const id of requiredOEAFields) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+
+            const hasNewFile = el.files.length > 0;
+            const hasExistFile = el.classList.contains('file-existing');
+
+            if (!hasNewFile && !hasExistFile) {
+                const label = document.querySelector(`label[for="${id}"]`);
+                const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
+                createAlert(`El campo "${labelText}" es obligatorio.`, 'danger');
+                el.focus();
+                return false;
+            }
+        }
+    }
+
+    //verifica extencion del doc y el peso
+    for (const input of files) {
+        if (input.files.length > 0) {
+            for (const file of input.files) {
+                //valida extencion
+                if (!exptensionVal.exec(file.name)) {
+                    createAlert(`El archivo ${file.name} no es un PDF valido.`, 'danger');
+                    input.value = '';
+                    return false;
+                }
+
+                //valida el peso
+                if (file.size > maxSizeMB) {
+                    createAlert(`El archivo ${file.name} supera los 4MB.`, 'danger');
+                    input.value = '';
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}

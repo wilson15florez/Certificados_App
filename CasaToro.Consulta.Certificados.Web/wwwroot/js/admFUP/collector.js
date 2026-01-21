@@ -184,3 +184,22 @@ export function collectProvFormData() {
 
     return data;
 }
+
+//funcion para recopilar los documentos cargados en el formulario de documentos
+export function collectDocsForm() {
+    const form = document.getElementById('uploadDocsForm');
+    const formData = new FormData();
+
+    formData.append('Nit', document.getElementById('idNum').value.trim());
+    formData.append('personType', document.getElementById('personType').value === 'natural' ? 'PersonaNatural' : 'PersonaJuridica');
+    const checked = form.querySelector('input[name="upOEA"]:checked');
+    formData.append('isOEA', checked ? checked.value : 'No');
+
+    form.querySelectorAll('input[type="file"]').forEach(input => {
+        if (input.files.length > 0) {
+            formData.append(input.id, input.files[0]);
+        }
+    });
+
+    return formData;
+}

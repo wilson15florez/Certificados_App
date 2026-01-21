@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
@@ -165,7 +166,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvTDPBellpi", fucpData.pvTDPBellpi },
                     { "pvTDPMotMaq", fucpData.pvTDPMotMaq },
                     { "pvTDPCasTor", fucpData.pvTDPCasTor },
-                    { "pvRadAut", fucpData.pvRadAut }
+                    { "pvRadAut", fucpData.pvRadAut },
+                    { "upIsOEA", fucpData.upIsOEA }
                 };
             }
 
@@ -316,6 +318,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
 
             return MakeDynamic(false, false, false, null, null, null);
+        }
+
+        public List<Documentos_Proveedores> GetDocumentsByNit(string nit)
+        {
+            return _context.Documentos_Proveedores
+                .Where(d => d.NitProveedor == nit)
+                .ToList();
         }
 
         //metodo para actualizar proveedor natural
@@ -671,7 +680,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para agragar proveedor a la tabla de form general a partir de la t. master
+        //metodo para agregar proveedor a la tabla de form general a partir de la t. master
         public void AddProveedorFUCP(Proveedores_FUCP proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -687,6 +696,56 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     throw new Exception("Error al agregar el FUCP del proveedor", ex);
                 }
             }
+        }
+
+        //Metodo para actualizar OEA en form general (Proveedores_FUCP)
+        public void UpdateStatusOEA(string Nit, string isOEA)
+        {
+            var fucp = _context.Proveedores_FUCP.FirstOrDefault(f =>  f.Nit == Nit);
+            if (fucp != null)
+            {
+                fucp.upIsOEA = isOEA;
+                _context.SaveChanges();
+            }
+        }
+
+        //metodo para guardar y generar la ruta de ubicacion de los documentos del proveedor
+        public async Task<string> SaveDocuments(IFormFile file, string Nit, string personType, string categoriaDoc, string nomArch, string webRootPath)
+        {
+            if (file == null || file.Length == 0) return null;
+
+            //construir ruta
+            string subPath = Path.Combine("docAnexa", "Proveedores", personType, Nit, categoriaDoc);
+            string fullPath = Path.Combine(webRootPath, subPath);
+
+            if (!Directory.Exists(fullPath)) Directory.CreateDirectory(fullPath);
+
+            //nombre del archivo con TIMESTAMP para versionamiento
+            string fileName = $"{nomArch}_{DateTime.Now:yyyyMMdd_HHmmss}{Path.GetExtension(file.FileName)}";
+            string filePath = Path.Combine(fullPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Path.Combine(subPath, fileName).Replace("\\", "/");
+        }
+
+        //metodo para guardar la ruta y metadata en DB
+        public void SaveDocumentMD(string Nit, string categoria, string nomArchivo, string ruta)
+        {
+            var newDoc = new Documentos_Proveedores
+            {
+                NitProveedor = Nit,
+                CategoriaDOC = categoria,
+                NombreArchivo = nomArchivo,
+                RutaArchivo = ruta,
+                fechaCarga = DateTime.Now
+            };
+
+            _context.Documentos_Proveedores.Add(newDoc);
+            _context.SaveChanges();
         }
     }
 }

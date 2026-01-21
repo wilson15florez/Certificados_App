@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using CasaToro.Consulta.Certificados.BL.Services;
+﻿using CasaToro.Consulta.Certificados.BL.Services;
 using CasaToro.Consulta.Certificados.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace CasaToro.Consulta.Certificados.Web.Controllers
@@ -11,12 +12,15 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
     {
         private readonly CertificateServiceExcel _certificateServiceExcel;
         private readonly ProviderService _providerService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
 
         // Constructor del controlador que recibe instacias de los servicios necesarios
-        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService)
+        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService, IWebHostEnvironment webHostEnvironment)
         {
             _certificateServiceExcel = certificateServiceExcel;
             _providerService = providerService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // Acción que muestra la vista principal del administrador
@@ -202,7 +206,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para consultar proveedor
+        //accion para consultar proveedor y traer la informacion
         [HttpGet]
         public async Task<IActionResult> CheckProvider(string idNum, string personType)
         {
@@ -246,10 +250,26 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
                 return Json(new { status = "foundMasterOnly", data = providerMaster });
+
             }
             catch (Exception ex)
             {
                 return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetProviderFiles(string idNum)
+        {
+            try
+            {
+                var documentos = _providerService.GetDocumentsByNit(idNum);
+                var dataFUCP = _providerService.getFUCPByNit(idNum);
+                return Json(new { status = "success", data = documentos, isOEA = dataFUCP?.upIsOEA});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message });
             }
         }
 
@@ -331,6 +351,37 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             catch (Exception ex)
             {
                 return Json(new { status = "error", message = "Error al agregar FUCP: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("/Admin/UploadDocuments")]
+        public async Task<IActionResult> UploadDocuments(string Nit, string personType, string isOEA)
+        {
+            try
+            {
+                var files = Request.Form.Files;
+                if (files.Count == 0) return Json(new { status = "error", message = "No se recibieron archivos." });
+
+                foreach (var file in files)
+                {
+                    string categoria = file.Name;
+
+                    string nameDoc = Path.GetFileNameWithoutExtension(file.FileName);
+
+                    string rutaRel = await _providerService.SaveDocuments(file, Nit, personType, categoria, nameDoc, _webHostEnvironment.WebRootPath);
+
+                    _providerService.SaveDocumentMD(Nit, categoria, file.FileName, rutaRel);
+                }
+
+                _providerService.UpdateStatusOEA(Nit, isOEA);
+
+                return Json(new { status = "success", message = "Archivos cargados y registrados correctamente." });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message });
             }
         }
 

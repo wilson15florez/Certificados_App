@@ -52,6 +52,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<PEPtipos_ProveedoresNatural> PEPtipos_ProveedoresNatural { get; set; }
 
+    public virtual DbSet<Documentos_Proveedores> Documentos_Proveedores { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Administradore>(entity =>
@@ -462,6 +464,10 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pvTipEmp).HasMaxLength(100);
+            entity.Property(e => e.upIsOEA)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
@@ -566,6 +572,19 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => new { e.NitProveedor, e.TipoPEPid });
 
             entity.Property(e => e.NitProveedor).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<Documentos_Proveedores>(entity =>
+        {
+            entity.HasKey(e => e.idDocProve).HasName("PK__Document__9813F02D1C88408A");
+
+            entity.Property(e => e.CategoriaDOC).HasMaxLength(100);
+            entity.Property(e => e.NitProveedor).HasMaxLength(20);
+            entity.Property(e => e.NombreArchivo).HasMaxLength(255);
+            entity.Property(e => e.RutaArchivo).HasMaxLength(500);
+            entity.Property(e => e.fechaCarga)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
         });
 
         OnModelCreatingPartial(modelBuilder);

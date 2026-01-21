@@ -98,7 +98,15 @@ export async function loadBancosData() {
     }
 }
 
-//logica de conexion al backend
+//funcion para traer la informacion de los documentos de uploadDocsForm
+export async function getProvDocuments(idNum) {
+    const response = await fetch(`/Admin/GetProviderFiles?idNum=${idNum}`);
+
+    if (!response.ok) throw new Error("Error al obtener documentos");
+    return await response.json();
+}
+
+//funcion para enviar la info de informacion de p. natural/juridica y provForm a la DB 
 export function sendData(payload, url) {
     console.log("Enviando datos a:", url, payload);
 
@@ -121,5 +129,25 @@ export function sendData(payload, url) {
         .catch(error => {
             console.error('Error de Fetch:', error);
             alert("Error al guardar: " + error.message);
+        });
+}
+
+//funcion para enviar docs del form documentos del proveedor a la DB
+export function sendFiles(formData, url) {
+    console.log("Enviando datos a:", url)
+
+    return fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Error en el servidor al subir archivos");
+            return response.json();
+        })
+        .then(result => {
+            if (result.status === 'error') {
+                throw new Error(result.message);
+            }
+            return result;
         });
 }
