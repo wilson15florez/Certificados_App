@@ -1,4 +1,4 @@
-﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr } from './constant.js';
+﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert } from './constant.js';
 import * as API from './api-client.js';
 import { waitSafeSetPhone, initTelInputs } from './utils-phone.js';
 
@@ -8,7 +8,28 @@ let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
 
+//funcion que valida tipo de persona que proveedor habia seleccionado y despliega el form indicado (vista proveedor)
+//export function formViewProvHandler(result) {
+//    if (result.status === "noType") {
+//        createAlert(result.message, 'warning'); cambiar al nuevo alert
+//        return;
+//    }
 
+//    const personType = result.type.toLowerCase();
+
+//    if (personType === 'natural') {
+//        $('#sectionNatural').fadeIn();
+//        $('#sectionJuridica').hide();
+
+//        loadFormData_Natural(result.data);
+//    } else {
+//        $('#sectionJuridica').fadeIn();
+//        $('#sectionNatural').hide();
+
+//        loadFormData_Juridica(result.data);
+//    }
+
+//}
 
 //funcion para bloquear los selects al iniciar la carga de la pagina
 export function firstBlock() {
@@ -165,17 +186,6 @@ export function pjTipDocument() {
         option.textContent = doc.text;
         pjRLTipoDoc.appendChild(option);
     });
-}
-
-//funcion para crear alertas
-export function createAlert(message, type = 'warning') {
-    const alertContainer = document.getElementById('alertContainer');
-    alertContainer.innerHTML = `
-                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                        ${message}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-            `;
 }
 
 //funcion que gestiona los select de ubicacion de persona natural
@@ -874,9 +884,6 @@ export async function loadProvFormData(data) {
 //funcion para precargar datos de proveedores_Master
 export async function loadMasterData(masterData, formId, idNum) {
 
-    //let rawTel = masterData.telefono ? masterData.telefono.trim() : "";
-    //let cleanTel = rawTel.replace(/\s+/g, '');
-
     const cleanTel = masterData.telefono ? masterData.telefono.replace(/\s+/g, '') : "";
 
     if (formId === 'persNatuForm') {
@@ -1048,10 +1055,10 @@ export function addSucursalInternal(newIndex) {
     newIndex = currentSucursales + 1;
 
     if (newIndex > maxSucursales) {
-        createAlert(`Máximo ${maxSucursales} sucursales permitidas.`, 'warning');
+        alertBody.innerText = `Máximo ${maxSucursales} sucursales permitidas.`;
+        alert.show();
         return;
     }
-    alertContainer.innerHTML = '';
 
     const newSucursalDiv = document.createElement('div');
     newSucursalDiv.className = 'sucursal-item justify-content-around align-items-center flex-row m-2 p-2';
@@ -1060,25 +1067,25 @@ export function addSucursalInternal(newIndex) {
                     <h4>Dirección sucursal ${newIndex}</h4>
                     <div class="d-flex">
                         <div class="col-md-4 form-group input-wrapper">
-                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" autocomplete="off" required />
+                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="off" required />
                             <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal *" alt="Dirección Sucursal *"></label>
                         </div>
                         <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento *</label>
-                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" required></select>
+                            <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                         <div class="col-md-4 form-group d-block custom-input-group">
                             <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad *</label>
-                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" required></select>
+                            <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="col-md-6 form-group input-wrapper">
-                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" required />
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
                             <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
                         <div class="col-md-6 form-group input-wrapper">
-                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" required />
+                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
                             <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
                         <div class="form-group">
@@ -1120,34 +1127,68 @@ export function addControlRow() {
     controlTableBody.appendChild(newRow);
 }
 
-
 //funcion para precargar nombres de los docs de uploadDocsForm
 export function loadDocsForm(data, isOEAValue) {
     const form = document.getElementById('uploadDocsForm');
+    if (!form) return
 
-    if (isOEAValue) {
-        const r = form.querySelector(`input[name="upOEA"][value="${isOEAValue}"]`);
-        if (r) r.checked = true;
-        toggleOEA();
-    }
-
-    data.forEach(doc => {
-        const categoria = doc.categoriaDOC || doc.CategoriaDOC;
-        const nombre = doc.nombreArchivo || doc.NombreArchivo;
-
-        const input = document.getElementById(categoria);
-        if (input) {
-
-            input.setAttribute('data-file-name', nombre);
-            input.classList.add('file-existing');
-
-            const container = input.closest('.custom-file-container');
-            const btn = container.querySelector('.btn-clear-file');
-
-            if (btn) btn.style.display = 'flex';
+    //limpieza inicial
+    form.querySelectorAll('input').forEach(el => {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+            el.checked = false;
+        } else {
+            el.value = '';
         }
+
+        el.classList.remove('file-existing');
+        el.removeAttribute('data-file-name');
     });
 
+    form.querySelectorAll('.btn-clear-file').forEach(btn => btn.style.display = 'none');
+
+    const containerYesOEA = document.getElementById('sectionYesOEA');
+    if (containerYesOEA) containerYesOEA.style.display = 'none';
+
+    const containerNoOEA = document.getElementById('sectionNoOEA');
+    if (containerNoOEA) containerNoOEA.style.display = 'none';
+
+
+    //carga de datos
+    if (isOEAValue) {
+        const r = form.querySelector(`input[name="upOEA"][value="${isOEAValue}"]`);
+        if (r) {
+            r.checked = true;
+            toggleOEA();
+        }
+    }
+
+    if (data && data.length > 0) {
+        data.forEach(doc => {
+            const categoria = doc.categoriaDOC || doc.CategoriaDOC;
+            const nombre = doc.nombreArchivo || doc.NombreArchivo;
+
+            const input = document.getElementById(categoria);
+            if (input) {
+                input.setAttribute('data-file-name', nombre);
+                input.classList.add('file-existing');
+
+                const container = input.closest('.custom-file-container');
+                if (container) {
+                    const btn = container.querySelector('.btn-clear-file');
+                    if (btn) btn.style.display = 'flex';
+                }
+            }
+        });
+    }
+
+    const magnetic = document.getElementById('upContingMeMagnetico');
+    const firmada = document.getElementById('upContingFirmada');
+
+    if (magnetic && magnetic.classList.contains('file-existing')) {
+        blockExcl('upContingFirmada', true);
+    } else if (firmada && firmada.classList.contains('file-existing')) {
+        blockExcl('upContingMeMagnetico', true);
+    }
 }
 
 //logica para visualizacion de campos de uploadDocsForm y boton "x"
@@ -1156,6 +1197,12 @@ export function fileHandler() {
     if (!form) return;
 
     const fileContainers = form.querySelectorAll('.custom-file-container');
+
+    //campos excluyentes
+    const exclusiones = {
+        'upContingMeMagnetico': 'upContingFirmada',
+        'upContingFirmada': 'upContingMeMagnetico'
+    };
 
     fileContainers.forEach(f => {
         const input = f.querySelector('input[type="file"]');
@@ -1174,6 +1221,10 @@ export function fileHandler() {
                 input.classList.add('file-existing');
 
                 if (btnClear) btnClear.style.display = 'flex';
+
+                if (exclusiones[input.id]) {
+                    blockExcl(exclusiones[input.id], true);
+                }
             }
         });
 
@@ -1185,24 +1236,63 @@ export function fileHandler() {
                 input.value = '';
                 input.classList.remove('file-existing');
                 input.removeAttribute('data-file-name');
-                hasValue();
                 btnClear.style.display = 'none';
+
+                if (exclusiones[input.id]) {
+                    blockExcl(exclusiones[input.id], false);
+                }
+
+                if (typeof hasValue === "function") hasValue();
             });
         }
-    })
+    });
+}
+function blockExcl(targetId, bloquear) {
+    const targInput = document.getElementById(targetId);
+    if (!targInput) return;
 
-    
+    const container = targInput.closest('.custom-file-container');
+    const label = container.querySelector('label');
+
+    if (bloquear) {
+        targInput.classList.add('no-edit');
+        targInput.required = false;
+        if (label) label.classList.add('disabled-label')
+    } else {
+        targInput.classList.remove('no-edit');
+        targInput.required = true;
+        if (label) label.classList.remove('disabled-label');
+    }
 }
 
 export function toggleOEA() {
     const si = document.getElementById('upOEAsi').checked;
-    const containerOEA = document.getElementById('sectionOEA');
+    const no = document.getElementById('upOEAno').checked;
+    const containerYesOEA = document.getElementById('sectionYesOEA');
+    const containerNoOEA = document.getElementById('sectionNoOEA');
     if (si) {
-        $(containerOEA).fadeIn();
-        containerOEA.querySelectorAll('input').forEach(i => i.required = true);
+        containerNoOEA.style.display = 'none';
+        containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
+        containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
+
+        containerYesOEA.style.display = 'block';
+        containerYesOEA.querySelectorAll('input').forEach(i => i.required = true);
+    } else if (no) {
+        containerYesOEA.style.display = 'none';
+        containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
+        containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+
+        containerNoOEA.style.display = 'block';
+        containerNoOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else {
-        $(containerOEA).fadeOut();
-        containerOEA.querySelectorAll('input').forEach(i => i.value = '');
-        containerOEA.querySelectorAll('input').forEach(i => i.required = false);
+        containerYesOEA.style.display = 'none';
+        containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
+        containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+
+        containerNoOEA.style.display = 'none';
+        containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
+        containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
     }
+
+
 }

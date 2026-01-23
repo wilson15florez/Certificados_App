@@ -91,7 +91,6 @@ export function collectFormData_Juridica() {
             Departamento: document.getElementById(`pjDepartDirSucursal_${i}`)?.value || null,
             Ciudad: document.getElementById(`pjCiudadDirSucursal_${i}`)?.value || null,
             Email: document.getElementById(`pjEmailDirSucursal_${i}`)?.value || null,
-            //Telefono: document.getElementById(`pjTelDirSucursal_${i}`)?.value || null
             telefono: telInst[`pjTelDirSucursal_${i}`]?.getNumber() || null
         };
     }).filter(s => s.Direccion);

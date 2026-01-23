@@ -98,6 +98,13 @@ export async function loadBancosData() {
     }
 }
 
+//funcion para traer la informacion de los proveedores
+export async function getProvDataForms(idNum, personType) {
+    const response = await fetch(`/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`);
+
+    return await response.json();
+}
+
 //funcion para traer la informacion de los documentos de uploadDocsForm
 export async function getProvDocuments(idNum) {
     const response = await fetch(`/Admin/GetProviderFiles?idNum=${idNum}`);
@@ -120,15 +127,12 @@ export function sendData(payload, url) {
         .then(response => response.json())
         .then(result => {
             if (result.error || result.status === 'error') {
-                alert("Error: " + (result.message || result.error));
                 throw new Error(result.message || result.error);
             }
-            alert("¡Exito! " + (result.message || 'Guardado correctamente.'));
             return result;
         })
         .catch(error => {
             console.error('Error de Fetch:', error);
-            alert("Error al guardar: " + error.message);
         });
 }
 
@@ -151,3 +155,13 @@ export function sendFiles(formData, url) {
             return result;
         });
 }
+
+//export async function dataProvider() {
+//    try {
+//        const response = await fetch('/Provider/CheckProviderRegister');
+//        return await response.json();
+//    } catch {
+//        console.error("Error al obtener perfil: ", error);
+//        throw error;
+//    }
+//}
