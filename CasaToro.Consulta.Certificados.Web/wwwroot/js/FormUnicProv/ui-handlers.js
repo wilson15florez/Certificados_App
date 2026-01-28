@@ -31,6 +31,45 @@ let originalPEPEntidad = '';
 
 //}
 
+//funcion para boton de auto scroll
+export function scrollButton() {
+    const btn = document.getElementById('btnScrollAuto');
+    const icon = document.getElementById('scrollIcon');
+
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        //calcula la posicion del scroll
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const fullHeight = document.body.offsetHeight;
+
+        //si se esta a mas de la mitad de la pagina, el boton cambia a subir
+        if (scrollPosition > (fullHeight / 4)) {
+            icon.classList.replace('bi-arrow-down-circle-fill', 'bi-arrow-up-circle-fill');
+            btn.classList.add('btn-up');
+            btn.title = 'Ir al inicio';
+        } else {
+            icon.classList.replace('bi-arrow-up-circle-fill', 'bi-arrow-down-circle-fill');
+            btn.classList.remove('btn-up');
+            btn.title = 'Ir al final';
+        }
+    });
+
+    btn.addEventListener('click', () => {
+        const fullHeight = document.body.offsetHeight;
+        const scrollPosition = window.scrollY;
+
+        if (scrollPosition > (fullHeight / 4)) {
+            //scroll hacia arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            //scroll hacia abajo
+            window.scrollTo({ top: fullHeight, behavior: 'smooth' });
+        }
+    });
+}
+
 //funcion para bloquear los selects al iniciar la carga de la pagina
 export function firstBlock() {
     //bloqueo inicial form persona natural
@@ -907,6 +946,8 @@ export async function loadMasterData(masterData, formId, idNum) {
             await waitSafeSetPhone('pnCelular', cleanTel);
             await waitSafeSetPhone('pnTelefono', '');
         }
+
+        document.getElementById('pvDeAuRepresentacion').value = masterData.nombre || '';
     }
     else if (formId === 'persJuriForm') {
         //precarga los campos que coincida con la data de master
@@ -920,6 +961,8 @@ export async function loadMasterData(masterData, formId, idNum) {
         if (pjInpNumId) {
             document.getElementById('pjNIT').value = idNum;
         }
+
+        document.getElementById('pvDeAuRepresentacion').value = masterData.nombre || '';
     }
 }
 

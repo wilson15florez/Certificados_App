@@ -78,8 +78,8 @@
             <!-- form de persona natural-->
             <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
 
-                <div class="justify-content-around align-items-center flex-row m-2 p-2">
-                    <h2>Persona Natural</h2>
+                <div class="flex-row header-form">
+                    <h2 class="title-form">Persona Natural</h2>
                 </div>
                 
                 <div>
@@ -269,8 +269,8 @@
             <!-- form de persona juridica-->
             <form id="persJuriForm" class="form-section" style="display:none;" autocomplete="off">
 
-                <div class="justify-content-around align-items-center flex-row m-2 p-2">
-                    <h2>Persona Jurídica</h2>
+                <div class="flex-row header-form">
+                    <h2 class="title-form">Persona Jurídica</h2>
                 </div>
                 
                 <div>
@@ -365,8 +365,8 @@
                     </div>
 
                     <!-- Subform de representante legal-->
-                    <div class="justify-content-around align-items-center flex-row m-2 p-2">
-                        <h3>Información del Representante Legal</h3>
+                    <div class="flex-row header-form">
+                        <h3 class="title-form">Información del Representante Legal</h3>
                     </div>
                     <div class="d-flex justify-content-around align-items-center  m-2 p-2">
                         <div class="col-md-3 form-group input-wrapper">
@@ -443,8 +443,8 @@
             <!-- form conocimiento proveedores (tanto para persona natural como juridica)-->
             <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
 
-                <div class="justify-content-around align-items-center flex-row m-2 p-2">
-                    <h3>Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>
+                <div class="flex-row header-form">
+                    <h3 class="title-form">Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>
                 </div>
 
                 <div>
@@ -630,8 +630,8 @@
                         </div>
                     </div>
 
-                    <div class="justify-content-around align-items-center m-2 p-2">
-                        <h3>Mercancía y Comercio Exterior</h3>
+                    <div class="flex-row header-form">
+                        <h3 class="title-form">Mercancía y Comercio Exterior</h3>
                     </div>
 
                     <div class="d-flex justify-content-around align-items-center m-2 p-2">
@@ -645,8 +645,8 @@
                         </div>
                     </div>
 
-                    <div class="justify-content-around align-items-center m-2 p-2">
-                        <h3>Información de la Cuenta de Pagos</h3>
+                    <div class="flex-row header-form">
+                        <h3 class="title-form">Información de la Cuenta de Pagos</h3>
                     </div>
 
                     <div class="row d-flex justify-content-around align-items-center m-2 p-2">
@@ -761,7 +761,10 @@
             <!-- subform declaraciones y autorizaciones-->
             <form id="declAutorPanel" class="floating-panel" autocomplete="off">
                 <div class="DeclAut-content">
-                    <h4>Declaraciones y Autorizaciones</h4>
+                    <div class="flex-row header-form">
+                        <h3 class="title-form">Declaraciones y Autorizaciones</h3>
+                    </div>
+                    
                     <div class="panelField">
                         <p>
                             <b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" class="form-control-input-wrapper" />,
@@ -910,7 +913,9 @@
             @* Contenido de uploadDocs *@
             <!-- form para subir documentos-->
             <form id="uploadDocsForm" enctype="multipart/form-data" class="form-section card flex-row" style="display:none;">
-                <h2 class="m-2 p-2"> Documentos Anexos </h2>
+                <div class="flex-row header-form">
+                    <h3 class="title-form"> Documentos Anexos </h3>
+                </div>
                 <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                     <div class="col-md-6 form-group input-wrapper">
                         <div class="custom-file-container">
@@ -1056,11 +1061,17 @@
 
 
             @* Contenido de printFormat *@
+            <form id="printFormatForm" style="display:none;"></form>
 
         </section>
 
 
     </main>
+
+    <!--Boton de scroll-->
+    <button type="button" id="btnScrollAuto" class="btn btn-primary scroll-btn" title="Ir al final">
+        <i id="scrollIcon" class="bi bi-arrow-down-circle-fill"></i>
+    </button>
 
     <!--Alertas-->
     <div class="modal fade" id="alertSuccess" tabindex="-1" aria-labelledby="alertLabelSuccess" aria-hidden="true">

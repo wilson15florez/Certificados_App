@@ -29,7 +29,7 @@ let activeDirecform = null;
 //funcion de inicializacion de handlers
 function initHandlers() {
 
-    
+    UI.scrollButton();
     UI.firstBlock();
     UI.fileHandler();
     Validator.dateLimits();
@@ -434,13 +434,13 @@ personTypeSelect.addEventListener('change', function () {
     idNumInput.value = '';
 
 });
-idNumInput.addEventListener('change', function () {
+idNumInput.addEventListener('input', function () {
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
     subNavConteiner.style.display = 'none';
-})
+});
 
 //listener de envio de forms
 submitPrvBtn.addEventListener("click", async (e) => {

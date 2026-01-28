@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CasaToro.Consulta.Certificados.BL.Services;
+using CasaToro.Consulta.Certificados.Entities;
+using CasaToro.Consulta.Certificados.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CasaToro.Consulta.Certificados.BL.Services;
-using CasaToro.Consulta.Certificados.Web.Models;
-using CasaToro.Consulta.Certificados.Entities;
 using System.Security.Claims;
 
 
@@ -16,14 +17,18 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         private readonly ProviderService _providerService;
         private readonly CertificatesService _certificatesService;
         private readonly LogService _logService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly FormatService _formatService = new FormatService();
 
         // Constructor del controlador que recibe instancias de los servicios necesarios
-        public ProviderController(BillService billService, ProviderService providerService, CertificatesService certificatesServices, LogService logService)
+        public ProviderController(BillService billService, ProviderService providerService, CertificatesService certificatesServices, LogService logService, IWebHostEnvironment webHostEnvironment, FormatService formatService)
         {
             _billService = billService;
             _providerService = providerService;
             _certificatesService = certificatesServices;
             _logService = logService;
+            _webHostEnvironment = webHostEnvironment;
+            _formatService = formatService;
         }
 
         // Acción que muestra la vista de certificados para el proveedor autenticado
@@ -186,7 +191,18 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         }
 
         [HttpGet]
-        
+        public async Task<IActionResult> printFormat(string nit)
+        {
+            dynamic dataProvider = await _providerService.getProviderDetails(nit, "juridica");
+
+            if (dataProvider == null) return NotFound("No se encontro informacion para el Nit proporcionado.");
+
+            string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
+
+            string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath.TrimStart('/'));
+
+            return File(System.IO.File.ReadAllBytes(fullPath), "application/pdf", $"Formato_{nit}.pdf");
+        }
 
         [HttpPost]
         public IActionResult UpdatePassword([FromBody] string password)
