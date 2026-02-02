@@ -13,14 +13,16 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         private readonly CertificateServiceExcel _certificateServiceExcel;
         private readonly ProviderService _providerService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly FormatService _formatService = new FormatService();
 
 
         // Constructor del controlador que recibe instacias de los servicios necesarios
-        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService, IWebHostEnvironment webHostEnvironment)
+        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService, IWebHostEnvironment webHostEnvironment, FormatService formatService)
         {
             _certificateServiceExcel = certificateServiceExcel;
             _providerService = providerService;
             _webHostEnvironment = webHostEnvironment;
+            _formatService = formatService;
         }
 
         // Acción que muestra la vista principal del administrador
@@ -182,27 +184,27 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para actualizar form general
+        //accion para actualizar informacion financiera
         [HttpPost]
-        [Route("/Admin/UpdateProviderFUCP")]
-        public IActionResult UpdateProviderFUCP([FromBody] Proveedores_FUCP providerData)
+        [Route("/Admin/UpdateProvFinanceInfo")]
+        public IActionResult UpdateProvFinanceInfo([FromBody] Proveedores_InfoFinanciera providerData)
         {
             try
             {
                 if (providerData == null)
                     return Json(new { status = "error", message = "Datos no recibidos." });
 
-                var existing = _providerService.getFUCPByNit(providerData.Nit);
+                var existing = _providerService.getProvFinanceInfByNit(providerData.Nit);
                 if (existing == null)
                     return Json(new { status = "error", message = "El proveedor no está registrado en el sistema." });
 
-                _providerService.UpdateFUCPInfo(providerData);
+                _providerService.UpdateFinanceInfo(providerData);
 
-                return Json(new { status = "success", message = "Información FUCP actualizada correctamente." });
+                return Json(new { status = "success", message = "Información Financiera actualizada correctamente." });
             }
             catch (Exception ex)
             {
-                return Json(new { status = "error", message = "Error al actualizar la informacion FUCP: " + ex.Message });
+                return Json(new { status = "error", message = "Error al actualizar la información Financiera: " + ex.Message });
             }
         }
 
@@ -224,14 +226,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                     return Json(new { status = "notFound", idNum });
                 }
 
-                //intenta obtener los detalles de persona (natural o juridica) + FUCP
+                //intenta obtener los detalles de persona (natural o juridica) + Informacion Financiera
                 dynamic naturalData = await _providerService.getProviderDetails(idNum, "natural");
                 dynamic juridicaData = await _providerService.getProviderDetails(idNum, "juridica");
 
                 bool natur = naturalData?.existNatu ?? false;
                 bool juri = juridicaData?.existJuri ?? false;
-                bool fucpN = naturalData?.existFUCP ?? false;
-                bool fucpJ = juridicaData?.existFUCP ?? false;
+                bool finInfNat = naturalData?.existFinanInf ?? false;
+                bool finInfJur = juridicaData?.existFinanInf ?? false;
 
                 // Si existe registro como natural y se está consultando juridica
                 if (natur && personType == "juridica")
@@ -247,6 +249,22 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 if (personType == "juridica" && juri)
                     return Json(new { status = "foundDetail", data = juridicaData });
+
+                if (personType == "natural" && !natur)
+                {
+                    var sugerencia = _providerService.SplitFullName(providerMaster.Nombre);
+                    return Json(new
+                    {
+                        status = "foundMasterOnly",
+                        data = providerMaster,
+                        suggested = new
+                        {
+                            firstSurname = sugerencia.firstSurname,
+                            secondSurname = sugerencia.secondSurname,
+                            names = sugerencia.names
+                        }
+                    });
+                }
 
                 //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
                 return Json(new { status = "foundMasterOnly", data = providerMaster });
@@ -264,12 +282,67 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             try
             {
                 var documentos = _providerService.GetDocumentsByNit(idNum);
-                var dataFUCP = _providerService.getFUCPByNit(idNum);
-                return Json(new { status = "success", data = documentos, isOEA = dataFUCP?.upIsOEA});
+                var dataFinanInf = _providerService.getProvFinanceInfByNit(idNum);
+                return Json(new { status = "success", data = documentos, isOEA = dataFinanInf?.upIsOEA });
             }
             catch (Exception ex)
             {
                 return Json(new { status = "error", message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PrintFormat(string nit)
+        {
+            try
+            {
+                dynamic dataProvider = await _providerService.getProviderDetails(nit, "juridica");
+
+                if (dataProvider == null || dataProvider.juridica == null)
+                {
+                    return BadRequest(new
+                    {
+                        status = "missing_data",
+                        message = "Es necesario llenar primero el Formato Único de Conocimiento de Proveedores (Persona Jurídica)."
+                    });
+                }
+
+                var juri = dataProvider.juridica as Dictionary<string, object>;
+                var finanInf = dataProvider.finanInf as Dictionary<string, object>;
+
+                if (juri != null && finanInf != null)
+                {
+                    if (juri.ContainsKey("pjRLNacionalidad"))
+                        juri["pjRLNacionalidad"] = _providerService.ConsultCountry(juri["pjRLNacionalidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (juri.ContainsKey("pjRLDepartNac"))
+                        juri["pjRLDepartNac"] = _providerService.ConsultState(juri["pjRLDepartNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (juri.ContainsKey("pjRLCiudadNac"))
+                        juri["pjRLCiudadNac"] = _providerService.ConsultCity(juri["pjRLCiudadNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvPorPais"))
+                        finanInf["pvPorPais"] = _providerService.ConsultCountry(finanInf["pvPorPais"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvAcEconomica"))
+                        finanInf["pvAcEconomica"] = _providerService.ConsultEconomic(finanInf["pvAcEconomica"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvEntidad"))
+                        finanInf["pvEntidad"] = _providerService.ConsultBank(finanInf["pvEntidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+                }
+
+                string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
+
+                string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath.TrimStart('/'));
+
+                //byte[] fileBytes = System.IO.File.ReadAllBytes(fullPath);
+
+                //return File(fileBytes, "application/pdf", $"Formato_{idNum}.pdf");
+                return Json(new { url = relativePath });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -327,30 +400,30 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para agregar form general
+        //accion para agregar informcion financiera
         [HttpPost]
-        [Route("/Admin/AddProviderFUCP")]
-        public IActionResult AddProviderFUCP([FromBody] Proveedores_FUCP provider)
+        [Route("/Admin/AddProvFinanceInfo")]
+        public IActionResult AddProvFinanceInfo([FromBody] Proveedores_InfoFinanciera provider)
         {
             try
             {
-                if (provider == null) return Json(new { status = "error", message = "Datos generales del proveedor no recibidos." });
+                if (provider == null) return Json(new { status = "error", message = "Información Financiera del proveedor no recibida." });
 
                 //validar la existencia del proveedor en la tabla Proveedores_Master
                 var pmaster = _providerService.getProviderByNit(provider.Nit);
                 if (pmaster == null) return Json(new { status = "error", message = "El provedor no esta registrado en el sistema." });
 
-                //validar que no exista ya el registro en proveedores_FUCP
-                var existingFUCP = _providerService.getFUCPByNit(provider.Nit);
-                if (existingFUCP != null) return Json(new { status = "error", message = "El proveedor ya tiene informacion registrada en FUCP." });
+                //validar que no exista ya el registro en proveedores_InfoFinanciera
+                var existFinanInf = _providerService.getProvFinanceInfByNit(provider.Nit);
+                if (existFinanInf != null) return Json(new { status = "error", message = "El proveedor ya tiene información financiera registrada." });
 
-                //insertar registro en FUCP
-                _providerService.AddProveedorFUCP(provider);
-                return Json(new { status = "success", message = "Proveedor registrado en FUCP correctamente." });
+                //insertar registro en Informacion Financiera
+                _providerService.AddProvFinanceInf(provider);
+                return Json(new { status = "success", message = "Información Financiera del Proveedor registrada correctamente." });
             }
             catch (Exception ex)
             {
-                return Json(new { status = "error", message = "Error al agregar FUCP: " + ex.Message });
+                return Json(new { status = "error", message = "Error al agregar Información Financiera: " + ex.Message });
             }
         }
 

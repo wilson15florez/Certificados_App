@@ -8,29 +8,6 @@ let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
 
-//funcion que valida tipo de persona que proveedor habia seleccionado y despliega el form indicado (vista proveedor)
-//export function formViewProvHandler(result) {
-//    if (result.status === "noType") {
-//        createAlert(result.message, 'warning'); cambiar al nuevo alert
-//        return;
-//    }
-
-//    const personType = result.type.toLowerCase();
-
-//    if (personType === 'natural') {
-//        $('#sectionNatural').fadeIn();
-//        $('#sectionJuridica').hide();
-
-//        loadFormData_Natural(result.data);
-//    } else {
-//        $('#sectionJuridica').fadeIn();
-//        $('#sectionNatural').hide();
-
-//        loadFormData_Juridica(result.data);
-//    }
-
-//}
-
 //funcion para boton de auto scroll
 export function scrollButton() {
     const btn = document.getElementById('btnScrollAuto');
@@ -88,7 +65,7 @@ export function firstBlock() {
     pjRLDepartNac.disabled = true;
     pjRLCiudadNac.disabled = true;
 
-    //bloqueo inicial form general
+    //bloqueo inicial form informacion financiera
     pvPorPais.disabled = true;
     pvDepartDec.disabled = true;
     pvCiudadDec.disabled = true;
@@ -446,7 +423,7 @@ export function hasValue() {
     });
 }
 
-//funcion que gestiona los select de ubicacion del provForm
+//funcion que gestiona los select de ubicacion del provForm (Informacion Financiera)
 export async function ubicProvFormHandler() {
 
     //si es autorellenado no limpia los selects de ubicacion
@@ -790,7 +767,7 @@ export async function loadFormData_Juridica(data) {
     isAutoFilling = false;
 }
 
-//funcion para precargar datos en el formulario de proveedor general (provForm)
+//funcion para precargar datos en el formulario de informacion financiera (provForm)
 export async function loadProvFormData(data) {
 
     isAutoFilling = true;
@@ -921,13 +898,15 @@ export async function loadProvFormData(data) {
 }
 
 //funcion para precargar datos de proveedores_Master
-export async function loadMasterData(masterData, formId, idNum) {
+export async function loadMasterData(masterData, formId, idNum, suggest) {
 
     const cleanTel = masterData.telefono ? masterData.telefono.replace(/\s+/g, '') : "";
 
     if (formId === 'persNatuForm') {
         //precarga los campos que coincida con la data de master
-        document.getElementById('pnNombreCompl').value = masterData.nombre || '';
+        document.getElementById('pnPrimerApell').value = suggest.firstSurname || '';
+        document.getElementById('pnSegundoApell').value = suggest.secondSurname || '';
+        document.getElementById('pnNombres').value = suggest.names || '';
         document.getElementById('pnDiResidencia').value = masterData.direccion || '';
         document.getElementById('pnEmail').value = masterData.correo || '';
 
@@ -967,7 +946,7 @@ export async function loadMasterData(masterData, formId, idNum) {
 }
 
 
-//logica para campos form general (provForm)
+//logica para campos form Informacion Financiera (provForm)
 export const formatCurrency = (value) => {
     if (!value) return '';
 
@@ -1123,15 +1102,15 @@ export function addSucursalInternal(newIndex) {
                         </div>
                     </div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col-md-6 form-group input-wrapper">
+                        <div class="col-md-5 form-group input-wrapper">
                             <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
                             <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
-                        <div class="col-md-6 form-group input-wrapper">
+                        <div class="col-md-5 form-group input-wrapper">
                             <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
                             <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-2 form-group">
                             <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
                         </div>
                     </div>
@@ -1338,4 +1317,19 @@ export function toggleOEA() {
     }
 
 
+}
+
+//visualizacion de formato para imprimir
+export function printFormatHandler(url) {
+    const printFormatForm = document.getElementById('printFormatForm');
+    const iframe = document.getElementById('printFrame');
+
+    if (url) {
+        iframe.src = `${url}?t=${new Date().getTime()}`;
+
+        printFormatForm.style.display = 'block';
+    } else {
+        iframe.src = '';
+        printFormatForm.style.display = 'none';
+    }
 }

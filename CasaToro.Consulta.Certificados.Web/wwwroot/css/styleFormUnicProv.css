@@ -195,6 +195,7 @@
     align-items: center;
     margin: 0.5rem !important;
     padding: 0.5rem !important;
+    border-radius: 0.5rem;
 }
 
 .title-form {
@@ -227,4 +228,27 @@
 /* Opcional: Color diferente para identificar el cambio */
 .btn-up {
     background-color: #5399d5 !important; /* Un tono más oscuro cuando es subir */
+}
+
+.certificates-content-body {
+    display: flex;
+    align-items: center;
+    height: 80vh;
+    flex-direction: column;
+    width: 95%;
+    height: 100%;
+}
+
+.pdf-viewer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:100%
+}
+
+.pdf-viewer iframe {
+   width: 100%;
+  height: 90%;
+  margin: 11px;
 }

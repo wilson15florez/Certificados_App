@@ -21,6 +21,10 @@ public partial class Proveedores_Juridica
 
     public string? pjTelDirPrincipal { get; set; }
 
+    public string? pjPrimApeRL { get; set; }
+
+    public string? pjSegApeRL { get; set; }
+
     public string? pjNomReLeg { get; set; }
 
     public string? pjRLTipNacionalidad { get; set; }
@@ -42,6 +46,8 @@ public partial class Proveedores_Juridica
     public string? pjRLDepartNac { get; set; }
 
     public string? pjRLCiudadNac { get; set; }
+
+    public DateOnly? pjValidAnual { get; set; }
 
     public virtual ICollection<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; } = new List<AccionistasControlPJuridica>();
 

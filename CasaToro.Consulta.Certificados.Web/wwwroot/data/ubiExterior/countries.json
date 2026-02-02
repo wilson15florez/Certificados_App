@@ -1,5 +1,4 @@
-﻿{
-"countries": [
+﻿[
 	{
 		"id" : 144,
 		"name" : "Afganistán"
@@ -856,4 +855,4 @@
 		"id" : 96,
 		"name" : "Zimbabwe"
 	}
-]}
+]

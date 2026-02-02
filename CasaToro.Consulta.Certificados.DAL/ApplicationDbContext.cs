@@ -40,7 +40,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; }
 
-    public virtual DbSet<Proveedores_FUCP> Proveedores_FUCP { get; set; }
+    public virtual DbSet<Proveedores_InfoFinanciera> Proveedores_InfoFinanciera { get; set; }
 
     public virtual DbSet<Proveedores_Juridica> Proveedores_Juridica { get; set; }
 
@@ -398,9 +398,9 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
-        modelBuilder.Entity<Proveedores_FUCP>(entity =>
+        modelBuilder.Entity<Proveedores_InfoFinanciera>(entity =>
         {
-            entity.HasKey(e => e.Id_ProFUCP);
+            entity.HasKey(e => e.Id_ProInfoFinan).HasName("PK_Proveedores_FUCP");
 
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.pvAcEconomica).HasMaxLength(255);
@@ -483,7 +483,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pjDepartDirPrincipal).HasMaxLength(100);
             entity.Property(e => e.pjDirPrincipal).HasMaxLength(255);
             entity.Property(e => e.pjEmailDirPrincipal).HasMaxLength(100);
-            entity.Property(e => e.pjNomReLeg).HasMaxLength(255);
+            entity.Property(e => e.pjNomReLeg).HasMaxLength(100);
+            entity.Property(e => e.pjPrimApeRL).HasMaxLength(100);
             entity.Property(e => e.pjRLCiuExpDoc).HasMaxLength(100);
             entity.Property(e => e.pjRLCiudadNac).HasMaxLength(100);
             entity.Property(e => e.pjRLDepExpDoc).HasMaxLength(100);
@@ -493,6 +494,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pjRLTipNacionalidad).HasMaxLength(50);
             entity.Property(e => e.pjRLTipoDoc).HasMaxLength(50);
             entity.Property(e => e.pjRazSocial).HasMaxLength(255);
+            entity.Property(e => e.pjSegApeRL).HasMaxLength(100);
             entity.Property(e => e.pjTelDirPrincipal).HasMaxLength(20);
         });
 
@@ -522,17 +524,19 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pnNacionalidad).HasMaxLength(100);
-            entity.Property(e => e.pnNombreCompl).HasMaxLength(255);
+            entity.Property(e => e.pnNombres).HasMaxLength(100);
             entity.Property(e => e.pnOficProfe).HasMaxLength(100);
             entity.Property(e => e.pnPEP)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pnPEP_Entidad).HasMaxLength(255);
+            entity.Property(e => e.pnPrimerApell).HasMaxLength(100);
             entity.Property(e => e.pnReconoPublic)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
+            entity.Property(e => e.pnSegundoApell).HasMaxLength(100);
             entity.Property(e => e.pnTelefono).HasMaxLength(20);
             entity.Property(e => e.pnTipoDoc).HasMaxLength(50);
             entity.Property(e => e.pnTipoNacionalidad).HasMaxLength(50);

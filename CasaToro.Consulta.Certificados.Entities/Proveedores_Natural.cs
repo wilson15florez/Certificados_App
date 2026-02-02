@@ -10,7 +10,11 @@ public partial class Proveedores_Natural
 
     public string Nit { get; set; } = null!;
 
-    public string pnNombreCompl { get; set; } = null!;
+    public string? pnPrimerApell { get; set; }
+
+    public string? pnSegundoApell { get; set; }
+
+    public string pnNombres { get; set; } = null!;
 
     public string? pnTipoNacionalidad { get; set; }
 
@@ -53,6 +57,8 @@ public partial class Proveedores_Natural
     public string? pnPEP { get; set; }
 
     public string? pnPEP_Entidad { get; set; }
+
+    public DateOnly? pnValidAnual { get; set; }
 
     [NotMapped]
     public List<int> PEPTypes { get; set; } = new List<int>();

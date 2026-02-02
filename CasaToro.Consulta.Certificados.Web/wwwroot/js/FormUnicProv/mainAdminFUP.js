@@ -91,7 +91,7 @@ function initHandlers() {
         }
     });
 
-    //handlers para provForm
+    //handlers para provForm (informacion financiera)
     const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
     const pvPorExtranjero = document.getElementById('pvPorExtranjero');
     const pvGrCon = document.querySelectorAll('input[name="pvGrCon"]');
@@ -108,14 +108,14 @@ function initHandlers() {
 
     //carga datos de codigos CIIU y actividades economicas
     API.loadCIIUData();
-    //sincroniza actividad economica -> codigo CIIU provForm
+    //sincroniza actividad economica -> codigo CIIU provForm (informacion financiera)
     $(pvAcEconomica).on('change', function () {
         const selectVal = $(this).val();
         if (selectVal && $(pvCodCIIU).val() !== selectVal) {
             $(pvCodCIIU).val(selectVal).trigger('change.select2');
         }
     });
-    //sincroniza codigo CIIU -> actividad economica provForm
+    //sincroniza codigo CIIU -> actividad economica provForm (informacion financiera)
     $(pvCodCIIU).on('change', function () {
         const selectVal = $(this).val();
         if (selectVal && $(pvAcEconomica).val() !== selectVal) {
@@ -123,7 +123,7 @@ function initHandlers() {
         }
     });
 
-    //formato de campos monetarios provForm
+    //formato de campos monetarios provForm (informacion financiera)
     const moneyInputs = [
         'pvIngrMens', 'pvEgrMens', 'pvActivos',
         'pvPasivos', 'pvPatrimonio', 'pvOtrIngr',
@@ -233,6 +233,7 @@ consultBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     const openFormsBtn = document.getElementById('openFormsBtn');
     const uploadDocsBtn = document.getElementById('uploadDocsBtn');
+    const printFormatForm = document.getElementById('printFormatForm');
 
     const personTypeSelect = document.getElementById('personType');
     const personType = personTypeSelect.value;
@@ -243,6 +244,7 @@ consultBtn.addEventListener('click', async function (e) {
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
 
     if (!personType || !idNum) {
         alertErrorBody.innerText = 'Por favor, ingrese el Tipo de persona e ingrese el Numero de Identificación.';
@@ -280,7 +282,7 @@ consultBtn.addEventListener('click', async function (e) {
 
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
-            alertSuccesBody.innerText = `Proveedor con ID: ${idNum} encontrado en la base de datos basica. Complete y/o actualice la informacion.`;
+            alertSuccesBody.innerText = `Proveedor con ID: ${idNum} encontrado en la base de datos basica. Complete la informacion.`;
             alertSuccess.show();
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
@@ -288,7 +290,7 @@ consultBtn.addEventListener('click', async function (e) {
             return;
         }
 
-        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_FUCP
+        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
         if (result.status === 'foundDetail') {
             alertSuccesBody.innerText = `Informacion del proveedor con ID: ${idNum} cargada con exito.`;
             alertSuccess.show();
@@ -317,6 +319,7 @@ openFormsBtn.addEventListener('click', async function (e) {
     const idNum = idNumInput.value.trim();
 
     uploadDocsForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
 
     try {
         const result = await API.getProvDataForms(idNum, personType);
@@ -326,6 +329,7 @@ openFormsBtn.addEventListener('click', async function (e) {
             isNewRegister = true;
 
             const masterData = result.data;
+            const suggest = result.suggested;
 
             if (personType === 'natural') {
                 persNatuForm.style.display = 'block';
@@ -335,7 +339,7 @@ openFormsBtn.addEventListener('click', async function (e) {
                 UI.loadProvFormData({});
 
                 setTimeout(async () => {
-                    await UI.loadMasterData(masterData, 'persNatuForm', idNum);
+                    await UI.loadMasterData(masterData, 'persNatuForm', idNum, suggest);
                     UI.hasValue();
                 }, 100);
 
@@ -357,7 +361,7 @@ openFormsBtn.addEventListener('click', async function (e) {
             return;
         }
 
-        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_FUCP
+        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
         if (result.status === 'foundDetail') {
 
             const formData = result.data;
@@ -380,8 +384,8 @@ openFormsBtn.addEventListener('click', async function (e) {
 
             await UI.ubicProvFormHandler();
 
-            if (formData.fucp) {
-                await UI.loadProvFormData(formData.fucp);
+            if (formData.finanInf) {
+                await UI.loadProvFormData(formData.finanInf);
             }
 
             UI.hasValue();
@@ -404,7 +408,7 @@ uploadDocsBtn.addEventListener('click', async function (e) {
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
-
+    printFormatForm.style.display = 'none';
     
     uploadDocsForm.style.display = 'block';
 
@@ -417,12 +421,37 @@ uploadDocsBtn.addEventListener('click', async function (e) {
         UI.loadDocsForm([], null);
     }
 });
-printFormatBtn.addEventListener('click', function (e) {
+printFormatBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
+
+    const personTypeSelect = document.getElementById('personType');
+    const personType = personTypeSelect.value;
+    const idNumInput = document.getElementById('idNum');
+    const idNum = idNumInput.value.trim();
+
+    if (!personType === "juridica") {
+        alertErrorBody.innerText = 'La impresión de formato solo está disponible para Personas Jurídicas.';
+        alertError.show();
+        return;
+    } else {
+        try {
+            const result = await API.getFormat(idNum);
+            if (result && result.url) {
+                UI.printFormatHandler(result.url);
+            }
+        }
+        catch (err) {
+            console.error("Error al obtener formato: ", err);
+
+            alertErrorBody.innerText = err.message;
+            alertError.show();
+            UI.printFormatHandler(null);
+        }
+    }
 });
 
 //logica para mostrar/ocultar los forms al cambiar el tipo de persona
@@ -438,6 +467,7 @@ idNumInput.addEventListener('input', function () {
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
     subNavConteiner.style.display = 'none';
 });
@@ -463,13 +493,13 @@ submitPrvBtn.addEventListener("click", async (e) => {
         //Add o Update segun tipo de persona y su registro
         if (personTypeSelect.value === 'natural') {
             await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural');
-            //Add o Update del form proveedor general(FUCP)
-            await API.sendData(provData, isNewRegister ? '/Admin/AddProviderFUCP' : '/Admin/UpdateProviderFUCP');
+            //Add o Update del provForm(Informacion Financiera)
+            await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
 
         } else if (personTypeSelect.value === 'juridica') {
             await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
-            //Add o Update del form proveedor general(FUCP)
-            await API.sendData(provData, isNewRegister ? '/Admin/AddProviderFUCP' : '/Admin/UpdateProviderFUCP');
+            //Add o Update del provForm(Informacion Financiera)
+            await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
         }
 
         alertSuccesBody.innerText = 'Proveedor guardado completamente.';

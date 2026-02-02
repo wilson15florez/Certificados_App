@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 
@@ -191,17 +192,65 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> printFormat(string nit)
+        public async Task<IActionResult> GetProvPersonDetails()
         {
-            dynamic dataProvider = await _providerService.getProviderDetails(nit, "juridica");
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                if (string.IsNullOrEmpty(nit)) return Unauthorized();
 
-            if (dataProvider == null) return NotFound("No se encontro informacion para el Nit proporcionado.");
+                //verifica en la tabla Proveedores_Master
+                var provMaster = _providerService.getProviderByNit(nit);
 
-            string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
+                dynamic naturalData = await _providerService.getProviderDetails(nit, "natural");
+                dynamic juridicaData = await _providerService.getProviderDetails(nit, "juridica");
 
-            string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath.TrimStart('/'));
+                bool natu = naturalData?.existNatu ?? false;
+                bool jur = juridicaData?.existJuri ?? false;
+                bool finInfNat = naturalData?.existFinanInf ?? false;
+                bool finInfJur = juridicaData?.existFinanInf ?? false;
 
-            return File(System.IO.File.ReadAllBytes(fullPath), "application/pdf", $"Formato_{nit}.pdf");
+
+                var tipoPersona = provMaster?.TipoPersona?.Trim();
+
+                //si se encuentra en la tabla correspondiente al tipo de persona
+                if (provMaster?.TipoPersona == "Natural" && natu)
+                    return Json(new { status = "foundDetail", data = naturalData, typePerson = tipoPersona });
+
+                if (provMaster?.TipoPersona == "Juridica" && jur)
+                    return Json(new { status = "foundDetail", data = juridicaData, typePerson = tipoPersona });
+
+                //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
+                return Json(new { status = "foundMasterOnly", data = provMaster, typePerson = tipoPersona?.ToLower() });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = "Error al consultar proveedor: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> printFormat(string idNum, string personType)
+        {
+            try
+            {
+                dynamic dataProvider = await _providerService.getProviderDetails(idNum, "juridica");
+
+                if (dataProvider == null) return NotFound("No se encontro informacion para el Nit proporcionado.");
+
+                string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
+
+                string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath.TrimStart('/'));
+
+                //byte[] fileBytes = System.IO.File.ReadAllBytes(fullPath);
+
+                //return File(fileBytes, "application/pdf", $"Formato_{idNum}.pdf");
+                return Json(new { url = relativePath });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]

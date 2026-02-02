@@ -17,7 +17,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         public string FillFormatoPDF(dynamic datos, string webRootPath)
         {
             var juridica = datos.juridica as IDictionary<string, object>;
-            var fucp = datos.fucp as IDictionary<string, object>;
+            var finanInf = datos.finanInf as IDictionary<string, object>;
             //var sucursales = datos.Sucursales as List<CasaToro.Consulta.Certificados.Entities.Sucursales_PJuridica>;
             //var accionistas = datos.Accionistas as List<CasaToro.Consulta.Certificados.Entities.AccionistasControlPJuridica>;
 
@@ -126,16 +126,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pjRLCiudadExpDoc", juridica["pjRLCiuExpDoc"]?.ToString());
 
 
-                        SetField(fields, "pvIngMen", fucp["pvIngrMens"]?.ToString());
-                        SetField(fields, "pvEgrMen", fucp["pvEgrMens"]?.ToString());
-                        SetField(fields, "pvActivos", fucp["pvActivos"]?.ToString());
-                        SetField(fields, "pvPasivos", fucp["pvPasivos"]?.ToString());
-                        SetField(fields, "pvPatrimonio", fucp["pvPatrimonio"]?.ToString());
-                        SetField(fields, "pvOtroIngr", fucp["pvOtrIngr"]?.ToString());
-                        SetField(fields, "pvPorceNac", fucp["pvPorNacional"]?.ToString());
-                        SetField(fields, "pvPorceExt", fucp["pvPorExtranjero"]?.ToString());
-                        SetField(fields, "pvPorcePaisExt", fucp["pvPorPais"]?.ToString());
-                        string tipEmp = fucp["pvTipEmp"]?.ToString();
+                        SetField(fields, "pvIngMen", finanInf["pvIngrMens"]?.ToString());
+                        SetField(fields, "pvEgrMen", finanInf["pvEgrMens"]?.ToString());
+                        SetField(fields, "pvActivos", finanInf["pvActivos"]?.ToString());
+                        SetField(fields, "pvPasivos", finanInf["pvPasivos"]?.ToString());
+                        SetField(fields, "pvPatrimonio", finanInf["pvPatrimonio"]?.ToString());
+                        SetField(fields, "pvOtroIngr", finanInf["pvOtrIngr"]?.ToString());
+                        SetField(fields, "pvPorceNac", finanInf["pvPorNacional"]?.ToString());
+                        SetField(fields, "pvPorceExt", finanInf["pvPorExtranjero"]?.ToString());
+                        SetField(fields, "pvPorcePaisExt", finanInf["pvPorPais"]?.ToString());
+                        string tipEmp = finanInf["pvTipEmp"]?.ToString();
                         if (tipEmp == "EmPublica")
                         {
                             //form.GetField("pvTEPublic").SetValue("EmPublica");
@@ -157,12 +157,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvTEOtra")) form.GetField("pvTEOtra").SetValue("pvEmOtra");
                             SetCheckBox(form, "pvTEOtra", true);
                         }
-                        SetField(fields, "pvActividadEco", fucp["pvAcEconomica"]?.ToString());
-                        SetField(fields, "pvCodCIIU", fucp["pvCodCIIU"]?.ToString());
-                        SetField(fields, "pvCapSocialReg", fucp["pvCapSocReg"]?.ToString());
-                        SetField(fields, "pvFechConst", fucp["pvFechConst"]?.ToString());
-                        SetField(fields, "pvFechVenc", fucp["pvFechVen"]?.ToString());
-                        if (fucp["pvGrCon"]?.ToString() == "Si")
+                        SetField(fields, "pvActividadEco", finanInf["pvAcEconomica"]?.ToString());
+                        SetField(fields, "pvCodCIIU", finanInf["pvCodCIIU"]?.ToString());
+                        SetField(fields, "pvCapSocialReg", finanInf["pvCapSocReg"]?.ToString());
+                        SetField(fields, "pvFechConst", finanInf["pvFechConst"]?.ToString());
+                        SetField(fields, "pvFechVenc", finanInf["pvFechVen"]?.ToString());
+                        if (finanInf["pvGrCon"]?.ToString() == "Si")
                         {
                             //form.GetField("pvGranConSi").SetValue("Si");
                             //if (fields.ContainsKey("pvGranConSi")) form.GetField("pvGranConSi").SetValue("Si");
@@ -173,9 +173,9 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvGranConNo")) form.GetField("pvGranConNo").SetValue("No");
                             SetCheckBox(form, "pvGranConNo", true);
                         }
-                        SetField(fields, "pvFechRes", fucp["pvFechResolGC"]?.ToString());
-                        SetField(fields, "pvNumResol", fucp["pvNumResolGC"]?.ToString());
-                        if (fucp["pvDeclIndCom"]?.ToString() == "Si")
+                        SetField(fields, "pvFechRes", finanInf["pvFechResolGC"]?.ToString());
+                        SetField(fields, "pvNumResol", finanInf["pvNumResolGC"]?.ToString());
+                        if (finanInf["pvDeclIndCom"]?.ToString() == "Si")
                         {
                             //form.GetField("pvDecIndComSi").SetValue("Si");
                             //if (fields.ContainsKey("pvDecIndComSi")) form.GetField("pvDecIndComSi").SetValue("Si");
@@ -187,9 +187,9 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvDecIndComNo")) form.GetField("pvDecIndComNo").SetValue("No");
                             SetCheckBox(form, "pvDecIndComNo", true);
                         }
-                        SetField(fields, "pvDeparDecl", fucp["pvDepartDec"]?.ToString());
-                        SetField(fields, "pvCiudadDecl", fucp["pvCiudadDec"]?.ToString());
-                        if (fucp["pvAutRet"]?.ToString() == "Si")
+                        SetField(fields, "pvDeparDecl", finanInf["pvDepartDec"]?.ToString());
+                        SetField(fields, "pvCiudadDecl", finanInf["pvCiudadDec"]?.ToString());
+                        if (finanInf["pvAutRet"]?.ToString() == "Si")
                         {
                             //form.GetField("pvAutoRetSi").SetValue("Si");
                             //if (fields.ContainsKey("pvAutoRetSi")) form.GetField("pvAutoRetSi").SetValue("Si");
@@ -201,10 +201,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvAutoRetNo")) form.GetField("pvAutoRetNo").SetValue("No");
                             SetCheckBox(form, "pvAutoRetNo", true);
                         }
-                        SetField(fields, "pvNumResolDIAN", fucp["pvNumResDIAN"]?.ToString());
-                        SetField(fields, "pvFormPagCE", fucp["pvForPag"]?.ToString());
-                        SetField(fields, "pvBenefComExt", fucp["pvEntBenef"]?.ToString());
-                        if (fucp["pvPosCuBan"]?.ToString() == "Si")
+                        SetField(fields, "pvNumResolDIAN", finanInf["pvNumResDIAN"]?.ToString());
+                        SetField(fields, "pvFormPagCE", finanInf["pvForPag"]?.ToString());
+                        SetField(fields, "pvBenefComExt", finanInf["pvEntBenef"]?.ToString());
+                        if (finanInf["pvPosCuBan"]?.ToString() == "Si")
                         {
                             //form.GetField("pvCkPosCuentSi").SetValue("Si");
                             //if (fields.ContainsKey("pvCkPosCuentSi")) form.GetField("pvCkPosCuentSi").SetValue("Si");
@@ -216,11 +216,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvCkPosCuentNo")) form.GetField("pvCkPosCuentNo").SetValue("No");
                             SetCheckBox(form, "pvCkPosCuentNo", true);
                         }
-                        SetField(fields, "pvEntidadBanc", fucp["pvEntidad"]?.ToString());
-                        SetField(fields, "pvNumCuentaBanc", fucp["pvNumCueBanc"]?.ToString());
-                        SetField(fields, "pvClasCuentaBanc", fucp["pvClasCueBan"]?.ToString());
+                        SetField(fields, "pvEntidadBanc", finanInf["pvEntidad"]?.ToString());
+                        SetField(fields, "pvNumCuentaBanc", finanInf["pvNumCueBanc"]?.ToString());
+                        SetField(fields, "pvClasCuentaBanc", finanInf["pvClasCueBan"]?.ToString());
 
-                        if (fucp["pvTDPMotMaq"]?.ToString() == "SI")
+                        if (finanInf["pvTDPMotMaq"]?.ToString() == "SI")
                         {
                             //form.GetField("pvAutMotorysaSi").SetValue("SI");
                             //if (fields.ContainsKey("pvAutMotorysaSi")) form.GetField("pvAutMotorysaSi").SetValue("SI");
@@ -233,7 +233,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             SetCheckBox(form, "pvAutMotorysaNo", true);
                         }
 
-                        if (fucp["pvTDPCasTor"]?.ToString() == "SI")
+                        if (finanInf["pvTDPCasTor"]?.ToString() == "SI")
                         {
                             //form.GetField("pvAutCasatoroSi").SetValue("SI");
                             //if (fields.ContainsKey("pvAutCasatoroSi")) form.GetField("pvAutCasatoroSi").SetValue("SI");
@@ -246,7 +246,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             SetCheckBox(form, "pvAutCasatoroNo", true);
                         }
 
-                        if (fucp["pvTDPBonap"]?.ToString() == "SI")
+                        if (finanInf["pvTDPBonap"]?.ToString() == "SI")
                         {
                             //form.GetField("pvAutBonaparteSi").SetValue("SI");
                             //if (fields.ContainsKey("pvAutBonaparteSi")) form.GetField("pvAutBonaparteSi").SetValue("SI");
@@ -259,7 +259,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             SetCheckBox(form, "pvAutBonaparteNo", true);
                         }
 
-                        if (fucp["pvRadAut"]?.ToString() == "SI")
+                        if (finanInf["pvRadAut"]?.ToString() == "SI")
                         {
                             //form.GetField("pvAutGeneralSi").SetValue("SI");
                             //if (fields.ContainsKey("pvAutGeneralSi")) form.GetField("pvAutGeneralSi").SetValue("SI");
@@ -271,8 +271,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             //if (fields.ContainsKey("pvAutGeneralNo")) form.GetField("pvAutGeneralNo").SetValue("NO");
                             SetCheckBox(form, "pvAutGeneralNo", true);
                         }
-                        SetField(fields, "pvRepleRazSocial", fucp["pvDeAuRepresentacion"]?.ToString());
-                        SetField(fields, "pvOrigenFuentes", fucp["pvFuenteRecur"]?.ToString());
+                        SetField(fields, "pvRepleRazSocial", finanInf["pvDeAuRepresentacion"]?.ToString());
+                        SetField(fields, "pvOrigenFuentes", finanInf["pvFuenteRecur"]?.ToString());
 
                         form.FlattenFields();
                     }

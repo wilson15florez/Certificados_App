@@ -6,16 +6,201 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
     public class ProviderService
     {
+        private static Dictionary<string, string> _cacheBancos;
+        private static Dictionary<string, string> _cachePaises;
+        private static Dictionary<string, string> _cacheEstados;
+        private static Dictionary<string, string> _cacheCiudades;
+        private static Dictionary<string, string> _cacheCIIU;
+        private static readonly object _lock = new object();
+        
+
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
         // Constructor de la clase que recibe una instancia de ApplicationDbContext (db)
-        public ProviderService(ApplicationDbContext context)
+        public ProviderService(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
+
+            string path = _env.WebRootPath;
+            Task.Run(() => CacheLoaded(_env.WebRootPath));
+        }
+
+        //clase privada para mapear los items del json
+        private class JsonItem
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+        }
+        private class JsonItemBank
+        {
+            [JsonProperty("Código")]
+            public string Codigo { get; set; }
+            public string Nombre { get; set; }
+        }
+        private class JsonItemCIIU
+        {
+            [JsonProperty("Código CIIU")]
+            public string Codigo { get; set; }
+
+            [JsonProperty("Actividad Economica")]
+            public string Actividad { get; set; }
+        }
+
+        private void CacheLoaded(string webRootPath)
+        {
+            if (_cacheBancos != null && _cachePaises != null && _cacheEstados != null && _cacheCiudades != null && _cacheCIIU != null) return;
+
+            lock (_lock)
+            {
+                if (_cacheBancos == null)
+                {
+                    string path = Path.Combine(webRootPath, "data", "entBanca", "entidades_bcos.json");
+                    var json = File.ReadAllText(path);
+                    var lista = JsonConvert.DeserializeObject<List<JsonItemBank>>(json);
+                    _cacheBancos = lista.Where(x => !string.IsNullOrEmpty(x.Codigo)).ToDictionary(item => item.Codigo, item => item.Nombre);
+                }
+
+                if (_cachePaises == null)
+                {
+                    string path = Path.Combine(webRootPath, "data", "ubiExterior", "countries.json");
+                    var json = File.ReadAllText(path);
+                    var lista = JsonConvert.DeserializeObject<List<JsonItem>>(json);
+                    _cachePaises = lista.Where(x => !string.IsNullOrEmpty(x.id)).ToDictionary(item => item.id, item => item.name);
+                }
+
+                if (_cacheEstados == null)
+                {
+                    string path = Path.Combine(webRootPath, "data", "ubiExterior", "states.json");
+                    var json = File.ReadAllText(path);
+                    var lista = JsonConvert.DeserializeObject<List<JsonItem>>(json);
+                    _cacheEstados = lista.Where(x => !string.IsNullOrEmpty(x.id)).ToDictionary(item => item.id, item => item.name);
+                }
+
+                if (_cacheCiudades == null)
+                {
+                    string path = Path.Combine(webRootPath, "data", "ubiExterior", "cities.json");
+                    var json = File.ReadAllText(path);
+                    var lista = JsonConvert.DeserializeObject<List<JsonItem>>(json);
+                    _cacheCiudades = lista.Where(x => !string.IsNullOrEmpty(x.id)).ToDictionary(item => item.id, item => item.name);
+                }
+
+                if (_cacheCIIU == null)
+                {
+                    string path = Path.Combine(webRootPath, "data", "Cod_CIIU-ActEconomica", "codCIIU_ActEco.json");
+                    var json = File.ReadAllText(path);
+                    var lista = JsonConvert.DeserializeObject<List<JsonItemCIIU>>(json);
+                    _cacheCIIU = lista.Where(x => !string.IsNullOrEmpty(x.Codigo)).ToDictionary(item => item.Codigo, item => item.Actividad);
+                }
+            }
+        }
+
+        public string ConsultBank(string Codigo, string webRootPath)
+        {
+            if (string.IsNullOrEmpty(Codigo)) return "";
+
+            CacheLoaded(webRootPath);
+
+            return _cacheBancos.TryGetValue(Codigo, out string Nombre) ? Nombre : Codigo;
+        }
+
+        public string ConsultCountry(string id, string webRootPath)
+        {
+            if (string.IsNullOrEmpty(id)) return "";
+
+            CacheLoaded(webRootPath);
+
+            return _cachePaises.TryGetValue(id, out string name) ? name : id;
+        }
+
+        public string ConsultState(string id, string webRootPath)
+        {
+            if (string.IsNullOrEmpty(id)) return "";
+
+            CacheLoaded(webRootPath);
+
+            return _cacheEstados.TryGetValue(id, out string name) ? name : id;
+        }
+
+        public string ConsultCity(string id, string webRootPath)
+        {
+            CacheLoaded(webRootPath);
+
+            return _cacheCiudades.TryGetValue(id, out string name) ? name : id;
+        }
+
+        public string ConsultEconomic(string Codigo, string webRootPath)
+        {
+            if (string.IsNullOrEmpty(Codigo)) return "";
+
+            CacheLoaded(webRootPath);
+
+            return _cacheCIIU.TryGetValue(Codigo, out string Actividad) ? Actividad : Codigo;
+        }
+
+
+        //metodo para separar nombres completos
+        public (string firstSurname, string secondSurname, string names) SplitFullName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) return ("", "", "");
+
+            string[] conectores = { "DE", "DEL", "LA", "LAS", "LOS", "Y", "MC", "MAC", "SAN", "SANTA", "VON", "VAN" };
+            var parts = fullName.ToUpper().Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            //lista para reconstruir las piezas
+            List<string> piezas = new List<string>();
+
+            //se procesa de atras hacia adelante para identificar apellidos
+            for (int i = parts.Count - 1; i >= 0; i--)
+            {
+                string currentPart = parts[i];
+
+                //si la palabra anterior es un conector lo unimos al bloque actual
+                if (i > 0 && conectores.Contains(parts[i - 1]))
+                {
+                    //si hay varios conectores se intenta unir recursivamente
+                    string accumulated = currentPart;
+                    while (i > 0 && conectores.Contains(parts[i - 1]))
+                    {
+                        i--;
+                        accumulated = parts[i] + " " + accumulated;
+                        //si la palabra actual no es un conector, ya se llego al apellido base y se detiene
+                        if (!conectores.Contains(parts[i])) break;
+                    }
+                    piezas.Add(accumulated);
+                }
+                else
+                {
+                    piezas.Add(currentPart);
+                }
+            }
+
+            piezas.Reverse();
+
+            //se distribuyen las partes restantes
+            int n = piezas.Count;
+            if (n >= 3)
+            {
+                string secSurname = piezas[n - 1];
+                string firSurname = piezas[n - 2];
+                string names = string.Join(" ", piezas.Take(n - 2));
+                return (firSurname, secSurname, names);
+            }
+            else if (n == 2)
+            {
+                return (piezas[1], "", piezas[0]);
+            }
+
+            return ("", "", piezas[0]);
         }
 
         // Método que obtiene la lista de proveedores paginada
@@ -62,9 +247,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             return _context.Proveedores_Master.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
         }
 
-        public Proveedores_FUCP? getFUCPByNit(string nit)
+        //Método que obtiene a un proveedor en la tabla proveedores_InfoFinanciera por su NIT
+        public Proveedores_InfoFinanciera? getProvFinanceInfByNit(string nit)
         {
-            return _context.Proveedores_FUCP.FirstOrDefault(f => f.Nit == nit);
+            return _context.Proveedores_InfoFinanciera.FirstOrDefault(f => f.Nit == nit);
         }
 
         // Método que obtiene las empresas asociadas a un proveedor
@@ -98,76 +284,76 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica y el FUCP
+        //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica y la informacion financiera
         public async Task<dynamic> getProviderDetails(string nit, string personType)
         {
             ExpandoObject MakeDynamic(
                 bool existNatu,
                 bool existJuri,
-                bool existFUCP,
+                bool existFinanInf,
                 object? natural,
                 object? juridica,
-                object? fucp
+                object? finanInf
             )
             {
                 dynamic d = new ExpandoObject();
                 d.existNatu = existNatu;
                 d.existJuri = existJuri;
-                d.existFUCP = existFUCP;
+                d.existFinanInf = existFinanInf;
                 d.natural = natural;
                 d.juridica = juridica;
-                d.fucp = fucp;
+                d.finanInf = finanInf;
                 return d;
             }
 
-            var fucpData = await _context.Proveedores_FUCP
+            var finanInfData = await _context.Proveedores_InfoFinanciera
                                         .FirstOrDefaultAsync(f => f.Nit == nit);
 
-            Dictionary<string, object>? mapFUCPdata = null;
+            Dictionary<string, object>? mapFinanInfData = null;
 
-            if (fucpData != null)
+            if (finanInfData != null)
             {
-                mapFUCPdata = new Dictionary<string, object>
+                mapFinanInfData = new Dictionary<string, object>
                 {
-                    { "Nit", fucpData.Nit },
-                    { "pvIngrMens", fucpData.pvIngrMens },
-                    { "pvEgrMens", fucpData.pvEgrMens },
-                    { "pvActivos", fucpData.pvActivos },
-                    { "pvPasivos", fucpData.pvPasivos },
-                    { "pvPatrimonio", fucpData.pvPatrimonio },
-                    { "pvOtrIngr", fucpData.pvOtrIngr },
-                    { "pvPorNacional", fucpData.pvPorNacional },
-                    { "pvPorExtranjero", fucpData.pvPorExtranjero },
-                    { "pvPorPais", fucpData.pvPorPais },
-                    { "pvTipEmp", fucpData.pvTipEmp },
-                    { "pvOtrTipEmp", fucpData.pvOtrTipEmp },
-                    { "pvAcEconomica", fucpData.pvAcEconomica },
-                    { "pvCodCIIU", fucpData.pvCodCIIU },
-                    { "pvCapSocReg", fucpData.pvCapSocReg },
-                    { "pvFechConst", fucpData.pvFechConst?.ToString("yyyy-MM-dd") },
-                    { "pvFechVen", fucpData.pvFechVen?.ToString("yyyy-MM-dd") },
-                    { "pvGrCon", fucpData.pvGrCon },
-                    { "pvDeclIndCom", fucpData.pvDeclIndCom },
-                    { "pvAutRet", fucpData.pvAutRet },
-                    { "pvFechResolGC", fucpData.pvFechResolGC?.ToString("yyyy-MM-dd") },
-                    { "pvNumResolGC", fucpData.pvNumResolGC },
-                    { "pvDepartDec", fucpData.pvDepartDec },
-                    { "pvCiudadDec", fucpData.pvCiudadDec },
-                    { "pvNumResDIAN", fucpData.pvNumResDIAN },
-                    { "pvForPag", fucpData.pvForPag },
-                    { "pvEntBenef", fucpData.pvEntBenef },
-                    { "pvPosCuBan", fucpData.pvPosCuBan },
-                    { "pvEntidad", fucpData.pvEntidad },
-                    { "pvNumCueBanc", fucpData.pvNumCueBanc },
-                    { "pvClasCueBan", fucpData.pvClasCueBan },
-                    { "pvDeAuRepresentacion", fucpData.pvDeAuRepresentacion },
-                    { "pvFuenteRecur", fucpData.pvFuenteRecur },
-                    { "pvTDPBonap", fucpData.pvTDPBonap },
-                    { "pvTDPBellpi", fucpData.pvTDPBellpi },
-                    { "pvTDPMotMaq", fucpData.pvTDPMotMaq },
-                    { "pvTDPCasTor", fucpData.pvTDPCasTor },
-                    { "pvRadAut", fucpData.pvRadAut },
-                    { "upIsOEA", fucpData.upIsOEA }
+                    { "Nit", finanInfData.Nit },
+                    { "pvIngrMens", finanInfData.pvIngrMens },
+                    { "pvEgrMens", finanInfData.pvEgrMens },
+                    { "pvActivos", finanInfData.pvActivos },
+                    { "pvPasivos", finanInfData.pvPasivos },
+                    { "pvPatrimonio", finanInfData.pvPatrimonio },
+                    { "pvOtrIngr", finanInfData.pvOtrIngr },
+                    { "pvPorNacional", finanInfData.pvPorNacional },
+                    { "pvPorExtranjero", finanInfData.pvPorExtranjero },
+                    { "pvPorPais", finanInfData.pvPorPais },
+                    { "pvTipEmp", finanInfData.pvTipEmp },
+                    { "pvOtrTipEmp", finanInfData.pvOtrTipEmp },
+                    { "pvAcEconomica", finanInfData.pvAcEconomica },
+                    { "pvCodCIIU", finanInfData.pvCodCIIU },
+                    { "pvCapSocReg", finanInfData.pvCapSocReg },
+                    { "pvFechConst", finanInfData.pvFechConst?.ToString("yyyy-MM-dd") },
+                    { "pvFechVen", finanInfData.pvFechVen?.ToString("yyyy-MM-dd") },
+                    { "pvGrCon", finanInfData.pvGrCon },
+                    { "pvDeclIndCom", finanInfData.pvDeclIndCom },
+                    { "pvAutRet", finanInfData.pvAutRet },
+                    { "pvFechResolGC", finanInfData.pvFechResolGC?.ToString("yyyy-MM-dd") },
+                    { "pvNumResolGC", finanInfData.pvNumResolGC },
+                    { "pvDepartDec", finanInfData.pvDepartDec },
+                    { "pvCiudadDec", finanInfData.pvCiudadDec },
+                    { "pvNumResDIAN", finanInfData.pvNumResDIAN },
+                    { "pvForPag", finanInfData.pvForPag },
+                    { "pvEntBenef", finanInfData.pvEntBenef },
+                    { "pvPosCuBan", finanInfData.pvPosCuBan },
+                    { "pvEntidad", finanInfData.pvEntidad },
+                    { "pvNumCueBanc", finanInfData.pvNumCueBanc },
+                    { "pvClasCueBan", finanInfData.pvClasCueBan },
+                    { "pvDeAuRepresentacion", finanInfData.pvDeAuRepresentacion },
+                    { "pvFuenteRecur", finanInfData.pvFuenteRecur },
+                    { "pvTDPBonap", finanInfData.pvTDPBonap },
+                    { "pvTDPBellpi", finanInfData.pvTDPBellpi },
+                    { "pvTDPMotMaq", finanInfData.pvTDPMotMaq },
+                    { "pvTDPCasTor", finanInfData.pvTDPCasTor },
+                    { "pvRadAut", finanInfData.pvRadAut },
+                    { "upIsOEA", finanInfData.upIsOEA }
                 };
             }
 
@@ -181,10 +367,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     (
                         existNatu: false,
                         existJuri: false,
-                        existFUCP: (mapFUCPdata != null),
+                        existFinanInf: (mapFinanInfData != null),
                         natural: null,
                         juridica: null,
-                        fucp: mapFUCPdata
+                        finanInf: mapFinanInfData
 
                         );
                 }
@@ -197,7 +383,9 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 var mapNaturalData = new Dictionary<string, object>
                     {
                         {"Nit", naturalData.Nit },
-                        {"pnNombreCompl", naturalData.pnNombreCompl },
+                        {"pnPrimerApell", naturalData.pnPrimerApell },
+                        {"pnSegundoApell", naturalData.pnSegundoApell },
+                        {"pnNombres", naturalData.pnNombres },
 
                         {"pnTipoNacionalidad", naturalData.pnTipoNacionalidad },
                         {"pnTipoDoc", naturalData.pnTipoDoc },
@@ -226,17 +414,17 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {"PEPTypes", pepTipos },
                         {"pnPEP_Entidad", naturalData.pnPEP_Entidad },
 
-                        { "FUCP", mapFUCPdata }
+                        { "FinanInf", mapFinanInfData }
                     };
 
                 return MakeDynamic
                 (
                     existNatu: true,
                     existJuri: false,
-                    existFUCP: (mapFUCPdata != null),
+                    existFinanInf: (mapFinanInfData != null),
                     natural: mapNaturalData,
                     juridica: null,
-                    fucp: mapFUCPdata
+                    finanInf: mapFinanInfData
                 );
             }
 
@@ -250,10 +438,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     (
                         existNatu: false,
                         existJuri: false,
-                        existFUCP: (mapFUCPdata != null),
+                        existFinanInf: (mapFinanInfData != null),
                         natural: null,
                         juridica: null,
-                        fucp: mapFUCPdata
+                        finanInf: mapFinanInfData
                     );
                 }
 
@@ -274,6 +462,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
                         {"pjEmailDirPrincipal",juridicaData.pjEmailDirPrincipal},
                         {"pjTelDirPrincipal",juridicaData.pjTelDirPrincipal},
+                        {"pjPrimApeRL", juridicaData.pjPrimApeRL },
+                        {"pjSegApeRL", juridicaData.pjSegApeRL },
                         {"pjNomReLeg",juridicaData.pjNomReLeg},
                         {"pjRLTipNacionalidad",juridicaData.pjRLTipNacionalidad},
                         {"pjRLTipoDoc",juridicaData.pjRLTipoDoc},
@@ -303,23 +493,24 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             porcentaje = a.porcentaje
                         }).ToList() },
 
-                        {  "FUCP", mapFUCPdata   }
+                        {  "FinanInf", mapFinanInfData   }
                     };
 
                 return MakeDynamic
                 (
                     existNatu: false,
                     existJuri: true,
-                    existFUCP: (mapFUCPdata != null),
+                    existFinanInf: (mapFinanInfData != null),
                     natural: null,
                     juridica: mapJuridicaData,
-                    fucp: mapFUCPdata
+                    finanInf: mapFinanInfData
                 );
             }
 
             return MakeDynamic(false, false, false, null, null, null);
         }
 
+        //Metodo para obtener los documentos asociados a un proveedor por su NIT
         public List<Documentos_Proveedores> GetDocumentsByNit(string nit)
         {
             return _context.Documentos_Proveedores
@@ -339,7 +530,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     var existingMaster = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == providerNit);
                     if (existingMaster != null)
                     {
-                        existingMaster.Nombre = providerData.pnNombreCompl.ToUpper();
+                        existingMaster.Nombre = providerData.pnNombres.ToUpper();
                         existingMaster.Direccion = providerData.pnDiResidencia;
                         existingMaster.Correo = providerData.pnEmail;
                         existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnTelefono) ? providerData.pnTelefono : providerData.pnCelular;
@@ -348,7 +539,9 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
                     if (existingNatural != null)
                     {
-                        existingNatural.pnNombreCompl = providerData.pnNombreCompl;
+                        existingNatural.pnPrimerApell = providerData.pnPrimerApell;
+                        existingNatural.pnSegundoApell = providerData.pnSegundoApell;
+                        existingNatural.pnNombres = providerData.pnNombres;
                         existingNatural.pnDiResidencia = providerData.pnDiResidencia;
                         existingNatural.pnDepRes = providerData.pnDepRes;
                         existingNatural.pnCiudadRes = providerData.pnCiudadRes;
@@ -374,6 +567,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingNatural.pnManRePub = providerData.pnManRePub;
                         existingNatural.pnPEP = providerData.pnPEP;
                         existingNatural.pnPEP_Entidad = providerData.pnPEP_Entidad;
+
+                        existingNatural.pnValidAnual = providerData.pnValidAnual;
                     }
                     else
                     {
@@ -438,6 +633,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     existingJuridica.pjEmailDirPrincipal = providerData.pjEmailDirPrincipal;
                     existingJuridica.pjTelDirPrincipal = providerData.pjTelDirPrincipal;
 
+                    existingJuridica.pjPrimApeRL = providerData.pjPrimApeRL;
+                    existingJuridica.pjSegApeRL = providerData.pjSegApeRL;
                     existingJuridica.pjNomReLeg = providerData.pjNomReLeg;
                     existingJuridica.pjRLTipNacionalidad = providerData.pjRLTipNacionalidad;
                     existingJuridica.pjRLTipoDoc = providerData.pjRLTipoDoc;
@@ -449,6 +646,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     existingJuridica.pjRLNacionalidad = providerData.pjRLNacionalidad;
                     existingJuridica.pjRLDepartNac = providerData.pjRLDepartNac;
                     existingJuridica.pjRLCiudadNac = providerData.pjRLCiudadNac;
+                    existingJuridica.pjValidAnual = providerData.pjValidAnual;
 
                     _context.Proveedores_Juridica.Update(existingJuridica);
                     _context.SaveChanges();
@@ -514,8 +712,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para actualizar form general de proveedor
-        public void UpdateFUCPInfo(Proveedores_FUCP providerData)
+        //metodo para actualizar la información financiera del proveedor
+        public void UpdateFinanceInfo(Proveedores_InfoFinanciera providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -523,50 +721,50 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 {
                     string providerNit = providerData.Nit;
 
-                    var existingFUCP = _context.Proveedores_FUCP.FirstOrDefault(f => f.Nit == providerNit);
-                    if (existingFUCP != null)
+                    var existingFinanInf = _context.Proveedores_InfoFinanciera.FirstOrDefault(f => f.Nit == providerNit);
+                    if (existingFinanInf != null)
                     {
-                        existingFUCP.pvIngrMens = providerData.pvIngrMens;
-                        existingFUCP.pvEgrMens = providerData.pvEgrMens;
-                        existingFUCP.pvActivos = providerData.pvActivos;
-                        existingFUCP.pvPasivos = providerData.pvPasivos;
-                        existingFUCP.pvPatrimonio = providerData.pvPatrimonio;
-                        existingFUCP.pvOtrIngr = providerData.pvOtrIngr;
-                        existingFUCP.pvPorNacional = providerData.pvPorNacional;
-                        existingFUCP.pvPorExtranjero = providerData.pvPorExtranjero;
-                        existingFUCP.pvPorPais = providerData.pvPorPais;
-                        existingFUCP.pvTipEmp = providerData.pvTipEmp;
-                        existingFUCP.pvOtrTipEmp = providerData.pvOtrTipEmp;
-                        existingFUCP.pvAcEconomica = providerData.pvAcEconomica;
-                        existingFUCP.pvCodCIIU = providerData.pvCodCIIU;
-                        existingFUCP.pvCapSocReg = providerData.pvCapSocReg;
-                        existingFUCP.pvFechConst = providerData.pvFechConst;
-                        existingFUCP.pvFechVen = providerData.pvFechVen;
-                        existingFUCP.pvGrCon = providerData.pvGrCon;
-                        existingFUCP.pvDeclIndCom = providerData.pvDeclIndCom;
-                        existingFUCP.pvAutRet = providerData.pvAutRet;
-                        existingFUCP.pvFechResolGC = providerData.pvFechResolGC;
-                        existingFUCP.pvNumResolGC = providerData.pvNumResolGC;
-                        existingFUCP.pvDepartDec = providerData.pvDepartDec;
-                        existingFUCP.pvCiudadDec = providerData.pvCiudadDec;
-                        existingFUCP.pvNumResDIAN = providerData.pvNumResDIAN;
-                        existingFUCP.pvForPag = providerData.pvForPag;
-                        existingFUCP.pvEntBenef = providerData.pvEntBenef;
-                        existingFUCP.pvPosCuBan = providerData.pvPosCuBan;
-                        existingFUCP.pvEntidad = providerData.pvEntidad;
-                        existingFUCP.pvNumCueBanc = providerData.pvNumCueBanc;
-                        existingFUCP.pvClasCueBan = providerData.pvClasCueBan;
-                        existingFUCP.pvDeAuRepresentacion = providerData.pvDeAuRepresentacion;
-                        existingFUCP.pvFuenteRecur = providerData.pvFuenteRecur;
-                        existingFUCP.pvTDPMotMaq = providerData.pvTDPMotMaq;
-                        existingFUCP.pvTDPCasTor = providerData.pvTDPCasTor;
-                        existingFUCP.pvTDPBonap = providerData.pvTDPBonap;
-                        existingFUCP.pvTDPBellpi = providerData.pvTDPBellpi;
-                        existingFUCP.pvRadAut = providerData.pvRadAut;
+                        existingFinanInf.pvIngrMens = providerData.pvIngrMens;
+                        existingFinanInf.pvEgrMens = providerData.pvEgrMens;
+                        existingFinanInf.pvActivos = providerData.pvActivos;
+                        existingFinanInf.pvPasivos = providerData.pvPasivos;
+                        existingFinanInf.pvPatrimonio = providerData.pvPatrimonio;
+                        existingFinanInf.pvOtrIngr = providerData.pvOtrIngr;
+                        existingFinanInf.pvPorNacional = providerData.pvPorNacional;
+                        existingFinanInf.pvPorExtranjero = providerData.pvPorExtranjero;
+                        existingFinanInf.pvPorPais = providerData.pvPorPais;
+                        existingFinanInf.pvTipEmp = providerData.pvTipEmp;
+                        existingFinanInf.pvOtrTipEmp = providerData.pvOtrTipEmp;
+                        existingFinanInf.pvAcEconomica = providerData.pvAcEconomica;
+                        existingFinanInf.pvCodCIIU = providerData.pvCodCIIU;
+                        existingFinanInf.pvCapSocReg = providerData.pvCapSocReg;
+                        existingFinanInf.pvFechConst = providerData.pvFechConst;
+                        existingFinanInf.pvFechVen = providerData.pvFechVen;
+                        existingFinanInf.pvGrCon = providerData.pvGrCon;
+                        existingFinanInf.pvDeclIndCom = providerData.pvDeclIndCom;
+                        existingFinanInf.pvAutRet = providerData.pvAutRet;
+                        existingFinanInf.pvFechResolGC = providerData.pvFechResolGC;
+                        existingFinanInf.pvNumResolGC = providerData.pvNumResolGC;
+                        existingFinanInf.pvDepartDec = providerData.pvDepartDec;
+                        existingFinanInf.pvCiudadDec = providerData.pvCiudadDec;
+                        existingFinanInf.pvNumResDIAN = providerData.pvNumResDIAN;
+                        existingFinanInf.pvForPag = providerData.pvForPag;
+                        existingFinanInf.pvEntBenef = providerData.pvEntBenef;
+                        existingFinanInf.pvPosCuBan = providerData.pvPosCuBan;
+                        existingFinanInf.pvEntidad = providerData.pvEntidad;
+                        existingFinanInf.pvNumCueBanc = providerData.pvNumCueBanc;
+                        existingFinanInf.pvClasCueBan = providerData.pvClasCueBan;
+                        existingFinanInf.pvDeAuRepresentacion = providerData.pvDeAuRepresentacion;
+                        existingFinanInf.pvFuenteRecur = providerData.pvFuenteRecur;
+                        existingFinanInf.pvTDPMotMaq = providerData.pvTDPMotMaq;
+                        existingFinanInf.pvTDPCasTor = providerData.pvTDPCasTor;
+                        existingFinanInf.pvTDPBonap = providerData.pvTDPBonap;
+                        existingFinanInf.pvTDPBellpi = providerData.pvTDPBellpi;
+                        existingFinanInf.pvRadAut = providerData.pvRadAut;
                     }
                     else
                     {
-                        throw new Exception($"Registro FUCP para NIT {providerNit} no encontrado.");
+                        throw new Exception($"Registro de Información Financiera para NIT {providerNit} no encontrado.");
                     }
                     _context.SaveChanges();
                     transaction.Commit();
@@ -574,7 +772,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception("Error al actualizar la información del FUCP " + ex.Message, ex);
+                    throw new Exception("Error al actualizar la Información Financiera " + ex.Message, ex);
                 }
             }
         }
@@ -680,31 +878,31 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para agregar proveedor a la tabla de form general a partir de la t. master
-        public void AddProveedorFUCP(Proveedores_FUCP proveedor)
+        //metodo para agregar proveedor a la tabla de proveedores_InfoFinanciera a partir de la t. master
+        public void AddProvFinanceInf(Proveedores_InfoFinanciera proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    _context.Proveedores_FUCP.Add(proveedor);
+                    _context.Proveedores_InfoFinanciera.Add(proveedor);
                     _context.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al agregar el FUCP del proveedor", ex);
+                    throw new Exception("Error al agregar la información financiera del proveedor", ex);
                 }
             }
         }
 
-        //Metodo para actualizar OEA en form general (Proveedores_FUCP)
+        //Metodo para actualizar OEA en Proveedores_InfFinanciera
         public void UpdateStatusOEA(string Nit, string isOEA)
         {
-            var fucp = _context.Proveedores_FUCP.FirstOrDefault(f =>  f.Nit == Nit);
-            if (fucp != null)
+            var finanInf = _context.Proveedores_InfoFinanciera.FirstOrDefault(f => f.Nit == Nit);
+            if (finanInf != null)
             {
-                fucp.upIsOEA = isOEA;
+                finanInf.upIsOEA = isOEA;
                 _context.SaveChanges();
             }
         }

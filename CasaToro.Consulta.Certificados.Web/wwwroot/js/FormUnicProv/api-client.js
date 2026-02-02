@@ -53,7 +53,7 @@ export async function loadUbiData() {
 export async function loadUbiExt() {
     const res = await fetch(url_COUNTRIES);
     const data = await res.json();
-    const countries = data.countries || [];
+    const countries = data || [];
     return countries.filter(c => c.name.toLowerCase() !== "colombia");
 }
 
@@ -61,14 +61,14 @@ export async function loadUbiExt() {
 export async function loadStates(countryId) {
     const res = await fetch(url_STATES);
     const data = await res.json();
-    return (data.states || []).filter(s => s.id_country == countryId);
+    return (data || []).filter(s => s.id_country == countryId);
 }
 
 //funcion para cargar ciudades segun el estado
 export async function loadCities(stateId) {
     const res = await fetch(url_CITIES);
     const data = await res.json();
-    return (data.cities || []).filter(c => c.id_state == stateId);
+    return (data || []).filter(c => c.id_state == stateId);
 }
 
 //funcion para cargar Codigo CIIU y actividades economicas
@@ -113,7 +113,7 @@ export async function getProvDocuments(idNum) {
     return await response.json();
 }
 
-//funcion para enviar la info de informacion de p. natural/juridica y provForm a la DB 
+//funcion para enviar la info de informacion de p. natural/juridica y la informacion financiera a la DB 
 export function sendData(payload, url) {
     console.log("Enviando datos a:", url, payload);
 
@@ -156,12 +156,22 @@ export function sendFiles(formData, url) {
         });
 }
 
-//export async function dataProvider() {
-//    try {
-//        const response = await fetch('/Provider/CheckProviderRegister');
-//        return await response.json();
-//    } catch {
-//        console.error("Error al obtener perfil: ", error);
-//        throw error;
-//    }
-//}
+export async function getFormat(nit) {
+    //const response = fetch(`/Provider/printFormat?idNum=${idNum}&personType=${personType}`);
+
+    //if (!response.ok) throw new Error("Error al obtener formato");
+    const response = await fetch(`/Admin/PrintFormat?nit=${nit}`);
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al obtener formato");
+    }
+
+    return await response.json();
+}
+
+export async function getProvPersType() {
+    const response = await fetch('/Provider/GetProvPersonDetails');
+    if (!response.ok) throw new Error("Error al obtener tipo de persona");
+    return await response.json();
+}

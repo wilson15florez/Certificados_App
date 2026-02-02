@@ -121,7 +121,7 @@ export function collectFormData_Juridica() {
     return data;
 }
 
-//funcion para recopilar los datos del formulario proveedor general
+//funcion para recopilar los datos del formulario de informacion financiera
 export function collectProvFormData() {
     const form = document.getElementById('provForm');
     const data = {};
@@ -161,7 +161,7 @@ export function collectProvFormData() {
 
 
     //Agrega Nit desde idNumInput para el foreign key en DB
-    data["Nit"] = document.getElementById('idNum').value.trim();
+    data["Nit"] = (document.getElementById('pnNumId').value.trim() !== "" ? document.getElementById('pnNumId').value.trim() : null) || (document.getElementById('pjNIT').value.trim() !== "" ? document.getElementById('pjNIT').value.trim() : null);
 
     //forzar ubicaciones a null por seguridad si estan vacias
     [

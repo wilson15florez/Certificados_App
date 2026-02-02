@@ -33,7 +33,7 @@ export function dateLimits() {
     const dateInputs = document.querySelectorAll('input[type="date"]');
 
     dateInputs.forEach(i => {
-        //si no corresponde a la fecha de vencimiento en el form general, la fecha maxima es hoy
+        //si no corresponde a la fecha de vencimiento en el form informacion financiera, la fecha maxima es hoy
         if (i.id !== 'pvFechVen') {
             i.setAttribute('max', today);
         }
@@ -304,7 +304,7 @@ export function validateJuridicaForm() {
     return true;
 }
 
-//validacion de campos del form formato unico
+//validacion de campos del provForm (informacion financiera)
 export function validateProvForm() {
 
     const form = document.getElementById('provForm');

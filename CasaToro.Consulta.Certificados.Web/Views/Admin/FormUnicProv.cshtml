@@ -62,7 +62,7 @@
             <div id="subNavConteiner" class="form-section" style="display:none;">
                 <div class="row d-flex justify-content-around align-items-center card flex-row m-2 p-2">
                     <div class="col-md-4 form-group">
-                        <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Informacion del Formato</button>
+                        <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Formato</button>
                     </div>
                     <div class="col-md-4 form-group">
                         <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
@@ -93,8 +93,8 @@
                             <label for="pnSegundoApell" class="form-label adaptive-label" placeholder="Segundo Apellido *" alt="Segundo Apellido *"></label>
                         </div>
                         <div class="col-md-6 form-group input-wrapper">
-                            <input type="text" id="pnNombreCompl" name="pnNombreCompl" class="form-control" required />
-                            <label for="pnNombreCompl" class="form-label adaptive-label" placeholder="Nombre Completo *" alt="Nombre Completo *"></label>
+                            <input type="text" id="pnNombres" name="pnNombres" class="form-control" required />
+                            <label for="pnNombres" class="form-label adaptive-label" placeholder="Nombre(s) *" alt="Nombre(s) *"></label>
                         </div>
                     </div>
 
@@ -379,7 +379,7 @@
                         </div>
                         <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pjNomReLeg" name="pjNomReLeg" class="form-control" />
-                            <label for="pjNomReLeg" class="form-label adaptive-label" placeholder="Nombres *" alt="Nombres *"></label>
+                            <label for="pjNomReLeg" class="form-label adaptive-label" placeholder="Nombre(s) *" alt="Nombre(s) *"></label>
                         </div>
                     </div>
                     
@@ -440,7 +440,7 @@
                 </div>
             </form>
 
-            <!-- form conocimiento proveedores (tanto para persona natural como juridica)-->
+            <!-- form infomacion financiera (tanto para persona natural como juridica)-->
             <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
 
                 <div class="flex-row header-form">
@@ -1061,7 +1061,12 @@
 
 
             @* Contenido de printFormat *@
-            <form id="printFormatForm" style="display:none;"></form>
+            <div id="printFormatForm" class="certificates-content-body" style="display:none">
+                <div class="pdf-viewer">
+                    <iframe id="printFrame" src=""></iframe>
+                </div>
+                
+            </div>
 
         </section>
 

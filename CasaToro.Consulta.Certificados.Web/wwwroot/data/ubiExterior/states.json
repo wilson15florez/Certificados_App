@@ -1,5 +1,4 @@
-﻿{
-"states": [
+﻿[
 	{
 		"id" : 1,
 		"id_country" : 3,
@@ -9995,4 +9994,4 @@
 		"id_country" : 82,
 		"name" : "Boyacá"
 	}
-]}
+]
