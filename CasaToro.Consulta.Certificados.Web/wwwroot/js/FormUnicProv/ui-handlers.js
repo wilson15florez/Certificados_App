@@ -37,7 +37,7 @@ export function scrollButton() {
         const fullHeight = document.body.offsetHeight;
         const scrollPosition = window.scrollY;
 
-        if (scrollPosition > (fullHeight / 4)) {
+        if (scrollPosition > (fullHeight / 8)) {
             //scroll hacia arriba
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
@@ -222,9 +222,9 @@ export async function ubicPNaHandler() {
 
     if (nac === 'Nacional') {
         //pais fijo colombia
-        fillSelect2(pnNacionalidad, [{ id: 'CO', name: 'COLOMBIA' }]);
+        fillSelect2(pnNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
 
-        $(pnNacionalidad).val('CO').trigger('change.select2');
+        $(pnNacionalidad).val('COLOMBIA').trigger('change.select2');
         pnNacionalidad.disabled = true;
 
         //carga departamentos/ciudades de colombia
@@ -367,8 +367,8 @@ export async function ubicPJuHandler() {
     const nac = pjRLTipNacionalidad.value;
     if (nac === 'Nacional') {
         //pais fijo colombia
-        fillSelect2(pjRLNacionalidad, [{ id: 'CO', name: 'COLOMBIA' }]);
-        $(pjRLNacionalidad).val('CO').trigger('change.select2');
+        fillSelect2(pjRLNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
+        $(pjRLNacionalidad).val('COLOMBIA').trigger('change.select2');
         pjRLNacionalidad.disabled = true;
 
         //depatamento y ciudad colombianos
@@ -1291,11 +1291,11 @@ export function toggleOEA() {
     const si = document.getElementById('upOEAsi').checked;
     const no = document.getElementById('upOEAno').checked;
     const containerYesOEA = document.getElementById('sectionYesOEA');
-    const containerNoOEA = document.getElementById('sectionNoOEA');
+    /*const containerNoOEA = document.getElementById('sectionNoOEA');*/
     if (si) {
-        containerNoOEA.style.display = 'none';
-        containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
-        containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
+        //containerNoOEA.style.display = 'none';
+        //containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
+        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
 
         containerYesOEA.style.display = 'block';
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = true);
@@ -1304,16 +1304,16 @@ export function toggleOEA() {
         containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
 
-        containerNoOEA.style.display = 'block';
-        containerNoOEA.querySelectorAll('input').forEach(i => i.required = true);
+        //containerNoOEA.style.display = 'block';
+        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else {
         containerYesOEA.style.display = 'none';
         containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
 
-        containerNoOEA.style.display = 'none';
-        containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
-        containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
+        //containerNoOEA.style.display = 'none';
+        //containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
+        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
     }
 
 

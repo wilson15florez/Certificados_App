@@ -9,6 +9,7 @@ using iText.Kernel.Pdf;
 using System.IO;
 using CasaToro.Consulta.Certificados.Entities;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
@@ -18,8 +19,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         {
             var juridica = datos.juridica as IDictionary<string, object>;
             var finanInf = datos.finanInf as IDictionary<string, object>;
-            //var sucursales = datos.Sucursales as List<CasaToro.Consulta.Certificados.Entities.Sucursales_PJuridica>;
-            //var accionistas = datos.Accionistas as List<CasaToro.Consulta.Certificados.Entities.AccionistasControlPJuridica>;
 
             if (juridica == null) throw new Exception("No se pudo obtener la información Jurídica del objeto datos.");
 
@@ -83,8 +82,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         }
 
                         // Rellenar Representante Legal
-                        //SetField(fields, "pjRLPrimApell", juridica.);
-                        //SetField(fields, "pjRLSegApell", juridica.);
+                        SetField(fields, "pjRLPrimApell", juridica["pjPrimApeRL"]?.ToString());
+                        SetField(fields, "pjRLSegApell", juridica["pjSegApeRL"]?.ToString());
                         SetField(fields, "pjRLNombres", juridica["pjNomReLeg"]?.ToString());
                         SetField(fields, "pjRLFechNac", juridica["pjRLFechaNac"]?.ToString());
                         SetField(fields, "pjRLDepaNac", juridica["pjRLDepartNac"]?.ToString());
@@ -93,9 +92,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         string rlTipNac = juridica["pjRLTipNacionalidad"]?.ToString();
                         if (rlTipNac == "Nacional")
                         {
-                            //form.GetField("pjRLCkDocNacCC").SetValue("CC");
-                            //SetField(fields, "pjRLNumIdNac", juridica.pjRLDocNum);
-                            //if (fields.ContainsKey("pjRLCkDocNacCC")) form.GetField("pjRLCkDocNacCC").SetValue("CC");
                             SetCheckBox(form, "pjRLCkDocNacCC", true);
                             SetField(fields, "pjRLNumIdNac", juridica["pjRLDocNum"]?.ToString());
                         } else
@@ -103,18 +99,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             string rlTipoDoc = juridica["pjRLTipoDoc"]?.ToString();
                             if (rlTipoDoc == "CE")
                             {
-                                //form.GetField("pjRLCkDocExtCE").SetValue("CE");
-                                //if (fields.ContainsKey("pjRLCkDocExtCE")) form.GetField("pjRLCkDocExtCE").SetValue("CE");
                                 SetCheckBox(form, "pjRLCkDocExtCE", true);
                             } else if (rlTipoDoc == "PAS")
                             {
-                                //form.GetField("pjRLCkDocExtPA").SetValue("PAS");
-                                //if (fields.ContainsKey("pjRLCkDocExtPA")) form.GetField("pjRLCkDocExtPA").SetValue("PAS");
                                 SetCheckBox(form, "pjRLCkDocExtPA", true);
                             } else
                             {
-                                //form.GetField("pjRLCkDocExtCAR").SetValue("CAR");
-                                //if (fields.ContainsKey("pjRLCkDocExtCAR")) form.GetField("pjRLCkDocExtCAR").SetValue("CAR");
                                 SetCheckBox(form, "pjRLCkDocExtCAR", true);
                             }
 
@@ -126,79 +116,61 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pjRLCiudadExpDoc", juridica["pjRLCiuExpDoc"]?.ToString());
 
 
-                        SetField(fields, "pvIngMen", finanInf["pvIngrMens"]?.ToString());
-                        SetField(fields, "pvEgrMen", finanInf["pvEgrMens"]?.ToString());
-                        SetField(fields, "pvActivos", finanInf["pvActivos"]?.ToString());
-                        SetField(fields, "pvPasivos", finanInf["pvPasivos"]?.ToString());
-                        SetField(fields, "pvPatrimonio", finanInf["pvPatrimonio"]?.ToString());
-                        SetField(fields, "pvOtroIngr", finanInf["pvOtrIngr"]?.ToString());
+                        //rellena informacion financiera
+
+                        SetField(fields, "pvIngMen", FormatMoney(finanInf["pvIngrMens"]));
+                        SetField(fields, "pvEgrMen", FormatMoney(finanInf["pvEgrMens"]));
+                        SetField(fields, "pvActivos", FormatMoney(finanInf["pvActivos"]));
+                        SetField(fields, "pvPasivos", FormatMoney(finanInf["pvPasivos"]));
+                        SetField(fields, "pvPatrimonio", FormatMoney(finanInf["pvPatrimonio"]));
+                        SetField(fields, "pvOtroIngr", FormatMoney(finanInf["pvOtrIngr"]));
                         SetField(fields, "pvPorceNac", finanInf["pvPorNacional"]?.ToString());
                         SetField(fields, "pvPorceExt", finanInf["pvPorExtranjero"]?.ToString());
                         SetField(fields, "pvPorcePaisExt", finanInf["pvPorPais"]?.ToString());
                         string tipEmp = finanInf["pvTipEmp"]?.ToString();
                         if (tipEmp == "EmPublica")
                         {
-                            //form.GetField("pvTEPublic").SetValue("EmPublica");
-                            //if (fields.ContainsKey("pvTEPublic")) form.GetField("pvTEPublic").SetValue("EmPublica");
                             SetCheckBox(form, "pvTEPublic", true);
                         } else if (tipEmp == "EmPrivada")
                         {
-                            //form.GetField("pvTEPrivada").SetValue("EmPrivada");
-                            //if (fields.ContainsKey("pvTEPrivada")) form.GetField("pvTEPrivada").SetValue("EmPrivada");
                             SetCheckBox(form, "pvTEPrivada", true);
                         } else if (tipEmp == "EmMixta")
                         {
-                            //form.GetField("pvTEMixta").SetValue("EmMixta");
-                            //if (fields.ContainsKey("pvTEMixta")) form.GetField("pvTEMixta").SetValue("EmMixta");
                             SetCheckBox(form, "pvTEMixta", true);
                         } else
                         {
-                            //form.GetField("pvTEOtra").SetValue("pvEmOtra");
-                            //if (fields.ContainsKey("pvTEOtra")) form.GetField("pvTEOtra").SetValue("pvEmOtra");
                             SetCheckBox(form, "pvTEOtra", true);
                         }
                         SetField(fields, "pvActividadEco", finanInf["pvAcEconomica"]?.ToString());
                         SetField(fields, "pvCodCIIU", finanInf["pvCodCIIU"]?.ToString());
-                        SetField(fields, "pvCapSocialReg", finanInf["pvCapSocReg"]?.ToString());
+                        SetField(fields, "pvCapSocialReg", FormatMoney(finanInf["pvCapSocReg"]));
                         SetField(fields, "pvFechConst", finanInf["pvFechConst"]?.ToString());
                         SetField(fields, "pvFechVenc", finanInf["pvFechVen"]?.ToString());
                         if (finanInf["pvGrCon"]?.ToString() == "Si")
                         {
-                            //form.GetField("pvGranConSi").SetValue("Si");
-                            //if (fields.ContainsKey("pvGranConSi")) form.GetField("pvGranConSi").SetValue("Si");
                             SetCheckBox(form, "pvGranConSi", true);
                         } else
                         {
-                            //form.GetField("pvGranConNo").SetValue("No");
-                            //if (fields.ContainsKey("pvGranConNo")) form.GetField("pvGranConNo").SetValue("No");
                             SetCheckBox(form, "pvGranConNo", true);
                         }
                         SetField(fields, "pvFechRes", finanInf["pvFechResolGC"]?.ToString());
                         SetField(fields, "pvNumResol", finanInf["pvNumResolGC"]?.ToString());
                         if (finanInf["pvDeclIndCom"]?.ToString() == "Si")
                         {
-                            //form.GetField("pvDecIndComSi").SetValue("Si");
-                            //if (fields.ContainsKey("pvDecIndComSi")) form.GetField("pvDecIndComSi").SetValue("Si");
                             SetCheckBox(form, "pvDecIndComSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvDecIndComNo").SetValue("No");
-                            //if (fields.ContainsKey("pvDecIndComNo")) form.GetField("pvDecIndComNo").SetValue("No");
                             SetCheckBox(form, "pvDecIndComNo", true);
                         }
                         SetField(fields, "pvDeparDecl", finanInf["pvDepartDec"]?.ToString());
                         SetField(fields, "pvCiudadDecl", finanInf["pvCiudadDec"]?.ToString());
                         if (finanInf["pvAutRet"]?.ToString() == "Si")
                         {
-                            //form.GetField("pvAutoRetSi").SetValue("Si");
-                            //if (fields.ContainsKey("pvAutoRetSi")) form.GetField("pvAutoRetSi").SetValue("Si");
                             SetCheckBox(form, "pvAutoRetSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvAutoRetNo").SetValue("No");
-                            //if (fields.ContainsKey("pvAutoRetNo")) form.GetField("pvAutoRetNo").SetValue("No");
                             SetCheckBox(form, "pvAutoRetNo", true);
                         }
                         SetField(fields, "pvNumResolDIAN", finanInf["pvNumResDIAN"]?.ToString());
@@ -206,14 +178,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pvBenefComExt", finanInf["pvEntBenef"]?.ToString());
                         if (finanInf["pvPosCuBan"]?.ToString() == "Si")
                         {
-                            //form.GetField("pvCkPosCuentSi").SetValue("Si");
-                            //if (fields.ContainsKey("pvCkPosCuentSi")) form.GetField("pvCkPosCuentSi").SetValue("Si");
                             SetCheckBox(form, "pvCkPosCuentSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvCkPosCuentNo").SetValue("No");
-                            //if (fields.ContainsKey("pvCkPosCuentNo")) form.GetField("pvCkPosCuentNo").SetValue("No");
                             SetCheckBox(form, "pvCkPosCuentNo", true);
                         }
                         SetField(fields, "pvEntidadBanc", finanInf["pvEntidad"]?.ToString());
@@ -222,53 +190,37 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                         if (finanInf["pvTDPMotMaq"]?.ToString() == "SI")
                         {
-                            //form.GetField("pvAutMotorysaSi").SetValue("SI");
-                            //if (fields.ContainsKey("pvAutMotorysaSi")) form.GetField("pvAutMotorysaSi").SetValue("SI");
                             SetCheckBox(form, "pvAutMotorysaSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvAutMotorysaNo").SetValue("NO");
-                            //if (fields.ContainsKey("pvAutMotorysaNo")) form.GetField("pvAutMotorysaNo").SetValue("NO");
                             SetCheckBox(form, "pvAutMotorysaNo", true);
                         }
 
                         if (finanInf["pvTDPCasTor"]?.ToString() == "SI")
                         {
-                            //form.GetField("pvAutCasatoroSi").SetValue("SI");
-                            //if (fields.ContainsKey("pvAutCasatoroSi")) form.GetField("pvAutCasatoroSi").SetValue("SI");
                             SetCheckBox(form, "pvAutCasatoroSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvAutCasatoroNo").SetValue("NO");
-                            //if (fields.ContainsKey("pvAutCasatoroNo")) form.GetField("pvAutCasatoroNo").SetValue("NO");
                             SetCheckBox(form, "pvAutCasatoroNo", true);
                         }
 
                         if (finanInf["pvTDPBonap"]?.ToString() == "SI")
                         {
-                            //form.GetField("pvAutBonaparteSi").SetValue("SI");
-                            //if (fields.ContainsKey("pvAutBonaparteSi")) form.GetField("pvAutBonaparteSi").SetValue("SI");
                             SetCheckBox(form, "pvAutBonaparteSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvAutBonaparteNo").SetValue("NO");
-                            //if (fields.ContainsKey("pvAutBonaparteNo")) form.GetField("pvAutBonaparteNo").SetValue("NO");
                             SetCheckBox(form, "pvAutBonaparteNo", true);
                         }
 
                         if (finanInf["pvRadAut"]?.ToString() == "SI")
                         {
-                            //form.GetField("pvAutGeneralSi").SetValue("SI");
-                            //if (fields.ContainsKey("pvAutGeneralSi")) form.GetField("pvAutGeneralSi").SetValue("SI");
                             SetCheckBox(form, "pvAutGeneralSi", true);
                         }
                         else
                         {
-                            //form.GetField("pvAutGeneralNo").SetValue("NO");
-                            //if (fields.ContainsKey("pvAutGeneralNo")) form.GetField("pvAutGeneralNo").SetValue("NO");
                             SetCheckBox(form, "pvAutGeneralNo", true);
                         }
                         SetField(fields, "pvRepleRazSocial", finanInf["pvDeAuRepresentacion"]?.ToString());
@@ -302,6 +254,21 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     field.SetValue(onValue);
                 }
             }
+        }
+
+        //metodo para dar formato de dinero a los campos del informacion financiera en el pdf
+        private string FormatMoney(object value)
+        {
+            if (value == null || string.IsNullOrEmpty(value.ToString())) 
+                return "$ 0";
+
+            //intentar convertir a decimal, eliminando caracteres no numéricos por si acaso
+            if (decimal.TryParse(value.ToString(), out decimal moneyVal))
+            {
+                return moneyVal.ToString("C0", CultureInfo.CreateSpecificCulture("es-CO"));
+            }
+
+            return "$ 0";
         }
     }
 }

@@ -67,9 +67,10 @@ export function validateNaturalForm() {
 
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
-        'pnNombreCompl', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc',
-        'pnNacionalidad', 'pnEstadoNac', 'pnCiudadNac', 'pnDiResidencia',
-        'pnDepRes', 'pnCiudadRes', 'pnCelular', 'pnEmail', 'pnActividad'
+        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnFechaExpDoc', 
+        'pnDepExpDoc', 'pnCiuExpDoc', 'pnNacionalidad', 'pnEstadoNac', 
+        'pnCiudadNac', 'pnDiResidencia', 'pnDepRes', 'pnCiudadRes', 
+        'pnCelular', 'pnEmail', 'pnActividad'
     ];
 
     for (const id of requiredFields) {
@@ -172,8 +173,8 @@ export function validateJuridicaForm() {
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
         'pjRazSocial', 'pjDirPrincipal', 'pjDepartDirPrincipal', 'pjCiudadDirPrincipal',
-        'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjNomReLeg', 'pjRLDocNum',
-        'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLNacionalidad',
+        'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg', 
+        'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLNacionalidad',
         'pjRLDepartNac', 'pjRLCiudadNac'
     ];
 
@@ -305,9 +306,10 @@ export function validateJuridicaForm() {
 }
 
 //validacion de campos del provForm (informacion financiera)
-export function validateProvForm() {
+export function validateProvForm(personType) {
 
     const form = document.getElementById('provForm');
+
 
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
@@ -389,38 +391,91 @@ export function validateProvForm() {
         return false;
     }
 
+    //verifica certificaciones
+
+    if (personType === 'juridica') {
+        //OEA
+        if (!form.querySelector('input[name="pvCeOEA"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación OEA.';
+            alertError.show();
+            return false;
+        }
+
+        //Calidad ISO 9001
+        if (!form.querySelector('input[name="pvCeCal"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación de Calidad ISO 9001.';
+            alertError.show();
+            return false;
+        }
+
+        //BASC
+        if (!form.querySelector('input[name="pvCeBASC"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación BASC.';
+            alertError.show();
+            return false;
+        }
+
+        //Ambiental ISO 14001
+        if (!form.querySelector('input[name="pvCeAmb"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación Ambiental ISO 14001.';
+            alertError.show();
+            return false;
+        }
+
+        //ISO 28000
+        if (!form.querySelector('input[name="pvCe28000"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación ISO 28000.';
+            alertError.show();
+            return false;
+        }
+
+        //SST ISO 45000
+        if (!form.querySelector('input[name="pvCeSST"]:checked')) {
+            alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación SST ISO 45000.';
+            alertError.show();
+            return false;
+        }
+    }
+    
     //verifica autorizaciones
-    const pvTDPMotMaq = document.querySelectorAll('input[name="pvTDPMotMaq"]');
+    const pvTDPMotMaq = document.querySelector('input[name="pvTDPMotMaq"]:checked');
     if (!pvTDPMotMaq) {
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para MOTORYSA S.A.';
         alertError.show();
         return false;
     }
 
-    const pvTDPCasTor = document.querySelectorAll('input[name="pvTDPCasTor"]');
+    const pvTDPCasTor = document.querySelector('input[name="pvTDPCasTor"]:checked');
     if (!pvTDPCasTor) {
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para CASATORO S.A.';
         alertError.show();
         return false;
     }
 
-    const pvTDPBonap = document.querySelectorAll('input[name="pvTDPBonap"]');
+    const pvTDPBonap = document.querySelector('input[name="pvTDPBonap"]:checked');
     if (!pvTDPBonap) {
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para BONAPARTE S.A.S.';
         alertError.show();
         return false;
     }
 
-    const pvTDPBellpi = document.querySelectorAll('input[name="pvTDPBellpi"]');
-    if (!pvTDPBellpi) {
-        alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para BELLPI S.A.S.';
+    //const pvTDPBellpi = document.querySelector('input[name="pvTDPBellpi"]:checked');
+    //if (!pvTDPBellpi) {
+    //    alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para BELLPI S.A.S.';
+    //    alertError.show();
+    //    return false;
+    //}
+
+    const pvRadAut = document.querySelector('input[name="pvRadAut"]:checked');
+    if (!pvRadAut) {
+        alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos.';
         alertError.show();
         return false;
     }
 
-    const pvRadAut = document.querySelectorAll('input[name="pvRadAut"]');
-    if (!pvRadAut) {
-        alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos.';
+    const pvCumCSIn = document.querySelector('input[name="pvCumCSIn"]:checked');
+    if (!pvCumCSIn) {
+        alertErrorBody.innerText = 'Por favor marque si cumple con lo dispuesto en el Capítulo X de la Circular Básica Jurídica de la Superintendencia de Sociedades.';
         alertError.show();
         return false;
     }

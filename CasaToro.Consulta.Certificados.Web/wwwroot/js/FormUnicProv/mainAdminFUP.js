@@ -17,6 +17,7 @@ const printFormatBtn = document.getElementById('printFormatBtn');
 const persNatuForm = document.getElementById('persNatuForm');
 const persJuriForm = document.getElementById('persJuriForm');
 const provForm = document.getElementById('provForm');
+const certSection = document.getElementById('certSection');
 const uploadDocsForm = document.getElementById('uploadDocsForm');
 
 const consultBtn = document.getElementById('consultBtn');
@@ -265,6 +266,7 @@ consultBtn.addEventListener('click', async function (e) {
             alert.show();
             openFormsBtn.disabled = true;
             uploadDocsBtn.disabled = true;
+            printFormatBtn.disabled = true;
 
             return;
         }
@@ -276,26 +278,30 @@ consultBtn.addEventListener('click', async function (e) {
             alert.show();
             openFormsBtn.disabled = true;
             uploadDocsBtn.disabled = true;
+            printFormatBtn.disabled = true;
 
             return;
         }
 
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
-            alertSuccesBody.innerText = `Proveedor con ID: ${idNum} encontrado en la base de datos basica. Complete la informacion.`;
+            const data = result.data;
+            alertSuccesBody.innerText = `Proveedor con ID: ${idNum} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
             alertSuccess.show();
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
+            printFormatBtn.disabled = false;
 
             return;
         }
 
         //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
         if (result.status === 'foundDetail') {
-            alertSuccesBody.innerText = `Informacion del proveedor con ID: ${idNum} cargada con exito.`;
-            alertSuccess.show();
+            //alertSuccesBody.innerText = `Informacion del proveedor con ID: ${idNum} cargada con exito.`;
+            //alertSuccess.show();
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
+            printFormatBtn.disabled = false;
 
             return;
         }
@@ -323,6 +329,7 @@ openFormsBtn.addEventListener('click', async function (e) {
 
     try {
         const result = await API.getProvDataForms(idNum, personType);
+        console.log(result);
 
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
@@ -334,6 +341,7 @@ openFormsBtn.addEventListener('click', async function (e) {
             if (personType === 'natural') {
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block';
+                certSection.style.display = 'none';
 
                 UI.loadFormData_Natural({});
                 UI.loadProvFormData({});
@@ -345,7 +353,8 @@ openFormsBtn.addEventListener('click', async function (e) {
 
             } else {
                 persJuriForm.style.display = 'block';
-                provForm.style.display = 'block'
+                provForm.style.display = 'block';
+                certSection.style.display = 'block';
                 UI.loadFormData_Juridica({});
                 UI.loadProvFormData({});
 
@@ -369,6 +378,7 @@ openFormsBtn.addEventListener('click', async function (e) {
             if (personType === 'natural') {
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block'
+                certSection.style.display = 'none';
 
                 if (formData.natural) {
                     await UI.loadFormData_Natural(formData.natural);
@@ -376,6 +386,7 @@ openFormsBtn.addEventListener('click', async function (e) {
             } else {
                 persJuriForm.style.display = 'block';
                 provForm.style.display = 'block'
+                certSection.style.display = 'block';
 
                 if (formData.juridica) {
                     await UI.loadFormData_Juridica(formData.juridica);
@@ -413,7 +424,7 @@ uploadDocsBtn.addEventListener('click', async function (e) {
     uploadDocsForm.style.display = 'block';
 
     try {
-        const result = await API.getProvDocuments(idNum);
+        const result = await API.getProvDocuments(idNum, personType);
         UI.loadDocsForm(result.data || [], result.isOEA || null);
     }
     catch (err) {
@@ -433,7 +444,7 @@ printFormatBtn.addEventListener('click', async function (e) {
     const idNumInput = document.getElementById('idNum');
     const idNum = idNumInput.value.trim();
 
-    if (!personType === "juridica") {
+    if (personType !== "juridica") {
         alertErrorBody.innerText = 'La impresión de formato solo está disponible para Personas Jurídicas.';
         alertError.show();
         return;
@@ -486,18 +497,18 @@ submitPrvBtn.addEventListener("click", async (e) => {
         if (!Validator.validateJuridicaForm()) return;
         dataProNJ = Collector.collectFormData_Juridica();
     }
-    if (!Validator.validateProvForm()) return;
-    const provData = Collector.collectProvFormData();
+    if (!Validator.validateProvForm(personTypeSelect.value)) return;
+    const provData = Collector.collectProvFormData(personTypeSelect.value);
 
     try {
         //Add o Update segun tipo de persona y su registro
         if (personTypeSelect.value === 'natural') {
-            await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural');
+            await API.sendData(dataProNJ, isNewRegister ? `/Admin/AddProviderNatural?typePerson=${personTypeSelect.value}` : `/Admin/UpdateProviderNatural?typePerson=${personTypeSelect.value}` );
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
 
         } else if (personTypeSelect.value === 'juridica') {
-            await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
+            await API.sendData(dataProNJ, isNewRegister ? `/Admin/AddProviderJuridica?typePerson=${personTypeSelect.value}` : `/Admin/UpdateProviderJuridica?typePerson=${personTypeSelect.value}`);
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
         }
@@ -517,7 +528,7 @@ submitDocsBtn.addEventListener('click', async (e) => {
 
     if (!Validator.validateDocsForm()) return;
 
-    const docFormData = Collector.collectDocsForm();
+    const docFormData = Collector.collectDocsForm(personTypeSelect.value);
 
     try {
         await API.sendFiles(docFormData, '/Admin/UploadDocuments');

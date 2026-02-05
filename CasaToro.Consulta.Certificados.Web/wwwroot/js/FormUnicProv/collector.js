@@ -122,7 +122,7 @@ export function collectFormData_Juridica() {
 }
 
 //funcion para recopilar los datos del formulario de informacion financiera
-export function collectProvFormData() {
+export function collectProvFormData(typePerson) {
     const form = document.getElementById('provForm');
     const data = {};
 
@@ -136,7 +136,8 @@ export function collectProvFormData() {
     //radios
     const radioGroups = [
         'pvTipEmp', 'pvGrCon', 'pvDeclIndCom',
-        'pvAutRet', 'pvPosCuBan'
+        'pvAutRet', 'pvPosCuBan',
+        'pvCeOEA', 'pvCeCal', 'pvCeBASC', 'pvCeAmb', 'pvCe28000', 'pvCeSST'
     ];
 
     radioGroups.forEach(rname => {
@@ -151,7 +152,7 @@ export function collectProvFormData() {
 
     const sbFormRadios = [
         'pvTDPMotMaq', 'pvTDPCasTor', 'pvTDPBonap',
-        'pvTDPBellpi', 'pvRadAut'
+        'pvRadAut', 'pvCumCSIn'
     ];
 
     sbFormRadios.forEach(rname => {
@@ -161,7 +162,12 @@ export function collectProvFormData() {
 
 
     //Agrega Nit desde idNumInput para el foreign key en DB
-    data["Nit"] = (document.getElementById('pnNumId').value.trim() !== "" ? document.getElementById('pnNumId').value.trim() : null) || (document.getElementById('pjNIT').value.trim() !== "" ? document.getElementById('pjNIT').value.trim() : null);
+    if (typePerson === 'natural') {
+        data["Nit"] = document.getElementById('pnNumId').value.trim() !== "" ? document.getElementById('pnNumId').value.trim() : null;
+    } else if (typePerson === 'juridica') {
+        data["Nit"] = document.getElementById('pjNIT').value.trim() !== "" ? document.getElementById('pjNIT').value.trim() : null;
+    }
+    
 
     //forzar ubicaciones a null por seguridad si estan vacias
     [
@@ -185,12 +191,16 @@ export function collectProvFormData() {
 }
 
 //funcion para recopilar los documentos cargados en el formulario de documentos
-export function collectDocsForm() {
+export function collectDocsForm(personType = null) {
     const form = document.getElementById('uploadDocsForm');
     const formData = new FormData();
 
-    formData.append('Nit', document.getElementById('idNum').value.trim());
-    formData.append('personType', document.getElementById('personType').value === 'natural' ? 'PersonaNatural' : 'PersonaJuridica');
+    if (personType) {
+        formData.append('Nit', document.getElementById('idNum').value.trim());
+        formData.append('personType', document.getElementById('personType').value === 'natural' ? 'PersonaNatural' : 'PersonaJuridica');
+    }
+    
+
     const checked = form.querySelector('input[name="upOEA"]:checked');
     formData.append('isOEA', checked ? checked.value : 'No');
 

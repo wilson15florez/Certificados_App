@@ -14,6 +14,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         private readonly ProviderService _providerService;
         private readonly LogService _logService;
         private readonly AdminService _adminService;
+        private readonly UsersService _usersService;
 
         /// <summary>
         /// Constructor de la clase LoginService.

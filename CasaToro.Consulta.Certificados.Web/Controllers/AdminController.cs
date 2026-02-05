@@ -12,17 +12,21 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
     {
         private readonly CertificateServiceExcel _certificateServiceExcel;
         private readonly ProviderService _providerService;
+        private readonly UsersService _usersService;
+        private readonly AdminService _adminService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly FormatService _formatService = new FormatService();
 
 
         // Constructor del controlador que recibe instacias de los servicios necesarios
-        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService, IWebHostEnvironment webHostEnvironment, FormatService formatService)
+        public AdminController(CertificateServiceExcel certificateServiceExcel, ProviderService providerService, IWebHostEnvironment webHostEnvironment, FormatService formatService, AdminService adminService, UsersService usersService)
         {
             _certificateServiceExcel = certificateServiceExcel;
             _providerService = providerService;
             _webHostEnvironment = webHostEnvironment;
             _formatService = formatService;
+            _usersService = usersService;
+            _adminService = adminService;
         }
 
         // Acción que muestra la vista principal del administrador
@@ -31,11 +35,26 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             return View();
         }
 
-        // Acción que muestra la vista para actualizar la información básica
+        // Acción que muestra la vista para la administración de proveedores
+        public ActionResult ProviderList()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
+        }
+
+        // Acción que muestra la vista para el formato unico de conocimiento del proveedor
         public ActionResult FormUnicProv()
         {
             return View();
         }
+
 
         // Acción que maneja la actualización de la información de los certificados desde un archivo Excel
         [HttpPost]
@@ -74,31 +93,17 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             return Json(new { error = "Ocurrio un error al procesar el archivo" });
         }
 
-        // Acción que muestra la vista para la administración de proveedores
-        public ActionResult ProviderList()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Error");
-            }
-        }
-
-        //accion para obtener la lista paginada de proveedores
+        // Accion para obtener la lista paginada de proveedores
         [HttpGet]
         public IActionResult GetProviders(int pageNumber = 1, int pageSize = 100, string? search = null)
         {
             try
             {
                 // Obtener lista paginada con búsqueda en la base de datos
-                var providers = _providerService.getProviders(pageNumber, pageSize, search);
+                var providers = _adminService.getProviders(pageNumber, pageSize, search);
 
                 // Contar total de proveedores con filtro
-                var totalProviders = _providerService.getProvidersCount(search);
+                var totalProviders = _adminService.getProvidersCount(search);
 
                 return Json(new
                 {
@@ -114,6 +119,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción para actualizar la informacion basica del proveedor en la tabla proveedores_master
         [HttpPost]
         public IActionResult UpdateProvider([FromBody] Proveedores_Master provider)
         {
@@ -142,17 +148,17 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         //Accion para actualizar persona natural
         [HttpPost]
         [Route("/Admin/UpdateProviderNatural")]
-        public IActionResult UpdateProviderNatural([FromBody] Proveedores_Natural providerData)
+        public IActionResult UpdateProviderNatural([FromBody] Proveedores_Natural providerData, string typePerson)
         {
             try
             {
                 if (providerData == null)
                 {
-                    Console.WriteLine("UpdateProviderNatural: Provider data is null");
                     return Json(new { error = "Datos del proveedor no recibidos." });
                 }
                 Console.WriteLine("UpdateProviderNatural payload: " + Newtonsoft.Json.JsonConvert.SerializeObject(providerData));
-                _providerService.UpdateNaturalInfo(providerData);
+                string fullName = providerData.pnNombres + " " + providerData.pnPrimerApell + " " + providerData.pnSegundoApell;
+                _providerService.UpdateNaturalInfo(providerData, fullName, typePerson);
                 return Json(new { message = "Información de persona natural actualizada correctamente." });
             }
             catch (Exception ex)
@@ -164,7 +170,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         //accion para actualizar persona juridica
         [HttpPost]
         [Route("/Admin/UpdateProviderJuridica")]
-        public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData)
+        public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData, string typePerson)
         {
             try
             {
@@ -175,7 +181,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (pmaster == null)
                     return Json(new { error = "El proveedor no esta registrado en el sistema." });
 
-                _providerService.UpdateJuridicaInfo(providerData);
+                _providerService.UpdateJuridicaInfo(providerData, typePerson);
                 return Json(new { message = "Información de persona jurídica actualizada correctamente." });
             }
             catch (Exception ex)
@@ -184,7 +190,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para actualizar informacion financiera
+        //accion para actualizar informacion financiera del proveedor
         [HttpPost]
         [Route("/Admin/UpdateProvFinanceInfo")]
         public IActionResult UpdateProvFinanceInfo([FromBody] Proveedores_InfoFinanciera providerData)
@@ -235,24 +241,28 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 bool finInfNat = naturalData?.existFinanInf ?? false;
                 bool finInfJur = juridicaData?.existFinanInf ?? false;
 
+
+                var tipoPersona = providerMaster?.TipoPersona?.Trim();
+
                 // Si existe registro como natural y se está consultando juridica
-                if (natur && personType == "juridica")
+                if ((natur || tipoPersona == "NATURAL") && personType == "juridica")
                     return Json(new { status = "misMatch", registeredType = "natural" });
 
                 // Si existe registro como juridica y se está consultando natural
-                if (juri && personType == "natural")
+                if ((juri || tipoPersona == "JURIDICA") && personType == "natural")
                     return Json(new { status = "misMatch", registeredType = "juridica" });
 
                 //si se encuentra en la tabla correspondiente al tipo de persona
-                if (personType == "natural" && natur)
+                if (personType == "natural" && (tipoPersona == "NATURAL" && natur))
                     return Json(new { status = "foundDetail", data = naturalData });
 
-                if (personType == "juridica" && juri)
+                if (personType == "juridica" && (tipoPersona == "JURIDICA" && juri))
                     return Json(new { status = "foundDetail", data = juridicaData });
 
-                if (personType == "natural" && !natur)
+                // separa el nombre si esta en proveedores_master y se asigno a persona natural
+                if (((tipoPersona == null || tipoPersona == "NATURAL") && !natur) && personType == "natural")
                 {
-                    var sugerencia = _providerService.SplitFullName(providerMaster.Nombre);
+                    var sugerencia = _usersService.SplitFullName(providerMaster.Nombre);
                     return Json(new
                     {
                         status = "foundMasterOnly",
@@ -276,6 +286,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción para consultar y traer los documentos cargados del proveedor
         [HttpGet]
         public IActionResult GetProviderFiles(string idNum)
         {
@@ -291,6 +302,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción que permite obtener la informacion del proveedor en el formato para imprimir
         [HttpGet]
         public async Task<IActionResult> PrintFormat(string nit)
         {
@@ -300,11 +312,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 if (dataProvider == null || dataProvider.juridica == null)
                 {
-                    return BadRequest(new
-                    {
-                        status = "missing_data",
-                        message = "Es necesario llenar primero el Formato Único de Conocimiento de Proveedores (Persona Jurídica)."
-                    });
+                    return Json(new { error = "Es necesario llenar primero el Formato Único de Conocimiento de Proveedores (Persona Jurídica)." });
                 }
 
                 var juri = dataProvider.juridica as Dictionary<string, object>;
@@ -313,22 +321,22 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (juri != null && finanInf != null)
                 {
                     if (juri.ContainsKey("pjRLNacionalidad"))
-                        juri["pjRLNacionalidad"] = _providerService.ConsultCountry(juri["pjRLNacionalidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        juri["pjRLNacionalidad"] = _usersService.ConsultCountry(juri["pjRLNacionalidad"]?.ToString(), _webHostEnvironment.WebRootPath);
 
                     if (juri.ContainsKey("pjRLDepartNac"))
-                        juri["pjRLDepartNac"] = _providerService.ConsultState(juri["pjRLDepartNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        juri["pjRLDepartNac"] = _usersService.ConsultState(juri["pjRLDepartNac"]?.ToString(), _webHostEnvironment.WebRootPath);
 
                     if (juri.ContainsKey("pjRLCiudadNac"))
-                        juri["pjRLCiudadNac"] = _providerService.ConsultCity(juri["pjRLCiudadNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        juri["pjRLCiudadNac"] = _usersService.ConsultCity(juri["pjRLCiudadNac"]?.ToString(), _webHostEnvironment.WebRootPath);
 
                     if (finanInf.ContainsKey("pvPorPais"))
-                        finanInf["pvPorPais"] = _providerService.ConsultCountry(finanInf["pvPorPais"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        finanInf["pvPorPais"] = _usersService.ConsultCountry(finanInf["pvPorPais"]?.ToString(), _webHostEnvironment.WebRootPath);
 
                     if (finanInf.ContainsKey("pvAcEconomica"))
-                        finanInf["pvAcEconomica"] = _providerService.ConsultEconomic(finanInf["pvAcEconomica"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        finanInf["pvAcEconomica"] = _usersService.ConsultEconomic(finanInf["pvAcEconomica"]?.ToString(), _webHostEnvironment.WebRootPath);
 
                     if (finanInf.ContainsKey("pvEntidad"))
-                        finanInf["pvEntidad"] = _providerService.ConsultBank(finanInf["pvEntidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+                        finanInf["pvEntidad"] = _usersService.ConsultBank(finanInf["pvEntidad"]?.ToString(), _webHostEnvironment.WebRootPath);
                 }
 
                 string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
@@ -342,14 +350,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return Json(new { status = "error", message = ex.Message });
             }
         }
 
         //accion para agregar proveedor natural
         [HttpPost]
         [Route("/Admin/AddProviderNatural")]
-        public async Task<IActionResult> AddProviderNatural([FromBody] Proveedores_Natural provider)
+        public async Task<IActionResult> AddProviderNatural([FromBody] Proveedores_Natural provider, string typePerson)
         {
             try
             {
@@ -363,8 +371,9 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 dynamic existingNatural = await _providerService.getProviderDetails(provider.Nit, "natural");
                 if (existingNatural.existNatu) return Json(new { error = "El proveedor ya tiene registrada su información como persona natural." });
 
+                string fullName = provider.pnNombres + " " + provider.pnPrimerApell + " " + provider.pnSegundoApell;
                 //insertar registro de persona natural
-                _providerService.AddProveedorNatural(provider);
+                _providerService.AddProveedorNatural(provider, fullName, typePerson);
                 return Json(new { message = "Proveedor de persona natural registrado correctamente." });
             }
             catch (Exception ex)
@@ -376,7 +385,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         //accion para agregar proveedor juridico
         [HttpPost]
         [Route("/Admin/AddProviderJuridica")]
-        public async Task<IActionResult> AddProviderJuridica([FromBody] Proveedores_Juridica provider)
+        public async Task<IActionResult> AddProviderJuridica([FromBody] Proveedores_Juridica provider, string typePerson)
         {
             try
             {
@@ -391,7 +400,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 if (existingJuridica.existJuri) return Json(new { error = "El proveedor ya tiene registrada su información como persona jurídica." });
 
                 //insertar registro de persona juridica
-                _providerService.AddProveedorJuridica(provider);
+                _providerService.AddProveedorJuridica(provider, typePerson);
                 return Json(new { message = "Proveedor de persona jurídica registrado correctamente." });
             }
             catch (Exception ex)
@@ -400,7 +409,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para agregar informcion financiera
+        //accion para agregar la informcion financiera del proveedor
         [HttpPost]
         [Route("/Admin/AddProvFinanceInfo")]
         public IActionResult AddProvFinanceInfo([FromBody] Proveedores_InfoFinanciera provider)
@@ -427,6 +436,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción para subir los documentos del proveedor
         [HttpPost]
         [Route("/Admin/UploadDocuments")]
         public async Task<IActionResult> UploadDocuments(string Nit, string personType, string isOEA)
@@ -470,7 +480,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 var existingProvider = _providerService.getProviderByNit(nit);
                 if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
                 // Restaurar contraseña del proveedor
-                _providerService.RestoreProviderPassword(nit);
+                _adminService.RestoreProviderPassword(nit);
                 return Json(new { message = "Contraseña restaurada correctamente" });
             }
             catch (Exception ex)

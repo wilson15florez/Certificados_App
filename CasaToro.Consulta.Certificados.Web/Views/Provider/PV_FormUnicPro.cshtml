@@ -303,14 +303,16 @@
                         </div>
                     </div>
 
+                    <div class="flex-row header-form">
+                        <h3 class="title-form">Composición Accionaria</h3>
+                    </div>
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <p class="sub-header">
                             Identifique la persona natural que ejerza control sobre la persona juridica o que sea titular, directa o indirectamente, del cinco por ciento (5%)
-                            o más del capital o derechos de voto y/o se beneficie en un cinco por ciento (5%) o mas de los rendimientos, utilidades o Activos.
+                            o más del capital o derechos de voto y/o se beneficie en un cinco por ciento (5%) o más de los rendimientos, utilidades o activos. (En caso de
+                            requerir más espacios debe anexarse la relación.)
                         </p>
-                        <p>En caso de requerir más espacios debe anexarse la relación.</p>
                     </div>
-
                     <div class="justify-content-around align-items-center flex-row m-2 p-2">
                         <table class="table table-hover" id="control-table">
                             <thead>
@@ -418,7 +420,7 @@
                 </div>
             </form>
 
-            <!-- form informacion financiera (tanto para persona natural como juridica)-->
+            <!-- form infomacion financiera (tanto para persona natural como juridica)-->
             <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
 
                 <div class="flex-row header-form">
@@ -591,7 +593,7 @@
                     <div class="row d-flex justify-content-start align-items-center flex-row m-2 p-2">
                         <h6>Auto Retenedor *</h6>
                         <div class="d-flex">
-                            <div class="col-md-6 form-group form-check">
+                            <div class="col-md-4 form-group form-check">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input" /><label for="pvAutRetSi" class="form-check-label">Si</label>
@@ -601,7 +603,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 form-group input-wrapper">
+                            <div class="col-md-4 form-group input-wrapper">
                                 <input type="number" id="pvNumResDIAN" name="pvNumResDIAN" class="form-control no-edit" />
                                 <label for="pvNumResDIAN" class="form-label adaptive-label disabled-label" placeholder="N° Resolución DIAN" alt="N° Resolución DIAN"></label>
                             </div>
@@ -609,14 +611,29 @@
                     </div>
 
                     <div class="flex-row header-form">
-                        <h3 class="title-form">Mercancía y Comercio Exterior</h3>
+                        <h3 class="title-form">Operaciones de Comercio Exterior</h3>
                     </div>
 
-                    <div class="d-flex justify-content-around align-items-center m-2 p-2">
-                        <div class="col-md-6 form-group input-wrapper">
-                            <input type="text" id="pvForPag" name="pvForPag" class="form-control" />
-                            <label for="pvForPag" class="form-label adaptive-label" placeholder="Forma de pago de operaciones comercio exterior" alt="Forma de pago de operaciones comercio exterior"></label>
+                    <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                        <h6>Realiza operaciones de comercio exterior *</h6>
+                        <div class="d-flex">
+                            <div class="col-md-6  form-group form-check">
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvOpeCExtSi" name="pvOpeCExt" value="Si" class="form-check-input" /><label for="pvOpeCExtSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvOpeCExtNo" name="pvOpeCExt" value="No" class="form-check-input" /><label for="pvOpeCExtNo" class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group input-wrapper">
+                                <input type="text" id="pvForPag" name="pvForPag" class="form-control" />
+                                <label for="pvForPag" class="form-label adaptive-label" placeholder="Forma de pago de operaciones comercio exterior" alt="Forma de pago de operaciones comercio exterior"></label>
+                            </div>
                         </div>
+                    </div>
+                    <div class="justify-content-start align-items-center m-2 p-2">
                         <div class="col-md-6 form-group input-wrapper">
                             <input type="text" id="pvEntBenef" name="pvEntBenef" class="form-control" title="Personas o empresas beneficiarias de operaciones de comercio exterior" />
                             <label for="pvEntBenef" class="form-label adaptive-label" placeholder="Beneficiarios de operaciones de comercio exterior" alt="Beneficiarios de operaciones de comercio exterior"></label>
@@ -667,6 +684,110 @@
                             <b>Nota:</b> Nos permitimos informar que aceptamos el pago de todas nuestras facturas a través del sistema automático de pagos, para lo cual
                             autorizamos nos consignen en la cuenta y entidad bancaria aquí señalada.
                         </p>
+                    </div>
+
+                    <div id="certSection" style="display: none">
+                        <div class="flex-row header-form">
+                            <h3 class="title-form">Certificaciones</h3>
+                        </div>
+
+                        <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                            <div class="col-md-6">
+                                <h6>OEA *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeOEASi" name="pvCeOEA" value="Si" class="form-check-input" /><label for="pvCeOEASi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeOEANo" name="pvCeOEA" value="No" class="form-check-input" /><label for="pvCeOEANo" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeOEAEnPr" name="pvCeOEA" value="EnProceso" class="form-check-input" /><label for="pvCeOEAEnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Calidad (ISO 9001) *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeCalSi" name="pvCeCal" value="Si" class="form-check-input" /><label for="pvCeCalSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeCalNo" name="pvCeCal" value="No" class="form-check-input" /><label for="pvCeCalNo" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeCalEnPr" name="pvCeCal" value="EnProceso" class="form-check-input" /><label for="pvCeCalEnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                            <div class="col-md-6">
+                                <h6>BASC *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeBASCSi" name="pvCeBASC" value="Si" class="form-check-input" /><label for="pvCeBASCSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeBASCNo" name="pvCeBASC" value="No" class="form-check-input" /><label for="pvCeBASCNo" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeBASCEnPr" name="pvCeBASC" value="EnProceso" class="form-check-input" /><label for="pvCeBASCEnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Ambiental (ISO 14001) *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeAmbSi" name="pvCeAmb" value="Si" class="form-check-input" /><label for="pvCeAmbSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeAmbNo" name="pvCeAmb" value="No" class="form-check-input" /><label for="pvCeAmbNo" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeAmbEnPr" name="pvCeAmb" value="EnProceso" class="form-check-input" /><label for="pvCeAmbEnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-around align-items-center m-2 p-2">
+                            <div class="col-md-6">
+                                <h6>ISO 28000 *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCe28000Si" name="pvCe28000" value="Si" class="form-check-input" /><label for="pvCe28000Si" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCe28000No" name="pvCe28000" value="No" class="form-check-input" /><label for="pvCe28000No" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCe28000EnPr" name="pvCe28000" value="EnProceso" class="form-check-input" /><label for="pvCe28000EnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>SST (ISO 45000) *</h6>
+                                <div class="d-flex">
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeSSTSi" name="pvCeSST" value="Si" class="form-check-input" /><label for="pvCeSSTSi" class="form-check-label">Si</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeSSTNo" name="pvCeSST" value="No" class="form-check-input" /><label for="pvCeSSTNo" class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                        <input type="radio" id="pvCeSSTEnPr" name="pvCeSST" value="EnProceso" class="form-check-input" /><label for="pvCeSSTEnPr" class="form-check-label">En Proceso</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-start align-items-center m-2 p-2">
+                            <div class="col-md-6 form-group input-wrapper">
+                                <input type="text" id="pvAdiCert" name="pvAdiCert" class="form-control" />
+                                <label for="pvAdiCert" class="form-label adaptive-label" placeholder="¿Adicional? ¿Cúal?" alt="¿Adicional? ¿Cúal?"></label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="justify-content-around align-items-center m-2 p-2">
@@ -742,25 +863,6 @@
                     <div class="flex-row header-form">
                         <h3 class="title-form">Declaraciones y Autorizaciones</h3>
                     </div>
-
-                    <div class="panelField">
-                        <p>
-                            <b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" class="form-control-input-wrapper" />,
-                            de manera voluntaria y bajo la gravedad del juramento afirmo que todo lo aquí consignado es cierto, veraz y verificable, por lo tanto realizo las siguientes declaraciones:
-                            a) Los recursos de mi propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social) <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" class="form-control-input-wrapper" />;
-                            b) Mi actividad, profesión u ocupación y/o de la empresa que represento es lícita y se ejerce dentro del marco legal y los recursos no provienen de actividades ilícitas contempladas en el Código Penal;
-                            c) Que sus socios, accionistas con participación directa o indirecta igual o superior al 5%, o administradores, empleados o beneficiarios finales no presentan registros negativos en las listas tanto
-                            nacionales como internacionales de control y prevención del riesgo del lavado de activos y/o financiación del terrorismo, así como tampoco en ninguna base de datos de índole privada o pública relacionada con
-                            actividades ilícitas asociadas a corrupción y/o soborno transnacional y que pueden ser consultadas para este fin;
-                            d) En desarrollo del objeto social y/o en la ejecución de mi actividad profesional no incurriré en alguna actividad ilícita de las contempladas en el Código Penal o en cualquier otra norma que modifique o
-                            adicione y en consecuencia me obligo a responder frente a LA EMPRESA y/o terceros por todos los perjuicios que se llegaren a causar como consecuencia del incumplimiento de estas afirmaciones;
-                            e) Me obligo a actualizar la información personal, corporativa, societaria, según aplique, así como la información financiera cada vez que haya cambios en la misma y en la medida en que la solicite
-                            LA EMPRESA, suministrando totalidad de los soportes documentales;
-                            f) Los bienes y/o recursos que se deriven de la presente relación contractual no serán destinados para la ejecución de actividades delictivas, así como tampoco, para la promoción y/o financiación de grupos
-                            armados al margen de la ley y en general a personas dedicadas a actividades ilícitas; g) No tiene relación alguna con personas asociadas a actividades delictivas. El incumplimiento de cualquiera de estas
-                            obligaciones aquí contempladas, faculta a LA EMPRESA para terminar de manera inmediata y unilateral el presente contrato y a que éste, efectué de manera inmediata los pagos adeudados a LA EMPRESA.
-                        </p>
-                    </div>
                     <div class="panelField">
                         <p>
                             <b>AUTORIZACIÓN PARA EL TRATAMIENTO DE DATOS PERSONALES:</b> Mediante el registro de mis datos personales en el presente formulario, autorizo a (marque con x) para que:<br />
@@ -776,13 +878,11 @@
                                 <div>
                                     <p>
                                         <b>MOTORES Y MÁQUINAS S.A. BIC - MOTORYSA BIC</b> identificada con NIT 860.019.063-8 ubicada en la dirección
-                                        Avenida Carrera 68 No. 68B-61 de Bogotá canal de comunicación <b>seguridad_de_datos@moterysa.com</b>,
-                                        Politica de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
+                                        Avenida Carrera 68 No. 68B-61 de Bogotá. Canal de comunicación <b>seguridad_de_datos@moterysa.com</b>.
+                                        Política de Tratamiento de Datos Personales publicada en página web <b>www.motorysa.com</b>.
                                     </p>
                                 </div>
                             </div>
-
-
                             <div class="d-flex">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="form-check m-2">
@@ -795,7 +895,7 @@
                                 <div>
                                     <p>
                                         <b>CASATORO S.A. BIC</b> identificada con NIT 830.004.993-8 ubicada en la dirección Avenida Boyacá No. 170-97
-                                        de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>, Politica de Tratamiento de Datos
+                                        de Bogotá, canal de comunicación <b>seguridaddedatos@casatoro.com</b>. Política de Tratamiento de Datos
                                         Personales publicada en página web <b>www.casatoro.com</b>.
                                     </p>
                                 </div>
@@ -812,71 +912,106 @@
                                 <div>
                                     <p>
                                         <b>REPUESTOS, ACCESORIOS Y LUBRICANTES BONAPARTE S.A.S. - BONAPARTE RAL</b> identificada con NIT 900.353.939-1
-                                        ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>,
-                                        Politica de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="form-check m-2">
-                                        <label for="pvTDPBellpiSI" class="form-check-label">SI</label><input type="radio" id="pvTDPBellpiSI" name="pvTDPBellpi" value="SI" class="form-check-input" />
-                                    </div>
-                                    <div class="form-check m-2">
-                                        <label for="pvTDPBellpiNO" class="form-check-label">NO</label><input type="radio" id="pvTDPBellpiNO" name="pvTDPBellpi" value="NO" class="form-check-input" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <p>
-                                        <b>BELLPI S.A.S</b> identificada con NIT 901.389.327-1 ubicada en la dirección Calle 170 #67-42 de Bogotá,
-                                        canal de comunicación <b>seguridaddedatos@bellpi.com</b> Politica de Tratamiento de Datos Personales publicada
-                                        en página wet <b>www.bellpi.com</b>.
+                                        ubicada en la dirección Avenida Boyacá No 170-97 de Bogotá, canal de comunicación <b>seguridaddedatosbp@bonaparte.com</b>.
+                                        Política de Tratamiento de Datos Personales publicada en página web <b>www.bonaparte.com</b>.
                                     </p>
                                 </div>
                             </div>
                         </p>
-                    </div>
-                    <div class="panelField">
                         <p>
-                            Guarde, use, almacene, recolecte, transfiera, transmita a nivel nacional, Internacional y realice el tratamiento de mis datos personales, comerciales y financieros recolectados por medio digital o
-                            escrito con las siguientes finalidades: a) Consultorías, auditorias, asesorías y servicios relacionados; b) Gestión administrativa; c) Gestión de cobros y pagos; d) Gestión de facturación;
-                            e) Gestión de proveedores, f) Gestión económica y contable; g) Suministrar y transferir información personal, comercial y financiera para que sea conocida y tratada por las personas naturales,
-                            juridicas y/o accionistas de LA EMPRESA y a sociedades controlantes, controladas, vinculadas, aliadas, o pertenecientes al mismo grupo empresarial y a cualquier aliado comercial; h) realizar el
-                            tratamiento de datos sensibles como: Huellas dactilares o un cálculo sobre ellas, fotografias, imágenes de video, ubicación espacial, datos de ordenadores, teléfonos y números celulares, VPN, correo
-                            electrónico, que serán utilizados con fines de autenticación e identificación por medio de la firma electrónica y/o digital con el fin de verificar la autenticidad de la autorización. Dicha
-                            información será almacenada y utilizada adicionalmente para ofrecer una capa adicional de seguridad. El titular conoce que no está obligado a autorizar el tratamiento de los datos sensibles a menos
-                            que sea estrictamente necesario para alguno de los fines descritos a requerido por ley, I) Suministrar, transmitir, transferir información personal, comercial y financiera para que sea conocida y
-                            tratada por las personas naturales o juridicas, filiales, matrices accionistas o vinculados económicos de LA EMPRESA como entidades bancarias, aliados comerciales y/o la Comunidad de la empresa,
-                            proveedores nacionales o extranjeros, que presten servicios tecnológicos, logisticos y operativos. j) El control y la prevención del fraude; k) Prevención y control de actividades ilicitas incluyendo,
-                            pero no limitándose al lavado de activos, financiación del terrorismo, soborno transnacional y/o los delitos asociados a corrupción. <br />
-                            Así mismo, declaro que LA EMPRESA me ha informado de manera previa y expresa lo siguiente: i) los datos suministrados en la presente solicitud son recolectados atendiendo las disposiciones legales e
-                            instrucciones de las autoridades competentes en materia de protección de datos personales; ii) El responsable del dicho tratamiento es la empresa <b>seleccionada anteriormente</b> según corresponda la vinculación
-                            comercial, iii) Que en ciertas situaciones es necesario realizar transferencias Internacionales de mis datos para cumplir con las finalidades del mismo y con las obligaciones contractuales y pos contractuales;
-                            iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles, en consecuencia no he sido obligado a responderias, por lo que
-                            <input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" class="form-check-input me-1" /><b class="me-1">SI</b> <input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" class="form-check-input me-1" /><b>NO</b> autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes;
-                            v) los derechos que me asisten como titular de los datos son actualizar, conocer, rectificar, conocer sobre el uso que le darán a mis datos, solicitar prueba de la autorización y/o revocar la misma, los
-                            cuales puedo ejercer a través de los canales de comunicación informados por LA EMPRESA y en la Politica de Tratamiento de Datos Personales, dirigida al encargado de Protección de Datos Personales.<br />
-                            <b>CONFIDENCIALIDAD Y RESERVA:</b> Toda la información no pública que sea entregada por LA EMPRESA y/o por cualquiera de sus sociedades vinculadas será considerada como CONFIDENCIAL Y RESERVADA, por lo tanto,
-                            gozará de especial protección, razón por la cual todo acto de divulgación, uso indebido de la información y/o falta de seguridad sobre la misma será considerado como un incumplimiento grave.
-                            El PROVEEDOR reconoce y acepta expresamente que la violación de confidencialidad generará perjuicios graves a LA EMPRESA.<br />
+                            Que en el presente documento se denominará LA EMPRESA para que: guarde, use, almacene, recolecte, transfiera, transmita a nivel nacional,
+                            Internacional y realice el tratamiento de mis datos personales, comerciales y financieros recolectados por medio digital o escrito con las
+                            siguientes finalidades: a) Consultorías, auditorias, asesorías y servicios relacionados; b) Gestión administrativa; c) Gestión de cobros y
+                            pagos; d) Gestión de facturación; e) Gestión de proveedores, f) Gestión económica y contable; g) Suministrar y transferir información personal,
+                            comercial y financiera para que sea conocida y tratada por las personas naturales, juridicas y/o accionistas de LA EMPRESA y a sociedades
+                            controlantes, controladas, vinculadas, aliadas, o pertenecientes al mismo grupo empresarial y a cualquier aliado comercial; h) realizar el
+                            tratamiento de datos sensibles como: Huellas dactilares o un cálculo sobre ellas, fotografias, imágenes de video, ubicación espacial,
+                            datos de ordenadores, teléfonos y números celulares, VPN, correo electrónico, que serán utilizados con fines de autenticación e identificación
+                            por medio de la firma electrónica y/o digital con el fin de verificar la autenticidad de la autorización. Dicha información será almacenada y
+                            utilizada adicionalmente para ofrecer una capa adicional de seguridad. El titular conoce que no está obligado a autorizar el tratamiento de los
+                            datos sensibles a menos que sea estrictamente necesario para alguno de los fines descritos a requerido por ley, I) Suministrar, transmitir, transferir
+                            información personal, comercial y financiera para que sea conocida y tratada por las personas naturales o juridicas, filiales, matrices accionistas
+                            o vinculados económicos de LA EMPRESA como entidades bancarias, aliados comerciales y/o la Comunidad de la empresa, proveedores nacionales o
+                            extranjeros, que presten servicios tecnológicos, logisticos y operativos. j) El control y la prevención del fraude; k) Prevención y control de
+                            actividades ilicitas incluyendo, pero no limitándose al lavado de activos, financiación del terrorismo, soborno transnacional y/o los delitos
+                            asociados a corrupción. <br /><br />
 
-                            <b>ÉTICA EMPRESARIAL:</b><br />
+                            <b>TRATAMIENTO DE DATOS FINANCIEROS:</b> Autorizo a LA EMPRESA, o a quien represente sus derechos, para que, en los términos de la Ley
+                            1266 de 2008 y de manera informada y expresa, realice el tratamiento de mis datos financieros con las siguientes finalidades: i) Procesar y
+                            consultar mi información ante centrales de información financiera, entidades financieras y otras entidades en Colombia o en el extranjero que
+                            administren bases de datos relacionadas con mi historial crediticio; ii) Solicitar y consultar, con fines estadísticos, de control, supervisión e
+                            información comercial, toda mi información financiera y comercial, especialmente la relacionada con el incumplimiento y/o mora en
+                            obligaciones, para la evaluación del riesgo; iii) Verificar toda la información que he suministrado a La empresa, incluyendo referencias
+                            comerciales, personales, laborales y mi información financiera. He sido informado por LA EMPRESA sobre el alcance de esta autorización, que
+                            implica que mi comportamiento frente a las obligaciones será registrado con el fin de proporcionar información suficiente y adecuada sobre
+                            el estado de mis obligaciones financieras, comerciales, crediticias y de servicios.<br />
+                            Así mismo, declaro que LA EMPRESA me ha informado de manera previa y expresa lo siguiente: i) los datos suministrados en la presente solicitud
+                            son recolectados atendiendo las disposiciones legales e instrucciones de las autoridades competentes en materia de protección de datos personales;
+                            ii) El responsable del dicho tratamiento es la empresa <b>seleccionada anteriormente</b> según corresponda la vinculación comercial, iii) Que en
+                            ciertas situaciones es necesario realizar transferencias Internacionales de mis datos para cumplir con las finalidades del mismo y con las obligaciones
+                            contractuales y pos contractuales; iv) Que son facultativas las respuestas a las preguntas que me han hecho o me harán sobre datos personales sensibles,
+                            en consecuencia no he sido obligado a responderias, por lo que
+                            <input type="radio" id="pvRadAutSI" name="pvRadAut" value="SI" class="form-check-input me-1" /><b class="me-1">SI</b>
+                            <input type="radio" id="pvRadAutNO" name="pvRadAut" value="NO" class="form-check-input me-1" /><b>NO</b>
+                            autorizo expresamente el tratamiento de mis datos sensibles, entre los cuales se incluyen los datos de los niños, niñas y adolescentes;
+                            v) los derechos que me asisten como titular de los datos son actualizar, conocer, rectificar, conocer sobre el uso que le darán a mis datos,
+                            solicitar prueba de la autorización y/o revocar la misma, los cuales puedo ejercer a través de los canales de comunicación informados por LA
+                            EMPRESA y en la Politica de Tratamiento de Datos Personales, dirigida al encargado de Protección de Datos Personales.<br /><br />
 
-                            Declaro que he recibido la información de:<br />
+                            <b>ORIGEN DE FONDOS Y/O BIENES:</b> Obrando en nombre propio y/o en representación de
+                            <input type="text" id="pvDeAuRepresentacion" name="pvDeAuRepresentacion" class="form-control-input-wrapper" required />, de manera voluntaria y bajo la gravedad
+                            del juramento afirmo que todo lo aquí consignado es cierto, veraz y verificable, por lo tanto realizo las siguientes declaraciones: a) Los recursos de mi
+                            propiedad o de la persona jurídica que represento provienen de las siguientes fuentes (ocupación, profesión, objeto social)
+                            <input type="text" id="pvFuenteRecur" name="pvFuenteRecur" class="form-control-input-wrapper" required />; b) Mi actividad, profesión u ocupación y/o de la empresa
+                            que represento es lícita y se ejerce dentro del marco legal y los recursos no provienen de actividades ilícitas contempladas en el Código Penal; c) Que sus
+                            socios, accionistas con participación directa o indirecta igual o superior al 5%, o administradores, empleados o beneficiarios finales no presentan registros
+                            negativos en las listas tanto nacionales como internacionales de control y prevención del riesgo del lavado de activos y/o financiación del terrorismo, así
+                            como tampoco en ninguna base de datos de índole privada o pública relacionada con actividades ilícitas asociadas a corrupción y/o soborno transnacional y que
+                            pueden ser consultadas para este fin; d) En desarrollo del objeto social y/o en la ejecución de mi actividad profesional no incurriré en alguna actividad ilícita
+                            de las contempladas en el Código Penal o en cualquier otra norma que modifique o adicione y en consecuencia me obligo a responder frente a LA EMPRESA y/o
+                            terceros por todos los perjuicios que se llegaren a causar como consecuencia del incumplimiento de estas afirmaciones; e) Me obligo a actualizar la información
+                            personal, corporativa, societaria, según aplique, así como la información financiera cada vez que haya cambios en la misma y en la medida en que la solicite
+                            LA EMPRESA, suministrando totalidad de los soportes documentales; f) Los bienes y/o recursos que se deriven de la presente relación contractual no serán destinados
+                            para la ejecución de actividades delictivas, así como tampoco, para la promoción y/o financiación de grupos armados al margen de la ley y en general a personas
+                            dedicadas a actividades ilícitas; g) No tiene relación alguna con personas asociadas a actividades delictivas. El incumplimiento de cualquiera de estas obligaciones
+                            aquí contempladas, faculta a LA EMPRESA para terminar de manera inmediata y unilateral el presente contrato y a que éste, efectué de manera inmediata los pagos
+                            adeudados a LA EMPRESA.<br /><br />
 
+                            <b>CONFIDENCIALIDAD Y RESERVA:</b> Toda la información no pública que sea entregada por LA EMPRESA y/o por cualquiera de sus sociedades vinculadas será considerada
+                            como CONFIDENCIAL Y RESERVADA, por lo tanto, gozará de especial protección, razón por la cual todo acto de divulgación, uso indebido de la información y/o falta de
+                            seguridad sobre la misma será considerado como un incumplimiento grave. El PROVEEDOR reconoce y acepta expresamente que la violación de confidencialidad generará
+                            perjuicios graves a LA EMPRESA.<br /><br />
+
+                            <b>ÉTICA EMPRESARIAL:</b> Declaro que he recibido la siguiente información contenida en el Manual de Transparencia y Ética Empresarial PTEE:<br />
                             <ul>
-                                <li>Politica de Transparencia y Anticorrupción</li>
-                                <li>Politica de Prevención y Gestión del Riesgo, de Corrupción y Soborno Trasnacional</li>
-                                <li>Politica de Derechos Humanos</li>
-                                <li>Politica para la Prevención del Consumo de Alcohol y Sustancias Psicoactivas</li>
-                                <li>Sistema de Autocontrol y Gestión del Riesgo Integral de LA/FT/FPADM-SAGRILAFT</li>
-                            </ul><br />
+                                <li>Política de Derechos Humanos</li>
+                                <li>Principios Aplicables A La política De Derechos Humanos</li>
+                                <li>Política de Transparencia y Ética Empresarial - PTEE</li>
+                                <li>Código de Conducta Empresarial - Normas Generales de conducta - Normas de Conducta Para Proveedores.</li>
+                                <li>Información sobre la línea de transparencia</li>
+                            </ul>
 
-                            Que conozco en su totalidad su contenido y por lo tanto entiendo las obligaciones, responsabilidades, deberes y derechos alli contenidos, velando por el cabal cumplimiento de lo dispuesto en las politicas - procedimientos
-                            y por lo tanto me comprometo a seguir sus principios y normas de conducta.
+                            Me comprometo a informar cualquier acto contrario al código de conducta al canal de transparencia
+                            <a target="_blank" href="https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379">
+                                https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379
+                            </a>.<br /><br />
 
-                            Si conoce algún hecho contrario al código de conducta, ética y el programa anticorrupción dirijase al canal ético:<br />
-                            <a target="_blank" href="https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379">https://www.lineaeticaratsel.com/index.php?idcategoria=30&entidad=c8b0f5e0795a14fc69bdf4ca76564d57a8bdc379</a>.
+                            <b>SAGRILAFT:</b> Declaro que conozco en su totalidad el contenido del documento, y por lo tanto entiendo las obligaciones, responsabilidades,
+                            deberes y derechos allí establecidos. Me comprometo a velar por el cumplimiento de las políticas y procedimientos definidos, así como a
+                            seguir los principios y normas de conducta correspondientes. Manifiesto que la empresa que represento:
+                            <input type="radio" id="pvCumCSInSI" name="pvCumCSIn" value="SI" class="form-check-input me-1" /><b class="me-1">SI</b>
+                            <input type="radio" id="pvCumCSInNO" name="pvCumCSIn" value="NO" class="form-check-input me-1" /><b>NO</b>
+                            cumple con lo dispuesto en el Capítulo X de la Circular Básica Jurídica de la Superintendencia de Sociedades, relacionado con el Sistema de
+                            Autocontrol y Gestión del Riesgo Integral de Lavado de Activos, Financiación del Terrorismo y Financiación de la Proliferación de Armas de
+                            Destrucción Masiva (SAGRILAFT/FPADM). Certifico que, en cumplimiento de las normas anti LA/FT/FPADM la empresa, sus miembros de junta directiva,
+                            accionistas, representantes legales y empleados han sido validados en las listas de control vinculantes para Colombia en materia de
+                            LA/FT/FPADM, y que ninguno de ellos se encuentra incluido en dichas listas. Igualmente, certifico que, a la fecha, ninguno presenta condenas
+                            vigentes por delitos relacionados con Lavado de Activos, Financiación del Terrorismo o Financiación de la Proliferación de Armas de Destrucción
+                            Masiva.<br />
+
+                            En caso de que la empresa no esté obligada por ley a implementar el SAGRILAFT, se compromete a aplicar medidas de debida diligencia y
+                            establecer controles internos para mitigar los riesgos asociados a LA/FT/FPADM.
+                            <br /><br />
                         </p>
                     </div>
                     <div class="panel-actions">
@@ -1020,7 +1155,7 @@
                     </div>
                 </div>
 
-                <div id="sectionNoOEA" style="display: none;">
+                @* <div id="sectionNoOEA" style="display: none;">
                     <div class="d-flex justify-content-start align-items-center flex-row m-2 p-2">
                         <div class="col-md-6 form-group input-wrapper">
                             <div class="custom-file-container">
@@ -1031,7 +1166,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> *@
                 <div class="button-group justify-content-around align-items-center m-2 p-2">
                     <button type="button" id="submitDocsBtn" class="btn btn-primary">Subir Documentos</button>
                 </div>

@@ -16,13 +16,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
     {
         private readonly BillService _billService;
         private readonly ProviderService _providerService;
+        private readonly UsersService _usersService;
         private readonly CertificatesService _certificatesService;
         private readonly LogService _logService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly FormatService _formatService = new FormatService();
 
         // Constructor del controlador que recibe instancias de los servicios necesarios
-        public ProviderController(BillService billService, ProviderService providerService, CertificatesService certificatesServices, LogService logService, IWebHostEnvironment webHostEnvironment, FormatService formatService)
+        public ProviderController(BillService billService, ProviderService providerService, CertificatesService certificatesServices, LogService logService, IWebHostEnvironment webHostEnvironment, FormatService formatService, UsersService usersService)
         {
             _billService = billService;
             _providerService = providerService;
@@ -30,6 +31,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             _logService = logService;
             _webHostEnvironment = webHostEnvironment;
             _formatService = formatService;
+            _usersService = usersService;
         }
 
         // Acción que muestra la vista de certificados para el proveedor autenticado
@@ -49,6 +51,60 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 months = months
             };
             return View(model);
+        }
+
+        // Acción que muestra la vista de facturas para el proveedor autenticado
+        public ActionResult Bill()
+        {
+            // Obtener el NIT del proveedor autenticado
+            var nit = User.FindFirst("NIT").Value;
+            // Obtener las facturas asociadas al proveedor
+            var bills = _billService.GetBillsForProvider(nit);
+
+            // Crear el modelo de vista con las facturas obtenidas
+            var model = new BillsViewModel
+            {
+                Bills = bills
+            };
+
+            return View(model);
+        }
+
+        // Acción que muestra la vista de editar perfil para el proveedor
+        public ActionResult editProfile()
+        {
+            try
+            {
+                // Obtener el NIT del proveedor autenticado
+                var nit = User.FindFirst("NIT").Value;
+                // Obtener el proveedor por su NIT
+                var provider = _providerService.getProviderByNit(nit);
+                var model = new ProfileViewModel
+                {
+                    Provider = provider
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View("Error");
+            }
+
+        }
+
+        // Acción que muestra la vista de Formulario unico de conocmiento para el proveedor
+        public ActionResult PV_FormUnicPro()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
         }
 
         // Acción que genera un certificado basado en los parámetros proporcionados
@@ -112,58 +168,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que muestra la vista de facturas para el proveedor autenticado
-        public ActionResult Bill()
-        {
-            // Obtener el NIT del proveedor autenticado
-            var nit = User.FindFirst("NIT").Value;
-            // Obtener las facturas asociadas al proveedor
-            var bills = _billService.GetBillsForProvider(nit);
-
-            // Crear el modelo de vista con las facturas obtenidas
-            var model = new BillsViewModel
-            {
-                Bills = bills
-            };
-
-            return View(model);
-        }
-
-        public ActionResult editProfile()
-        {
-            try
-            {
-                // Obtener el NIT del proveedor autenticado
-                var nit = User.FindFirst("NIT").Value;
-                // Obtener el proveedor por su NIT
-                var provider = _providerService.getProviderByNit(nit);
-                var model = new ProfileViewModel
-                {
-                    Provider = provider
-                };
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = e.Message;
-                return View("Error");
-            }
-
-        }
-
-        public ActionResult PV_FormUnicPro()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Error");
-            }
-        }
-
+        // Acción que actualiza la informacion del proveedor en la tabla proveedores_master
         public IActionResult UpdateProvider([FromBody] Proveedores_Master provider)
         {
             try
@@ -178,7 +183,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 existingProvider.Direccion = provider.Direccion;
                 existingProvider.Correo = provider.Correo;
                 existingProvider.Telefono = provider.Telefono;
-                existingProvider.TipoPersona = provider.TipoPersona;
+                existingProvider.TipoPersona = provider.TipoPersona.Trim();
 
                 // Actualizar información del proveedor en la base de datos
                 _providerService.UpdateProvider(existingProvider);
@@ -191,6 +196,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción que permite obtener la informacion de un proveedor
         [HttpGet]
         public async Task<IActionResult> GetProvPersonDetails()
         {
@@ -214,11 +220,29 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 var tipoPersona = provMaster?.TipoPersona?.Trim();
 
                 //si se encuentra en la tabla correspondiente al tipo de persona
-                if (provMaster?.TipoPersona == "Natural" && natu)
+                if (tipoPersona == "NATURAL" && natu)
                     return Json(new { status = "foundDetail", data = naturalData, typePerson = tipoPersona });
 
-                if (provMaster?.TipoPersona == "Juridica" && jur)
+                if (tipoPersona == "JURIDICA" && jur)
                     return Json(new { status = "foundDetail", data = juridicaData, typePerson = tipoPersona });
+
+                // separa el nombre si esta en proveedores_master y se asigno a persona natural
+                if (tipoPersona == "NATURAL" && !natu)
+                {
+                    var sugerencia = _usersService.SplitFullName(provMaster.Nombre);
+                    return Json(new
+                    {
+                        status = "foundMasterOnly",
+                        data = provMaster,
+                        typePerson = tipoPersona,
+                        suggested = new
+                        {
+                            firstSurname = sugerencia.firstSurname,
+                            secondSurname = sugerencia.secondSurname,
+                            names = sugerencia.names
+                        }
+                    });
+                }
 
                 //si se encuentra en proveedores_Master pero no en las tablas de tipo de persona
                 return Json(new { status = "foundMasterOnly", data = provMaster, typePerson = tipoPersona?.ToLower() });
@@ -229,14 +253,68 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción para consultar y traer los documentos cargados del proveedor
         [HttpGet]
-        public async Task<IActionResult> printFormat(string idNum, string personType)
+        public IActionResult GetProviderFiles()
         {
             try
             {
-                dynamic dataProvider = await _providerService.getProviderDetails(idNum, "juridica");
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
 
-                if (dataProvider == null) return NotFound("No se encontro informacion para el Nit proporcionado.");
+                var documentos = _providerService.GetDocumentsByNit(nit);
+                var dataFinanInf = _providerService.getProvFinanceInfByNit(nit);
+                return Json(new { status = "success", data = documentos, isOEA = dataFinanInf?.upIsOEA });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message });
+            }
+        }
+
+        // Acción que permite obtener la informacion del proveedor en el formato para imprimir
+        [HttpGet]
+        public async Task<IActionResult> printFormat()
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
+
+                dynamic dataProvider = await _providerService.getProviderDetails(nit, "juridica");
+
+                if (dataProvider == null || dataProvider.juridica == null)
+                {
+                    return Json(new { error = "Es necesario llenar primero el Formato Único de Conocimiento de Proveedores (Persona Jurídica)." });
+                }
+
+                var juri = dataProvider.juridica as Dictionary<string, object>;
+                var finanInf = dataProvider.finanInf as Dictionary<string, object>;
+
+                if (juri != null && finanInf != null)
+                {
+                    if (juri.ContainsKey("pjRLNacionalidad"))
+                        juri["pjRLNacionalidad"] = _usersService.ConsultCountry(juri["pjRLNacionalidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (juri.ContainsKey("pjRLDepartNac"))
+                        juri["pjRLDepartNac"] = _usersService.ConsultState(juri["pjRLDepartNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (juri.ContainsKey("pjRLCiudadNac"))
+                        juri["pjRLCiudadNac"] = _usersService.ConsultCity(juri["pjRLCiudadNac"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvPorPais"))
+                        finanInf["pvPorPais"] = _usersService.ConsultCountry(finanInf["pvPorPais"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvAcEconomica"))
+                        finanInf["pvAcEconomica"] = _usersService.ConsultEconomic(finanInf["pvAcEconomica"]?.ToString(), _webHostEnvironment.WebRootPath);
+
+                    if (finanInf.ContainsKey("pvEntidad"))
+                        finanInf["pvEntidad"] = _usersService.ConsultBank(finanInf["pvEntidad"]?.ToString(), _webHostEnvironment.WebRootPath);
+                }
 
                 string relativePath = _formatService.FillFormatoPDF(dataProvider, _webHostEnvironment.WebRootPath);
 
@@ -249,10 +327,222 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Json(new { status = "error", message = ex.Message });
             }
         }
 
+        //accion para agregar proveedor natural
+        [HttpPost]
+        [Route("/Proveedor/AddProviderNatural")]
+        public async Task<IActionResult> AddProviderNatural([FromBody] Proveedores_Natural provider, string typePerson)
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
+
+                if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getProviderByNit(nit);
+                if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedor_natural
+                dynamic existingNatural = await _providerService.getProviderDetails(nit, "natural");
+                if (existingNatural.existNatu) return Json(new { error = "El proveedor ya tiene registrada su información como persona natural." });
+
+
+                string fullName = provider.pnNombres + " " + provider.pnPrimerApell + " " + provider.pnSegundoApell;
+                //insertar registro de persona natural
+                _providerService.AddProveedorNatural(provider, fullName, typePerson);
+                return Json(new { message = "Proveedor de persona natural registrado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        //accion para agregar proveedor juridico
+        [HttpPost]
+        [Route("/Proveedor/AddProviderJuridica")]
+        public async Task<IActionResult> AddProviderJuridica([FromBody] Proveedores_Juridica provider, string typePerson)
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
+
+                if (provider == null) return Json(new { error = "Datos del proveedor no recibidos." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getProviderByNit(nit);
+                if (pmaster == null) return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedor_juridica
+                dynamic existingJuridica = await _providerService.getProviderDetails(nit, "juridica");
+                if (existingJuridica.existJuri) return Json(new { error = "El proveedor ya tiene registrada su información como persona jurídica." });
+
+                //insertar registro de persona juridica
+                _providerService.AddProveedorJuridica(provider, typePerson);
+                return Json(new { message = "Proveedor de persona jurídica registrado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        //accion para agregar la informcion financiera del proveedor
+        [HttpPost]
+        [Route("/Proveedor/AddProvFinanceInfo")]
+        public IActionResult AddProvFinanceInfo([FromBody] Proveedores_InfoFinanciera provider)
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
+
+                if (provider == null) return Json(new { status = "error", message = "Información Financiera del proveedor no recibida." });
+
+                //validar la existencia del proveedor en la tabla Proveedores_Master
+                var pmaster = _providerService.getProviderByNit(nit);
+                if (pmaster == null) return Json(new { status = "error", message = "El provedor no esta registrado en el sistema." });
+
+                //validar que no exista ya el registro en proveedores_InfoFinanciera
+                var existFinanInf = _providerService.getProvFinanceInfByNit(nit);
+                if (existFinanInf != null) return Json(new { status = "error", message = "El proveedor ya tiene información financiera registrada." });
+
+                //insertar registro en Informacion Financiera
+                _providerService.AddProvFinanceInf(provider);
+                return Json(new { status = "success", message = "Información Financiera del Proveedor registrada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = "Error al agregar Información Financiera: " + ex.Message });
+            }
+        }
+
+        // Acción para subir los documentos del proveedor
+        [HttpPost]
+        [Route("/Proveedor/UploadDocuments")]
+        public async Task<IActionResult> UploadDocuments(string isOEA)
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+                // Verificar si el proveedor existe
+                var existingProvider = _providerService.getProviderByNit(nit);
+                if (existingProvider == null) return Json(new { error = "Proveedor no encontrado" });
+
+                var personType = existingProvider.TipoPersona;
+                var tipPersona = personType == "NATURAL" ? "PersonaNatural" : "PersonaJuridica";
+
+                var files = Request.Form.Files;
+                if (files.Count == 0) return Json(new { status = "error", message = "No se recibieron archivos." });
+
+                foreach (var file in files)
+                {
+                    string categoria = file.Name;
+
+                    string nameDoc = Path.GetFileNameWithoutExtension(file.FileName);
+
+                    string rutaRel = await _providerService.SaveDocuments(file, nit, tipPersona, categoria, nameDoc, _webHostEnvironment.WebRootPath);
+
+                    _providerService.SaveDocumentMD(nit, categoria, file.FileName, rutaRel);
+                }
+
+                _providerService.UpdateStatusOEA(nit, isOEA);
+
+                return Json(new { status = "success", message = "Archivos cargados y registrados correctamente." });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message });
+            }
+        }
+
+        //Accion para actualizar persona natural
+        [HttpPost]
+        [Route("/Proveedor/UpdateProviderNatural")]
+        public IActionResult UpdateProviderNatural([FromBody] Proveedores_Natural providerData, string typePerson)
+        {
+            try
+            {
+                if (providerData == null)
+                {
+                    Console.WriteLine("UpdateProviderNatural: Provider data is null");
+                    return Json(new { error = "Datos del proveedor no recibidos." });
+                }
+                Console.WriteLine("UpdateProviderNatural payload: " + Newtonsoft.Json.JsonConvert.SerializeObject(providerData));
+                string fullName = providerData.pnNombres + " " + providerData.pnPrimerApell + " " + providerData.pnSegundoApell;
+                _providerService.UpdateNaturalInfo(providerData, fullName, typePerson);
+                
+                return Json(new { message = "Información de persona natural actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = "Error al actualizar la persona natural: " + ex.Message });
+            }
+        }
+
+        //accion para actualizar persona juridica
+        [HttpPost]
+        [Route("/Proveedor/UpdateProviderJuridica")]
+        public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData, string typePerson)
+        {
+            try
+            {
+                if (providerData == null)
+                    return Json(new { error = "Datos del proveedor no recibidos." });
+
+                var pmaster = _providerService.getProviderByNit(providerData.Nit);
+                if (pmaster == null)
+                    return Json(new { error = "El proveedor no esta registrado en el sistema." });
+
+                _providerService.UpdateJuridicaInfo(providerData, typePerson);
+                return Json(new { message = "Información de persona jurídica actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = "Error al actualizar la persona jurídica: " + ex.Message });
+            }
+        }
+
+        //accion para actualizar informacion financiera del proveedor
+        [HttpPost]
+        [Route("/Proveedor/UpdateProvFinanceInfo")]
+        public IActionResult UpdateProvFinanceInfo([FromBody] Proveedores_InfoFinanciera providerData)
+        {
+            try
+            {
+                var nit = User.FindFirst("NIT").Value;
+
+                if (providerData == null)
+                    return Json(new { status = "error", message = "Datos no recibidos." });
+
+                var existing = _providerService.getProvFinanceInfByNit(nit);
+                if (existing == null)
+                    return Json(new { status = "error", message = "El proveedor no está registrado en el sistema." });
+
+                _providerService.UpdateFinanceInfo(providerData);
+
+                return Json(new { status = "success", message = "Información Financiera actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = "Error al actualizar la información Financiera: " + ex.Message });
+            }
+        }
+
+        // Acción que permite actualizar la contraseña del proveedor
         [HttpPost]
         public IActionResult UpdatePassword([FromBody] string password)
         {
@@ -273,6 +563,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
+        // Acción que permite verificar la contraseña al inicio de sesion 
         [HttpPost]
         public IActionResult VerifyPassword([FromBody] string currentPassword)
         {

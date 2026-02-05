@@ -12,9 +12,11 @@ const printFormatBtn = document.getElementById('printFormatBtn');
 const persNatuForm = document.getElementById('persNatuForm');
 const persJuriForm = document.getElementById('persJuriForm');
 const provForm = document.getElementById('provForm');
-const uploadDocsForm = document.getElementById('uploadDocsForm');
+const certSection = document.getElementById('certSection');
 
-const consultBtn = document.getElementById('consultBtn');
+const uploadDocsForm = document.getElementById('uploadDocsForm');
+const printFormatForm = document.getElementById('printFormatForm');
+
 const submitPrvBtn = document.getElementById('submitPrvBtn');
 
 let isNewRegister = false;
@@ -219,102 +221,11 @@ saveAutBtn.addEventListener('click', () => {
 //logica para mostrar/ocultar entre acciones de la sub nav
 openFormsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
-    const persNatuForm = document.getElementById('persNatuForm');
-    const persJuriForm = document.getElementById('persJuriForm');
-    const provForm = document.getElementById('provForm');
-    const subNavConteiner = document.getElementById('subNavConteiner');
-    const uploadDocsForm = document.getElementById('uploadDocsForm');
 
-    try {
-        const result = await API.getProvPersType();
-        console.log("Respuesta completa del servidor:", result);
+    uploadDocsForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
 
-        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
-        console.log("Tipo de persona procesado:", typePerson);
-
-        //ID solo registrado en proveedores_Master
-        if (result.status === 'foundMasterOnly') {
-            isNewRegister = true;
-
-            const masterData = result.data;
-
-            if (typePerson === 'natural') {
-                subNavConteiner.style.display = 'block';
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block';
-
-                UI.loadFormData_Natural({});
-                UI.loadProvFormData({});
-
-                setTimeout(async () => {
-                    await UI.loadMasterData(masterData, "persNatuForm", masterData.nit);
-                    UI.hasValue()
-                }, 100);
-
-            } else if (typePerson === 'juridica') {
-                subNavConteiner.style.display = 'block';
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block';
-
-                UI.loadFormData_Juridica({});
-                UI.loadProvFormData({});
-
-                setTimeout(async () => {
-                    await UI.loadMasterData(masterData, "persJuriForm", masterData.nit);
-                    UI.hasValue()
-                }, 100);
-
-            } else {
-                alertBody.innerHTML = 'Tipo de persona no ha sido seleccionado. \n Por favor registre que tipo de persona es en la pestaña "Editar Perfil"';
-                alert.show();
-            }
-
-            await UI.ubicProvFormHandler();
-
-            return;
-        }
-
-        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
-        if (result.status === 'foundDetail') {
-            const formData = result.data;
-
-            if (typePerson === 'natural') {
-                subNavConteiner.style.display = 'block';
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block';
-
-                if (formData.natural) {
-                    await UI.loadFormData_Natural(formData.natural);
-                }
-            } else {
-                subNavConteiner.style.display = 'block';
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block';
-
-                if (formData.juridica) {
-                    await UI.loadFormData_Juridica(formData.juridica);
-                }
-            }
-
-            await UI.ubicProvFormHandler();
-
-            if (formData.finanInf) {
-                await UI.loadProvFormData(formData.finanInf);
-            }
-
-            UI.hasValue();
-
-            return;
-        }
-
-        alertErrorBody.innerHTML = 'No se pudo determinar el estado del proveedor.';
-        alertError.show();
-    }
-    catch (error) {
-        alertErrorBody.innerHTML = `Error al verificar el proveedor: ${error.message}`;
-        alertError.show();
-        console.error('Error al verificar el proveedor:', error);
-    }
+    checkUser();
 });
 uploadDocsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
@@ -326,13 +237,12 @@ uploadDocsBtn.addEventListener('click', async function (e) {
 
     uploadDocsForm.style.display = 'block';
 
-    const resultProv = await API.getProvPersType();
+    const resultProv = await API.getProvDataForms(null);
     console.log("Respuesta completa del servidor:", resultProv);
 
 
     try {
-        const provData = resultProv.data;
-        const result = await API.getProvDocuments(provData.nit);
+        const result = await API.getProvDocuments(null);
         UI.loadDocsForm(result.data || [], result.isOEA || null);
     }
     catch (err) {
@@ -347,20 +257,19 @@ printFormatBtn.addEventListener('click', async function (e) {
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
 
-    const resultProv = await API.getProvPersType();
-    console.log("Respuesta completa del servidor:", resultProv);
+    const resultProv = await API.getProvDataForms(null);
+    console.log("Respuesta completa del servidor para printFormatBtn:", resultProv);
 
     const typePerson = (resultProv.typeperson || resultProv.typePerson || "").toLowerCase().trim();
     console.log("Tipo de persona procesado:", typePerson);
 
-    if (!typePerson === "juridica") {
+    if (typePerson !== "juridica") {
         alertErrorBody.innerText = 'La impresión de formato solo está disponible para Personas Jurídicas.';
         alertError.show();
         return;
     } else {
         try {
-            const provData = resultProv.data;
-            const result = await API.getFormat(provData.nit);
+            const result = await API.getFormat(null);
             if (result && result.url) {
                 UI.printFormatHandler(result.url);
             }
@@ -379,7 +288,7 @@ printFormatBtn.addEventListener('click', async function (e) {
 submitPrvBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    const resultProv = await API.getProvPersType();
+    const resultProv = await API.getProvDataForms(null);
     console.log("Respuesta completa del servidor:", resultProv);
 
     const typePerson = (resultProv.typeperson || resultProv.typePerson || "").toLowerCase().trim();
@@ -391,24 +300,24 @@ submitPrvBtn.addEventListener("click", async (e) => {
     if (typePerson === 'natural') {
         if (!Validator.validateNaturalForm()) return;
         dataProNJ = Collector.collectFormData_Natural();
-    } else if (typePerson.value === 'juridica') {
+    } else if (typePerson === 'juridica') {
         if (!Validator.validateJuridicaForm()) return;
         dataProNJ = Collector.collectFormData_Juridica();
     }
-    if (!Validator.validateProvForm()) return;
-    const provData = Collector.collectProvFormData();
+    if (!Validator.validateProvForm(typePerson)) return;
+    const provData = Collector.collectProvFormData(typePerson);
 
     try {
         //Add o Update segun tipo de persona y su registro
-        if (typePerson.value === 'natural') {
-            await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderNatural' : '/Admin/UpdateProviderNatural');
+        if (typePerson === 'natural') {
+            await API.sendData(dataProNJ, isNewRegister ? `/Proveedor/AddProviderNatural?typePerson=${typePerson}` : `/Proveedor/UpdateProviderNatural?typePerson=${typePerson}`);
             //Add o Update del provForm(Informacion Financiera)
-            await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
+            await API.sendData(provData, isNewRegister ? '/Proveedor/AddProvFinanceInfo' : '/Proveedor/UpdateProvFinanceInfo');
 
-        } else if (typePerson.value === 'juridica') {
-            await API.sendData(dataProNJ, isNewRegister ? '/Admin/AddProviderJuridica' : '/Admin/UpdateProviderJuridica');
+        } else if (typePerson === 'juridica') {
+            await API.sendData(dataProNJ, isNewRegister ? `/Proveedor/AddProviderJuridica?typePerson=${typePerson}` : `/Proveedor/UpdateProviderJuridica?typePerson=${typePerson}`);
             //Add o Update del provForm(Informacion Financiera)
-            await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
+            await API.sendData(provData, isNewRegister ? '/Proveedor/AddProvFinanceInfo' : '/Proveedor/UpdateProvFinanceInfo');
         }
 
         alertSuccesBody.innerText = 'Proveedor guardado completamente.';
@@ -426,10 +335,10 @@ submitDocsBtn.addEventListener('click', async (e) => {
 
     if (!Validator.validateDocsForm()) return;
 
-    const docFormData = Collector.collectDocsForm();
+    const docFormData = Collector.collectDocsForm(null);
 
     try {
-        await API.sendFiles(docFormData, '/Admin/UploadDocuments');
+        await API.sendFiles(docFormData, '/Proveedor/UploadDocuments');
 
         alertSuccesBody.innerText = 'Documentos cargados correctamente.';
         alertSuccess.show();
@@ -446,10 +355,9 @@ async function checkUser() {
     const persJuriForm = document.getElementById('persJuriForm');
     const provForm = document.getElementById('provForm');
     const subNavConteiner = document.getElementById('subNavConteiner');
-    const uploadDocsForm = document.getElementById('uploadDocsForm');
 
     try {
-        const result = await API.getProvPersType();
+        const result = await API.getProvDataForms(null);
         console.log("Respuesta completa del servidor:", result);
 
         const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
@@ -460,17 +368,19 @@ async function checkUser() {
             isNewRegister = true;
 
             const masterData = result.data;
+            const suggest = result.suggested;
 
             if (typePerson === 'natural') {
                 subNavConteiner.style.display = 'block';
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block';
+                certSection.style.display = 'none';
 
                 UI.loadFormData_Natural({});
                 UI.loadProvFormData({});
 
                 setTimeout(async () => {
-                    await UI.loadMasterData(masterData, "persNatuForm", masterData.nit);
+                    await UI.loadMasterData(masterData, "persNatuForm", masterData.nit, suggest);
                     UI.hasValue()
                 }, 100);
 
@@ -478,6 +388,7 @@ async function checkUser() {
                 subNavConteiner.style.display = 'block';
                 persJuriForm.style.display = 'block';
                 provForm.style.display = 'block';
+                certSection.style.display = 'block';
 
                 UI.loadFormData_Juridica({});
                 UI.loadProvFormData({});
@@ -505,14 +416,17 @@ async function checkUser() {
                 subNavConteiner.style.display = 'block';
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block';
+                certSection.style.display = 'none';
 
                 if (formData.natural) {
                     await UI.loadFormData_Natural(formData.natural);
                 }
+                printFormatBtn.disabled = true;
             } else {
                 subNavConteiner.style.display = 'block';
                 persJuriForm.style.display = 'block';
                 provForm.style.display = 'block';
+                certSection.style.display = 'block';
 
                 if (formData.juridica) {
                     await UI.loadFormData_Juridica(formData.juridica);
@@ -534,9 +448,9 @@ async function checkUser() {
         alertError.show();
     }
     catch (error) {
-        alertErrorBody.innerHTML = `Error al verificar el proveedor: ${error.message}`;
+        alertErrorBody.innerHTML = `Error al verificar el proveedor : ${error.message}`;
         alertError.show();
-        console.error('Error al verificar el proveedor:', error);
+        console.error('Error al verificar el proveedor: ', error);
     }
 }
 

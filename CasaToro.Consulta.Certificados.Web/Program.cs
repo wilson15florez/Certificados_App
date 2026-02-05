@@ -40,6 +40,7 @@ builder.Services.AddScoped<CertificateServiceExcel>();
 builder.Services.AddScoped<BillService>();
 // Debajo de los otros AddScoped
 builder.Services.AddScoped<FormatService>();
+builder.Services.AddScoped<UsersService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

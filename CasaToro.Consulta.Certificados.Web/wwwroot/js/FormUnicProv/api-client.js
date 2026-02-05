@@ -99,15 +99,19 @@ export async function loadBancosData() {
 }
 
 //funcion para traer la informacion de los proveedores
-export async function getProvDataForms(idNum, personType) {
-    const response = await fetch(`/Admin/CheckProvider?idNum=${idNum}&personType=${personType}`);
+export async function getProvDataForms(idNum, personType = null) {
+
+    const url = personType ? `/Admin/CheckProvider?idNum=${idNum}&personType=${personType}` : '/Provider/GetProvPersonDetails';
+
+    const response = await fetch(url);
 
     return await response.json();
 }
 
 //funcion para traer la informacion de los documentos de uploadDocsForm
-export async function getProvDocuments(idNum) {
-    const response = await fetch(`/Admin/GetProviderFiles?idNum=${idNum}`);
+export async function getProvDocuments(idNum, personType = null) {
+    const url = personType ? `/Admin/GetProviderFiles?idNum=${idNum}` : `/Provider/GetProviderFiles`;
+    const response = await fetch(url);
 
     if (!response.ok) throw new Error("Error al obtener documentos");
     return await response.json();
@@ -156,22 +160,20 @@ export function sendFiles(formData, url) {
         });
 }
 
-export async function getFormat(nit) {
-    //const response = fetch(`/Provider/printFormat?idNum=${idNum}&personType=${personType}`);
+export async function getFormat(idNum, personType = null) {
+    const url = personType ? `/Admin/PrintFormat?nit=${idNum}` : `/Provider/PrintFormat`;
 
-    //if (!response.ok) throw new Error("Error al obtener formato");
-    const response = await fetch(`/Admin/PrintFormat?nit=${nit}`);
+    const response = await fetch(url);
 
     if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al obtener formato");
+        throw new Error("Error al obtener formato");
     }
 
     return await response.json();
 }
 
-export async function getProvPersType() {
-    const response = await fetch('/Provider/GetProvPersonDetails');
-    if (!response.ok) throw new Error("Error al obtener tipo de persona");
-    return await response.json();
-}
+//export async function getProvPersType() {
+//    const response = await fetch('/Provider/GetProvPersonDetails');
+//    if (!response.ok) throw new Error("Error al obtener tipo de persona");
+//    return await response.json();
+//}

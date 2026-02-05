@@ -59,7 +59,7 @@ saveBtn.addEventListener('click', () => {
     const address = document.getElementById('address-input').value;
     const email = document.getElementById('email-input').value;
     const phone = document.getElementById('phone-input').value;
-    const typePerson = document.getElementById('tipo_Persona').value;
+    const typePerson = document.getElementById('tipo_Persona').value.trim();
 
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regexTelFijo = /^60[1-9]\d{7}$/;
