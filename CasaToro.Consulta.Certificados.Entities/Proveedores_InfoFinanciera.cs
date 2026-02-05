@@ -57,6 +57,8 @@ public partial class Proveedores_InfoFinanciera
 
     public string? pvNumResDIAN { get; set; }
 
+    public string? pvOpeCExt { get; set; }
+
     public string? pvForPag { get; set; }
 
     public string? pvEntBenef { get; set; }
@@ -69,6 +71,20 @@ public partial class Proveedores_InfoFinanciera
 
     public string? pvClasCueBan { get; set; }
 
+    public string? pvCeOEA { get; set; }
+
+    public string? pvCeCal { get; set; }
+
+    public string? pvCeBASC { get; set; }
+
+    public string? pvCeAmb { get; set; }
+
+    public string? pvCe28000 { get; set; }
+
+    public string? pvCeSST { get; set; }
+
+    public string? pvAdiCert { get; set; }
+
     public string? pvDeAuRepresentacion { get; set; }
 
     public string? pvFuenteRecur { get; set; }
@@ -79,7 +95,7 @@ public partial class Proveedores_InfoFinanciera
 
     public string? pvTDPBonap { get; set; }
 
-    public string? pvTDPBellpi { get; set; }
+    public string? pvCumCSIn { get; set; }
 
     public string? pvRadAut { get; set; }
 

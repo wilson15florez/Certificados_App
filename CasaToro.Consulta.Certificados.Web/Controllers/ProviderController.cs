@@ -411,10 +411,6 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 if (provider == null) return Json(new { status = "error", message = "Información Financiera del proveedor no recibida." });
 
-                //validar la existencia del proveedor en la tabla Proveedores_Master
-                var pmaster = _providerService.getProviderByNit(nit);
-                if (pmaster == null) return Json(new { status = "error", message = "El provedor no esta registrado en el sistema." });
-
                 //validar que no exista ya el registro en proveedores_InfoFinanciera
                 var existFinanInf = _providerService.getProvFinanceInfByNit(nit);
                 if (existFinanInf != null) return Json(new { status = "error", message = "El proveedor ya tiene información financiera registrada." });

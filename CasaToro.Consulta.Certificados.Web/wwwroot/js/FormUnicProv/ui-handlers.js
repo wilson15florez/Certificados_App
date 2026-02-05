@@ -866,6 +866,34 @@ export async function loadProvFormData(data) {
         const r = form.querySelector(`input[name="pvPosCuBan"][value="${data.pvPosCuBan}"]`);
         if (r) r.checked = true;
     }
+    if (data.pvOpeCExt) {
+        const r = form.querySelector(`input[name="pvOpeCExt"][value="${data.pvOpeCExt}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCeOEA) {
+        const r = form.querySelector(`input[name="pvCeOEA"][value="${data.pvCeOEA}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCeCal) {
+        const r = form.querySelector(`input[name="pvCeCal"][value="${data.pvCeCal}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCeBASC) {
+        const r = form.querySelector(`input[name="pvCeBASC"][value="${data.pvCeBASC}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCeAmb) {
+        const r = form.querySelector(`input[name="pvCeAmb"][value="${data.pvCeAmb}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCe28000) {
+        const r = form.querySelector(`input[name="pvCe28000"][value="${data.pvCe28000}"]`);
+        if (r) r.checked = true;
+    }
+    if (data.pvCeSST) {
+        const r = document.querySelector(`input[name="pvCeSST"][value="${data.pvCeSST}"]`);
+        if (r) r.checked = true;
+    }
     if (data.pvTDPMotMaq) {
         const r = document.querySelector(`input[name="pvTDPMotMaq"][value="${data.pvTDPMotMaq}"]`);
         if (r) r.checked = true;
@@ -878,8 +906,8 @@ export async function loadProvFormData(data) {
         const r = document.querySelector(`input[name="pvTDPBonap"][value="${data.pvTDPBonap}"]`);
         if (r) r.checked = true;
     }
-    if (data.pvTDPBellpi) {
-        const r = document.querySelector(`input[name="pvTDPBellpi"][value="${data.pvTDPBellpi}"]`);
+    if (data.pvCumCSIn) {
+        const r = document.querySelector(`input[name="pvCumCSIn"][value="${data.pvCumCSIn}"]`);
         if (r) r.checked = true;
     }
     if (data.pvRadAut) {
@@ -893,6 +921,7 @@ export async function loadProvFormData(data) {
     togglePvDIC();
     togglePvAR();
     togglePvCB();
+    togglePvCoEx();
 
     isAutoFilling = false;
 }
@@ -1049,6 +1078,31 @@ export function togglePvCB() {
         $(pvClasCueBan).prop('disabled', true).trigger('change');
         $(pvClasCueBan).val(null).trigger('change');
         pvClasCueBan.required = false;
+    }
+}
+export function togglePvCoEx() {
+    const si = document.getElementById('pvOpeCExtSi').checked;
+    const inpFPCoEx = document.getElementById('pvForPag');
+    const labFPCoEx = document.querySelector('label[for="pvForPag"]');
+    const inpBenCoEx = document.getElementById('pvEntBenef');
+    const labBenCoEx = document.querySelector('label[for="pvEntBenef"]');
+
+    if (si) {
+        inpFPCoEx.classList.remove('no-edit');
+        labFPCoEx.classList.remove('disabled-label');
+        inpFPCoEx.required = true;
+        inpBenCoEx.classList.remove('no-edit');
+        labBenCoEx.classList.remove('disabled-label');
+        inpBenCoEx.required = true;
+    } else {
+        pvForPag.value = '';
+        inpFPCoEx.classList.add('no-edit');
+        labFPCoEx.classList.add('disabled-label');
+        inpFPCoEx.required = false;
+        pvEntBenef.value = '';
+        inpBenCoEx.classList.add('no-edit');
+        labBenCoEx.classList.add('disabled-label');
+        inpBenCoEx.required = false;
     }
 }
 

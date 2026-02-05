@@ -405,14 +405,38 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Nit).HasMaxLength(20);
             entity.Property(e => e.pvAcEconomica).HasMaxLength(255);
             entity.Property(e => e.pvActivos).HasMaxLength(50);
+            entity.Property(e => e.pvAdiCert).HasMaxLength(255);
             entity.Property(e => e.pvAutRet)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pvCapSocReg).HasMaxLength(255);
+            entity.Property(e => e.pvCe28000)
+                .HasMaxLength(2)
+                .IsFixedLength();
+            entity.Property(e => e.pvCeAmb)
+                .HasMaxLength(2)
+                .IsFixedLength();
+            entity.Property(e => e.pvCeBASC)
+                .HasMaxLength(2)
+                .IsFixedLength();
+            entity.Property(e => e.pvCeCal)
+                .HasMaxLength(2)
+                .IsFixedLength();
+            entity.Property(e => e.pvCeOEA)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.pvCeSST)
+                .HasMaxLength(2)
+                .IsFixedLength();
             entity.Property(e => e.pvCiudadDec).HasMaxLength(100);
             entity.Property(e => e.pvClasCueBan).HasMaxLength(50);
             entity.Property(e => e.pvCodCIIU).HasMaxLength(10);
+            entity.Property(e => e.pvCumCSIn)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.pvDeAuRepresentacion).HasMaxLength(255);
             entity.Property(e => e.pvDeclIndCom)
                 .HasMaxLength(2)
@@ -432,6 +456,10 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.pvNumCueBanc).HasMaxLength(50);
             entity.Property(e => e.pvNumResDIAN).HasMaxLength(100);
             entity.Property(e => e.pvNumResolGC).HasMaxLength(100);
+            entity.Property(e => e.pvOpeCExt)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.pvOtrIngr).HasMaxLength(50);
             entity.Property(e => e.pvOtrTipEmp).HasMaxLength(255);
             entity.Property(e => e.pvPasivos).HasMaxLength(50);
@@ -444,10 +472,6 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pvRadAut)
-                .HasMaxLength(2)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.pvTDPBellpi)
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .IsFixedLength();

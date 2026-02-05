@@ -93,6 +93,7 @@ function initFormHandlers() {
     const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
     const pvAutRet = document.querySelectorAll('input[name="pvAutRet"]');
     const pvPosCuBan = document.querySelectorAll('input[name="pvPosCuBan"]');
+    const pvOpeCExt = document.querySelectorAll('input[name="pvOpeCExt"]');
 
     pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
     pvPorExtranjero.addEventListener('input', UI.togglePvPais);
@@ -100,6 +101,7 @@ function initFormHandlers() {
     pvDeclIndCom.forEach(r => r.addEventListener('change', UI.togglePvDIC));
     pvAutRet.forEach(r => r.addEventListener('change', UI.togglePvAR));
     pvPosCuBan.forEach(r => r.addEventListener('change', UI.togglePvCB));
+    pvOpeCExt.forEach(r => r.addEventListener('change', UI.togglePvCoEx));
 
     //carga datos de codigos CIIU y actividades economicas
     API.loadCIIUData();

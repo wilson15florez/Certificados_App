@@ -137,7 +137,7 @@ export function collectProvFormData(typePerson) {
     const radioGroups = [
         'pvTipEmp', 'pvGrCon', 'pvDeclIndCom',
         'pvAutRet', 'pvPosCuBan',
-        'pvCeOEA', 'pvCeCal', 'pvCeBASC', 'pvCeAmb', 'pvCe28000', 'pvCeSST'
+        'pvOpeCExt', 'pvCeOEA', 'pvCeCal', 'pvCeBASC', 'pvCeAmb', 'pvCe28000', 'pvCeSST'
     ];
 
     radioGroups.forEach(rname => {

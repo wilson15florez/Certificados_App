@@ -119,6 +119,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvDepartDec", finanInfData.pvDepartDec },
                     { "pvCiudadDec", finanInfData.pvCiudadDec },
                     { "pvNumResDIAN", finanInfData.pvNumResDIAN },
+                    { "pvOpeCExt", finanInfData.pvOpeCExt },
+                    { "pvCeOEA", finanInfData.pvCeOEA },
+                    { "pvCeCal", finanInfData.pvCeCal },
+                    { "pvCeBASC", finanInfData.pvCeBASC  },
+                    { "pvCeAmb", finanInfData.pvCeAmb },
+                    { "pvCe28000", finanInfData.pvCe28000 },
+                    { "pvCeSST", finanInfData.pvCeSST },
+                    { "pvAdiCert", finanInfData.pvAdiCert },
                     { "pvForPag", finanInfData.pvForPag },
                     { "pvEntBenef", finanInfData.pvEntBenef },
                     { "pvPosCuBan", finanInfData.pvPosCuBan },
@@ -128,7 +136,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvDeAuRepresentacion", finanInfData.pvDeAuRepresentacion },
                     { "pvFuenteRecur", finanInfData.pvFuenteRecur },
                     { "pvTDPBonap", finanInfData.pvTDPBonap },
-                    { "pvTDPBellpi", finanInfData.pvTDPBellpi },
+                    { "pvCumCSIn", finanInfData.pvCumCSIn },
                     { "pvTDPMotMaq", finanInfData.pvTDPMotMaq },
                     { "pvTDPCasTor", finanInfData.pvTDPCasTor },
                     { "pvRadAut", finanInfData.pvRadAut },
@@ -538,18 +546,26 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingFinanInf.pvDepartDec = providerData.pvDepartDec;
                         existingFinanInf.pvCiudadDec = providerData.pvCiudadDec;
                         existingFinanInf.pvNumResDIAN = providerData.pvNumResDIAN;
+                        existingFinanInf.pvOpeCExt = providerData.pvOpeCExt;
                         existingFinanInf.pvForPag = providerData.pvForPag;
                         existingFinanInf.pvEntBenef = providerData.pvEntBenef;
                         existingFinanInf.pvPosCuBan = providerData.pvPosCuBan;
                         existingFinanInf.pvEntidad = providerData.pvEntidad;
                         existingFinanInf.pvNumCueBanc = providerData.pvNumCueBanc;
                         existingFinanInf.pvClasCueBan = providerData.pvClasCueBan;
+                        existingFinanInf.pvCeOEA = providerData.pvCeOEA;
+                        existingFinanInf.pvCeCal = providerData.pvCeCal;
+                        existingFinanInf.pvCeBASC = providerData.pvCeBASC;
+                        existingFinanInf.pvCeAmb = providerData.pvCeAmb;
+                        existingFinanInf.pvCe28000 = providerData.pvCe28000;
+                        existingFinanInf.pvCeSST = providerData.pvCeSST;
+                        existingFinanInf.pvAdiCert = providerData.pvAdiCert;
                         existingFinanInf.pvDeAuRepresentacion = providerData.pvDeAuRepresentacion;
                         existingFinanInf.pvFuenteRecur = providerData.pvFuenteRecur;
                         existingFinanInf.pvTDPMotMaq = providerData.pvTDPMotMaq;
                         existingFinanInf.pvTDPCasTor = providerData.pvTDPCasTor;
                         existingFinanInf.pvTDPBonap = providerData.pvTDPBonap;
-                        existingFinanInf.pvTDPBellpi = providerData.pvTDPBellpi;
+                        existingFinanInf.pvCumCSIn = providerData.pvCumCSIn;
                         existingFinanInf.pvRadAut = providerData.pvRadAut;
                     }
                     else
@@ -562,7 +578,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception("Error al actualizar la Información Financiera " + ex.Message, ex);
+                    var inner = ex.InnerException != null ? ex.InnerException.Message : "";
+                    throw new Exception($"Error al actualizar la Información Financiera: {ex.Message}. Detalle: {inner}");
                 }
             }
         }
