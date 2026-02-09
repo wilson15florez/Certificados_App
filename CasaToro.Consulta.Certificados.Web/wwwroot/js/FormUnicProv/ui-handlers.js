@@ -1143,7 +1143,7 @@ export function addSucursalInternal(newIndex) {
                     <h4>Dirección sucursal ${newIndex}</h4>
                     <div class="d-flex">
                         <div class="col-md-4 form-group input-wrapper">
-                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="off" required />
+                            <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal *" alt="Dirección Sucursal *"></label>
                         </div>
                         <div class="col-md-4 form-group d-block custom-input-group">
@@ -1157,11 +1157,11 @@ export function addSucursalInternal(newIndex) {
                     </div>
                     <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                         <div class="col-md-5 form-group input-wrapper">
-                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" required />
+                            <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
                         <div class="col-md-5 form-group input-wrapper">
-                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" required />
+                            <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
                         <div class="col-md-2 form-group">

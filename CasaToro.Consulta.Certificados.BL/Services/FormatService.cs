@@ -17,13 +17,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
     {
         public string FillFormatoPDF(dynamic datos, string webRootPath)
         {
+            var master = datos.master as CasaToro.Consulta.Certificados.Entities.Proveedores_Master;
             var juridica = datos.juridica as IDictionary<string, object>;
             var finanInf = datos.finanInf as IDictionary<string, object>;
 
             if (juridica == null) throw new Exception("No se pudo obtener la información Jurídica del objeto datos.");
 
             string nit = juridica["Nit"]?.ToString() ?? "S_N";
-            string templatePath = Path.Combine(webRootPath, "data", "ADM-FO-0002 V8", "ADM-FO-0002 V8 (PLANTILLA).pdf");
+            string templatePath = Path.Combine(webRootPath, "data", "ADM-FO-0002 V8", "ADM-FO-0002 V8-0602.pdf");
             string fileName = $"Formato_Unico_de_Conocimiento_de_Proveedores_{nit}.pdf";
             string outputPath = Path.Combine(webRootPath, "GeneratedFiles", fileName);
 
@@ -39,6 +40,17 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
                         //IDictionary<string, PdfFormField> fields = form.GetAllFormFields();
                         var fields = form.GetAllFormFields();
+
+                        // Rellenar campos del encabezado
+                        SetSplitDate(fields, master.FechaDiligencia, "tramFechAno", "tramFechMes", "tramFechDia");
+                        if (master.TipoTramite == "VINCULACION")
+                        {
+                            SetCheckBox(form, "tramCheckVinc", true);
+                        }
+                        else if (master.TipoTramite == "ACTUALIZACION")
+                        {
+                            SetCheckBox(form, "tramCkActua", true);
+                        }
 
                         // Rellenar campos básicos
                         SetField(fields, "pjRazonSocial", juridica["pjRazSocial"]?.ToString());
@@ -85,7 +97,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pjRLPrimApell", juridica["pjPrimApeRL"]?.ToString());
                         SetField(fields, "pjRLSegApell", juridica["pjSegApeRL"]?.ToString());
                         SetField(fields, "pjRLNombres", juridica["pjNomReLeg"]?.ToString());
-                        SetField(fields, "pjRLFechNac", juridica["pjRLFechaNac"]?.ToString());
+                        SetSplitDate(fields, juridica["pjRLFechaNac"], "pjRLFeNaAno", "pjRLFeNaMes", "pjRLFeNaDia"); 
                         SetField(fields, "pjRLDepaNac", juridica["pjRLDepartNac"]?.ToString());
                         SetField(fields, "pjRLCiudadNac", juridica["pjRLCiudadNac"]?.ToString());
                         SetField(fields, "pjRLNacionalidad", juridica["pjRLNacionalidad"]?.ToString());
@@ -94,7 +106,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {
                             SetCheckBox(form, "pjRLCkDocNacCC", true);
                             SetField(fields, "pjRLNumIdNac", juridica["pjRLDocNum"]?.ToString());
-                        } else
+                        } 
+                        else
                         {
                             string rlTipoDoc = juridica["pjRLTipoDoc"]?.ToString();
                             if (rlTipoDoc == "CE")
@@ -111,7 +124,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             SetField(fields, "pjRLNumIdExt", juridica["pjRLDocNum"]?.ToString());
                         }
 
-                        SetField(fields, "pjRLFechExpeDoc", juridica["pjRLFechExpDoc"]?.ToString());
+                        SetSplitDate(fields, juridica["pjRLFechExpDoc"], "pjRLFeExDoAno", "pjRLFeExDoMes", "pjRLFeExDoDia");
                         SetField(fields, "pjRLDepaExpDoc", juridica["pjRLDepExpDoc"]?.ToString());
                         SetField(fields, "pjRLCiudadExpDoc", juridica["pjRLCiuExpDoc"]?.ToString());
 
@@ -131,29 +144,33 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         if (tipEmp == "EmPublica")
                         {
                             SetCheckBox(form, "pvTEPublic", true);
-                        } else if (tipEmp == "EmPrivada")
+                        } 
+                        else if (tipEmp == "EmPrivada")
                         {
                             SetCheckBox(form, "pvTEPrivada", true);
-                        } else if (tipEmp == "EmMixta")
+                        } 
+                        else if (tipEmp == "EmMixta")
                         {
                             SetCheckBox(form, "pvTEMixta", true);
-                        } else
+                        } 
+                        else
                         {
                             SetCheckBox(form, "pvTEOtra", true);
                         }
                         SetField(fields, "pvActividadEco", finanInf["pvAcEconomica"]?.ToString());
                         SetField(fields, "pvCodCIIU", finanInf["pvCodCIIU"]?.ToString());
                         SetField(fields, "pvCapSocialReg", FormatMoney(finanInf["pvCapSocReg"]));
-                        SetField(fields, "pvFechConst", finanInf["pvFechConst"]?.ToString());
-                        SetField(fields, "pvFechVenc", finanInf["pvFechVen"]?.ToString());
+                        SetSplitDate(fields, finanInf["pvFechConst"], "pvFeConAno", "pvFeConMes", "pvFeConDia");
+                        SetSplitDate(fields, finanInf["pvFechVen"], "pvFeVenAno", "pvFeVenMes", "pvFeVenDia");
                         if (finanInf["pvGrCon"]?.ToString() == "Si")
                         {
                             SetCheckBox(form, "pvGranConSi", true);
-                        } else
+                        } 
+                        else
                         {
                             SetCheckBox(form, "pvGranConNo", true);
                         }
-                        SetField(fields, "pvFechRes", finanInf["pvFechResolGC"]?.ToString());
+                        SetSplitDate(fields, finanInf["pvFechResolGC"], "pvFeResAno", "pvFeResMes", "pvFeResDia");
                         SetField(fields, "pvNumResol", finanInf["pvNumResolGC"]?.ToString());
                         if (finanInf["pvDeclIndCom"]?.ToString() == "Si")
                         {
@@ -174,6 +191,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             SetCheckBox(form, "pvAutoRetNo", true);
                         }
                         SetField(fields, "pvNumResolDIAN", finanInf["pvNumResDIAN"]?.ToString());
+                        if (finanInf["pvOpeCExt"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkComExtSi", true);
+                        }
+                        else
+                        {
+                            SetCheckBox(form, "pvCkComExtNo", true);
+                        }
                         SetField(fields, "pvFormPagCE", finanInf["pvForPag"]?.ToString());
                         SetField(fields, "pvBenefComExt", finanInf["pvEntBenef"]?.ToString());
                         if (finanInf["pvPosCuBan"]?.ToString() == "Si")
@@ -187,6 +212,87 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pvEntidadBanc", finanInf["pvEntidad"]?.ToString());
                         SetField(fields, "pvNumCuentaBanc", finanInf["pvNumCueBanc"]?.ToString());
                         SetField(fields, "pvClasCuentaBanc", finanInf["pvClasCueBan"]?.ToString());
+                        if (finanInf["pvCeOEA"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkOEASi", true);
+                        }
+                        else if (finanInf["pvCeOEA"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCkOEANo", true);
+                        }
+                        else if (finanInf["pvCeOEA"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCkOEAProces", true);
+                        }
+
+                        if (finanInf["pvCeCal"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkCalidadSi", true);
+                        }
+                        else if (finanInf["pvCeCal"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCkCalidadNo", true);
+                        }
+                        else if (finanInf["pvCeCal"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCkCalidadProces", true);
+                        }
+
+                        if (finanInf["pvCeBASC"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkBASCSi", true);
+                        }
+                        else if (finanInf["pvCeBASC"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCkBASCNo", true);
+                        }
+                        else if (finanInf["pvCeBASC"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCkBASCProces", true);
+                        }
+
+                        if (finanInf["pvCeAmb"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkAmbientalSi", true);
+                        }
+                        else if (finanInf["pvCeAmb"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCkAmbientalNo", true);
+                        }
+                        else if (finanInf["pvCeAmb"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCkAmbientalProces", true);
+                        }
+
+                        if (finanInf["pvCe28000"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCk28000Si", true);
+                        }
+                        else if (finanInf["pvCe28000"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCk28000No", true);
+                        }
+                        else if (finanInf["pvCe28000"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCk28000Proces", true);
+                        }
+
+                        if (finanInf["pvCeSST"]?.ToString() == "Si")
+                        {
+                            SetCheckBox(form, "pvCkSSTSi", true);
+                        }
+                        else if (finanInf["pvCeSST"]?.ToString() == "No")
+                        {
+                            SetCheckBox(form, "pvCkSSTNo", true);
+                        }
+                        else if (finanInf["pvCeSST"]?.ToString() == "EP")
+                        {
+                            SetCheckBox(form, "pvCkSSTProces", true);
+                        }
+
+                        SetField(fields, "pvCertAdicional", finanInf["pvAdiCert"]?.ToString());
+
+                        // Rellenar Declaraciones y Autorizaciones
 
                         if (finanInf["pvTDPMotMaq"]?.ToString() == "SI")
                         {
@@ -225,8 +331,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         }
                         SetField(fields, "pvRepleRazSocial", finanInf["pvDeAuRepresentacion"]?.ToString());
                         SetField(fields, "pvOrigenFuentes", finanInf["pvFuenteRecur"]?.ToString());
+                        if (finanInf["pvCumCSIn"]?.ToString() == "SI")
+                        {
+                            SetCheckBox(form, "pvCumplSi", true);
+                        }
+                        else
+                        {
+                            SetCheckBox(form, "pvCumplNo", true);
+                        }
 
-                        form.FlattenFields();
+                            form.FlattenFields();
                     }
                 }
             }
@@ -253,6 +367,24 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     string onValue = possibleValues.Length > 1 ? possibleValues[1] : possibleValues[0];
                     field.SetValue(onValue);
                 }
+            }
+        }
+
+        private void SetSplitDate(IDictionary<string, iText.Forms.Fields.PdfFormField> fields, object? dataValue, string fileDateYear, string fileDateMonth, string fileDateDay)
+        {
+            if (fields == null) return;
+
+            if (dataValue != null && DateTime.TryParse(dataValue.ToString(), out DateTime dt))
+            {
+                SetField(fields, fileDateYear, dt.Year.ToString());
+                SetField(fields, fileDateMonth, dt.ToString("MM"));
+                SetField(fields, fileDateDay, dt.ToString("dd"));
+            }
+            else
+            {
+                SetField(fields, fileDateYear, "");
+                SetField(fields, fileDateMonth, "");
+                SetField(fields, fileDateDay, "");
             }
         }
 

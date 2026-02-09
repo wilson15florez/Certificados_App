@@ -76,7 +76,7 @@
             @* Contenido de openForms *@
 
             <!-- form de persona natural-->
-            <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
+            <form id="persNatuForm" class="form-section" style="display:none;">
 
                 <div class="flex-row header-form">
                     <h2 class="title-form">Persona Natural</h2>
@@ -155,7 +155,7 @@
                             <label for="pnFechaNac" class="form-label adaptive-label" placeholder="Fecha de Nacimiento *" alt="Fecha de Nacimiento *"></label>
                         </div>
                         <div class="col-md-6 form-group input-wrapper">
-                            <input type="text" id="pnDiResidencia" name="pnDiResidencia" class="form-control" required />
+                            <input type="text" id="pnDiResidencia" name="pnDiResidencia" class="form-control" autocomplete="new-password" required />
                             <label for="pnDiResidencia" class="form-label adaptive-label" placeholder="Dirección de Residencia *" alt="Dirección de Residencia *"></label>
                         </div>
                         
@@ -182,7 +182,7 @@
                             <label for="pnCelular" class="form-label adaptive-label" placeholder="Teléfono Celular *" alt="Teléfono Celular *"></label>
                         </div>
                         <div class="col-md-4 form-group input-wrapper">
-                            <input type="email" id="pnEmail" name="pnEmail" class="form-control" required/>
+                            <input type="email" id="pnEmail" name="pnEmail" class="form-control" autocomplete="new-password" required />
                             <label for="pnEmail" class="form-label adaptive-label" placeholder="Correo Electrónico *" alt="Correo Electrónico *"></label>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
             </form>
 
             <!-- form de persona juridica-->
-            <form id="persJuriForm" class="form-section" style="display:none;" autocomplete="off">
+            <form id="persJuriForm" class="form-section" style="display:none;">
 
                 <div class="flex-row header-form">
                     <h2 class="title-form">Persona Jurídica</h2>
@@ -289,7 +289,7 @@
                         <h3 class="sub-header">Direcciones</h3>
                         <div class="d-flex">
                             <div class="col-md-4 form-group input-wrapper">
-                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" autocomplete="off" required />
+                                <input type="text" id="pjDirPrincipal" name="pjDirPrincipal" class="form-control" autocomplete="new-password" required />
                                 <label for="pjDirPrincipal" class="form-label adaptive-label" placeholder="Dirección Oficina Principal *" alt="Dirección Oficina Principal *"></label>
                             </div>
                             <div class="col-md-4 form-group d-block custom-input-group">
@@ -303,7 +303,7 @@
                         </div>
                         <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
                             <div class="col-md-6 form-group input-wrapper">
-                                <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" class="form-control" required />
+                                <input type="email" id="pjEmailDirPrincipal" name="pjEmailDirPrincipal" class="form-control" autocomplete="new-password" required />
                                 <label for="pjEmailDirPrincipal" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                             </div>
                             <div class="col-md-6 form-group input-wrapper">
@@ -443,7 +443,7 @@
             </form>
 
             <!-- form infomacion financiera (tanto para persona natural como juridica)-->
-            <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
+            <form id="provForm" class="form-section" style="display: none;">
 
                 <div class="flex-row header-form">
                     <h3 class="title-form">Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>

@@ -10,7 +10,7 @@ export function collectFormData_Natural() {
     form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea')
         .forEach(el => {
             if (!el.name) return;
-            data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
+            data[el.name] = el.value.trim() !== "" ? el.value.toUpperCase().trim() : null;
         });
 
     //recopila campos de telefono con el plugin intl-tel-input
@@ -45,7 +45,7 @@ export function collectFormData_Natural() {
     //PEP entidad (solo si es 'si')
     if (data.pnPEP === 'Si') {
         const entidad = document.getElementById('pnPEP_Entidad').value.trim();
-        data.pnPEP_Entidad = entidad !== "" ? entidad : null;
+        data.pnPEP_Entidad = entidad !== "" ? entidad.toUpperCase() : null;
     } else {
         data.pnPEP_Entidad = null;
         data.PEPTypes = [];
@@ -73,7 +73,7 @@ export function collectFormData_Juridica() {
     form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea')
         .forEach(el => {
             if (!el.name) return;
-            data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
+            data[el.name] = el.value.trim() !== "" ? el.value.toUpperCase().trim() : null;
         });
 
     //recopila campos de telefono con el plugin intl-tel-input
@@ -87,17 +87,17 @@ export function collectFormData_Juridica() {
     data.Sucursales_PJuridica = Array.from(document.querySelectorAll('#sucursales-container .sucursal-item')).map((s, idx) => {
         const i = idx + 1;
         return {
-            Direccion: document.getElementById(`pjDirSucursal_${i}`)?.value || null,
+            Direccion: document.getElementById(`pjDirSucursal_${i}`)?.value.toUpperCase() || null,
             Departamento: document.getElementById(`pjDepartDirSucursal_${i}`)?.value || null,
             Ciudad: document.getElementById(`pjCiudadDirSucursal_${i}`)?.value || null,
-            Email: document.getElementById(`pjEmailDirSucursal_${i}`)?.value || null,
+            Email: document.getElementById(`pjEmailDirSucursal_${i}`)?.value.toUpperCase() || null,
             telefono: telInst[`pjTelDirSucursal_${i}`]?.getNumber() || null
         };
     }).filter(s => s.Direccion);
 
     //recopila accionistas
     data.AccionistasControlPJuridica = Array.from(document.querySelector('#control-table tbody').querySelectorAll('.control-row')).map(row => ({
-        razonSocial: row.querySelector('[name="controlRazonSocial[]"]')?.value || null,
+        razonSocial: row.querySelector('[name="controlRazonSocial[]"]')?.value.toUpperCase() || null,
         idType: row.querySelector('[name="controlIdType[]"]')?.value || null,
         idNum: row.querySelector('[name="controlIdNum[]"]')?.value || null,
         porcentaje: row.querySelector('[name="controlPorcentaje[]"]')?.value || null
@@ -130,7 +130,7 @@ export function collectProvFormData(typePerson) {
     form.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea')
         .forEach(el => {
             if (!el.name) return;
-            data[el.name] = el.value.trim() !== "" ? el.value.trim() : null;
+            data[el.name] = el.value.trim() !== "" ? el.value.toUpperCase().trim() : null;
         });
 
     //radios
@@ -147,8 +147,8 @@ export function collectProvFormData(typePerson) {
 
 
     //Agrega datos del subform declaraciones y autorizaciones
-    data["pvDeAuRepresentacion"] = document.getElementById('pvDeAuRepresentacion').value.trim();
-    data["pvFuenteRecur"] = document.getElementById('pvFuenteRecur').value.trim();
+    data["pvDeAuRepresentacion"] = document.getElementById('pvDeAuRepresentacion').value.toUpperCase().trim();
+    data["pvFuenteRecur"] = document.getElementById('pvFuenteRecur').value.toUpperCase().trim();
 
     const sbFormRadios = [
         'pvTDPMotMaq', 'pvTDPCasTor', 'pvTDPBonap',
@@ -161,7 +161,7 @@ export function collectProvFormData(typePerson) {
     });
 
 
-    //Agrega Nit desde idNumInput para el foreign key en DB
+    //Agrega Nit desde el campor id del respectivo form para el foreign key en DB
     if (typePerson === 'natural') {
         data["Nit"] = document.getElementById('pnNumId').value.trim() !== "" ? document.getElementById('pnNumId').value.trim() : null;
     } else if (typePerson === 'juridica') {

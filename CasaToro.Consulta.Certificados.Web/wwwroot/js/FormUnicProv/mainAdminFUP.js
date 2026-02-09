@@ -452,7 +452,7 @@ printFormatBtn.addEventListener('click', async function (e) {
         return;
     } else {
         try {
-            const result = await API.getFormat(idNum);
+            const result = await API.getFormat(idNum, personType);
             if (result && result.url) {
                 UI.printFormatHandler(result.url);
             }

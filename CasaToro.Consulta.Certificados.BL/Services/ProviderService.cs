@@ -306,7 +306,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para actualizar proveedor natural
-        public void UpdateNaturalInfo(Proveedores_Natural providerData, string fullname, string tipPersona)
+        public void UpdateNaturalInfo(Proveedores_Natural providerData, string fullname, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -322,6 +322,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = providerData.pnEmail;
                         existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnCelular) ? providerData.pnTelefono : providerData.pnCelular;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
+                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite = tipTramite;
                     }
 
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
@@ -401,7 +403,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para actualizar proveedor juridico
-        public void UpdateJuridicaInfo(Proveedores_Juridica providerData, string tipPersona)
+        public void UpdateJuridicaInfo(Proveedores_Juridica providerData, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             string providerNit = providerData.Nit;
 
@@ -414,9 +416,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {
                         existingMaster.Nombre = providerData.pjRazSocial.ToUpper();
                         existingMaster.Direccion = providerData.pjDirPrincipal;
-                        existingMaster.Correo = providerData.pjDirPrincipal;
+                        existingMaster.Correo = providerData.pjEmailDirPrincipal;
                         existingMaster.Telefono = providerData.pjTelDirPrincipal;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
+                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite = tipTramite;
                     }
 
                     var existingJuridica = _context.Proveedores_Juridica.FirstOrDefault(p => p.Nit == providerNit);
@@ -604,7 +608,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para agregar proveedor a la tabla de p. natural a partir de la t. master
-        public void AddProveedorNatural(Proveedores_Natural proveedor, string fullname, string tipPersona)
+        public void AddProveedorNatural(Proveedores_Natural proveedor, string fullname, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -623,6 +627,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = proveedor.pnEmail;
                         existingMaster.Telefono = !string.IsNullOrWhiteSpace(proveedor.pnCelular) ? proveedor.pnTelefono : proveedor.pnCelular;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
+                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite = tipTramite;
                     }
 
                     var oldPEP = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
@@ -648,12 +654,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         }
 
         //metodo para agregar proveedor a la tabla de p. juridica a partir de la t. master
-        public void AddProveedorJuridica(Proveedores_Juridica proveedor, string tipPersona)
+        public void AddProveedorJuridica(Proveedores_Juridica proveedor, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             try
             {
                 _context.Proveedores_Juridica.Add(proveedor);
-                _context.SaveChanges();
 
                 string providerNit = proveedor.Nit;
 
@@ -662,10 +667,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 {
                     existingMaster.Nombre = proveedor.pjRazSocial.ToUpper();
                     existingMaster.Direccion = proveedor.pjDirPrincipal;
-                    existingMaster.Correo = proveedor.pjDirPrincipal;
+                    existingMaster.Correo = proveedor.pjEmailDirPrincipal;
                     existingMaster.Telefono = proveedor.pjTelDirPrincipal;
                     existingMaster.TipoPersona = tipPersona.ToUpper();
+                    existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
+                    existingMaster.TipoTramite = tipTramite;
                 }
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
