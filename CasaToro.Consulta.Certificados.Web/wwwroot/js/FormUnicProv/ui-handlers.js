@@ -1,6 +1,6 @@
 ﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert } from './constant.js';
 import * as API from './api-client.js';
-import { waitSafeSetPhone, initTelInputs } from './utils-phone.js';
+import { waitSafeSetPhone, initTelInputs, existingFiles } from './form-helpers.js';
 
 const controlTableBody = document.querySelector('#control-table tbody');
 const maxSucursales = 2;
@@ -59,6 +59,7 @@ export function firstBlock() {
     pnCiudadRes.disabled = true;
 
     //bloqueo inicial form persona juridica
+    pjCiudadDilig.disabled = true;
     pjCiudadDirPrincipal.disabled = true;
     pjRLCiuExpDoc.disabled = true;
     pjRLNacionalidad.disabled = true;
@@ -332,7 +333,7 @@ export async function ubicPJuHandler() {
     $(pjRLDepartNac).off('change.ubiNac').off('change.ubiExtrEstado');
 
     //limpia selects y los deshabilita si no es autorellenado
-    const selectClear = [pjDepartDirPrincipal, pjCiudadDirPrincipal, pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
+    const selectClear = [pjDepartDilig, pjCiudadDilig, pjDepartDirPrincipal, pjCiudadDirPrincipal, pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
     selectClear.forEach(sel => {
         $(sel).empty();
         if (!isAutoFilling) {
@@ -349,6 +350,11 @@ export async function ubicPJuHandler() {
             citySelect.disabled = municipios.length === 0;
         });
     };
+
+    //departamento y ciudad de diligenciamiento
+    fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
+    
+    handleDeptChange(pjDepartDilig, pjCiudadDilig);
 
     //departamento y ciudad direccion principal
     if (pjDepartDirPrincipal.options.length <= 1) {
@@ -413,7 +419,7 @@ export function hasValue() {
         }
 
         // Escuchar cuando el usuario interactúa
-        input.addEventListener('blur', () => {
+        input.addEventListener('change', () => {
             if (input.value.trim() !== "") {
                 input.classList.add('has-value');
             } else {
@@ -561,12 +567,19 @@ export async function loadFormData_Natural(data) {
         await setSelect2Val(pnCiudadRes, data.pnCiudadRes);
     }
 
+    //select Actividad
+    if (data.pnActividad) {
+        let pnActivity = data.pnActividad;
+        pnActivity = pnActivity.charAt(0).toUpperCase() + pnActivity.slice(1).toLowerCase();
+        pnActividad.value = pnActivity;
+    }
+
     //asigna los campos simples excepto los que requieren logica especial
     const skipCampos = [
         'pnTipoNacionalidad', 'pnTipoDoc', 'pnNacionalidad',
         'pnEstadoNac', 'pnCiudadNac', 'pnDepExpDoc',
         'pnCiuExpDoc', 'pnDepRes', 'pnCiudadRes', 'Nit',
-        'pnCelular', 'pnTelefono'
+        'pnCelular', 'pnTelefono', 'pnActividad'
     ];
 
     for (const key in data) {
@@ -650,7 +663,7 @@ export async function loadFormData_Juridica(data) {
             document.getElementById(`pjDirSucursal_${i}`).value = suc.pjSucursalDir || '';
             document.getElementById(`pjEmailDirSucursal_${i}`).value = suc.pjSucursalEmail || '';
             await waitSafeSetPhone(`pjTelDirSucursal_${i}`, suc.pjSucursalTel);
-
+            
             //llenar selects de ubicacion de sucursales
             const depSelect = document.getElementById(`pjDepartDirSucursal_${i}`);
             const citySelect = document.getElementById(`pjCiudadDirSucursal_${i}`);
@@ -701,6 +714,16 @@ export async function loadFormData_Juridica(data) {
     await ubicPJuHandler();
 
     //ubicacion
+
+    //diligenciamiento
+    if (data.pjDepartDilig) {
+        await setSelect2Val(pjDepartDilig, data.pjDepartDilig);
+        $(pjDepartDilig).trigger("change.ubiNac");
+        await waitForSelec2(pjCiudadDilig)
+    }
+    if (data.pjCiudadDilig) {
+        await setSelect2Val(pjCiudadDilig, data.pjCiudadDilig);
+    }
 
     //direccion principal
     if (data.pjDepartDirPrincipal) {
@@ -819,10 +842,18 @@ export async function loadProvFormData(data) {
         await setSelect2Val(pvEntidad, data.pvEntidad);
     }
 
+    //select tipo de cuenta bancaria
+    if (data.pvClasCueBan) {
+        let pvCCB = data.pvClasCueBan;
+        pvCCB = pvCCB.charAt(0).toUpperCase() + pvCCB.slice(1).toLowerCase();
+        pvClasCueBan.value = pvCCB;
+    }
+
     //asigna los campos simples excepto los que requieren logica especial
     const skipCampos = [
         'pvPorPais', 'pvDepartDec', 'pvCiudadDec',
-        'pvAcEconomica', 'pvCodCIIU', 'pvEntidad'
+        'pvAcEconomica', 'pvCodCIIU', 'pvEntidad',
+        'pvClasCueBan'
     ];
 
     for (const key in data) {
@@ -846,10 +877,10 @@ export async function loadProvFormData(data) {
     });
 
     //radios
-    if (data.pvTipEmp) {
-        const r = form.querySelector(`input[name="pvTipEmp"][value="${data.pvTipEmp}"]`);
-        if (r) r.checked = true;
-    }
+    //if (data.pvTipEmp) {
+    //    const r = form.querySelector(`input[name="pvTipEmp"][value="${data.pvTipEmp}"]`);
+    //    if (r) r.checked = true;
+    //}
     if (data.pvGrCon) {
         const r = form.querySelector(`input[name="pvGrCon"][value="${data.pvGrCon}"]`);
         if (r) r.checked = true;
@@ -915,7 +946,7 @@ export async function loadProvFormData(data) {
         if (r) r.checked = true;
     }
 
-    togglePvTE();
+    //togglePvTE();
     togglePvPais();
     togglePvGC();
     togglePvDIC();
@@ -989,21 +1020,21 @@ export const formatCurrency = (value) => {
 export const unformatCurrency = (value) => {
     return value.replace(/\D/g, '');
 };
-export function togglePvTE() {
-    const siOtra = document.getElementById('pvEmOtra').checked;
-    const inpTE = document.getElementById('pvOtrTipEmp');
-    const labTE = document.querySelector('label[for="pvOtrTipEmp"]');
-    if (siOtra) {
-        inpTE.classList.remove('no-edit');
-        labTE.classList.remove('disabled-label');
-        inpTE.required = true;
-    } else {
-        pvOtrTipEmp.value = '';
-        inpTE.classList.add('no-edit');
-        labTE.classList.add('disabled-label');
-        inpTE.required = false;
-    }
-}
+//export function togglePvTE() {
+//    const siOtra = document.getElementById('pvEmOtra').checked;
+//    const inpTE = document.getElementById('pvOtrTipEmp');
+//    const labTE = document.querySelector('label[for="pvOtrTipEmp"]');
+//    if (siOtra) {
+//        inpTE.classList.remove('no-edit');
+//        labTE.classList.remove('disabled-label');
+//        inpTE.required = true;
+//    } else {
+//        pvOtrTipEmp.value = '';
+//        inpTE.classList.add('no-edit');
+//        labTE.classList.add('disabled-label');
+//        inpTE.required = false;
+//    }
+//}
 export function togglePvPais() {
     const hasValue = pvPorExtranjero.value.trim().length > 0;
     $(pvPorPais).prop('disabled', !hasValue).trigger('change.select2');
@@ -1137,35 +1168,35 @@ export function addSucursalInternal(newIndex) {
     }
 
     const newSucursalDiv = document.createElement('div');
-    newSucursalDiv.className = 'sucursal-item justify-content-around align-items-center flex-row m-2 p-2';
+    newSucursalDiv.className = 'sucursal-item m-2 p-2';
     newSucursalDiv.id = `sucursal_${newIndex}`;
     newSucursalDiv.innerHTML = `
                     <h4>Dirección sucursal ${newIndex}</h4>
-                    <div class="d-flex">
-                        <div class="col-md-4 form-group input-wrapper">
+                    <div class="field-group">
+                        <div class="col-md-5 input-wrapper">
                             <input type="text" id="pjDirSucursal_${newIndex}" name="pjDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Dirección Sucursal *" alt="Dirección Sucursal *"></label>
                         </div>
-                        <div class="col-md-4 form-group d-block custom-input-group">
+                        <div class="col-md-3 custom-input-group">
                             <label for="pjDepartDirSucursal_${newIndex}" class="form-label">Departamento *</label>
                             <select id="pjDepartDirSucursal_${newIndex}" name="pjDepartDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
-                        <div class="col-md-4 form-group d-block custom-input-group">
+                        <div class="col-md-3 custom-input-group">
                             <label for="pjCiudadDirSucursal_${newIndex}" class="form-label">Ciudad *</label>
                             <select id="pjCiudadDirSucursal_${newIndex}" name="pjCiudadDirSucursal_${newIndex}" class="form-control" required></select>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
-                        <div class="col-md-5 form-group input-wrapper">
+                    <div class="field-group">
+                        <div class="col-md-4 input-wrapper">
                             <input type="email" id="pjEmailDirSucursal_${newIndex}" name="pjEmailDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjEmailDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="E-mail *" alt="E-mail *"></label>
                         </div>
-                        <div class="col-md-5 form-group input-wrapper">
+                        <div class="col-md-4 input-wrapper">
                             <input type="tel" id="pjTelDirSucursal_${newIndex}" name="pjTelDirSucursal_${newIndex}" class="form-control" autocomplete="new-password" required />
                             <label for="pjTelDirSucursal_${newIndex}" class="form-label adaptive-label" placeholder="Teléfono *" alt="Teléfono *"></label>
                         </div>
-                        <div class="col-md-2 form-group">
-                            <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover Sucursal</button>
+                        <div class="col-md-3">
+                            <button type="button" class="remove-sucursal-btn button-group btn btn-primary">Remover</button>
                         </div>
                     </div>
                 `;
@@ -1198,7 +1229,7 @@ export function addControlRow() {
                     </td>
                     <td><input type="text" class="form-control" name="controlIdNum[]" style="width:100%;" /></td>
                     <td><input type="number" class="form-control" name="controlPorcentaje[]" style="width:100%;" /></td>
-                    <td><button type="button" class="remove-control-row button-group btn btn-primary">Eliminar</button></td>
+                    <td><button type="button" class="remove-control-row button-group btn btn-primary">X</button></td>
                 `;
     controlTableBody.appendChild(newRow);
 }
@@ -1216,17 +1247,17 @@ export function loadDocsForm(data, isOEAValue) {
             el.value = '';
         }
 
-        el.classList.remove('file-existing');
-        el.removeAttribute('data-file-name');
+        el.classList.remove('file-existing', 'no-edit');
+        //el.removeAttribute('data-file-name');
     });
 
-    form.querySelectorAll('.btn-clear-file').forEach(btn => btn.style.display = 'none');
+    //form.querySelectorAll('.btn-clear-file').forEach(btn => btn.style.display = 'none');
 
-    const containerYesOEA = document.getElementById('sectionYesOEA');
-    if (containerYesOEA) containerYesOEA.style.display = 'none';
+    //const containerYesOEA = document.getElementById('sectionYesOEA');
+    //if (containerYesOEA) containerYesOEA.style.display = 'none';
 
-    const containerNoOEA = document.getElementById('sectionNoOEA');
-    if (containerNoOEA) containerNoOEA.style.display = 'none';
+    //const containerNoOEA = document.getElementById('sectionNoOEA');
+    //if (containerNoOEA) containerNoOEA.style.display = 'none';
 
 
     //carga de datos
@@ -1238,6 +1269,25 @@ export function loadDocsForm(data, isOEAValue) {
         }
     }
 
+    //if (data && data.length > 0) {
+    //    data.forEach(doc => {
+    //        const categoria = doc.categoriaDOC || doc.CategoriaDOC;
+    //        const nombre = doc.nombreArchivo || doc.NombreArchivo;
+
+    //        const input = document.getElementById(categoria);
+    //        if (input) {
+    //            input.setAttribute('data-file-name', nombre);
+    //            input.classList.add('file-existing');
+
+    //            const container = input.closest('.custom-file-container');
+    //            if (container) {
+    //                const btn = container.querySelector('.btn-clear-file');
+    //                if (btn) btn.style.display = 'flex';
+    //            }
+    //        }
+    //    });
+    //}
+
     if (data && data.length > 0) {
         data.forEach(doc => {
             const categoria = doc.categoriaDOC || doc.CategoriaDOC;
@@ -1245,84 +1295,94 @@ export function loadDocsForm(data, isOEAValue) {
 
             const input = document.getElementById(categoria);
             if (input) {
-                input.setAttribute('data-file-name', nombre);
+                // Escribir el nombre del archivo en el input de texto
+                input.value = nombre;
                 input.classList.add('file-existing');
 
-                const container = input.closest('.custom-file-container');
-                if (container) {
-                    const btn = container.querySelector('.btn-clear-file');
-                    if (btn) btn.style.display = 'flex';
-                }
+                if (!existingFiles[categoria]) existingFiles[categoria] = [];
+                existingFiles[categoria].push(nombre)
             }
         });
     }
 
+    //const magnetic = document.getElementById('upContingMeMagnetico');
+    //const firmada = document.getElementById('upContingFirmada');
+
+    //if (magnetic && magnetic.classList.contains('file-existing')) {
+    //    blockExcl('upContingFirmada', true);
+    //} else if (firmada && firmada.classList.contains('file-existing')) {
+    //    blockExcl('upContingMeMagnetico', true);
+    //}
+    checkExclusiones();
+}
+
+function checkExclusiones() {
     const magnetic = document.getElementById('upContingMeMagnetico');
     const firmada = document.getElementById('upContingFirmada');
 
-    if (magnetic && magnetic.classList.contains('file-existing')) {
-        blockExcl('upContingFirmada', true);
-    } else if (firmada && firmada.classList.contains('file-existing')) {
-        blockExcl('upContingMeMagnetico', true);
-    }
+    if (magnetic?.value) blockExcl('upContingFirmada', true);
+    else if (firmada?.value) blockExcl('upContingMeMagnetico', true);
 }
 
 //logica para visualizacion de campos de uploadDocsForm y boton "x"
-export function fileHandler() {
-    const form = document.getElementById('uploadDocsForm');
-    if (!form) return;
+//export function fileHandler() {
+//    const form = document.getElementById('uploadDocsForm');
+//    if (!form) return;
 
-    const fileContainers = form.querySelectorAll('.custom-file-container');
+//    const fileContainers = form.querySelectorAll('.custom-file-container');
 
-    //campos excluyentes
-    const exclusiones = {
-        'upContingMeMagnetico': 'upContingFirmada',
-        'upContingFirmada': 'upContingMeMagnetico'
-    };
+//    //campos excluyentes
+//    const exclusiones = {
+//        'upContingMeMagnetico': 'upContingFirmada',
+//        'upContingFirmada': 'upContingMeMagnetico'
+//    };
 
-    fileContainers.forEach(f => {
-        const input = f.querySelector('input[type="file"]');
-        const btnClear = f.querySelector('.btn-clear-file');
+//    fileContainers.forEach(f => {
+//        const input = f.querySelector('input[type="file"]');
+//        const btnClear = f.querySelector('.btn-clear-file');
 
-        input.addEventListener('change', (e) => {
-            const files = e.target.files;
+//        input.addEventListener('change', (e) => {
+//            const files = e.target.files;
 
-            if (files.length > 0) {
+//            if (files.length > 0) {
 
-                let displaytext = files.length > 1
-                    ? `${files.length} archivos seleccionados`
-                    : files[0].name;
+//                let displaytext = "";
+//                if (files.length > 1) {
+//                    displaytext = Array.from(files).map(f => f.name).join(', ');
+//                } else {
+//                    displaytext = files[0].name;
+//                }
 
-                input.setAttribute('data-file-name', displaytext);
-                input.classList.add('file-existing');
+//                input.setAttribute('data-file-name', displaytext);
+//                input.classList.add('file-existing');
 
-                if (btnClear) btnClear.style.display = 'flex';
+//                if (btnClear) btnClear.style.display = 'flex';
 
-                if (exclusiones[input.id]) {
-                    blockExcl(exclusiones[input.id], true);
-                }
-            }
-        });
+//                if (exclusiones[input.id]) {
+//                    blockExcl(exclusiones[input.id], true);
+//                }
+//            }
+//        });
 
-        if (btnClear) {
-            btnClear.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
+//        if (btnClear) {
+//            btnClear.addEventListener('click', (e) => {
+//                e.preventDefault();
+//                e.stopPropagation();
 
-                input.value = '';
-                input.classList.remove('file-existing');
-                input.removeAttribute('data-file-name');
-                btnClear.style.display = 'none';
+//                input.value = '';
+//                input.classList.remove('file-existing');
+//                input.removeAttribute('data-file-name');
+//                btnClear.style.display = 'none';
 
-                if (exclusiones[input.id]) {
-                    blockExcl(exclusiones[input.id], false);
-                }
+//                if (exclusiones[input.id]) {
+//                    blockExcl(exclusiones[input.id], false);
+//                }
 
-                if (typeof hasValue === "function") hasValue();
-            });
-        }
-    });
-}
+//                if (typeof hasValue === "function") hasValue();
+//            });
+//        }
+//    });
+//}
 function blockExcl(targetId, bloquear) {
     const targInput = document.getElementById(targetId);
     if (!targInput) return;
@@ -1333,10 +1393,12 @@ function blockExcl(targetId, bloquear) {
     if (bloquear) {
         targInput.classList.add('no-edit');
         targInput.required = false;
+        targInput.style.pointerEvents = 'none';
         if (label) label.classList.add('disabled-label')
     } else {
         targInput.classList.remove('no-edit');
         targInput.required = true;
+        targInput.style.pointerEvents = 'auto';
         if (label) label.classList.remove('disabled-label');
     }
 }
@@ -1355,15 +1417,26 @@ export function toggleOEA() {
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else if (no) {
         containerYesOEA.style.display = 'none';
-        containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
-        containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+        //containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
+        //containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+        containerYesOEA.querySelectorAll('input').forEach(i => {
+            i.value = '';
+            i.required = false;
+            i.classList.remove('file-existing');
+        });
+        
 
         //containerNoOEA.style.display = 'block';
         //containerNoOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else {
         containerYesOEA.style.display = 'none';
-        containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
-        containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+        //containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
+        //containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
+        containerYesOEA.querySelectorAll('input').forEach(i => {
+            i.value = '';
+            i.required = false;
+            i.classList.remove('file-existing');
+        });
 
         //containerNoOEA.style.display = 'none';
         //containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
@@ -1381,7 +1454,7 @@ export function printFormatHandler(url) {
     if (url) {
         iframe.src = `${url}?t=${new Date().getTime()}`;
 
-        printFormatForm.style.display = 'block';
+        printFormatForm.style.display = 'flex';
     } else {
         iframe.src = '';
         printFormatForm.style.display = 'none';

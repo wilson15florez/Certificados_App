@@ -502,7 +502,9 @@ public partial class ApplicationDbContext : DbContext
             entity.HasIndex(e => e.Nit, "UQ_Proveedores_Juridica_Nit").IsUnique();
 
             entity.Property(e => e.Nit).HasMaxLength(20);
+            entity.Property(e => e.pjCiudadDilig).HasMaxLength(100);
             entity.Property(e => e.pjCiudadDirPrincipal).HasMaxLength(100);
+            entity.Property(e => e.pjDepartDilig).HasMaxLength(100);
             entity.Property(e => e.pjDepartDirPrincipal).HasMaxLength(100);
             entity.Property(e => e.pjDirPrincipal).HasMaxLength(255);
             entity.Property(e => e.pjEmailDirPrincipal).HasMaxLength(100);

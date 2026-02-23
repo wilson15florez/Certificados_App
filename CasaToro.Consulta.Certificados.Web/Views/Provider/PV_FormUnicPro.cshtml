@@ -44,10 +44,10 @@
                         <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Formato</button>
                     </div>
                     <div class="col-md-4 form-group">
-                        <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
+                        <button id="printFormatBtn" type="button" class="btn btn-primary">imprimir Formato</button>
                     </div>
                     <div class="col-md-4 form-group">
-                        <button id="printFormatBtn" type="button" class="btn btn-primary">imprimir Formato</button>
+                        <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             @* Contenido de openForms *@
 
             <!-- form de persona natural-->
-            <form id="persNatuForm" class="form-section" style="display:none;" autocomplete="off">
+            <form id="persNatuForm" class="form-section" autocomplete="off" style="display:none;">
 
                 <div class="flex-row header-form">
                     <h2 class="title-form">Persona Natural</h2>
@@ -175,8 +175,8 @@
                             <label for="pnActividad" class="form-label">Actividad *</label>
                             <select id="pnActividad" name="pnActividad" class="form-control">
                                 <option value="" disabled selected>Seleccione una opción</option>
-                                <option value="dependiente">Dependiente</option>
-                                <option value="independiente">Independiente</option>
+                                <option value="Dependiente">Dependiente</option>
+                                <option value="Independiente">Independiente</option>
                             </select>
                         </div>
                     </div>
@@ -246,7 +246,7 @@
             </form>
 
             <!-- form de persona juridica-->
-            <form id="persJuriForm" class="form-section" style="display:none;" autocomplete="off">
+            <form id="persJuriForm" class="form-section" autocomplete="off" style="display:none;">
 
                 <div class="flex-row header-form">
                     <h2 class="title-form">Persona Jurídica</h2>
@@ -261,6 +261,17 @@
                         <div class="col-md-6 form-group input-wrapper">
                             <input type="number" id="pjNIT" name="pjNIT" class="form-control no-edit" required />
                             <label for="pjNIT" class="form-label adaptive-label disabled-label" placeholder="NIT *" alt="NIT *"></label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center flex-row m-2 p-2">
+                        <div class="col-md-6 form-group d-block custom-input-group">
+                            <label for="pjDepartDilig" class="form-label">Departamento Diligencia*</label>
+                            <select id="pjDepartDilig" name="pjDepartDilig" class="form-control" required></select>
+                        </div>
+                        <div class="col-md-6 form-group d-block custom-input-group">
+                            <label for="pjCiudadDilig" class="form-label">Ciudad Diligencia *</label>
+                            <select id="pjCiudadDilig" name="pjCiudadDilig" class="form-control" required></select>
                         </div>
                     </div>
 
@@ -421,7 +432,7 @@
             </form>
 
             <!-- form infomacion financiera (tanto para persona natural como juridica)-->
-            <form id="provForm" class="form-section" style="display: none;" autocomplete="off">
+            <form id="provForm" class="form-section" autocomplete="off" style="display: none;">
 
                 <div class="flex-row header-form">
                     <h3 class="title-form">Información Financiera y Tributaria (Persona Natural / Jurídica)</h3>
@@ -1097,6 +1108,16 @@
                             <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
                             <input class="form-control file-hidden" type="file" id="upCertificacionesVarias" multiple accept=".pdf">
                             <label for="upCertificacionesVarias" class="form-label adaptive-label" placeholder="Certificaciones (ISO, BASC, ...) *" alt="Certificaciones (ISO, BASC, ...) *"></label>
+                            <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center flex-row m-2 p-2">
+                    <div class="col-md-6 form-group input-wrapper">
+                        <div class="custom-file-container">
+                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                            <input class="form-control file-hidden" type="file" id="upFUCPfirmado" accept=".pdf" required>
+                            <label for="upFUCPfirmado" class="form-label adaptive-label" placeholder="Formato Único de Conocimiento Firmado *" alt="Formato Único de Conocimiento Firmado *"></label>
                             <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
                         </div>
                     </div>

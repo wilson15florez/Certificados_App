@@ -3,7 +3,7 @@ import * as API from './api-client.js';
 import * as UI from './ui-handlers.js';
 import * as Collector from './collector.js';
 import * as Validator from './validators.js';
-import * as UtilsPhone from './utils-phone.js';
+import * as Fhelper from './form-helpers.js';
 
 const personTypeSelect = document.getElementById('personType');
 const personType = personTypeSelect.value;
@@ -24,15 +24,14 @@ const consultBtn = document.getElementById('consultBtn');
 const submitPrvBtn = document.getElementById('submitPrvBtn');
 
 let isNewRegister = false;
-let activeParagraph = null;
-let activeDirecform = null;
 
 //funcion de inicializacion de handlers
 function initHandlers() {
 
     UI.scrollButton();
     UI.firstBlock();
-    UI.fileHandler();
+    //UI.fileHandler();
+    Fhelper.initUploadDocs();
     Validator.dateLimits();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
@@ -93,7 +92,7 @@ function initHandlers() {
     });
 
     //handlers para provForm (informacion financiera)
-    const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+    //const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
     const pvPorExtranjero = document.getElementById('pvPorExtranjero');
     const pvGrCon = document.querySelectorAll('input[name="pvGrCon"]');
     const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
@@ -101,7 +100,7 @@ function initHandlers() {
     const pvPosCuBan = document.querySelectorAll('input[name="pvPosCuBan"]');
     const pvOpeCExt = document.querySelectorAll('input[name="pvOpeCExt"]');
 
-    pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
+    //pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
     pvPorExtranjero.addEventListener('input', UI.togglePvPais);
     pvGrCon.forEach(r => r.addEventListener('change', UI.togglePvGC));
     pvDeclIndCom.forEach(r => r.addEventListener('change', UI.togglePvDIC));
@@ -149,9 +148,12 @@ function initHandlers() {
     });
 
     //inicializacion de instancias de intl-tel-input
-    UtilsPhone.initTelInputs(document.getElementById('pnTelefono'), false);
-    UtilsPhone.initTelInputs(document.getElementById('pnCelular'), true);
-    UtilsPhone.initTelInputs(document.getElementById('pjTelDirPrincipal'), true);
+    Fhelper.initTelInputs(document.getElementById('pnTelefono'), false);
+    Fhelper.initTelInputs(document.getElementById('pnCelular'), true);
+    Fhelper.initTelInputs(document.getElementById('pjTelDirPrincipal'), true);
+
+    Fhelper.initDirection();
+    Fhelper.initDeclAut();
 
     //UI.handlePEPChange();
     const pnPEPYes = document.getElementById('pnPEPSi');
@@ -169,60 +171,6 @@ function initHandlers() {
 
     UI.hasValue();
 }
-
-//logica del subformulario de direccion (despliega subform, botones cancelar y guardar)
-document.addEventListener('focusin', (e) => {
-    if (e.target.matches('input[id^="pnDiResidencia"], input[id^="pjDirPrincipal"],input[id^="pjDirSucursal_"]')) {
-        activeDirecform = e.target;
-        document.getElementById('directionStructure').style.display = 'flex';
-    }
-});
-document.getElementById('cancelDirBtn').addEventListener('click', () => {
-    document.getElementById('directionStructure').style.display = 'none';
-    activeDirecform = null;
-});
-document.getElementById('saveDirBtn').addEventListener('click', () => {
-    const tipoVia = document.getElementById('tipoVia').value.trim();
-    const vPrincipal = document.getElementById('vPrincipal').value.trim();
-    const sufPrincipal = document.getElementById('sufPrincipal').value.trim();
-    const vSecundaria = document.getElementById('vSecundaria').value.trim();
-    const sufSecundaria = document.getElementById('sufSecundaria').value.trim();
-    const numPlaca = document.getElementById('numPlaca').value.trim();
-    const compleDir = document.getElementById('compleDir').value.trim();
-
-    if (!tipoVia || !vPrincipal || !vSecundaria || !numPlaca) {
-        alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
-        alertError.show();
-        return;
-    }
-
-    //construye la direccion
-    let direcc = `${tipoVia} ${vPrincipal}${sufPrincipal ? sufPrincipal : ''}  # ${vSecundaria}${sufSecundaria ? sufSecundaria : ''} - ${numPlaca}`;
-    if (compleDir) direcc += `, ${compleDir}`;
-
-    //asigna la direccion al input
-    if (activeDirecform) {
-        activeDirecform.value = direcc;
-    }
-
-    //cierre
-    document.getElementById('directionStructure').style.display = 'none';
-    activeDirecform = null;
-});
-
-//logica del subformulario de declaraciones y autorizaciones (despliega subform, botones cancelar y guardar)
-declAutTrigger.addEventListener('click', () => {
-    declAutorPanel.style.display = 'flex';
-    activeParagraph = declAutTrigger;
-});
-cancelAutBtn.addEventListener('click', () => {
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
-saveAutBtn.addEventListener('click', () => {
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
 
 //atajo de consulta con enter
 idNumInput.addEventListener("keydown", function (e) {
@@ -340,6 +288,8 @@ openFormsBtn.addEventListener('click', async function (e) {
             const masterData = result.data;
             const suggest = result.suggested;
 
+            Fhelper.resetFormDA();
+
             if (personType === 'natural') {
                 persNatuForm.style.display = 'block';
                 provForm.style.display = 'block';
@@ -425,6 +375,11 @@ uploadDocsBtn.addEventListener('click', async function (e) {
     
     uploadDocsForm.style.display = 'block';
 
+    const personTypeSelect = document.getElementById('personType');
+    const personType = personTypeSelect.value;
+    const idNumInput = document.getElementById('idNum');
+    const idNum = idNumInput.value.trim();
+
     try {
         const result = await API.getProvDocuments(idNum, personType);
         UI.loadDocsForm(result.data || [], result.isOEA || null);
@@ -473,7 +428,11 @@ personTypeSelect.addEventListener('change', function () {
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
+    uploadDocsForm.style.display = 'none';
+    subNavConteiner.style.display = 'none';
     idNumInput.value = '';
+    UI.hasValue();
 
 });
 idNumInput.addEventListener('input', function () {

@@ -2,7 +2,7 @@
 import * as UI from './ui-handlers.js';
 import * as Collector from './collector.js';
 import * as Validator from './validators.js';
-import * as UtilsPhone from './utils-phone.js';
+import * as Fhelper from './form-helpers.js';
 import { alertSuccesBody, alertErrorBody, alertBody, alertSuccess, alertError, alert } from './constant.js';
 
 const openFormsBtn = document.getElementById('openFormsBtn');
@@ -19,9 +19,13 @@ const printFormatForm = document.getElementById('printFormatForm');
 
 const submitPrvBtn = document.getElementById('submitPrvBtn');
 
+const result = await API.getProvDataForms(null);
+console.log("Respuesta completa del servidor:", result);
+
+const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+console.log("Tipo de persona procesado:", typePerson);
+
 let isNewRegister = false;
-let activeParagraph = null;
-let activeDirecform = null;
 
 function initFormHandlers() {
     UI.scrollButton();
@@ -143,9 +147,12 @@ function initFormHandlers() {
     });
 
     //inicializacion de instancias de intl-tel-input
-    UtilsPhone.initTelInputs(document.getElementById('pnTelefono'), false);
-    UtilsPhone.initTelInputs(document.getElementById('pnCelular'), true);
-    UtilsPhone.initTelInputs(document.getElementById('pjTelDirPrincipal'), true);
+    Fhelper.initTelInputs(document.getElementById('pnTelefono'), false);
+    Fhelper.initTelInputs(document.getElementById('pnCelular'), true);
+    Fhelper.initTelInputs(document.getElementById('pjTelDirPrincipal'), true);
+
+    Fhelper.initDirection();
+    Fhelper.initDeclAut();
 
     //UI.handlePEPChange();
     const pnPEPYes = document.getElementById('pnPEPSi');
@@ -166,60 +173,6 @@ function initFormHandlers() {
     checkUser();
 }
 
-//logica del subformulario de direccion (despliega subform, botones cancelar y guardar)
-document.addEventListener('focusin', (e) => {
-    if (e.target.matches('input[id^="pnDiResidencia"], input[id^="pjDirPrincipal"],input[id^="pjDirSucursal_"]')) {
-        activeDirecform = e.target;
-        document.getElementById('directionStructure').style.display = 'flex';
-    }
-});
-document.getElementById('cancelDirBtn').addEventListener('click', () => {
-    document.getElementById('directionStructure').style.display = 'none';
-    activeDirecform = null;
-});
-document.getElementById('saveDirBtn').addEventListener('click', () => {
-    const tipoVia = document.getElementById('tipoVia').value.trim();
-    const vPrincipal = document.getElementById('vPrincipal').value.trim();
-    const sufPrincipal = document.getElementById('sufPrincipal').value.trim();
-    const vSecundaria = document.getElementById('vSecundaria').value.trim();
-    const sufSecundaria = document.getElementById('sufSecundaria').value.trim();
-    const numPlaca = document.getElementById('numPlaca').value.trim();
-    const compleDir = document.getElementById('compleDir').value.trim();
-
-    if (!tipoVia || !vPrincipal || !vSecundaria || !numPlaca) {
-        alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
-        alertError.show();
-        return;
-    }
-
-    //construye la direccion
-    let direcc = `${tipoVia} ${vPrincipal}${sufPrincipal ? sufPrincipal : ''}  # ${vSecundaria}${sufSecundaria ? sufSecundaria : ''} - ${numPlaca}`;
-    if (compleDir) direcc += `, ${compleDir}`;
-
-    //asigna la direccion al input
-    if (activeDirecform) {
-        activeDirecform.value = direcc;
-    }
-
-    //cierre
-    document.getElementById('directionStructure').style.display = 'none';
-    activeDirecform = null;
-});
-
-//logica del subformulario de declaraciones y autorizaciones (despliega subform, botones cancelar y guardar)
-declAutTrigger.addEventListener('click', () => {
-    declAutorPanel.style.display = 'flex';
-    activeParagraph = declAutTrigger;
-});
-cancelAutBtn.addEventListener('click', () => {
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
-saveAutBtn.addEventListener('click', () => {
-    declAutorPanel.style.display = 'none';
-    activeParagraph = null;
-});
-
 //logica para mostrar/ocultar entre acciones de la sub nav
 openFormsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
@@ -239,10 +192,6 @@ uploadDocsBtn.addEventListener('click', async function (e) {
 
     uploadDocsForm.style.display = 'block';
 
-    const resultProv = await API.getProvDataForms(null);
-    console.log("Respuesta completa del servidor:", resultProv);
-
-
     try {
         const result = await API.getProvDocuments(null);
         UI.loadDocsForm(result.data || [], result.isOEA || null);
@@ -258,12 +207,6 @@ printFormatBtn.addEventListener('click', async function (e) {
     persJuriForm.style.display = 'none';
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
-
-    const resultProv = await API.getProvDataForms(null);
-    console.log("Respuesta completa del servidor para printFormatBtn:", resultProv);
-
-    const typePerson = (resultProv.typeperson || resultProv.typePerson || "").toLowerCase().trim();
-    console.log("Tipo de persona procesado:", typePerson);
 
     if (typePerson !== "juridica") {
         alertErrorBody.innerText = 'La impresión de formato solo está disponible para Personas Jurídicas.';
@@ -289,12 +232,6 @@ printFormatBtn.addEventListener('click', async function (e) {
 //listener de envio de forms
 submitPrvBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-
-    const resultProv = await API.getProvDataForms(null);
-    console.log("Respuesta completa del servidor:", resultProv);
-
-    const typePerson = (resultProv.typeperson || resultProv.typePerson || "").toLowerCase().trim();
-    console.log("Tipo de persona procesado:", typePerson);
 
     let dataProNJ = null;
 
@@ -353,24 +290,15 @@ submitDocsBtn.addEventListener('click', async (e) => {
 });
 
 async function checkUser() {
-    const persNatuForm = document.getElementById('persNatuForm');
-    const persJuriForm = document.getElementById('persJuriForm');
-    const provForm = document.getElementById('provForm');
-    const subNavConteiner = document.getElementById('subNavConteiner');
-
     try {
-        const result = await API.getProvDataForms(null);
-        console.log("Respuesta completa del servidor:", result);
-
-        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
-        console.log("Tipo de persona procesado:", typePerson);
-
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
             isNewRegister = true;
 
             const masterData = result.data;
             const suggest = result.suggested;
+
+            Fhelper.resetFormDA();
 
             if (typePerson === 'natural') {
                 subNavConteiner.style.display = 'block';

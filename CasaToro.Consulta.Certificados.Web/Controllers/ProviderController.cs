@@ -479,8 +479,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                     string nameDoc = Path.GetFileNameWithoutExtension(file.FileName);
 
+                    string uniqueName = $"{Guid.NewGuid()}_{nameDoc}";
+
                     // Guardar el archivo en el servidor y obtener la ruta relativa
-                    string rutaRel = await _providerService.SaveDocuments(file, nit, tipPersona, categoria, nameDoc, _webHostEnvironment.WebRootPath);
+                    string rutaRel = await _providerService.SaveDocuments(file, nit, tipPersona, categoria, uniqueName, _webHostEnvironment.WebRootPath);
 
                     // Guardar la información metadatos del documento en la base de datos
                     _providerService.SaveDocumentMD(nit, categoria, file.FileName, rutaRel);

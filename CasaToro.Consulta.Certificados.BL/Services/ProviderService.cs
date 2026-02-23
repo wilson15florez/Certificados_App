@@ -244,6 +244,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {
                         {"Nit",juridicaData.Nit},
                         {"pjRazSocial",juridicaData.pjRazSocial},
+                        {"pjDepartDilig", juridicaData.pjDepartDilig },
+                        {"pjCiudadDilig", juridicaData.pjCiudadDilig },
                         {"pjDirPrincipal",juridicaData.pjDirPrincipal},
                         {"pjDepartDirPrincipal",juridicaData.pjDepartDirPrincipal },
                         {"pjCiudadDirPrincipal",juridicaData.pjCiudadDirPrincipal},
@@ -429,6 +431,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         throw new Exception($"Registro detallado para NIT {providerNit} no encontrado.");
 
                     existingJuridica.pjRazSocial = providerData.pjRazSocial;
+                    existingJuridica.pjDepartDilig = providerData.pjDepartDilig;
+                    existingJuridica.pjCiudadDilig = providerData.pjCiudadDilig;
                     existingJuridica.pjDirPrincipal = providerData.pjDirPrincipal;
                     existingJuridica.pjDepartDirPrincipal = providerData.pjDepartDirPrincipal;
                     existingJuridica.pjCiudadDirPrincipal = providerData.pjCiudadDirPrincipal;

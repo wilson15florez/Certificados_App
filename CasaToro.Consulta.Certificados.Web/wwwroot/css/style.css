@@ -298,6 +298,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
 }
 
 .user-info {
@@ -562,6 +563,10 @@ label.disabled-label[for=pjNIT] {
     width: 95%;
     border-bottom: 1px solid #e0e0e0;
     padding: 0.7rem;
+}
+
+.title-header {
+    text-align: center;
 }
 
 .content-body {

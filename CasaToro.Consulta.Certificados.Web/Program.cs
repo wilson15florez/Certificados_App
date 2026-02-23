@@ -38,7 +38,6 @@ builder.Services.AddScoped<LogService>();
 builder.Services.AddScoped<CertificatesService>();
 builder.Services.AddScoped<CertificateServiceExcel>();
 builder.Services.AddScoped<BillService>();
-// Debajo de los otros AddScoped
 builder.Services.AddScoped<FormatService>();
 builder.Services.AddScoped<UsersService>();
 

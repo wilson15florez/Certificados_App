@@ -1,5 +1,5 @@
 ﻿import { alertErrorBody, alertError, regexEmail } from './constant.js';
-import { telInst } from './utils-phone.js';
+import { telInst } from './form-helpers.js';
 
 
 /** 
@@ -172,7 +172,7 @@ export function validateJuridicaForm() {
 
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
-        'pjRazSocial', 'pjDirPrincipal', 'pjDepartDirPrincipal', 'pjCiudadDirPrincipal',
+        'pjRazSocial', 'pjDepartDilig', 'pjCiudadDilig', 'pjDirPrincipal', 'pjDepartDirPrincipal', 'pjCiudadDirPrincipal',
         'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg', 
         'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLNacionalidad',
         'pjRLDepartNac', 'pjRLCiudadNac'
@@ -486,7 +486,7 @@ export function validateProvForm(personType) {
 //validacion de documentos cargados en form documentos
 export function validateDocsForm() {
     const form = document.getElementById('uploadDocsForm');
-    const files = form.querySelectorAll('input[type="file"]');
+    //const files = form.querySelectorAll('input[type="file"]');
     const maxSizeMB = 4 * 1024 * 1024;
     const exptensionVal = /(\.pdf)$/i;
 
@@ -500,12 +500,24 @@ export function validateDocsForm() {
         const el = document.getElementById(id);
         if (!el) continue;
 
-        const hasNewFile = el.files.length > 0;
-        const hasExistFile = el.classList.contains('file-existing');
+        //const hasNewFile = el.files.length > 0;
+        //const hasExistFile = el.classList.contains('file-existing');
 
-        if (!hasNewFile && !hasExistFile) {
+        //if (!hasNewFile && !hasExistFile) {
+        //    const label = document.querySelector(`label[for="${id}"]`);
+        //    const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
+        //    alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
+        //    alertError.show();
+        //    el.focus();
+        //    return false;
+        //}
+
+        const hasContent = el.value.trim() !== '';
+
+        if (!hasContent) {
             const label = document.querySelector(`label[for="${id}"]`);
             const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
+
             alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
             alertError.show();
             el.focus();
@@ -515,10 +527,20 @@ export function validateDocsForm() {
 
     //verifica que sean dos referencias comerciales
     const refComerc = document.getElementById('upRefeComerciales');
-    if (!refComerc.classList.contains('file-existing') && refComerc.files.length !== 2) {
-        if (refComerc.files.length > 0 && refComerc.files.length !== 2) {
+    //if (!refComerc.classList.contains('file-existing') && refComerc.files.length !== 2) {
+    //    if (refComerc.files.length > 0 && refComerc.files.length !== 2) {
+    //        alertErrorBody.innerText = 'Por favor ingrese dos (2) referencias comerciales';
+    //        alertError.show();
+    //        return false;
+    //    }
+    //}
+    if (refComerc) {
+        const fileNames = refComerc.value.split(', ').filter(name => name.trim() !== '');
+
+        if (fileNames.length < 2) {
             alertErrorBody.innerText = 'Por favor ingrese dos (2) referencias comerciales';
             alertError.show();
+            refComerc.focus();
             return false;
         }
     }
@@ -541,10 +563,20 @@ export function validateDocsForm() {
             const el = document.getElementById(id);
             if (!el || el.disabled || !el.required) continue;
 
-            const hasNewFile = el.files.length > 0;
-            const hasExistFile = el.classList.contains('file-existing');
+            //const hasNewFile = el.files.length > 0;
+            //const hasExistFile = el.classList.contains('file-existing');
 
-            if (!hasNewFile && !hasExistFile) {
+            //if (!hasNewFile && !hasExistFile) {
+            //    const label = document.querySelector(`label[for="${id}"]`);
+            //    const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
+            //    alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
+            //    alertError.show();
+            //    el.focus();
+            //    return false;
+            //}
+
+            const hasContent = el.value.trim() !== '';
+            if (!hasContent) {
                 const label = document.querySelector(`label[for="${id}"]`);
                 const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
                 alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
@@ -556,22 +588,41 @@ export function validateDocsForm() {
     }
 
     //verifica extencion del doc y el peso
-    for (const input of files) {
-        if (input.files.length > 0) {
-            for (const file of input.files) {
-                //valida extencion
+    //for (const input of files) {
+    //    if (input.files.length > 0) {
+    //        for (const file of input.files) {
+    //            //valida extencion
+    //            if (!exptensionVal.exec(file.name)) {
+    //                alertErrorBody.innerText = `El archivo ${file.name} no es un PDF valido.`;
+    //                alertError.show();
+    //                input.value = '';
+    //                return false;
+    //            }
+
+    //            //valida el peso
+    //            if (file.size > maxSizeMB) {
+    //                alertErrorBody.innerText = `El archivo ${file.name} supera los 4MB.`;
+    //                alertError.show();
+    //                input.value = '';
+    //                return false;
+    //            }
+    //        }
+    //    }
+    //}
+
+    if (typeof tempFiles !== 'undefined') {
+        for (const inputId in tempFiles) {
+            const files = tempFiles[inputId];
+            for (const file of files) {
                 if (!exptensionVal.exec(file.name)) {
-                    alertErrorBody.innerText = `El archivo ${file.name} no es un PDF valido.`;
+                    alertErrorBody.innerText = `El archivo "${file.name}" no es un PDF válido.`;
                     alertError.show();
-                    input.value = '';
                     return false;
                 }
 
-                //valida el peso
                 if (file.size > maxSizeMB) {
-                    alertErrorBody.innerText = `El archivo ${file.name} supera los 4MB.`;
+                    alertErrorBody.innerText = `El archivo "${file.name}" supera el límite de 4MB.`;
                     alertError.show();
-                    input.value = '';
                     return false;
                 }
             }

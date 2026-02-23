@@ -42,6 +42,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         var fields = form.GetAllFormFields();
 
                         // Rellenar campos del encabezado
+                        SetField(fields, "tramCiudad", juridica["pjCiudadDilig"]?.ToString());
                         SetSplitDate(fields, master.FechaDiligencia, "tramFechAno", "tramFechMes", "tramFechDia");
                         if (master.TipoTramite == "VINCULACION")
                         {
@@ -57,7 +58,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pjNit", juridica["Nit"]?.ToString());
                         SetField(fields, "pjDirPrincipal", juridica["pjDirPrincipal"]?.ToString());
                         SetField(fields, "pjCiudadDirPri", juridica["pjCiudadDirPrincipal"]?.ToString());
-                        SetField(fields, "pjEmailDirPri", juridica["pjEmailDirPrincipal"]?.ToString());
+                        SetField(fields, "pjEmailDirPri", juridica["pjEmailDirPrincipal"]?.ToString().ToLower());
                         SetField(fields, "pjTelDirPri", juridica["pjTelDirPrincipal"]?.ToString());
 
                         // Rellenar sucursales
@@ -70,7 +71,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                                 if (i > 2) break;
                                 SetField(fields, $"pjDirSuc{i}", suc.pjSucursalDir?.ToString());
                                 SetField(fields, $"pjCiudadSuc{i}", suc.pjSucursalCiudad?.ToString());
-                                SetField(fields, $"pjEmailSuc{i}", suc.pjSucursalEmail?.ToString());
+                                SetField(fields, $"pjEmailSuc{i}", suc.pjSucursalEmail?.ToString().ToLower());
                                 SetField(fields, $"pjTelSuc{i}", suc.pjSucursalTel?.ToString());
                                 i++;
                             }

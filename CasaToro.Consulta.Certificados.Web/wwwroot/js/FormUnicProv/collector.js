@@ -1,4 +1,4 @@
-﻿import { telInst } from './utils-phone.js';
+﻿import { telInst } from './form-helpers.js';
 import { unformatCurrency } from './ui-handlers.js'
 
 //funcion para recopilar los datos del formulario persona natural
@@ -161,7 +161,7 @@ export function collectProvFormData(typePerson) {
     });
 
 
-    //Agrega Nit desde el campor id del respectivo form para el foreign key en DB
+    //Agrega Nit desde el campo id del respectivo form para el foreign key en DB
     if (typePerson === 'natural') {
         data["Nit"] = document.getElementById('pnNumId').value.trim() !== "" ? document.getElementById('pnNumId').value.trim() : null;
     } else if (typePerson === 'juridica') {
@@ -204,10 +204,19 @@ export function collectDocsForm(personType = null) {
     const checked = form.querySelector('input[name="upOEA"]:checked');
     formData.append('isOEA', checked ? checked.value : 'No');
 
-    form.querySelectorAll('input[type="file"]').forEach(input => {
-        if (input.files.length > 0) {
-            formData.append(input.id, input.files[0]);
-        }
+    //form.querySelectorAll('input[type="file"]').forEach(input => {
+    //    if (input.files.length > 0) {
+    //        for (let i = 0; i < input.files.length; i++) {
+    //            formData.append(input.id, input.files[i]);
+    //        }
+    //    }
+    //});
+
+    Object.keys(tempFiles).forEach(inputId => {
+        const fileArray = tempFiles[inputId];
+        fileArray.forEach(file => {
+            formData.append(inputId, file);
+        });
     });
 
     return formData;

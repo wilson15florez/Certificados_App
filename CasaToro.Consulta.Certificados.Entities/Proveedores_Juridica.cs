@@ -11,6 +11,10 @@ public partial class Proveedores_Juridica
 
     public string pjRazSocial { get; set; } = null!;
 
+    public string? pjDepartDilig { get; set; }
+
+    public string? pjCiudadDilig { get; set; }
+
     public string? pjDirPrincipal { get; set; }
 
     public string? pjDepartDirPrincipal { get; set; }
