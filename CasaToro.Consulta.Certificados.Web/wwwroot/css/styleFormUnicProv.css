@@ -276,8 +276,20 @@
   margin: 11px;
 }
 
-.doc-trigger {
-    /*pointer-events: none;*/
+/* Área de Drop Zone */
+.drop-zone {
+    border: 2px dashed #007bff;
+    border-radius: 6px;
+    padding: 30px;
+    text-align: center;
+    background: #f8fbff;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    background: #e1efff;
+    border-color: #0056b3;
+    transform: scale(1.02);
 }
 
 .files-panel {

@@ -142,15 +142,15 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         SetField(fields, "pvPorceExt", finanInf["pvPorExtranjero"]?.ToString());
                         SetField(fields, "pvPorcePaisExt", finanInf["pvPorPais"]?.ToString());
                         string tipEmp = finanInf["pvTipEmp"]?.ToString();
-                        if (tipEmp == "EmPublica")
+                        if (tipEmp == "PUBLICA")
                         {
                             SetCheckBox(form, "pvTEPublic", true);
                         } 
-                        else if (tipEmp == "EmPrivada")
+                        else if (tipEmp == "PRIVADA")
                         {
                             SetCheckBox(form, "pvTEPrivada", true);
                         } 
-                        else if (tipEmp == "EmMixta")
+                        else if (tipEmp == "MIXTA")
                         {
                             SetCheckBox(form, "pvTEMixta", true);
                         } 

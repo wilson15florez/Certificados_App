@@ -203,7 +203,7 @@ export function resetFormDA() {
 
 //LOGICA PARA SUBFORM DE CARGA DE DOCUMENTOS
 
-let tempFiles = {};
+export let tempFiles = {};
 let currentInput = null;
 export let existingFiles = {};
 let backupTemp = null;
@@ -214,11 +214,12 @@ export function initUploadDocs() {
     const panel = document.getElementById('uploadFilesPanel');
     const fileInput = document.getElementById('filesContainer');
     const listPreview = document.getElementById('fileList');
+    const dropZone = document.getElementById('uploadContainer');
 
     //abre el panel cuando se oprime uno de los inputs
     docsForm.addEventListener('click', (e) => {
         if (e.target.classList.contains('doc-trigger')) {
-            const label = document.querySelector(`label[for="${e.target}"]`);
+            const label = document.querySelector(`label[for="${e.target.id}"]`);
             const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : e.target;
             openUploadPanel(e.target, labelText);
         }
@@ -232,6 +233,27 @@ export function initUploadDocs() {
         e.target.value = '';
     });
 
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+
+    dropZone.addEventListener('dragover', () => dropZone.classList.add('drag-over'));
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+
+    dropZone.addEventListener('drop', (e) => {
+        dropZone.classList.remove('drag-over');
+        const files = Array.from(e.dataTransfer.files);
+        const pdfFiles = files.filter(f => f.type === 'application/pdf');
+        if (pdfFiles.length > 0) {
+            addFilesToTemp(pdfFiles);
+        } else {
+            alert("Solo se permiten archivos PDF.")
+        }
+    });
+
     //guardar documentos
     document.getElementById('saveDocsBtn').addEventListener('click', () => {
         const dbList = existingFiles[currentInput] || [];
@@ -241,7 +263,7 @@ export function initUploadDocs() {
         const allNames = [...dbList, ...newList.map(f => f.name)];
         mainInput.value = allNames.join(', ');
 
-        if (allNames.length > 0) mainInput.classList.add('file.existing');
+        if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
         
         panel.style.display = 'none';

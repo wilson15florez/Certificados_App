@@ -1,4 +1,4 @@
-﻿import { telInst } from './form-helpers.js';
+﻿import { telInst, tempFiles } from './form-helpers.js';
 import { unformatCurrency } from './ui-handlers.js'
 
 //funcion para recopilar los datos del formulario persona natural
@@ -134,8 +134,9 @@ export function collectProvFormData(typePerson) {
         });
 
     //radios
+    //'pvTipEmp', 
     const radioGroups = [
-        'pvTipEmp', 'pvGrCon', 'pvDeclIndCom',
+        'pvGrCon', 'pvDeclIndCom',
         'pvAutRet', 'pvPosCuBan',
         'pvOpeCExt', 'pvCeOEA', 'pvCeCal', 'pvCeBASC', 'pvCeAmb', 'pvCe28000', 'pvCeSST'
     ];

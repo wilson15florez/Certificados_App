@@ -876,6 +876,13 @@ export async function loadProvFormData(data) {
         }
     });
 
+    //select tipo empresa
+    if (data.pvTipEmp) {
+        let pvTipoEmpr = data.pvTipEmp;
+        pvTipoEmpr = pvTipoEmpr.charAt(0).toUpperCase() + pvTipoEmpr.slice(1).toLowerCase();
+        pvTipEmp.value = pvTipoEmpr;
+    }
+
     //radios
     //if (data.pvTipEmp) {
     //    const r = form.querySelector(`input[name="pvTipEmp"][value="${data.pvTipEmp}"]`);
@@ -1316,6 +1323,7 @@ export function loadDocsForm(data, isOEAValue) {
     checkExclusiones();
 }
 
+//logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
 function checkExclusiones() {
     const magnetic = document.getElementById('upContingMeMagnetico');
     const firmada = document.getElementById('upContingFirmada');
@@ -1323,66 +1331,6 @@ function checkExclusiones() {
     if (magnetic?.value) blockExcl('upContingFirmada', true);
     else if (firmada?.value) blockExcl('upContingMeMagnetico', true);
 }
-
-//logica para visualizacion de campos de uploadDocsForm y boton "x"
-//export function fileHandler() {
-//    const form = document.getElementById('uploadDocsForm');
-//    if (!form) return;
-
-//    const fileContainers = form.querySelectorAll('.custom-file-container');
-
-//    //campos excluyentes
-//    const exclusiones = {
-//        'upContingMeMagnetico': 'upContingFirmada',
-//        'upContingFirmada': 'upContingMeMagnetico'
-//    };
-
-//    fileContainers.forEach(f => {
-//        const input = f.querySelector('input[type="file"]');
-//        const btnClear = f.querySelector('.btn-clear-file');
-
-//        input.addEventListener('change', (e) => {
-//            const files = e.target.files;
-
-//            if (files.length > 0) {
-
-//                let displaytext = "";
-//                if (files.length > 1) {
-//                    displaytext = Array.from(files).map(f => f.name).join(', ');
-//                } else {
-//                    displaytext = files[0].name;
-//                }
-
-//                input.setAttribute('data-file-name', displaytext);
-//                input.classList.add('file-existing');
-
-//                if (btnClear) btnClear.style.display = 'flex';
-
-//                if (exclusiones[input.id]) {
-//                    blockExcl(exclusiones[input.id], true);
-//                }
-//            }
-//        });
-
-//        if (btnClear) {
-//            btnClear.addEventListener('click', (e) => {
-//                e.preventDefault();
-//                e.stopPropagation();
-
-//                input.value = '';
-//                input.classList.remove('file-existing');
-//                input.removeAttribute('data-file-name');
-//                btnClear.style.display = 'none';
-
-//                if (exclusiones[input.id]) {
-//                    blockExcl(exclusiones[input.id], false);
-//                }
-
-//                if (typeof hasValue === "function") hasValue();
-//            });
-//        }
-//    });
-//}
 function blockExcl(targetId, bloquear) {
     const targInput = document.getElementById(targetId);
     if (!targInput) return;

@@ -314,7 +314,7 @@ export function validateProvForm(personType) {
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
         'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos',
-        'pvPatrimonio', 'pvOtrIngr', 'pvOtrTipEmp', 'pvPorNacional', 'pvPorPais',
+        'pvPatrimonio', 'pvOtrIngr', 'pvTipEmp', 'pvOtrTipEmp', 'pvPorNacional', 'pvPorPais',
         'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst',
         'pvFechVen', 'pvFechResolGC', 'pvNumResolGC', 'pvDepartDec',
         'pvCiudadDec', 'pvNumResDIAN', 'pvEntidad',
@@ -357,11 +357,11 @@ export function validateProvForm(personType) {
     }
 
     //verifica tipo de empresa
-    if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
-        alertErrorBody.innerText = 'Por favor seleccione el tipo de empresa.';
-        alertError.show();
-        return false;
-    }
+    //if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
+    //    alertErrorBody.innerText = 'Por favor seleccione el tipo de empresa.';
+    //    alertError.show();
+    //    return false;
+    //}
 
     //verifica gran contribuyente
     if (!form.querySelector('input[name="pvGrCon"]:checked')) {

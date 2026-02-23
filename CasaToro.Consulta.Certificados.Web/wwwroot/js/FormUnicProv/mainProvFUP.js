@@ -19,18 +19,14 @@ const printFormatForm = document.getElementById('printFormatForm');
 
 const submitPrvBtn = document.getElementById('submitPrvBtn');
 
-const result = await API.getProvDataForms(null);
-console.log("Respuesta completa del servidor:", result);
-
-const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
-console.log("Tipo de persona procesado:", typePerson);
 
 let isNewRegister = false;
 
 function initFormHandlers() {
     UI.scrollButton();
     UI.firstBlock();
-    UI.fileHandler();
+    //UI.fileHandler();
+    Fhelper.initUploadDocs();
     Validator.dateLimits();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
@@ -208,6 +204,12 @@ printFormatBtn.addEventListener('click', async function (e) {
     provForm.style.display = 'none';
     uploadDocsForm.style.display = 'none';
 
+    const result = await API.getProvDataForms(null);
+    console.log("Respuesta completa del servidor:", result);
+
+    const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+    console.log("Tipo de persona procesado:", typePerson);
+
     if (typePerson !== "juridica") {
         alertErrorBody.innerText = 'La impresión de formato solo está disponible para Personas Jurídicas.';
         alertError.show();
@@ -234,6 +236,12 @@ submitPrvBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
     let dataProNJ = null;
+
+    const result = await API.getProvDataForms(null);
+    console.log("Respuesta completa del servidor:", result);
+
+    const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+    console.log("Tipo de persona procesado:", typePerson);
 
     //valida y recopila la data
     if (typePerson === 'natural') {
@@ -291,6 +299,13 @@ submitDocsBtn.addEventListener('click', async (e) => {
 
 async function checkUser() {
     try {
+
+        const result = await API.getProvDataForms(null);
+        console.log("Respuesta completa del servidor:", result);
+
+        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+        console.log("Tipo de persona procesado:", typePerson);
+
         //ID solo registrado en proveedores_Master
         if (result.status === 'foundMasterOnly') {
             isNewRegister = true;
