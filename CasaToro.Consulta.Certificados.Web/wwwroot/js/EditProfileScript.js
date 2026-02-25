@@ -56,10 +56,10 @@ saveBtnPass.addEventListener('click', () => {
 
 saveBtn.addEventListener('click', () => {
     const name = document.getElementById('name-input').value;
-    const address = document.getElementById('address-input').value;
-    const email = document.getElementById('email-input').value;
-    const phone = document.getElementById('phone-input').value;
-    const typePerson = document.getElementById('tipo_Persona').value.trim();
+    const address = document.getElementById('address-input').value.trim() !== "" ? document.getElementById('address-input').value.toUpperCase().trim() : null;
+    const email = document.getElementById('email-input').value.trim() !== "" ? document.getElementById('email-input').value.toUpperCase().trim() : null;
+    const phone = document.getElementById('phone-input').value.trim() !== "" ? document.getElementById('phone-input').value.trim() : null;
+    const typePerson = document.getElementById('tipo_Persona').value.trim() !== "" ? document.getElementById('tipo_Persona').value.trim() : null;
 
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regexTelFijo = /^60[1-9]\d{7}$/;
@@ -114,6 +114,7 @@ saveBtn.addEventListener('click', () => {
         })
         .catch(error => console.log("Error:", error));
 
+    selectTypePerson();
 });
 
 function appendAlert(message, type, container) {
@@ -137,3 +138,14 @@ function appendAlert(message, type, container) {
     }, 3000);
 
 }
+
+function selectTypePerson() {
+    const tipPers = document.getElementById('tipo_Persona');
+    if (tipPers.value === ('NATURAL' && 'JURIDICA')) {
+        tipPers.disabled = true;
+    } else {
+        tipPers.disabled = false;
+    }
+}
+
+selectTypePerson();

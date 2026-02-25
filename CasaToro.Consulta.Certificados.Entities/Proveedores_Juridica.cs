@@ -51,8 +51,6 @@ public partial class Proveedores_Juridica
 
     public string? pjRLCiudadNac { get; set; }
 
-    public DateOnly? pjValidAnual { get; set; }
-
     public virtual ICollection<AccionistasControlPJuridica> AccionistasControlPJuridica { get; set; } = new List<AccionistasControlPJuridica>();
 
     public virtual ICollection<Sucursales_PJuridica> Sucursales_PJuridica { get; set; } = new List<Sucursales_PJuridica>();

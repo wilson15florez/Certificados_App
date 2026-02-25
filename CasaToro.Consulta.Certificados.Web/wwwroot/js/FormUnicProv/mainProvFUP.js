@@ -25,9 +25,9 @@ let isNewRegister = false;
 function initFormHandlers() {
     UI.scrollButton();
     UI.firstBlock();
-    //UI.fileHandler();
     Fhelper.initUploadDocs();
     Validator.dateLimits();
+    UI.ubicPJuHandler();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
     $(pnTipoNacionalidad).off("change.pnTipoNac").on("change.pnTipoNac", async function () {
@@ -36,7 +36,7 @@ function initFormHandlers() {
     });
     $(pjRLTipNacionalidad).off("change.pjRLTipoDoc").on("change.pjRLTipoDoc", async function () {
         UI.pjTipDocument();
-        await UI.ubicPJuHandler(false);
+        await UI.ubicPJuReLeHandler();
     });
 
     //handlers para agregar y eliminar sucursales en form persona juridica
@@ -355,6 +355,8 @@ async function checkUser() {
 
         //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
         if (result.status === 'foundDetail') {
+            isNewRegister = false;
+
             const formData = result.data;
 
             if (typePerson === 'natural') {

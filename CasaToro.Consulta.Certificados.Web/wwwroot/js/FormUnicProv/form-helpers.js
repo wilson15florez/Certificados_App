@@ -1,5 +1,5 @@
-﻿import { alertErrorBody, alertError } from './constant.js';
-import { hasValue } from './ui-handlers.js';
+﻿import { alertErrorBody, alertBody, alertError, alert } from './constant.js';
+import { hasValue, checkExclusiones, filePaths } from './ui-handlers.js';
 
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
@@ -265,7 +265,8 @@ export function initUploadDocs() {
 
         if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-        
+
+        checkExclusiones();
         panel.style.display = 'none';
     });
 
@@ -283,7 +284,7 @@ function openUploadPanel(input, label) {
     backupExisting = existingFiles[input.id] ? [...existingFiles[input.id]] : [];
 
     const panel = document.getElementById('uploadFilesPanel');
-    const isMultiple = input.hasAttribute('multiple') || input.id === 'upRefeComerciales' || input.id === 'upCertificacionesVarias';
+    const isMultiple = input.hasAttribute('multiple') || input.id === 'upRefeComerciales' || input.id === 'upCertificacionesVarias' || input.id === 'upEstadoFinanciero';
 
     //configuracion del input del panel
     const fileInput = document.getElementById('filesContainer');
@@ -302,13 +303,75 @@ function openUploadPanel(input, label) {
 function addFilesToTemp(files) {
     if (!tempFiles[currentInput]) tempFiles[currentInput] = [];
 
-    const isMultiple = document.getElementById('filesContainer').hasAttribute('multiple');
+    const dbList = existingFiles[currentInput] || [];
+    const currentTemp = tempFiles[currentInput];
+    const totalFiles = dbList.length + currentTemp.length;
+    let slotsLeft = 0;
 
-    if (isMultiple) {
-        tempFiles[currentInput] = [...tempFiles[currentInput], ...files];
-    } else {
-        tempFiles[currentInput] = [files[0]]
+    //certificaciones varias (limite 10)
+    if (currentInput === 'upCertificacionesVarias') {
+        const maxAllowed = 10;
+        slotsLeft = maxAllowed - totalFiles;
+
+        if (slotsLeft <= 0) {
+            alertErrorBody.innerText = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine una para cargar una nueva.`;
+            alertError.show();
+            return;
+        }
+
+        const filesToAdd = files.slice(0, slotsLeft);
+        if (files.length > slotsLeft) {
+            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            alert.show();
+        }
+        tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
+
     }
+    else if (currentInput === 'upRefeComerciales') {
+        const maxAllowed = 2;
+        slotsLeft = maxAllowed - totalFiles;
+
+        if (slotsLeft <= 0) {
+            alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            alertError.show();
+            return;
+        }
+
+        const filesToAdd = files.slice(0, slotsLeft);
+        if (files.length > slotsLeft) {
+            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            alert.show();
+        }
+        tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
+
+    }
+    else if (currentInput === 'upEstadoFinanciero') {
+        const maxAllowed = 2;
+        slotsLeft = maxAllowed - totalFiles;
+
+        if (slotsLeft <= 0) {
+            alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            alertError.show();
+            return;
+        }
+
+        const filesToAdd = files.slice(0, slotsLeft);
+        if (files.length > slotsLeft) {
+            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            alert.show();
+        }
+        tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
+
+    }
+    else {
+        if (totalFiles >= 1) {
+            alertBody.innerText = `Ya hay un archivo cargado para este campo. Elimine el archivo existente para cargar uno nuevo.`;
+            alert.show();
+            return;
+        }
+        tempFiles[currentInput] = [...currentTemp, files[0]];
+    }
+
     renderFilePreview();
 }
 
@@ -334,14 +397,36 @@ function createFileItem(container, name, index, isExisting) {
 
     const nameSpan = document.createElement('span');
     nameSpan.textContent = name;
+    nameSpan.style.cursor = 'pointer';
+    nameSpan.title = "Haga click para visualizar el documento";
+
     if (isExisting) nameSpan.style.color = "#28a745";
+
+    //evento para visualizar el documento al hacer click en su nombre
+    nameSpan.onclick = () => {
+        if (isExisting) {
+            //si viene de la DB se pasa los parametros para armar la URL del documento
+            previewExistPDF(currentInput, name);
+        } else {
+            //si viene de los archivos temporales se crea un URL temporal para visualizarlo
+            const fileObj = tempFiles[currentInput][index];
+            if (fileObj) {
+                const blobURL = URL.createObjectURL(fileObj);
+                window.open(blobURL, '_blank');
+                //libera memoria luego de un tiempo
+                setTimeout(() => URL.revokeObjectURL(blobURL), 10000);
+            }
+            
+        }
+    };
 
     const btnRemove = document.createElement('button');
     btnRemove.type = 'button';
     btnRemove.innerHTML = '&times;';
     btnRemove.className = 'btn-remove-file';
 
-    btnRemove.onclick = () => {
+    btnRemove.onclick = (e) => {
+        e.stopPropagation();
         if (isExisting) {
             existingFiles[currentInput].splice(index, 1);
         } else {
@@ -355,9 +440,23 @@ function createFileItem(container, name, index, isExisting) {
     container.appendChild(rect);
 }
 
+function previewExistPDF(categoria, fileName) {
+    //buscamos la ruta en el mapa de rutas cargadas desde la DB
+    if (filePaths[categoria] && filePaths[categoria][fileName]) {
+        const relativePath = filePaths[categoria][fileName];
+
+        const url = relativePath.startsWith('/') ? relativePath : '/' + relativePath;
+
+        //abrir doc en pestaña nueva
+        window.open(url, '_blank');
+    } else {
+        console.log("No se encontró la ruta para el archivo:", fileName);
+    }
+}
+
 export function removeTempFile(index) {
     if (tempFiles[currentInput]) {
-        tempFiles[currentInput].slice(index, 1);
+        tempFiles[currentInput].splice(index, 1);
         renderFilePreview();
     }
 };

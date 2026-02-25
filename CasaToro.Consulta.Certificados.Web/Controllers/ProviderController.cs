@@ -180,8 +180,8 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 // Actualizar información del proveedor existente
                 existingProvider.Nombre = provider.Nombre.ToUpper();
-                existingProvider.Direccion = provider.Direccion.ToUpper();
-                existingProvider.Correo = provider.Correo.ToUpper();
+                existingProvider.Direccion = provider.Direccion;
+                existingProvider.Correo = provider.Correo;
                 existingProvider.Telefono = provider.Telefono;
                 existingProvider.TipoPersona = provider.TipoPersona.Trim();
 
@@ -453,7 +453,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         // Acción para subir los documentos del proveedor
         [HttpPost]
         [Route("/Proveedor/UploadDocuments")]
-        public async Task<IActionResult> UploadDocuments(string isOEA)
+        public async Task<IActionResult> UploadDocuments(string isOEA, string existingFilesJSON)
         {
             try
             {
@@ -468,21 +468,23 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 var personType = existingProvider.TipoPersona;
                 var tipPersona = personType == "NATURAL" ? "PersonaNatural" : "PersonaJuridica";
 
+                // Procesa que archivos deben permanecer en la DB y el servidor
+                var existingFilesMap = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<string>>>(existingFilesJSON);
+
+                // Eliminar del Servidor y la DB los archivos que el usuario quito en el panel
+                _providerService.DeleteDocument(nit, existingFilesMap, _webHostEnvironment.WebRootPath);
+
                 // Verificar que se hayan recibido archivos en la solicitud
                 var files = Request.Form.Files;
-                if (files.Count == 0) return Json(new { status = "error", message = "No se recibieron archivos." });
 
                 // Procesar cada archivo recibido
                 foreach (var file in files)
                 {
                     string categoria = file.Name;
-
                     string nameDoc = Path.GetFileNameWithoutExtension(file.FileName);
 
-                    string uniqueName = $"{Guid.NewGuid()}_{nameDoc}";
-
                     // Guardar el archivo en el servidor y obtener la ruta relativa
-                    string rutaRel = await _providerService.SaveDocuments(file, nit, tipPersona, categoria, uniqueName, _webHostEnvironment.WebRootPath);
+                    string rutaRel = await _providerService.SaveDocuments(file, nit, tipPersona, categoria, nameDoc, _webHostEnvironment.WebRootPath);
 
                     // Guardar la información metadatos del documento en la base de datos
                     _providerService.SaveDocumentMD(nit, categoria, file.FileName, rutaRel);

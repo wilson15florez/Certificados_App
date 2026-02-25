@@ -58,8 +58,6 @@ public partial class Proveedores_Natural
 
     public string? pnPEP_Entidad { get; set; }
 
-    public DateOnly? pnValidAnual { get; set; }
-
     [NotMapped]
     public List<int> PEPTypes { get; set; } = new List<int>();
 }

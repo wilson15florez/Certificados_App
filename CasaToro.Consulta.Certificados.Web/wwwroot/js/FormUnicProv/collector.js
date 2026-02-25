@@ -1,4 +1,4 @@
-﻿import { telInst, tempFiles } from './form-helpers.js';
+﻿import { existingFiles, telInst, tempFiles } from './form-helpers.js';
 import { unformatCurrency } from './ui-handlers.js'
 
 //funcion para recopilar los datos del formulario persona natural
@@ -201,24 +201,18 @@ export function collectDocsForm(personType = null) {
         formData.append('personType', document.getElementById('personType').value === 'natural' ? 'PersonaNatural' : 'PersonaJuridica');
     }
     
-
     const checked = form.querySelector('input[name="upOEA"]:checked');
     formData.append('isOEA', checked ? checked.value : 'No');
 
-    //form.querySelectorAll('input[type="file"]').forEach(input => {
-    //    if (input.files.length > 0) {
-    //        for (let i = 0; i < input.files.length; i++) {
-    //            formData.append(input.id, input.files[i]);
-    //        }
-    //    }
-    //});
-
+    // Enviar Archivos nuevos
     Object.keys(tempFiles).forEach(inputId => {
-        const fileArray = tempFiles[inputId];
-        fileArray.forEach(file => {
+        tempFiles[inputId].forEach(file => {
             formData.append(inputId, file);
         });
     });
+
+    // Enviar lista de archivos que permanecen (no eliminados), si esta en la DB pero no en la lista lo eliminamos
+    formData.append('existingFilesJSON', JSON.stringify(existingFiles));
 
     return formData;
 }

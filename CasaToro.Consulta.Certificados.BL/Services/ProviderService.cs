@@ -360,7 +360,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingNatural.pnPEP = providerData.pnPEP;
                         existingNatural.pnPEP_Entidad = providerData.pnPEP_Entidad;
 
-                        existingNatural.pnValidAnual = providerData.pnValidAnual;
                     }
                     else
                     {
@@ -452,7 +451,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     existingJuridica.pjRLNacionalidad = providerData.pjRLNacionalidad;
                     existingJuridica.pjRLDepartNac = providerData.pjRLDepartNac;
                     existingJuridica.pjRLCiudadNac = providerData.pjRLCiudadNac;
-                    existingJuridica.pjValidAnual = providerData.pjValidAnual;
 
                     _context.Proveedores_Juridica.Update(existingJuridica);
                     _context.SaveChanges();
@@ -750,6 +748,38 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             };
 
             _context.Documentos_Proveedores.Add(newDoc);
+            _context.SaveChanges();
+        }
+
+        public void DeleteDocument(string Nit, Dictionary<string, List<string>> existingFilesMap, string webRootPath) 
+        { 
+            var docsInDB = _context.Documentos_Proveedores.Where(d => d.NitProveedor == Nit).ToList();
+            foreach (var docDB in docsInDB) {
+                bool stayDoc = false;
+
+                //si la categoria existe en la lista del frontend
+                if (existingFilesMap.ContainsKey(docDB.CategoriaDOC))
+                {
+                    //verifica si el nombre del archivo existe en la lista del frontend para mantenerlo, si no existe se elimina
+                    if (existingFilesMap[docDB.CategoriaDOC].Contains(docDB.NombreArchivo))
+                    {
+                        stayDoc = true;
+                    }
+                }
+
+                if (!stayDoc)
+                {
+                    //elimina archivo fisico
+                    string fullPath = Path.Combine(webRootPath, docDB.RutaArchivo);
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+
+                    //elimina metadata en DB (registro)
+                    _context.Documentos_Proveedores.Remove(docDB);
+                }
+            }
             _context.SaveChanges();
         }
     }

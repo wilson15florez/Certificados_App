@@ -494,25 +494,27 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         // Acción para subir los documentos del proveedor
         [HttpPost]
         [Route("/Admin/UploadDocuments")]
-        public async Task<IActionResult> UploadDocuments(string Nit, string personType, string isOEA)
+        public async Task<IActionResult> UploadDocuments(string Nit, string personType, string isOEA, string existingFilesJSON)
         {
             try
             {
+                // Procesa que archivos deben permanecer en la DB y el servidor
+                var existingFilesMap = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<string>>>(existingFilesJSON);
+
+                // Eliminar del Servidor y la DB los archivos que el usuario quito en el panel
+                _providerService.DeleteDocument(Nit, existingFilesMap, _webHostEnvironment.WebRootPath);
+
                 // verifica que se hayan recivido los documentos y los datos necesarios
                 var files = Request.Form.Files;
-                if (files.Count == 0) return Json(new { status = "error", message = "No se recibieron archivos." });
 
                 // procesa cada documento recibido
                 foreach (var file in files)
                 {
                     string categoria = file.Name;
-
                     string nameDoc = Path.GetFileNameWithoutExtension(file.FileName);
 
-                    string uniqueName = $"{Guid.NewGuid()}_{nameDoc}";
-
                     // guarda el documento en el servidor y obtiene la ruta relativa
-                    string rutaRel = await _providerService.SaveDocuments(file, Nit, personType, categoria, uniqueName, _webHostEnvironment.WebRootPath);
+                    string rutaRel = await _providerService.SaveDocuments(file, Nit, personType, categoria, nameDoc, _webHostEnvironment.WebRootPath);
 
                     // guardar la informacion metadatos del documento en la base de datos
                     _providerService.SaveDocumentMD(Nit, categoria, file.FileName, rutaRel);

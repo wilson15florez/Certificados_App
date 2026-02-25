@@ -1,12 +1,13 @@
 ﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert } from './constant.js';
 import * as API from './api-client.js';
-import { waitSafeSetPhone, initTelInputs, existingFiles } from './form-helpers.js';
+import { waitSafeSetPhone, initTelInputs, existingFiles, tempFiles } from './form-helpers.js';
 
 const controlTableBody = document.querySelector('#control-table tbody');
 const maxSucursales = 2;
 let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
+export let filePaths = {};
 
 //funcion para boton de auto scroll
 export function scrollButton() {
@@ -233,7 +234,7 @@ export async function ubicPNaHandler() {
 
         //departamentos de nacimiento, expedicion y residencia
         [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
-            fillSelect2(depSelect, departamentos);
+            fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             depSelect.disabled = false;
         });
 
@@ -241,7 +242,7 @@ export async function ubicPNaHandler() {
             $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
                 const dep = this.value.trim().toUpperCase();
                 const municipios = ciudadByDep[dep] || [];
-                fillSelect2(citySelect, municipios);
+                fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                 citySelect.disabled = municipios.length === 0;
             });
         };
@@ -263,7 +264,7 @@ export async function ubicPNaHandler() {
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
         [pnDepExpDoc, pnDepRes].forEach(depSelect => {
-            fillSelect2(depSelect, departamentos);
+            fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             depSelect.disabled = false;
         });
 
@@ -271,7 +272,7 @@ export async function ubicPNaHandler() {
             $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
                 const dep = this.value.trim().toUpperCase();
                 const municipios = ciudadByDep[dep] || [];
-                fillSelect2(citySelect, municipios);
+                fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                 citySelect.disabled = municipios.length === 0;
             });
         };
@@ -324,21 +325,63 @@ export function handlePEPChange() {
     }
 }
 
-//funcion que gestiona los select de ubicacion de persona juridica
+//funcion que gestiona los select de ubicacion de persona juridica (diligenciamiento, direccion principal)
 export async function ubicPJuHandler() {
     //asegura que los datos de ubicacion colombiana esten cargados
     await API.loadUbiData();
 
-    $(pjRLNacionalidad).off('change.ubiExtrPais');
-    $(pjRLDepartNac).off('change.ubiNac').off('change.ubiExtrEstado');
-
-    //limpia selects y los deshabilita si no es autorellenado
-    const selectClear = [pjDepartDilig, pjCiudadDilig, pjDepartDirPrincipal, pjCiudadDirPrincipal, pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
-    selectClear.forEach(sel => {
-        $(sel).empty();
-        if (!isAutoFilling) {
-            $(sel).prop("disabled", true);
+    //datos de ubicacion colombiana
+    const handleDeptChange = (depSelect, citySelect) => {
+        if (!($(depSelect)).val()) {
+            citySelect.disabled = true;
         }
+        $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
+            
+            const dep = this.value.trim().toUpperCase();
+            const municipios = ubi_CiudadByDep[dep] || [];
+
+            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+            citySelect.disabled = municipios.length === 0;
+            //$(citySelect).trigger('change.select2');
+            if (municipios.length === 0) {
+                $(citySelect).trigger('change.select2');
+            }
+        });
+    };
+
+    //limpia selects y los deshabilita si no es autorellenado del representante legal
+    const selectClear = [pjDepartDilig, pjCiudadDilig, pjDepartDirPrincipal, pjCiudadDirPrincipal];
+    selectClear.forEach(sel => {
+        const $sel = $(sel);
+        $sel.val(null).trigger('change.select2');
+        $sel.empty();
+        if (!isAutoFilling) sel.disabled = true;
+    });
+
+    //departamento y ciudad de diligenciamiento
+    fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
+    pjDepartDilig.disabled = false;
+    handleDeptChange(pjDepartDilig, pjCiudadDilig);
+
+    //departamento y ciudad direccion principal
+    fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
+    pjDepartDirPrincipal.disabled = false;
+    handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal);
+
+}
+
+//funcion que gestiona los select de ubicacion del representante legal de persona juridica
+export async function ubicPJuReLeHandler() {
+    //asegura que los datos de ubicacion colombiana esten cargados
+    await API.loadUbiData();
+
+    //limpia selects y los deshabilita si no es autorellenado del representante legal
+    const selectClearRL = [pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac, pjRLDepExpDoc, pjRLCiuExpDoc];
+    selectClearRL.forEach(sel => {
+        const $sel = $(sel);
+        $sel.val(null).trigger('change.select2');
+        $sel.empty();
+        if (!isAutoFilling) sel.disabled = true;
     });
 
     //datos de ubicacion colombiana
@@ -346,23 +389,15 @@ export async function ubicPJuHandler() {
         $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
             const dep = this.value.trim().toUpperCase();
             const municipios = ubi_CiudadByDep[dep] || [];
+
             fillSelect2(citySelect, municipios, 'Seleccione ciudad');
             citySelect.disabled = municipios.length === 0;
+
+            if (municipios.length === 0) {
+                $(citySelect).trigger('change.select2');
+            }
         });
     };
-
-    //departamento y ciudad de diligenciamiento
-    fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
-    
-    handleDeptChange(pjDepartDilig, pjCiudadDilig);
-
-    //departamento y ciudad direccion principal
-    if (pjDepartDirPrincipal.options.length <= 1) {
-        fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
-        pjDepartDirPrincipal.disabled = false;
-    }
-
-    handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal);
 
     //departamento y ciudad expedicion documento representante legal
     fillSelect2(pjRLDepExpDoc, ubi_Departamentos, 'Seleccione departamento');
@@ -712,6 +747,7 @@ export async function loadFormData_Juridica(data) {
         pjTipDocument();
     }
     await ubicPJuHandler();
+    await ubicPJuReLeHandler();
 
     //ubicacion
 
@@ -1246,6 +1282,11 @@ export function loadDocsForm(data, isOEAValue) {
     const form = document.getElementById('uploadDocsForm');
     if (!form) return
 
+    //limpieza de arrays para evitar duplicacion al re-consultar
+    for (let key in existingFiles) delete existingFiles[key];
+    for (let key in tempFiles) delete tempFiles[key];
+    for (let key in filePaths) delete filePaths[key];
+
     //limpieza inicial
     form.querySelectorAll('input').forEach(el => {
         if (el.type === 'radio' || el.type === 'checkbox') {
@@ -1255,17 +1296,7 @@ export function loadDocsForm(data, isOEAValue) {
         }
 
         el.classList.remove('file-existing', 'no-edit');
-        //el.removeAttribute('data-file-name');
     });
-
-    //form.querySelectorAll('.btn-clear-file').forEach(btn => btn.style.display = 'none');
-
-    //const containerYesOEA = document.getElementById('sectionYesOEA');
-    //if (containerYesOEA) containerYesOEA.style.display = 'none';
-
-    //const containerNoOEA = document.getElementById('sectionNoOEA');
-    //if (containerNoOEA) containerNoOEA.style.display = 'none';
-
 
     //carga de datos
     if (isOEAValue) {
@@ -1276,67 +1307,50 @@ export function loadDocsForm(data, isOEAValue) {
         }
     }
 
-    //if (data && data.length > 0) {
-    //    data.forEach(doc => {
-    //        const categoria = doc.categoriaDOC || doc.CategoriaDOC;
-    //        const nombre = doc.nombreArchivo || doc.NombreArchivo;
-
-    //        const input = document.getElementById(categoria);
-    //        if (input) {
-    //            input.setAttribute('data-file-name', nombre);
-    //            input.classList.add('file-existing');
-
-    //            const container = input.closest('.custom-file-container');
-    //            if (container) {
-    //                const btn = container.querySelector('.btn-clear-file');
-    //                if (btn) btn.style.display = 'flex';
-    //            }
-    //        }
-    //    });
-    //}
-
     if (data && data.length > 0) {
         data.forEach(doc => {
             const categoria = doc.categoriaDOC || doc.CategoriaDOC;
             const nombre = doc.nombreArchivo || doc.NombreArchivo;
+            const ruta = doc.rutaArchivo || doc.RutaArchivo;
 
+            if (categoria) {
+                if (!existingFiles[categoria]) existingFiles[categoria] = [];
+                existingFiles[categoria].push(nombre);
+
+                //se guarda la ruta asociada al nombre del archivo
+                if (!filePaths[categoria]) filePaths[categoria] = {};
+                filePaths[categoria][nombre] = ruta;
+            }
+        });
+
+        Object.keys(existingFiles).forEach(categoria => {
             const input = document.getElementById(categoria);
             if (input) {
-                // Escribir el nombre del archivo en el input de texto
-                input.value = nombre;
+                input.value = existingFiles[categoria].join(', ');
                 input.classList.add('file-existing');
-
-                if (!existingFiles[categoria]) existingFiles[categoria] = [];
-                existingFiles[categoria].push(nombre)
             }
         });
     }
 
-    //const magnetic = document.getElementById('upContingMeMagnetico');
-    //const firmada = document.getElementById('upContingFirmada');
-
-    //if (magnetic && magnetic.classList.contains('file-existing')) {
-    //    blockExcl('upContingFirmada', true);
-    //} else if (firmada && firmada.classList.contains('file-existing')) {
-    //    blockExcl('upContingMeMagnetico', true);
-    //}
     checkExclusiones();
 }
 
 //logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
-function checkExclusiones() {
+export function checkExclusiones() {
     const magnetic = document.getElementById('upContingMeMagnetico');
     const firmada = document.getElementById('upContingFirmada');
 
-    if (magnetic?.value) blockExcl('upContingFirmada', true);
-    else if (firmada?.value) blockExcl('upContingMeMagnetico', true);
+    if (!magnetic || !firmada) return;
+
+    blockExcl('upContingFirmada', magnetic.value.trim() !== "");
+    blockExcl('upContingMeMagnetico', firmada.value.trim() !== "");
 }
 function blockExcl(targetId, bloquear) {
     const targInput = document.getElementById(targetId);
     if (!targInput) return;
 
     const container = targInput.closest('.custom-file-container');
-    const label = container.querySelector('label');
+    const label = container?.querySelector('label');
 
     if (bloquear) {
         targInput.classList.add('no-edit');
