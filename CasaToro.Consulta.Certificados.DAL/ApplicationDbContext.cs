@@ -373,7 +373,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(255);
             entity.Property(e => e.Telefono).HasMaxLength(20);
             entity.Property(e => e.TipoPersona).HasMaxLength(255);
-            entity.Property(e => e.TipoTramite).HasMaxLength(100);
+            entity.Property(e => e.TipoTramite_Formato).HasMaxLength(100);
         });
 
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");

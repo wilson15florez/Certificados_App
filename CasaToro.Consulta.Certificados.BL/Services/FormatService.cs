@@ -43,12 +43,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                         // Rellenar campos del encabezado
                         SetField(fields, "tramCiudad", juridica["pjCiudadDilig"]?.ToString());
-                        SetSplitDate(fields, master.FechaDiligencia, "tramFechAno", "tramFechMes", "tramFechDia");
-                        if (master.TipoTramite == "VINCULACION")
+                        SetSplitDate(fields, master.FechaDiligencia_Formato, "tramFechAno", "tramFechMes", "tramFechDia");
+                        if (master.TipoTramite_Formato == "VINCULACION")
                         {
                             SetCheckBox(form, "tramCheckVinc", true);
                         }
-                        else if (master.TipoTramite == "ACTUALIZACION")
+                        else if (master.TipoTramite_Formato == "ACTUALIZACION")
                         {
                             SetCheckBox(form, "tramCkActua", true);
                         }

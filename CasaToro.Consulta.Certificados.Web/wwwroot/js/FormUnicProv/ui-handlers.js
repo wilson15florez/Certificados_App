@@ -13,37 +13,60 @@ export let filePaths = {};
 export function scrollButton() {
     const btn = document.getElementById('btnScrollAuto');
     const icon = document.getElementById('scrollIcon');
+    let lastScrollTop = 0;
+    let action = 'down';
 
     if (!btn) return;
 
     window.addEventListener('scroll', () => {
         //calcula la posicion del scroll
-        const scrollPosition = window.scrollY;
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         const windowHeight = window.innerHeight;
-        const fullHeight = document.body.offsetHeight;
+        const fullHeight = document.documentElement.scrollHeight;
 
-        //si se esta a mas de la mitad de la pagina, el boton cambia a subir
-        if (scrollPosition > (fullHeight / 4)) {
+        //logica de direccion
+        if (scrollPosition + windowHeight >= fullHeight - 10) {
+            //caso: al final de la pagina -> forzar subir
+            action = 'up';
+
+        } else if (scrollPosition <= 10) {
+            //caso: al inicio de la pagina -> forzar bajar
+            action = 'down';
+
+        } else {
+            //caso: entre medio -> definir segun ultima direccion
+            if (scrollPosition > lastScrollTop) {
+                action = 'down';
+            } else {
+                action = 'up';
+            }
+        }
+
+        //cambio visual del icono segun accion
+        if (action === 'up') {
             icon.classList.replace('bi-arrow-down-circle-fill', 'bi-arrow-up-circle-fill');
-            btn.classList.add('btn-up');
             btn.title = 'Ir al inicio';
         } else {
             icon.classList.replace('bi-arrow-up-circle-fill', 'bi-arrow-down-circle-fill');
-            btn.classList.remove('btn-up');
             btn.title = 'Ir al final';
         }
-    });
+
+        lastScrollTop = scrollPosition <= 0 ? 0 : scrollPosition;
+    }, { passive: true });
 
     btn.addEventListener('click', () => {
-        const fullHeight = document.body.offsetHeight;
-        const scrollPosition = window.scrollY;
-
-        if (scrollPosition > (fullHeight / 8)) {
+        if (action === 'up') {
             //scroll hacia arriba
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         } else {
             //scroll hacia abajo
-            window.scrollTo({ top: fullHeight, behavior: 'smooth' });
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
         }
     });
 }

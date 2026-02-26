@@ -19,9 +19,9 @@ public partial class Proveedores_Master
 
     public string? TipoPersona { get; set; }
 
-    public DateOnly? FechaDiligencia { get; set; }
+    public DateOnly? FechaDiligencia_Formato { get; set; }
 
-    public string? TipoTramite { get; set; }
+    public string? TipoTramite_Formato { get; set; }
 
     public virtual ICollection<CertificadosIca> CertificadosIcas { get; set; } = new List<CertificadosIca>();
 

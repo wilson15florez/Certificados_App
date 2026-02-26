@@ -279,10 +279,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 //si se encuentra en la tabla correspondiente al tipo de persona
                 if (personType == "natural" && (tipoPersona == "NATURAL" && natur))
-                    return Json(new { status = "foundDetail", data = naturalData });
+                    return Json(new { status = "foundDetail", data = naturalData, dateValityFUCP = providerMaster.FechaDiligencia_Formato });
 
                 if (personType == "juridica" && (tipoPersona == "JURIDICA" && juri))
-                    return Json(new { status = "foundDetail", data = juridicaData });
+                    return Json(new { status = "foundDetail", data = juridicaData, dateValityFUCP = providerMaster.FechaDiligencia_Formato });
 
                 // separa el nombre si esta en proveedores_master y se asigno a persona natural
                 if (((tipoPersona == null || tipoPersona == "NATURAL") && !natur) && personType == "natural")
@@ -414,7 +414,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 DateTime dateProcedure = DateTime.Now;
 
                 // determina si el tipo de tramite, dependiendo si es un nuevo proveedor o si es una actualizacion de uno existente
-                string tipTramite = (pmaster.TipoTramite == "VINCULACION") ? "VINCULACION" : "ACTUALIZACION";
+                string tipTramite = (pmaster.TipoTramite_Formato == "VINCULACION") ? "VINCULACION" : "ACTUALIZACION";
                                 
                 //insertar registro de persona natural
                 _providerService.AddProveedorNatural(provider, fullName, typePerson, dateProcedure, tipTramite);
@@ -449,7 +449,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 DateTime dateProcedure = DateTime.Now;
 
                 // determina si el tipo de tramite, dependiendo si es un nuevo proveedor o si es una actualizacion de uno existente
-                string tipTramite = (pmaster.TipoTramite == "VINCULACION") ? "VINCULACION" : "ACTUALIZACION";
+                string tipTramite = (pmaster.TipoTramite_Formato == "VINCULACION") ? "VINCULACION" : "ACTUALIZACION";
 
                 //insertar registro de persona juridica
                 _providerService.AddProveedorJuridica(provider, typePerson, dateProcedure, tipTramite);

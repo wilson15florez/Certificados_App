@@ -324,8 +324,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = providerData.pnEmail;
                         existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnCelular) ? providerData.pnTelefono : providerData.pnCelular;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
-                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
-                        existingMaster.TipoTramite = tipTramite;
+                        existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite_Formato = tipTramite;
                     }
 
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
@@ -420,8 +420,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = providerData.pjEmailDirPrincipal;
                         existingMaster.Telefono = providerData.pjTelDirPrincipal;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
-                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
-                        existingMaster.TipoTramite = tipTramite;
+                        existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite_Formato = tipTramite;
                     }
 
                     var existingJuridica = _context.Proveedores_Juridica.FirstOrDefault(p => p.Nit == providerNit);
@@ -629,8 +629,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Correo = proveedor.pnEmail;
                         existingMaster.Telefono = !string.IsNullOrWhiteSpace(proveedor.pnCelular) ? proveedor.pnTelefono : proveedor.pnCelular;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
-                        existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
-                        existingMaster.TipoTramite = tipTramite;
+                        existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite_Formato = tipTramite;
                     }
 
                     var oldPEP = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
@@ -672,8 +672,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     existingMaster.Correo = proveedor.pjEmailDirPrincipal;
                     existingMaster.Telefono = proveedor.pjTelDirPrincipal;
                     existingMaster.TipoPersona = tipPersona.ToUpper();
-                    existingMaster.FechaDiligencia = DateOnly.FromDateTime(dateProcedure);
-                    existingMaster.TipoTramite = tipTramite;
+                    existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
+                    existingMaster.TipoTramite_Formato = tipTramite;
                 }
                 _context.SaveChanges();
             }

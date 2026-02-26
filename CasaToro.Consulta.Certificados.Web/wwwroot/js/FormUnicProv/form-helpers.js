@@ -20,6 +20,11 @@ export function initTelInputs(element, required = false) {
         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js',
     });
 
+    const label = document.querySelector(`label[for="${element.id}"]`);
+    if (label) {
+        element.parentNode.insertBefore(label, element.nextSibling);
+    }
+
     telInst[element.id] = iti;
     return iti;
 }

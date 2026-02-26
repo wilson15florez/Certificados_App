@@ -1,4 +1,4 @@
-﻿import { alertErrorBody, alertError, regexEmail } from './constant.js';
+﻿import { alertErrorBody, alertBody, alertError, alert, regexEmail } from './constant.js';
 import { telInst } from './form-helpers.js';
 
 
@@ -7,7 +7,7 @@ import { telInst } from './form-helpers.js';
  * @param { String } dateString
  * @returns { Boolean }
 */
-export function isAdult(dateString) {
+function isAdult(dateString) {
     if (!dateString) return;
 
     const birthday = new Date(dateString);
@@ -23,6 +23,35 @@ export function isAdult(dateString) {
     }
 
     return age >= 18;
+}
+
+/**
+ * valida si proveedor debe actualizar el Formato Unico de Conocimiento de Proveedores,
+ * en base a la fecha de diligenciamiento del formato en la tabla proveedores_master
+ * @param {string|Date} FechaDiligencia_Formato
+ * @return {boolean} 
+ */
+function shouldUpdateFUCP(FechaDiligencia_Formato) {
+    if (!FechaDiligencia_Formato) return true;
+
+    const dateDoc = new Date(FechaDiligencia_Formato);
+    const yearDoc = dateDoc.getFullYear();
+
+    //fecha actual
+    const currentDate = new Date().getFullYear();
+
+    // si el año del ultimo diligenciamiento es menor al año actual, se debe actualizar el formato
+    return yearDoc < currentDate;
+}
+export async function validityFUCP(fechaMaster) {
+    const isInvalid = shouldUpdateFUCP(fechaMaster);
+
+    if (isInvalid) {
+        alertBody.innerText = 'El formato único de conocimiento de proveedores (FUCP) que se encuentra registrado en el sistema, fue diligenciado en el año anterior. Por favor, revise y actualice la información correspondiente al año vigente.';
+        alert.show();
+        return true;
+    }
+    return false;
 }
 
 //configuracion de los limites del calendario para los inputs date

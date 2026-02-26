@@ -359,6 +359,11 @@ async function checkUser() {
 
             const formData = result.data;
 
+            const dateValityFUCP = result.dateValityFUCP;
+            if (dateValityFUCP) {
+                await Validator.validityFUCP(dateValityFUCP);
+            }
+
             if (typePerson === 'natural') {
                 subNavConteiner.style.display = 'block';
                 persNatuForm.style.display = 'block';

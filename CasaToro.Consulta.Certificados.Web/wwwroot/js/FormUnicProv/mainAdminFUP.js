@@ -247,8 +247,10 @@ consultBtn.addEventListener('click', async function (e) {
 
         //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
         if (result.status === 'foundDetail') {
-            //alertSuccesBody.innerText = `Informacion del proveedor con ID: ${idNum} cargada con exito.`;
-            //alertSuccess.show();
+            const dateValityFUCP = result.dateValityFUCP;
+            if (dateValityFUCP) {
+                await Validator.validityFUCP(dateValityFUCP);
+            }
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
             printFormatBtn.disabled = false;
