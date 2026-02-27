@@ -1,4 +1,11 @@
-﻿.field-group {
+﻿label.disabled-label[for=pnNumId],
+label.disabled-label[for=pjNIT],
+.custom-input-group label.disabled-label,
+input.has-value + label.disabled-label[for=dirPreview]{
+    background: linear-gradient(#ffffff,#e9ecef) !important
+}
+
+.field-group {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -6,6 +13,11 @@
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
+}
+
+.separate-bottom {
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: initial !important;
 }
 
 .direction-structure {
@@ -155,6 +167,22 @@
     z-index: 5;
     opacity: 1;
     transform: translateY(0);
+}
+
+/*clase para inputs invalidos*/
+.is-invalid-custom {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 .1rem rgba(220,53,69,.25) !important;
+}
+
+/*clase para texto de error bajo el campo invalido*/
+.error-message {
+    color: #dc3545;
+    font-size: 0.8rem;
+    position: absolute;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
 }
 
 .file-hidden {

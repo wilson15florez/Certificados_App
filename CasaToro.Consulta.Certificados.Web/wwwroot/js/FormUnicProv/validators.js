@@ -2,11 +2,7 @@
 import { telInst } from './form-helpers.js';
 
 
-/** 
- * validacion para una fecha de un mayor de 18 años
- * @param { String } dateString
- * @returns { Boolean }
-*/
+//validacion para una fecha de un mayor de 18 años
 function isAdult(dateString) {
     if (!dateString) return;
 
@@ -28,8 +24,6 @@ function isAdult(dateString) {
 /**
  * valida si proveedor debe actualizar el Formato Unico de Conocimiento de Proveedores,
  * en base a la fecha de diligenciamiento del formato en la tabla proveedores_master
- * @param {string|Date} FechaDiligencia_Formato
- * @return {boolean} 
  */
 function shouldUpdateFUCP(FechaDiligencia_Formato) {
     if (!FechaDiligencia_Formato) return true;
@@ -72,6 +66,28 @@ export function dateLimits() {
         //    input.setAttribute('min', today);
         //}
     });
+}
+
+//muestra u oculta el error visual en un campo
+export function toggleValidInput(el, isValid, message = 'Este campo es obligatorio.') {
+    console.log('toggleValidInput en Validators iniciado');
+    if (!el) return;
+
+    //elimina mensajes previos
+    const existingError = el.parentNode.querySelector('.error-message');
+    if (existingError) existingError.remove();
+
+    if (isValid) {
+        el.classList.remove('is-invalid-custom');
+    } else {
+        el.classList.add('is-invalid-custom');
+        //crea un elemento para mostrar el mensaje de error
+        const errorEl = document.createElement('span');
+        errorEl.className = 'error-message';
+        errorEl.innerText = message;
+        el.parentNode.appendChild(errorEl);
+    }
+    console.log('toggleValidInput en Validators ejecutado');
 }
 
 //Validacion de campos del form Persona natural

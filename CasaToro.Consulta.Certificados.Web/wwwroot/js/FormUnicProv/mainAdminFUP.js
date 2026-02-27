@@ -33,6 +33,7 @@ function initHandlers() {
     Fhelper.initUploadDocs();
     Validator.dateLimits();
     UI.ubicPJuHandler();
+    UI.initValidationIRT();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
     $(pnTipoNacionalidad).off("change.pnTipoNac").on("change.pnTipoNac", async function () {
@@ -239,8 +240,8 @@ consultBtn.addEventListener('click', async function (e) {
             alertSuccesBody.innerText = `Proveedor con ID: ${idNum} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
             alertSuccess.show();
             openFormsBtn.disabled = false;
+            printFormatBtn.disabled = true;
             uploadDocsBtn.disabled = false;
-            printFormatBtn.disabled = false;
 
             return;
         }
@@ -253,7 +254,7 @@ consultBtn.addEventListener('click', async function (e) {
             }
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
-            printFormatBtn.disabled = false;
+            if (personType === 'natural') printFormatBtn.disabled = true;
 
             return;
         }

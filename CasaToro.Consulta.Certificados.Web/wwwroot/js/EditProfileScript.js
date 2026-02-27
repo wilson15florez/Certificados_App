@@ -141,10 +141,13 @@ function appendAlert(message, type, container) {
 
 function selectTypePerson() {
     const tipPers = document.getElementById('tipo_Persona');
-    if (tipPers.value === ('NATURAL' && 'JURIDICA')) {
+    const lblTipPers = document.querySelector('label[for="tipo_Persona"]')
+    if (tipPers.value === ('NATURAL' || 'JURIDICA')) {
         tipPers.disabled = true;
+        lblTipPers.classList.add('disabled-label');
     } else {
         tipPers.disabled = false;
+        lblTipPers.classList.remove('disabled-label');
     }
 }
 

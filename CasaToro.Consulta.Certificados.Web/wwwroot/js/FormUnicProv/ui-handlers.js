@@ -1,6 +1,7 @@
-﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert } from './constant.js';
+﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert, regexEmail } from './constant.js';
 import * as API from './api-client.js';
-import { waitSafeSetPhone, initTelInputs, existingFiles, tempFiles } from './form-helpers.js';
+import { waitSafeSetPhone, initTelInputs, existingFiles, tempFiles, telInst } from './form-helpers.js';
+import { toggleValidInput } from './validators.js';
 
 const controlTableBody = document.querySelector('#control-table tbody');
 const maxSucursales = 2;
@@ -71,30 +72,18 @@ export function scrollButton() {
     });
 }
 
-//funcion para bloquear los selects al iniciar la carga de la pagina
+//funcion para bloquear los selects al iniciar la carga de la pagina (forms persona natural, juridica e informacion financiera)
 export function firstBlock() {
-    //bloqueo inicial form persona natural
-    pnDepExpDoc.disabled = true;
-    pnCiuExpDoc.disabled = true;
-    pnNacionalidad.disabled = true;
-    pnEstadoNac.disabled = true;
-    pnCiudadNac.disabled = true;
-    pnDepRes.disabled = true;
-    pnCiudadRes.disabled = true;
+    const selectFields = [
+        pnDepExpDoc, pnCiuExpDoc, pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepRes, pnCiudadRes,
+        pjCiudadDilig, pjCiudadDirPrincipal, pjRLCiuExpDoc, pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac,
+        pvPorPais, pvDepartDec, pvCiudadDec, pvClasCueBan
+    ];
 
-    //bloqueo inicial form persona juridica
-    pjCiudadDilig.disabled = true;
-    pjCiudadDirPrincipal.disabled = true;
-    pjRLCiuExpDoc.disabled = true;
-    pjRLNacionalidad.disabled = true;
-    pjRLDepartNac.disabled = true;
-    pjRLCiudadNac.disabled = true;
-
-    //bloqueo inicial form informacion financiera
-    pvPorPais.disabled = true;
-    pvDepartDec.disabled = true;
-    pvCiudadDec.disabled = true;
-    pvClasCueBan.disabled = true;
+    selectFields.forEach(sel => {
+        sel.disabled = true;
+        document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
+    });
 }
 
 //funcion que espera a que select2 tenga opciones cargadas
@@ -229,6 +218,20 @@ export function pjTipDocument() {
     });
 }
 
+//Funcion que vincula la logica de Departamento -> Ciudad
+//function handleDeptChange(depSelect, citySelect, nameSpace) {
+//    $(depSelect).off(`change.${nameSpace}`).on(`change.${nameSpace}`, function () {
+//        const dep = this.value.trim().toUpperCase();
+//        const municipios = ubi_CiudadByDep[dep] || [];
+
+//        fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+
+//        citySelect.disabled = municipios.length === 0;
+
+//        $(citySelect).val('').trigger('change.select2');
+//    });
+//}
+
 //funcion que gestiona los select de ubicacion de persona natural
 export async function ubicPNaHandler() {
 
@@ -242,6 +245,7 @@ export async function ubicPNaHandler() {
         $(sel).empty();
         if (!isAutoFilling) {
             $(sel).prop("disabled", true);
+            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
         }
     });
 
@@ -251,6 +255,7 @@ export async function ubicPNaHandler() {
 
         $(pnNacionalidad).val('COLOMBIA').trigger('change.select2');
         pnNacionalidad.disabled = true;
+        document.querySelector('label[for="pnNacionalidad"]').classList.add('disabled-label');
 
         //carga departamentos/ciudades de colombia
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
@@ -259,6 +264,7 @@ export async function ubicPNaHandler() {
         [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
             fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             depSelect.disabled = false;
+            document.querySelector(`label[for="${depSelect.id}"]`).classList.remove('disabled-label');
         });
 
         const handleDeptChange = (depSelect, citySelect) => {
@@ -267,6 +273,7 @@ export async function ubicPNaHandler() {
                 const municipios = ciudadByDep[dep] || [];
                 fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                 citySelect.disabled = municipios.length === 0;
+                document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
             });
         };
 
@@ -282,6 +289,7 @@ export async function ubicPNaHandler() {
 
         fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
         pnNacionalidad.disabled = false;
+        document.querySelector('label[for="pnNacionalidad"]').classList.remove('disabled-label');
 
         //Departamentos y ciudades colombianas para expedicion y residencia
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
@@ -289,6 +297,7 @@ export async function ubicPNaHandler() {
         [pnDepExpDoc, pnDepRes].forEach(depSelect => {
             fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             depSelect.disabled = false;
+            document.querySelector(`label[for="${depSelect.id}"]`).classList.remove('disabled-label');
         });
 
         const handleDeptChange = (depSelect, citySelect) => {
@@ -297,6 +306,7 @@ export async function ubicPNaHandler() {
                 const municipios = ciudadByDep[dep] || [];
                 fillSelect2(citySelect, municipios, 'Seleccione ciudad');
                 citySelect.disabled = municipios.length === 0;
+                document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
             });
         };
 
@@ -311,6 +321,7 @@ export async function ubicPNaHandler() {
             const states = await API.loadStates(countryId);
             fillSelect2(pnEstadoNac, states, 'Seleccione estado', 'id', 'name');
             pnEstadoNac.disabled = false;
+            document.querySelector('label[for="pnEstadoNac"]').classList.remove('disabled-label');
 
             //ciudades
             $(pnEstadoNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
@@ -318,6 +329,7 @@ export async function ubicPNaHandler() {
                 const cities = await API.loadCities(stateId);
                 fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
                 pnCiudadNac.disabled = false;
+                document.querySelector('label[for="pnCiudadNac"]').classList.remove('disabled-label');
             });
         });
     }
@@ -357,6 +369,7 @@ export async function ubicPJuHandler() {
     const handleDeptChange = (depSelect, citySelect) => {
         if (!($(depSelect)).val()) {
             citySelect.disabled = true;
+            document.querySelector(`label[for="${citySelect.id}"]`).classList.add('disabled-label');
         }
         $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
             
@@ -369,6 +382,7 @@ export async function ubicPJuHandler() {
             if (municipios.length === 0) {
                 $(citySelect).trigger('change.select2');
             }
+            document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
         });
     };
 
@@ -378,17 +392,22 @@ export async function ubicPJuHandler() {
         const $sel = $(sel);
         $sel.val(null).trigger('change.select2');
         $sel.empty();
-        if (!isAutoFilling) sel.disabled = true;
+        if (!isAutoFilling) {
+            sel.disabled = true;
+            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
+        }
     });
 
     //departamento y ciudad de diligenciamiento
     fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
     pjDepartDilig.disabled = false;
+    document.querySelector(`label[for="pjDepartDilig"]`).classList.remove('disabled-label');
     handleDeptChange(pjDepartDilig, pjCiudadDilig);
 
     //departamento y ciudad direccion principal
     fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
     pjDepartDirPrincipal.disabled = false;
+    document.querySelector(`label[for="pjDepartDirPrincipal"]`).classList.remove('disabled-label');
     handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal);
 
 }
@@ -404,7 +423,10 @@ export async function ubicPJuReLeHandler() {
         const $sel = $(sel);
         $sel.val(null).trigger('change.select2');
         $sel.empty();
-        if (!isAutoFilling) sel.disabled = true;
+        if (!isAutoFilling) {
+            sel.disabled = true;
+            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
+        }
     });
 
     //datos de ubicacion colombiana
@@ -419,12 +441,14 @@ export async function ubicPJuReLeHandler() {
             if (municipios.length === 0) {
                 $(citySelect).trigger('change.select2');
             }
+            document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
         });
     };
 
     //departamento y ciudad expedicion documento representante legal
     fillSelect2(pjRLDepExpDoc, ubi_Departamentos, 'Seleccione departamento');
     pjRLDepExpDoc.disabled = false;
+    document.querySelector(`label[for="pjRLDepExpDoc"]`).classList.remove('disabled-label');
     handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
 
     //ubicacion nacimiento de representante legal
@@ -434,10 +458,12 @@ export async function ubicPJuReLeHandler() {
         fillSelect2(pjRLNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
         $(pjRLNacionalidad).val('COLOMBIA').trigger('change.select2');
         pjRLNacionalidad.disabled = true;
+        document.querySelector('label[for="pjRLNacionalidad"]').classList.add('disabled-label');
 
         //depatamento y ciudad colombianos
         fillSelect2(pjRLDepartNac, ubi_Departamentos, 'Seleccione departamento');
         pjRLDepartNac.disabled = false;
+        document.querySelector(`label[for="pjRLDepartNac"]`).classList.remove('disabled-label');
         handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
     }
     else if (nac === 'Extranjero') {
@@ -445,6 +471,7 @@ export async function ubicPJuReLeHandler() {
         const countries = await API.loadUbiExt();
         fillSelect2(pjRLNacionalidad, countries, 'Seleccione país', 'id', 'name');
         pjRLNacionalidad.disabled = false;
+        document.querySelector('label[for="pjRLNacionalidad"]').classList.remove('disabled-label');
 
         //Estados y ciudades para país seleccionado
         $(pjRLNacionalidad).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
@@ -454,6 +481,7 @@ export async function ubicPJuReLeHandler() {
             const states = await API.loadStates(countryId);
             fillSelect2(pjRLDepartNac, states, 'Seleccione estado', 'id', 'name');
             pjRLDepartNac.disabled = false;
+            document.querySelector('label[for="pjRLDepartNac"]').classList.remove('disabled-label');
 
             //ciudades
             $(pjRLDepartNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
@@ -461,6 +489,7 @@ export async function ubicPJuReLeHandler() {
                 const cities = await API.loadCities(stateId);
                 fillSelect2(pjRLCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
                 pjRLCiudadNac.disabled = false;
+                document.querySelector('label[for="pjRLCiudadNac"]').classList.remove('disabled-label');
             });
         });
     }
@@ -487,6 +516,49 @@ export function hasValue() {
     });
 }
 
+//logica que asigna la validacion de campos
+export function initValidationIRT() {
+    console.log('initValidationIRT en UI iniciado');
+    //validacion de campos simples
+    const requiredFields = [
+        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnFechaExpDoc', 'pnFechaNac', 'pnDiResidencia', 'pnEmail', 'pnTelefono', 'pnCelular', 'pnPEP_Entidad',
+        'pjRazSocial', 'pjDirPrincipal', 'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg', 'pjRLDocNum', 'pjRLFechExpDoc',
+        'pjRLFechaNac', 'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos', 'pvPatrimonio', 'pvOtrIngr', 'pvPorNacional', 'pvCapSocReg', 'pvFechConst', 'pvFechVen',
+        'pvFechResolGC', 'pvNumResolGC', 'pvNumResDIAN', 'pvForPag', 'pvEntBenef', 'pvNumCueBanc', 'vPrincipal', 'vSecundaria', 'numPlaca', 'pvDeAuRepresentacion',
+        'pvFuenteRecur'
+    ];
+
+    requiredFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener('blur', () => {
+            const value = el.value.trim();
+
+            //logica especifica por tipo de campo
+            if (id === 'pnEmail' || id === 'pjEmailDirPrincipal') {
+                const isValid = regexEmail.test(value);
+                toggleValidInput(el, isValid, 'Ingrese un correo valido.');
+            }
+            else if (el.type === 'tel') {
+                const iti = telInst[id];
+                const isValid = value === '' ? false : iti.isValidNumber();
+                toggleValidInput(el, isValid, 'Ingrese un número de teléfono válido.');
+            }
+            else {
+                toggleValidInput(el, value !== '', 'Este campo es obligatorio.');
+            }
+        });
+
+        el.addEventListener('input', () => {
+            el.classList.remove('is-invalid-custom');
+            const msg = el.parentNode.querySelector('.error-message');
+            if (msg) msg.remove();
+        });
+    });
+    console.log('initValidationIRT en UI ejecutado');
+}
+
 //funcion que gestiona los select de ubicacion del provForm (Informacion Financiera)
 export async function ubicProvFormHandler() {
 
@@ -494,6 +566,7 @@ export async function ubicProvFormHandler() {
     if (!isAutoFilling) {
         [pvPorPais, pvDepartDec, pvCiudadDec].forEach(sel => {
             $(sel).empty().prop("disabled", true);
+            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
         });
     }
 
@@ -508,12 +581,19 @@ export async function ubicProvFormHandler() {
     const countries = await API.loadUbiExt();
     fillSelect2(pvPorPais, countries, 'Seleccione país', 'id', 'name');
     pvPorPais.disabled = false;
+    document.querySelector(`label[for="pvPorPais"]`).classList.remove('disabled-label');
 
     //carga departamento y ciudad de declaracion
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
     fillSelect2(pvDepartDec, departamentos, 'Seleccione departamento');
     pvDepartDec.disabled = false;
+    document.querySelector(`label[for="pvDepartDec"]`).classList.remove('disabled-label');
+
+    if (!pvDepartDec.value) {
+        pvCiudadDec.disabled = true;
+        document.querySelector(`label[for="pvCiudadDec"]`).classList.add('disabled-label');
+    }
 
     $(pvDepartDec).off('change.ubiNac').on('change.ubiNac', function () {
         const selectedDep = this.value.trim().toUpperCase();
@@ -521,6 +601,7 @@ export async function ubicProvFormHandler() {
 
         fillSelect2(pvCiudadDec, municipios, 'Seleccione ciudad');
         pvCiudadDec.disabled = municipios.length === 0;
+        document.querySelector(`label[for="pvCiudadDec"]`).classList.remove('disabled-label');
     });
 
     if (isAutoFilling && pvDepartDec.value) {
@@ -1104,6 +1185,7 @@ export const unformatCurrency = (value) => {
 export function togglePvPais() {
     const hasValue = pvPorExtranjero.value.trim().length > 0;
     $(pvPorPais).prop('disabled', !hasValue).trigger('change.select2');
+    document.querySelector(`label[for="pvPorPais"]`).classList.toggle('disabled-label', !hasValue);
     if (!hasValue) {
         $(pvPorPais).val(null).trigger('change.select2');
     }
@@ -1128,10 +1210,16 @@ export function togglePvDIC() {
     const si = document.getElementById('pvDeclIndComSi').checked;
     const selDIC = [document.getElementById('pvDepartDec'), document.getElementById('pvCiudadDec')];
     if (si) {
-        selDIC.forEach(el => $(el).prop('disabled', false).trigger('change.select2'));
+        document.getElementById('pvDepartDec').disabled = false;
+        document.querySelector(`label[for="pvDepartDec"]`).classList.remove('disabled-label');
+        document.getElementById('pvDepartDec').trigger('change.select2');
+        
         selDIC.forEach(el => $(el).required = true);
     } else {
-        selDIC.forEach(el => $(el).prop('disabled', true).trigger('change.select2'));
+        selDIC.forEach(el => {
+            $(el).prop('disabled', true).trigger('change.select2')
+            document.querySelector(`label[for="${el.id}"]`).classList.add('disabled-label');
+        });
         selDIC.forEach(el => $(el).val(null).trigger('change.select2'));
         selDIC.forEach(el => $(el).required = false);
     }
@@ -1161,8 +1249,10 @@ export function togglePvCB() {
         labCB.classList.remove('disabled-label');
         inpCB.required = true;
         $(pvEntidad).prop('disabled', false).trigger('change.select2');
+        document.querySelector(`label[for="pvEntidad"]`).classList.remove('disabled-label');
         pvEntidad.required = true;
         $(pvClasCueBan).prop('disabled', false).trigger('change');
+        document.querySelector(`label[for="pvClasCueBan"]`).classList.remove('disabled-label');
         pvClasCueBan.required = true;
     } else {
         pvNumCueBanc.value = '';
@@ -1170,9 +1260,11 @@ export function togglePvCB() {
         labCB.classList.add('disabled-label');
         inpCB.required = false;
         $(pvEntidad).prop('disabled', true).trigger('change.select2');
+        document.querySelector(`label[for="pvEntidad"]`).classList.add('disabled-label');
         $(pvEntidad).val(null).trigger('change.select2');
         pvEntidad.required = false;
         $(pvClasCueBan).prop('disabled', true).trigger('change');
+        document.querySelector(`label[for="pvClasCueBan"]`).classList.add('disabled-label');
         $(pvClasCueBan).val(null).trigger('change');
         pvClasCueBan.required = false;
     }

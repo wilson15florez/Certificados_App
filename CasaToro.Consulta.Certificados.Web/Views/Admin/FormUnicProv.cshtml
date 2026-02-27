@@ -66,11 +66,11 @@
             <div id="subNavConteiner" class="form-section" style="display:none;">
                 <div class="border field-group">
 
-                    <button id="openFormsBtn" type="button" class="btn btn-primary">Llenar o Actualizar Formato</button>
+                    <button id="openFormsBtn" type="button" class="btn btn-primary">Diligenciar Formato</button>
 
-                    <button id="printFormatBtn" type="button" class="btn btn-primary">imprimir Formato</button>
+                    <button id="printFormatBtn" type="button" class="btn btn-primary">Imprimir Formato</button>
 
-                    <button id="uploadDocsBtn" type="button" class="btn btn-primary">Subir Documentos Anexos</button>
+                    <button id="uploadDocsBtn" type="button" class="btn btn-primary">Documentos Anexos</button>
                 </div>
             </div>
 
@@ -857,7 +857,7 @@
                             <label for="vPrincipal" class="form-label adaptive-label" placeholder="Vía principal" alt="Vía principal"></label>
                         </div>
                         <div class="col-md-2 input-wrapper structure-field">
-                            <input type="text" id="sufPrincipal" name="sufPrincipal" class="form-control" maxlength="3" />
+                            <input type="text" id="sufPrincipal" name="sufPrincipal" class="form-control" maxlength="12" />
                             <label for="sufPrincipal" class="form-label adaptive-label" placeholder="Prefijo" alt="Prefijo"></label>
                         </div>
                         <div class="col-md-3 input-wrapper structure-field">
@@ -865,9 +865,9 @@
                             <label for="vSecundaria" class="form-label adaptive-label" placeholder="Vía secundaria" alt="Vía secundaria"></label>
                         </div>
                     </div>
-                    <div class="field-group">
+                    <div class="field-group separate-bottom">
                         <div class="col-md-2 input-wrapper structure-field">
-                            <input type="text" id="sufSecundaria" name="sufSecundaria" class="form-control" maxlength="3" />
+                            <input type="text" id="sufSecundaria" name="sufSecundaria" class="form-control" maxlength="12" />
                             <label for="sufSecundaria" class="form-label adaptive-label" placeholder="Prefijo" alt="Prefijo"></label>
                         </div>
                         <div class="col-md-2 input-wrapper structure-field">
@@ -877,6 +877,12 @@
                         <div class="col-md-7 input-wrapper structure-field">
                             <input type="text" id="compleDir" name="compleDir" class="form-control" />
                             <label for="compleDir" class="form-label adaptive-label" placeholder="Complemento (opcional)" alt="Complemento (opcional)"></label>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="col-md-11 input-wrapper structure-field">
+                            <input type="text" id="dirPreview" name="dirPreview" class="form-control no-edit" />
+                            <label for="dirPreview" class="form-label adaptive-label disabled-label" placeholder="Vista previa de dirección" alt="Vista previa de dirección"></label>
                         </div>
                     </div>
                     <div class="field-group">

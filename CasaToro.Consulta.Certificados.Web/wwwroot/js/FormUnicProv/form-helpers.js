@@ -1,5 +1,6 @@
 ﻿import { alertErrorBody, alertBody, alertError, alert } from './constant.js';
 import { hasValue, checkExclusiones, filePaths } from './ui-handlers.js';
+import { toggleValidInput } from './validators.js';
 
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
@@ -70,6 +71,7 @@ const dirEstr = {
     sufSecundaria: () => document.getElementById('sufSecundaria'),
     numPlaca: () => document.getElementById('numPlaca'),
     compleDir: () => document.getElementById('compleDir'),
+    preview: () => document.getElementById('dirPreview'),
     container: () => document.getElementById('directionStructure')
 };
 
@@ -84,15 +86,48 @@ export function initDirection() {
         }
     });
 
+    const subForm = dirEstr.container();
+    subForm.addEventListener('input', updatePreview);
+    subForm.addEventListener('change', updatePreview);
+
     document.getElementById('cancelDirBtn')?.addEventListener('click', closeForm);
     document.getElementById('saveDirBtn')?.addEventListener('click', saveDirection);
+}
+
+function updatePreview() {
+    const via = (id) => document.getElementById(id).value.trim();
+
+    if (!via('tipoVia') && !via('vPrincipal')) {
+        dirEstr.preview().value = '';
+        return;
+    }
+
+    let previewText = `${via('tipoVia')} ${via('vPrincipal')}${via('sufPrincipal')}`;
+
+    if (via('vSecundaria')) {
+        previewText += ` # ${via('vSecundaria')}${via('sufSecundaria')}`;
+    }
+
+    if (via('numPlaca')) {
+        previewText += ` - ${via('numPlaca')}`;
+    }
+
+    if (via('compleDir')) {
+        previewText += `, ${via('compleDir')}`;
+    }
+
+    dirEstr.preview().value = previewText.toUpperCase();
+    hasValue();
 }
 
 //funcion para abrir el subform
 function openDirecForm(input) {
     activeInput = input;
     resetDirForm();
-    if (input.value) parseDirection(input.value);
+    if (input.value) {
+        parseDirection(input.value);
+        updatePreview();
+    }
     dirEstr.container().style.display = 'flex';
     hasValue();
 }
@@ -107,6 +142,8 @@ function resetDirForm() {
         if (el.tagName === 'INPUT') el.value = '';
         if (el.tagName === 'SELECT') el.value = "";
     });
+
+    if (dirEstr.preview()) dirEstr.preview().value = '';
 }
 
 //funcion para cerrar el subform
@@ -164,6 +201,11 @@ function saveDirection() {
 
     if (activeInput) {
         activeInput.value = fullAddress.toUpperCase();
+
+        const isValid = via('tipoVia') && via('vPrincipal') && via('vSecundaria');
+
+        toggleValidInput(activeInput, isValid, 'La dirección debe seguir el formato estándar.');
+
         activeInput.dispatchEvent(new Event('change'));
     }
     closeForm();

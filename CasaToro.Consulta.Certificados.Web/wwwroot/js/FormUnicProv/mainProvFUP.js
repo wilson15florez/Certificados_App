@@ -169,6 +169,53 @@ function initFormHandlers() {
     checkUser();
 }
 
+async function checkUser() {
+    try {
+
+        const result = await API.getProvDataForms(null);
+        console.log("Respuesta completa del servidor:", result);
+
+        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+        console.log("Tipo de persona procesado:", typePerson);
+
+        //ID solo registrado en proveedores_Master
+        if (result.status === 'foundMasterOnly') {
+            const data = result.data;
+            const nit = data.nit || data.NIT;
+            alertSuccesBody.innerText = `Proveedor con ID: ${nit} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
+            alertSuccess.show();
+            subNavConteiner.style.display = 'block';
+            openFormsBtn.disabled = false;
+            printFormatBtn.disabled = true;
+            uploadDocsBtn.disabled = false;
+
+            return;
+        }
+
+        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
+        if (result.status === 'foundDetail') {
+            const dateValityFUCP = result.dateValityFUCP;
+            if (dateValityFUCP) {
+                await Validator.validityFUCP(dateValityFUCP);
+            }
+            subNavConteiner.style.display = 'block';
+            openFormsBtn.disabled = false;
+            uploadDocsBtn.disabled = false;
+            if (typePerson === 'natural') printFormatBtn.disabled = true;
+
+            return;
+        }
+
+        alertErrorBody.innerHTML = 'No se pudo determinar el estado del proveedor.';
+        alertError.show();
+    }
+    catch (error) {
+        alertErrorBody.innerHTML = `Error al verificar el proveedor : ${error.message}`;
+        alertError.show();
+        console.error('Error al verificar el proveedor: ', error);
+    }
+}
+
 //logica para mostrar/ocultar entre acciones de la sub nav
 openFormsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
@@ -176,7 +223,94 @@ openFormsBtn.addEventListener('click', async function (e) {
     uploadDocsForm.style.display = 'none';
     printFormatForm.style.display = 'none';
 
-    checkUser();
+    try {
+        const result = await API.getProvDataForms(null);
+        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+
+        //proveedor solo encontrado en la tabla maestra, sin detalles de tipo de persona ni informacion financiera registrada
+        if (result.status === 'foundMasterOnly') {
+            isNewRegister = true;
+
+            const masterData = result.data;
+            const suggest = result.suggested;
+
+            Fhelper.resetFormDA();
+
+            if (typePerson === 'natural') {
+                persNatuForm.style.display = 'block';
+                provForm.style.display = 'block';
+                certSection.style.display = 'none';
+
+                UI.loadFormData_Natural({});
+                UI.loadProvFormData({});
+
+                setTimeout(async () => {
+                    await UI.loadMasterData(masterData, 'persNatuForm', masterData.nit, suggest);
+                    UI.hasValue();
+                }, 100);
+            } else {
+                persJuriForm.style.display = 'block';
+                provForm.style.display = 'block';
+                certSection.style.display = 'block';
+
+                UI.loadFormData_Juridica({});
+                UI.loadProvFormData({});
+
+                setTimeout(async () => {
+                    await UI.loadMasterData(masterData, 'persJuriForm', masterData.nit);
+                    UI.hasValue();
+                }, 100);
+            }
+
+            await UI.ubicProvFormHandler();
+
+            return;
+        }
+
+        //proveedor registrado en la tabla master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinancier
+        if (result.status === 'foundDetail') {
+            isNewRegister = false;
+
+            const formData = result.data;
+
+            if (typePerson === 'natural') {
+                persNatuForm.style.display = 'block';
+                provForm.style.display = 'block';
+                certSection.style.display = 'none';
+
+                if (formData.natural) {
+                    await UI.loadFormData_Natural(formData.natural);
+                }
+            } else {
+                persJuriForm.style.display = 'block';
+                provForm.style.display = 'block';
+                certSection.style.display = 'block';
+
+                if (formData.juridica) {
+                    await UI.loadFormData_Juridica(formData.juridica);
+                }
+            }
+
+            await ui.ubicProvFormHandler();
+
+            if (formData.finanInf) {
+                await UI.loadProvFormData(formData.finanInf);
+            }
+
+            UI.hasValue();
+
+            return;
+        }
+
+        alertErrorBody.innerHTML = 'No se pudo determinar el estado del proveedor.';
+        alertError.show();
+    }
+    catch (error) {
+        alertErrorBody.innerHTML = `Error al cargar el formulario del proveedor: ${error.message}`;
+        alertError.show();
+        console.error('Error al cargar el formulario del proveedor: ', error);
+    }
+    
 });
 uploadDocsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
@@ -296,114 +430,5 @@ submitDocsBtn.addEventListener('click', async (e) => {
         alertError.show();
     }
 });
-
-async function checkUser() {
-    try {
-
-        const result = await API.getProvDataForms(null);
-        console.log("Respuesta completa del servidor:", result);
-
-        const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
-        console.log("Tipo de persona procesado:", typePerson);
-
-        //ID solo registrado en proveedores_Master
-        if (result.status === 'foundMasterOnly') {
-            isNewRegister = true;
-
-            const masterData = result.data;
-            const suggest = result.suggested;
-
-            Fhelper.resetFormDA();
-
-            if (typePerson === 'natural') {
-                subNavConteiner.style.display = 'block';
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block';
-                certSection.style.display = 'none';
-
-                UI.loadFormData_Natural({});
-                UI.loadProvFormData({});
-
-                setTimeout(async () => {
-                    await UI.loadMasterData(masterData, "persNatuForm", masterData.nit, suggest);
-                    UI.hasValue()
-                }, 100);
-
-            } else if (typePerson === 'juridica') {
-                subNavConteiner.style.display = 'block';
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block';
-                certSection.style.display = 'block';
-
-                UI.loadFormData_Juridica({});
-                UI.loadProvFormData({});
-
-                setTimeout(async () => {
-                    await UI.loadMasterData(masterData, "persJuriForm", masterData.nit);
-                    UI.hasValue()
-                }, 100);
-
-            } else {
-                alertBody.innerHTML = 'Tipo de persona no ha sido seleccionado. \n Por favor registre que tipo de persona es en la pestaña "Editar Perfil"';
-                alert.show();
-            }
-
-            await UI.ubicProvFormHandler();
-
-            return;
-        }
-
-        //ID ya registrado en proveedores_Master, en una tabla de tipo de persona (natural o juridica) y en proveedores_InfoFinanciera
-        if (result.status === 'foundDetail') {
-            isNewRegister = false;
-
-            const formData = result.data;
-
-            const dateValityFUCP = result.dateValityFUCP;
-            if (dateValityFUCP) {
-                await Validator.validityFUCP(dateValityFUCP);
-            }
-
-            if (typePerson === 'natural') {
-                subNavConteiner.style.display = 'block';
-                persNatuForm.style.display = 'block';
-                provForm.style.display = 'block';
-                certSection.style.display = 'none';
-
-                if (formData.natural) {
-                    await UI.loadFormData_Natural(formData.natural);
-                }
-                printFormatBtn.disabled = true;
-            } else {
-                subNavConteiner.style.display = 'block';
-                persJuriForm.style.display = 'block';
-                provForm.style.display = 'block';
-                certSection.style.display = 'block';
-
-                if (formData.juridica) {
-                    await UI.loadFormData_Juridica(formData.juridica);
-                }
-            }
-
-            await UI.ubicProvFormHandler();
-
-            if (formData.finanInf) {
-                await UI.loadProvFormData(formData.finanInf);
-            }
-
-            UI.hasValue();
-
-            return;
-        }
-
-        alertErrorBody.innerHTML = 'No se pudo determinar el estado del proveedor.';
-        alertError.show();
-    }
-    catch (error) {
-        alertErrorBody.innerHTML = `Error al verificar el proveedor : ${error.message}`;
-        alertError.show();
-        console.error('Error al verificar el proveedor: ', error);
-    }
-}
 
 initFormHandlers();

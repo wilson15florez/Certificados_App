@@ -462,11 +462,6 @@ body {
     background: linear-gradient(#e9ecef) !important;
 }
 
-label.disabled-label[for=pnNumId],
-label.disabled-label[for=pjNIT] {
-    background: linear-gradient(#ffffff,#e9ecef) !important
-}
-
 .custom-input-group input,
 .custom-input-group select {
     border-radius: 2rem;

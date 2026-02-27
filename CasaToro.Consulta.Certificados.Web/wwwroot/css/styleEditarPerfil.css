@@ -83,6 +83,10 @@
     pointer-events: none;
 }
 
+label.disabled-label[for=nit-input],
+label.disabled-label[for=tipo_Persona] {
+    background: linear-gradient(#ffffff,#e9ecef) !important
+}
 
 input:focus + .adaptive-label,
 input:valid + .adaptive-label {
@@ -103,6 +107,9 @@ input:valid + .adaptive-label::before {
     content: attr(placeholder);
 }
 
+.blockquote-footer::before {
+    content:"ID:" !important;
+}
 
 @media (min-width: 1920px) {
     .profile-info {
