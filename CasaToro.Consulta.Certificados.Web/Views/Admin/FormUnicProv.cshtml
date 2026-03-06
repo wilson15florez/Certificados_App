@@ -206,7 +206,7 @@
                     <div class="m-2 p-2">
                         <h4 class="sub-header">Marque según su perfil, cargo y/u ocupación</h4>
                         <div class="d-flex">
-                            <div class="col-md-6 input-wrapper form-check">
+                            <div class="col-md-6 input-wrapper check-group">
                                 <label>Goza de Reconocimiento Público *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -217,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 input-wrapper form-check">
+                            <div class="col-md-6 input-wrapper check-group">
                                 <label>Maneja Recursos Públicos *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -230,7 +230,7 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-md-6 input-wrapper form-check">
+                            <div class="col-md-6 input-wrapper check-group">
                                 <label>Es Persona Expuesta Politicamente *</label>
                                 <div class="d-flex">
                                     <div class="form-check m-2">
@@ -241,7 +241,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 input-wrapper form-check" id="pnPEPtypeGroup" style="display:none;">
+                            <div class="col-md-6 input-wrapper check-group" id="pnPEPtypeGroup" style="display:none;">
                                 <label>Tipo de PEP *</label>
                                 <div class="">
                                     <div class="form-check m-2">
@@ -486,8 +486,8 @@
                             <label for="pvPatrimonio" class="form-label adaptive-label" placeholder="Patrimonio $ *" alt="Patrimonio $ *"></label>
                         </div>
                         <div class="col-md-5.5 input-wrapper">
-                            <input type="text" id="pvOtrIngr" name="pvOtrIngr" class="form-control" required />
-                            <label for="pvOtrIngr" class="form-label adaptive-label" placeholder="Otros Ingresos $ *" alt="Otros Ingresos $ *"></label>
+                            <input type="text" id="pvOtrIngr" name="pvOtrIngr" class="form-control" />
+                            <label for="pvOtrIngr" class="form-label adaptive-label" placeholder="Otros Ingresos $" alt="Otros Ingresos $"></label>
                         </div>
                     </div>
 
@@ -512,7 +512,7 @@
                     @* <div class="m-2 p-2">
                         <h6>Tipo de Empresa *</h6>
                         <div class="d-flex">
-                            <div class="col-md-6 form-check">
+                            <div class="col-md-6 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvEmPublica" name="pvTipEmp" value="EmPublica" class="form-check-input" /><label for="pvEmPublica" class="form-check-label">Pública</label>
@@ -574,7 +574,7 @@
                     <div class="m-2 p-2">
                         <h6>Gran Contribuyente *</h6>
                         <div class="d-flex">
-                            <div class="col-md-3 form-check">
+                            <div class="col-md-3 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvGrConSi" name="pvGrCon" value="Si" class="form-check-input" /><label for="pvGrConSi" class="form-check-label">Si</label>
@@ -598,7 +598,7 @@
                     <div class="m-2 p-2">
                         <h6>Declarante Industria y Comercio *</h6>
                         <div class="d-flex">
-                            <div class="col-md-3 form-check">
+                            <div class="col-md-3 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvDeclIndComSi" name="pvDeclIndCom" value="Si" class="form-check-input" /><label for="pvDeclIndComSi" class="form-check-label">Si</label>
@@ -622,7 +622,7 @@
                     <div class="m-2 p-2">
                         <h6>Auto Retenedor *</h6>
                         <div class="d-flex">
-                            <div class="col-md-3 form-check">
+                            <div class="col-md-3 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvAutRetSi" name="pvAutRet" value="Si" class="form-check-input" /><label for="pvAutRetSi" class="form-check-label">Si</label>
@@ -646,7 +646,7 @@
                     <div class="m-2 p-2">
                         <h6>Realiza operaciones de comercio exterior *</h6>
                         <div class="d-flex">
-                            <div class="col-md-5 form-check">
+                            <div class="col-md-5 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvOpeCExtSi" name="pvOpeCExt" value="Si" class="form-check-input" /><label for="pvOpeCExtSi" class="form-check-label">Si</label>
@@ -676,7 +676,7 @@
                     <div class="m-2 p-2">
                         <h6>Posee cuenta bancaria *</h6>
                         <div class="d-flex">
-                            <div class="col-md-5 form-check">
+                            <div class="col-md-5 check-group">
                                 <div class="d-flex">
                                     <div class="form-check m-2">
                                         <input type="radio" id="pvPosCuBanSi" name="pvPosCuBan" value="Si" class="form-check-input" /><label for="pvPosCuBanSi" class="form-check-label">Si</label>

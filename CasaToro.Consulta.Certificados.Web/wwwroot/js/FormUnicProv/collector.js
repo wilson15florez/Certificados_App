@@ -1,5 +1,6 @@
-﻿import { existingFiles, telInst, tempFiles } from './form-helpers.js';
-import { unformatCurrency } from './ui-handlers.js'
+﻿import { existingFiles, tempFiles } from './form-helpers.js';
+import { unformatCurrency } from './ui-handlers.js';
+import { telInst } from './constant.js';
 
 //funcion para recopilar los datos del formulario persona natural
 export function collectFormData_Natural() {

@@ -1,9 +1,9 @@
-﻿import { alertErrorBody, alertBody, alertError, alert, regexEmail } from './constant.js';
-import { telInst } from './form-helpers.js';
+﻿import { alertErrorBody, alertBody, alertError, alert, regexEmail, dirtyFields, telInst } from './constant.js';
+import { openFormDA } from './form-helpers.js';
 
 
 //validacion para una fecha de un mayor de 18 años
-function isAdult(dateString) {
+export function isAdult(dateString) {
     if (!dateString) return;
 
     const birthday = new Date(dateString);
@@ -68,26 +68,50 @@ export function dateLimits() {
     });
 }
 
+//scroll para radio/checkbox invalidos
+function scrollToRadio(name, message = 'Seleccione una opción.') {
+    const firstRadio = document.querySelector(`input[name="${name}"]`);
+    if (!firstRadio) return;
+    toggleValidInput(firstRadio, false, message);
+}
+
 //muestra u oculta el error visual en un campo
 export function toggleValidInput(el, isValid, message = 'Este campo es obligatorio.') {
-    console.log('toggleValidInput en Validators iniciado');
     if (!el) return;
 
-    //elimina mensajes previos
-    const existingError = el.parentNode.querySelector('.error-message');
-    if (existingError) existingError.remove();
+    //identificar el contenedor real para el mensaje y la clase de error
+    let targetVisual = el;
+    let container = el.parentNode;
 
-    if (isValid) {
-        el.classList.remove('is-invalid-custom');
-    } else {
-        el.classList.add('is-invalid-custom');
+    //caso especial: select2
+    if (el.classList.contains('select2-hidden-accessible')) {
+        const s2Container = el.nextElementSibling;
+        if (s2Container && s2Container.classList.contains('select2-container')) {
+            targetVisual = s2Container.querySelector('.select2-selection');
+        }
+    }
+    //caso especial: radios o checkbox
+    else if (el.type === 'radio' || el.type === 'checkbox') {
+        targetVisual = null;
+        container = el.closest('.check-group') || el.parentNode;
+    }
+
+    //elimina mensajes previos
+    const existingError = container.querySelector('.error-message');
+    if (existingError) existingError.remove();
+    if (targetVisual) targetVisual.classList.remove('is-invalid-custom');
+
+    if (!isValid) {
+        if (targetVisual) targetVisual.classList.add('is-invalid-custom');
         //crea un elemento para mostrar el mensaje de error
         const errorEl = document.createElement('span');
         errorEl.className = 'error-message';
         errorEl.innerText = message;
-        el.parentNode.appendChild(errorEl);
+        container.appendChild(errorEl);
+
+        const scrollTarget = targetVisual || container;
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    console.log('toggleValidInput en Validators ejecutado');
 }
 
 //Validacion de campos del form Persona natural
@@ -112,10 +136,10 @@ export function validateNaturalForm() {
 
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
-        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnFechaExpDoc', 
-        'pnDepExpDoc', 'pnCiuExpDoc', 'pnNacionalidad', 'pnEstadoNac', 
-        'pnCiudadNac', 'pnDiResidencia', 'pnDepRes', 'pnCiudadRes', 
-        'pnCelular', 'pnEmail', 'pnActividad'
+        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnFechaExpDoc',
+        'pnDepExpDoc', 'pnCiuExpDoc', 'pnNacionalidad', 'pnEstadoNac',
+        'pnCiudadNac', 'pnFechaNac', 'pnDiResidencia', 'pnDiResidencia',
+        'pnDepRes', 'pnCiudadRes', 'pnEmail', 'pnCelular', 'pnActividad'
     ];
 
     for (const id of requiredFields) {
@@ -125,30 +149,34 @@ export function validateNaturalForm() {
             const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
             alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
             alertError.show();
+            toggleValidInput(el, false, 'Este campo es obligatorio.');
             el.focus();
             return false;
         }
     }
 
     //valida que fecha de nacimiento corresponda a un mayor de edad(>=18)
-    const pnFechaNac = document.getElementById('pnFechaNac').value;
-    if (pnFechaNac && !isAdult(pnFechaNac)) {
+    const pnFechaNac = document.getElementById('pnFechaNac');
+    if (pnFechaNac.value && !isAdult(pnFechaNac.value)) {
         alertErrorBody.innerText = 'La persona natural debe ser mayor de edad.';
         alertError.show();
-        document.getElementById('pnFechaNac').focus();
+        toggleValidInput(pnFechaNac, false, 'La persona natural debe ser mayor de edad.');
+        pnFechaNac.focus();
+        return false;
+    }
+
+    // verifica email
+    const email = document.getElementById('pnEmail');
+
+    if (email.value.trim() && !regexEmail.test(email.value.trim())) {
+        alertErrorBody.innerHTML = 'Por favor ingrese un correo electrónico válido.';
+        alertError.show();
+        email.focus();
         return false;
     }
 
     const itiTel = telInst['pnTelefono'];
     const itiCel = telInst['pnCelular'];
-
-    //valida celular (obligatorio)
-    if (!itiCel.isValidNumber()) {
-        alertErrorBody.innerText = 'Por favor ingrese un número de celular válido para el país seleccionado.';
-        alertError.show();
-        document.getElementById('pnCelular').focus();
-        return false;
-    }
 
     //valida telefono fijo (si fue diligenciado)
     if (document.getElementById('pnTelefono').value.trim() !== '') {
@@ -160,12 +188,11 @@ export function validateNaturalForm() {
         }
     }
 
-    // verifica email
-    const email = document.getElementById('pnEmail').value.trim();
-
-    if (email && !regexEmail.test(email)) {
-        alertErrorBody.innerHTML = 'Por favor ingrese un correo electrónico válido.';
+    //valida celular (obligatorio)
+    if (!itiCel.isValidNumber()) {
+        alertErrorBody.innerText = 'Por favor ingrese un número de celular válido para el país seleccionado.';
         alertError.show();
+        document.getElementById('pnCelular').focus();
         return false;
     }
 
@@ -173,37 +200,40 @@ export function validateNaturalForm() {
     if (!form.querySelector('input[name="pnReconoPublic"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si tiene reconocimiento publico.';
         alertError.show();
+        scrollToRadio('pnReconoPublic', 'Seleccione una opción.');
         return false;
     }
     //verificacion manejo de recursos publico
     if (!form.querySelector('input[name="pnManRePub"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si maneja recursos de origen publico.';
         alertError.show();
+        scrollToRadio('pnManRePub', 'Seleccione una opción.');
         return false;
     }
 
     //verifica PEP y de ser si, valida el check y entidad
-    const pepSi = document.getElementById('pnPEPSi').checked;
-    const pepNo = document.getElementById('pnPEPNo').checked;
-
-    if (!pepSi && !pepNo) {
-        alertErrorBody.innerText = 'Por favor seleccione si es PEP.';
+    if (!form.querySelector('input[name="pnPEP"]:checked')) {
+        alertErrorBody.innerText = 'Por favor seleccione si es Persona Expuesta Politicamente (PEP).';
         alertError.show();
+        scrollToRadio('pnPEP', 'Seleccione una opción.');
         return false;
     }
 
-    if (pepSi) {
+    if (form.querySelector('input[id="pnPEPSi"]:checked')) {
         const pepChecks = form.querySelectorAll('input[name="pnPEPType"]:checked');
-        const penEntidad = document.getElementById('pnPEP_Entidad').value.trim();
+        const pepEntidad = document.getElementById('pnPEP_Entidad');
 
         if (pepChecks.length === 0) {
             alertErrorBody.innerText = 'Por favor seleccione al menos un tipo de PEP.';
             alertError.show();
+            scrollToRadio('pnPEPType', 'Seleccione al menos un tipo de PEP.');
             return false;
         }
-        if (!penEntidad) {
+        if (!pepEntidad.value.trim()) {
             alertErrorBody.innerText = 'Por favor ingrese la entidad relacionada con el PEP.';
             alertError.show();
+            toggleValidInput(pepEntidad, false, 'Este campo es obligatorio.');
+            pepEntidad.focus();
             return false;
         }
     }
@@ -217,10 +247,10 @@ export function validateJuridicaForm() {
 
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
-        'pjRazSocial', 'pjDepartDilig', 'pjCiudadDilig', 'pjDirPrincipal', 'pjDepartDirPrincipal', 'pjCiudadDirPrincipal',
-        'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg', 
-        'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLNacionalidad',
-        'pjRLDepartNac', 'pjRLCiudadNac'
+        'pjRazSocial', 'pjDepartDilig', 'pjCiudadDilig', 'pjDirPrincipal', 'pjDepartDirPrincipal',
+        'pjCiudadDirPrincipal', 'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL',
+        'pjSegApeRL', 'pjNomReLeg', 'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc',
+        'pjRLCiuExpDoc', 'pjRLFechaNac', 'pjRLNacionalidad', 'pjRLDepartNac', 'pjRLCiudadNac'
     ];
 
     for (const id of requiredFields) {
@@ -230,6 +260,7 @@ export function validateJuridicaForm() {
             const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
             alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
             alertError.show();
+            toggleValidInput(el, false, 'Este campo es obligatorio.');
             el.focus();
             return false;
         }
@@ -339,11 +370,12 @@ export function validateJuridicaForm() {
         return false;
     }
 
-    const pjRLFechaNac = document.getElementById('pjRLFechaNac').value;
-    if (pjRLFechaNac && !isAdult(pjRLFechaNac)) {
+    const pjRLFechaNac = document.getElementById('pjRLFechaNac');
+    if (pjRLFechaNac.value && !isAdult(pjRLFechaNac.value)) {
         alertErrorBody.innerText = 'El respresentante legal debe ser mayor de edad.';
         alertError.show();
-        document.getElementById('pjRLFechaNac').focus();
+        toggleValidInput(pjRLFechaNac, false, 'La persona debe ser mayor de edad.')
+        pjRLFechaNac.focus();
         return false;
     }
 
@@ -355,15 +387,14 @@ export function validateProvForm(personType) {
 
     const form = document.getElementById('provForm');
 
-
     //verifica que los demas campos esten diligenciados
     const requiredFields = [
         'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos',
-        'pvPatrimonio', 'pvOtrIngr', 'pvTipEmp', 'pvOtrTipEmp', 'pvPorNacional', 'pvPorPais',
+        'pvPatrimonio', 'pvPorNacional', 'pvPorPais', 'pvTipEmp',  
         'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst',
         'pvFechVen', 'pvFechResolGC', 'pvNumResolGC', 'pvDepartDec',
-        'pvCiudadDec', 'pvNumResDIAN', 'pvEntidad',
-        'pvNumCueBanc', 'pvClasCueBan', 'pvDeAuRepresentacion', 'pvFuenteRecur'
+        'pvCiudadDec', 'pvNumResDIAN', 'pvForPag', 'pvEntBenef',
+        'pvEntidad', 'pvNumCueBanc', 'pvClasCueBan'
     ];
 
     for (const id of requiredFields) {
@@ -374,51 +405,65 @@ export function validateProvForm(personType) {
             const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
             alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
             alertError.show();
+            toggleValidInput(el, false, 'Este campo es obligatorio.');
             el.focus();
             return false;
         }
     }
 
     //verifica porcentaje capital nacional y/o extranjero
+    const pvPorNacional = document.getElementById('pvPorNacional');
+    const pvPorExtranjero = document.getElementById('pvPorExtranjero');
     let totalPorc = 0;
     const porcNac = parseFloat(pvPorNacional.value.trim() || 0);
     const porcExtr = parseFloat(pvPorExtranjero.value.trim() || 0);
     if (porcNac == 0) {
         alertErrorBody.innerText = 'El porcentaje de capital nacional no puede ser cero (0).';
         alertError.show();
+
+        dirtyFields.add('pvPorNacional');
+        toggleValidInput(pvPorNacional, false, 'Porcentaje invalido.');
+        pvPorNacional.focus();
+
         return false;
     }
     if (porcExtr != 0) {
         totalPorc = porcNac + porcExtr;
         if (totalPorc !== 100) {
-            alertErrorBody.innerText = 'La suma del porcentaje de capital nacional y extranjero debe ser igual a cien (100).';
+            alertErrorBody.innerText = 'La suma del porcentaje de capital nacional y extranjero debe ser igual a cien (100%).';
             alertError.show();
+
+            dirtyFields.add('pvPorNacional');
+            dirtyFields.add('pvPorExtranjero');
+            toggleValidInput(pvPorExtranjero, false, 'Porcentajes no validos.');
+            pvPorExtranjero.focus();    
+
             return false;
         }
     } else if (porcNac !== 100) {
-        alertErrorBody.innerText = 'El porcentaje de capital nacional debe ser igual a cien (100) si no hay capital extranjero.';
+        alertErrorBody.innerText = 'El porcentaje de capital nacional debe ser igual a cien (100%) si no hay capital extranjero.';
         alertError.show();
+
+        dirtyFields.add('pvPorNacional');
+        toggleValidInput(pvPorNacional, false, 'Porcentaje invalido.');
+        pvPorNacional.focus();
+
         return false;
     }
-
-    //verifica tipo de empresa
-    //if (!form.querySelector('input[name="pvTipEmp"]:checked')) {
-    //    alertErrorBody.innerText = 'Por favor seleccione el tipo de empresa.';
-    //    alertError.show();
-    //    return false;
-    //}
 
     //verifica gran contribuyente
     if (!form.querySelector('input[name="pvGrCon"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si es gran contribuyente.';
         alertError.show();
+        scrollToRadio('pvGrCon', 'Seleccione una opción.');
         return false;
     }
 
     //verifica declaracion de industria y comercio
     if (!form.querySelector('input[name="pvDeclIndCom"]:checked')) {
-        alertErrorBody.innerText = 'Por favor seleccione si declara impuesto de industria y comercio.';
+        alertErrorBody.innerText = 'Por favor seleccione si es declarante de industria y comercio.';
         alertError.show();
+        scrollToRadio('pvDeclIndCom', 'Seleccione una opción.');
         return false;
     }
 
@@ -426,6 +471,15 @@ export function validateProvForm(personType) {
     if (!form.querySelector('input[name="pvAutRet"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si es auto retenedor.';
         alertError.show();
+        scrollToRadio('pvAutRet', 'Seleccione una opción.');
+        return false;
+    }
+
+    //varifica comercio exterior
+    if (!form.querySelector('input[name="pvOpeCExt"]:checked')) {
+        alertErrorBody.innerText = 'Por favor seleccione si realiza operaciones de comercio exterior.';
+        alertError.show();
+        scrollToRadio('pvOpeCExt', 'Seleccione una opción.');
         return false;
     }
 
@@ -433,6 +487,7 @@ export function validateProvForm(personType) {
     if (!form.querySelector('input[name="pvPosCuBan"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si posee cuenta bancaria.';
         alertError.show();
+        scrollToRadio('pvPosCuBan', 'Seleccione una opción.');
         return false;
     }
 
@@ -443,6 +498,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCeOEA"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación OEA.';
             alertError.show();
+            scrollToRadio('pvCeOEA', 'Seleccione una opción.');
             return false;
         }
 
@@ -450,6 +506,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCeCal"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación de Calidad ISO 9001.';
             alertError.show();
+            scrollToRadio('pvCeCal', 'Seleccione una opción.');
             return false;
         }
 
@@ -457,6 +514,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCeBASC"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación BASC.';
             alertError.show();
+            scrollToRadio('pvCeBASC', 'Seleccione una opción.');
             return false;
         }
 
@@ -464,6 +522,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCeAmb"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación Ambiental ISO 14001.';
             alertError.show();
+            scrollToRadio('pvCeAmb', 'Seleccione una opción.');
             return false;
         }
 
@@ -471,6 +530,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCe28000"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación ISO 28000.';
             alertError.show();
+            scrollToRadio('pvCe28000', 'Seleccione una opción.');
             return false;
         }
 
@@ -478,6 +538,7 @@ export function validateProvForm(personType) {
         if (!form.querySelector('input[name="pvCeSST"]:checked')) {
             alertErrorBody.innerText = 'Por favor seleccione si cuenta con certificación SST ISO 45000.';
             alertError.show();
+            scrollToRadio('pvCeSST', 'Seleccione una opción.');
             return false;
         }
     }
@@ -485,43 +546,73 @@ export function validateProvForm(personType) {
     //verifica autorizaciones
     const pvTDPMotMaq = document.querySelector('input[name="pvTDPMotMaq"]:checked');
     if (!pvTDPMotMaq) {
+        openFormDA();
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para MOTORYSA S.A.';
         alertError.show();
+        scrollToRadio('pvTDPMotMaq', 'Seleccione una opción.');
         return false;
     }
 
     const pvTDPCasTor = document.querySelector('input[name="pvTDPCasTor"]:checked');
     if (!pvTDPCasTor) {
+        openFormDA();
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para CASATORO S.A.';
         alertError.show();
+        scrollToRadio('pvTDPCasTor', 'Seleccione una opción.');
         return false;
     }
 
     const pvTDPBonap = document.querySelector('input[name="pvTDPBonap"]:checked');
     if (!pvTDPBonap) {
+        openFormDA();
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para BONAPARTE S.A.S.';
         alertError.show();
+        scrollToRadio('pvTDPBonap', 'Seleccione una opción.');
         return false;
     }
 
     //const pvTDPBellpi = document.querySelector('input[name="pvTDPBellpi"]:checked');
     //if (!pvTDPBellpi) {
+    //    openFormDA();
     //    alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos para BELLPI S.A.S.';
     //    alertError.show();
+    //    scrollToRadio('pvTDPBellpi', 'Seleccione una opción.');
     //    return false;
     //}
 
     const pvRadAut = document.querySelector('input[name="pvRadAut"]:checked');
     if (!pvRadAut) {
+        openFormDA();
         alertErrorBody.innerText = 'Por favor seleccione si autoriza el tratamiento de datos.';
         alertError.show();
+        scrollToRadio('pvRadAut', 'Seleccione una opción.');
+        return false;
+    }
+
+    const pvDeAuRepresentacion = document.getElementById('pvDeAuRepresentacion');
+    if (!pvDeAuRepresentacion.value) {
+        openFormDA();
+        alertErrorBody.innerText = 'Por favor indique a quien representa.';
+        alertError.show();
+        toggleValidInput(pvDeAuRepresentacion, false);
+        return false;
+    }
+
+    const pvFuenteRecur = document.getElementById('pvFuenteRecur');
+    if (!pvFuenteRecur.value) {
+        openFormDA();
+        alertErrorBody.innerText = 'Por favor indique la fuente de los recursos.'
+        alertError.show();
+        toggleValidInput(pvFuenteRecur, false);
         return false;
     }
 
     const pvCumCSIn = document.querySelector('input[name="pvCumCSIn"]:checked');
     if (!pvCumCSIn) {
+        openFormDA();
         alertErrorBody.innerText = 'Por favor marque si cumple con lo dispuesto en el Capítulo X de la Circular Básica Jurídica de la Superintendencia de Sociedades.';
         alertError.show();
+        scrollToRadio('pvCumCSIn', 'Seleccione una opción.');
         return false;
     }
 
@@ -545,18 +636,6 @@ export function validateDocsForm() {
         const el = document.getElementById(id);
         if (!el) continue;
 
-        //const hasNewFile = el.files.length > 0;
-        //const hasExistFile = el.classList.contains('file-existing');
-
-        //if (!hasNewFile && !hasExistFile) {
-        //    const label = document.querySelector(`label[for="${id}"]`);
-        //    const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
-        //    alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
-        //    alertError.show();
-        //    el.focus();
-        //    return false;
-        //}
-
         const hasContent = el.value.trim() !== '';
 
         if (!hasContent) {
@@ -565,6 +644,7 @@ export function validateDocsForm() {
 
             alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
             alertError.show();
+            toggleValidInput(el, false, 'Este campo es obligatorio.');
             el.focus();
             return false;
         }
@@ -572,13 +652,6 @@ export function validateDocsForm() {
 
     //verifica que sean dos referencias comerciales
     const refComerc = document.getElementById('upRefeComerciales');
-    //if (!refComerc.classList.contains('file-existing') && refComerc.files.length !== 2) {
-    //    if (refComerc.files.length > 0 && refComerc.files.length !== 2) {
-    //        alertErrorBody.innerText = 'Por favor ingrese dos (2) referencias comerciales';
-    //        alertError.show();
-    //        return false;
-    //    }
-    //}
     if (refComerc) {
         const fileNames = refComerc.value.split(', ').filter(name => name.trim() !== '');
 
@@ -594,6 +667,7 @@ export function validateDocsForm() {
     if (!form.querySelector('input[name="upOEA"]:checked')) {
         alertErrorBody.innerText = 'Por favor seleccione si es Operador Económico Autorizado (OEA).';
         alertError.show();
+        scrollToRadio('upOEA', 'Seleccione una opción.');
         return false;
     }
 
@@ -608,52 +682,18 @@ export function validateDocsForm() {
             const el = document.getElementById(id);
             if (!el || el.disabled || !el.required) continue;
 
-            //const hasNewFile = el.files.length > 0;
-            //const hasExistFile = el.classList.contains('file-existing');
-
-            //if (!hasNewFile && !hasExistFile) {
-            //    const label = document.querySelector(`label[for="${id}"]`);
-            //    const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
-            //    alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
-            //    alertError.show();
-            //    el.focus();
-            //    return false;
-            //}
-
             const hasContent = el.value.trim() !== '';
             if (!hasContent) {
                 const label = document.querySelector(`label[for="${id}"]`);
                 const labelText = label ? (label.getAttribute('placeholder') || label.textContent) : id;
                 alertErrorBody.innerText = `El campo "${labelText}" es obligatorio.`;
                 alertError.show();
+                toggleValidInput(el, false, 'El campo es obligatorio.');
                 el.focus();
                 return false;
             }
         }
     }
-
-    //verifica extencion del doc y el peso
-    //for (const input of files) {
-    //    if (input.files.length > 0) {
-    //        for (const file of input.files) {
-    //            //valida extencion
-    //            if (!exptensionVal.exec(file.name)) {
-    //                alertErrorBody.innerText = `El archivo ${file.name} no es un PDF valido.`;
-    //                alertError.show();
-    //                input.value = '';
-    //                return false;
-    //            }
-
-    //            //valida el peso
-    //            if (file.size > maxSizeMB) {
-    //                alertErrorBody.innerText = `El archivo ${file.name} supera los 4MB.`;
-    //                alertError.show();
-    //                input.value = '';
-    //                return false;
-    //            }
-    //        }
-    //    }
-    //}
 
     if (typeof tempFiles !== 'undefined') {
         for (const inputId in tempFiles) {

@@ -80,7 +80,7 @@ function initHandlers() {
     const addControlRowBtn = document.getElementById('addControlRowBtn');
     const controlTableBody = document.querySelector('#control-table tbody');
 
-    addControlRowBtn.addEventListener('click', UI.addControlRow);
+    addControlRowBtn.addEventListener('click', function () { UI.addControlRow(); });
     controlTableBody.addEventListener('click', function (e) {
         if (e.target.classList.contains('remove-control-row')) {
             if (controlTableBody.querySelectorAll('.control-row').length > 1) {
@@ -94,6 +94,7 @@ function initHandlers() {
 
     //handlers para provForm (informacion financiera)
     //const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+    const pvPorNacional = document.getElementById('pvPorNacional');
     const pvPorExtranjero = document.getElementById('pvPorExtranjero');
     const pvGrCon = document.querySelectorAll('input[name="pvGrCon"]');
     const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
@@ -102,6 +103,7 @@ function initHandlers() {
     const pvOpeCExt = document.querySelectorAll('input[name="pvOpeCExt"]');
 
     //pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
+    pvPorNacional.addEventListener('input', UI.togglePvPais);
     pvPorExtranjero.addEventListener('input', UI.togglePvPais);
     pvGrCon.forEach(r => r.addEventListener('change', UI.togglePvGC));
     pvDeclIndCom.forEach(r => r.addEventListener('change', UI.togglePvDIC));
@@ -191,6 +193,18 @@ consultBtn.addEventListener('click', async function (e) {
     const personType = personTypeSelect.value;
     const idNumInput = document.getElementById('idNum');
     const idNum = idNumInput.value.trim();
+
+    //limpia validaciones visuales de posible consulta anterior
+    UI.clearValidationIRT();
+    [
+        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
+        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias',
+        'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada',
+        'upManifestacionSeguridad', 'upCertifiOEA', 'upAcuerdoSeguridad'
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { delete el.dataset.panelVisited; delete el.dataset.panelOpen; }
+    });
 
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
@@ -320,8 +334,6 @@ openFormsBtn.addEventListener('click', async function (e) {
 
             }
 
-            await UI.ubicProvFormHandler();
-
             return;
         }
 
@@ -348,8 +360,6 @@ openFormsBtn.addEventListener('click', async function (e) {
                     await UI.loadFormData_Juridica(formData.juridica);
                 }
             }
-
-            await UI.ubicProvFormHandler();
 
             if (formData.finanInf) {
                 await UI.loadProvFormData(formData.finanInf);
@@ -476,6 +486,8 @@ submitPrvBtn.addEventListener("click", async (e) => {
             await API.sendData(dataProNJ, isNewRegister ? `/Admin/AddProviderJuridica?typePerson=${personTypeSelect.value}` : `/Admin/UpdateProviderJuridica?typePerson=${personTypeSelect.value}`);
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
+
+            printFormatBtn.disabled = false;
         }
 
         alertSuccesBody.innerText = 'Proveedor guardado completamente.';
@@ -490,6 +502,19 @@ submitPrvBtn.addEventListener("click", async (e) => {
 //listener de envio de documentos
 submitDocsBtn.addEventListener('click', async (e) => {
     e.preventDefault();
+
+    const docsFieldIds = [
+        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado',
+        'upComposicionAccionaria', 'upFotocopiaCC', 'upRefeComerciales',
+        'upEstadoFinanciero', 'upCertificacionesVarias', 'upFUCPfirmado',
+        'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada',
+        'upManifestacionSeguridad', 'upCertifiOEA', 'upAcuerdoSeguridad'
+    ];
+
+    docsFieldIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.dataset.panelVisited = 'true';
+    })
 
     if (!Validator.validateDocsForm()) return;
 

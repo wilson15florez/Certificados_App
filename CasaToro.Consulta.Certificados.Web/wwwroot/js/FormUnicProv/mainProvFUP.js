@@ -27,7 +27,9 @@ function initFormHandlers() {
     UI.firstBlock();
     Fhelper.initUploadDocs();
     Validator.dateLimits();
+    Validator.dateLimits();
     UI.ubicPJuHandler();
+    UI.initValidationIRT();
 
     //handlers de nacionalidad y tipo de documento para form persona natural y juridica
     $(pnTipoNacionalidad).off("change.pnTipoNac").on("change.pnTipoNac", async function () {
@@ -74,7 +76,7 @@ function initFormHandlers() {
     const addControlRowBtn = document.getElementById('addControlRowBtn');
     const controlTableBody = document.querySelector('#control-table tbody');
 
-    addControlRowBtn.addEventListener('click', UI.addControlRow);
+    addControlRowBtn.addEventListener('click', function () { UI.addControlRow(); });
     controlTableBody.addEventListener('click', function (e) {
         if (e.target.classList.contains('remove-control-row')) {
             if (controlTableBody.querySelectorAll('.control-row').length > 1) {
@@ -87,7 +89,8 @@ function initFormHandlers() {
     });
 
     //handlers para provForm (informacion financiera)
-    const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+    //const pvTipEmp = document.querySelectorAll('input[name="pvTipEmp"]');
+    const pvPorNacional = document.getElementById('pvPorNacional');
     const pvPorExtranjero = document.getElementById('pvPorExtranjero');
     const pvGrCon = document.querySelectorAll('input[name="pvGrCon"]');
     const pvDeclIndCom = document.querySelectorAll('input[name="pvDeclIndCom"]');
@@ -95,7 +98,8 @@ function initFormHandlers() {
     const pvPosCuBan = document.querySelectorAll('input[name="pvPosCuBan"]');
     const pvOpeCExt = document.querySelectorAll('input[name="pvOpeCExt"]');
 
-    pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
+    //pvTipEmp.forEach(r => r.addEventListener('input', UI.togglePvTE));
+    pvPorNacional.addEventListener('input', UI.togglePvPais);
     pvPorExtranjero.addEventListener('input', UI.togglePvPais);
     pvGrCon.forEach(r => r.addEventListener('change', UI.togglePvGC));
     pvDeclIndCom.forEach(r => r.addEventListener('change', UI.togglePvDIC));
@@ -262,8 +266,6 @@ openFormsBtn.addEventListener('click', async function (e) {
                 }, 100);
             }
 
-            await UI.ubicProvFormHandler();
-
             return;
         }
 
@@ -290,8 +292,6 @@ openFormsBtn.addEventListener('click', async function (e) {
                     await UI.loadFormData_Juridica(formData.juridica);
                 }
             }
-
-            await ui.ubicProvFormHandler();
 
             if (formData.finanInf) {
                 await UI.loadProvFormData(formData.finanInf);

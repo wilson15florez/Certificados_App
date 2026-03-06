@@ -15,6 +15,13 @@ input.has-value + label.disabled-label[for=dirPreview]{
     border-radius: 0.5rem;
 }
 
+.check-group {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+    margin-bottom: 0.125rem;
+}
+
 .separate-bottom {
     border-bottom: 1px solid #e0e0e0;
     border-radius: initial !important;
@@ -110,6 +117,27 @@ input.has-value + label.disabled-label[for=dirPreview]{
     padding: 8px 15px;
 }
 
+/*Asegura que los modales de alerta queden por encima de declAutorPanel*/
+#alertError.modal,
+#alertError.show,
+.modal.show {
+    z-index: 10100 !important;
+}
+
+.modal-backdrop {
+    z-index: 10050 !important;
+}
+
+/*Ancla el error-message dentro de declAutorPanel*/
+#declAutorPanel .form-check {
+    position: relative;
+}
+
+/*Ajuste del error-message dentro de declAutorPanel*/
+#declAutorPanel .error-message {
+    width: 7rem;
+    left: 4px;
+}
 
 .interactive-text {
     color: #007bff;
@@ -175,14 +203,38 @@ input.has-value + label.disabled-label[for=dirPreview]{
     box-shadow: 0 0 0 .1rem rgba(220,53,69,.25) !important;
 }
 
+.is-invalid-custom.select2-selection {
+    border: 2px solid #dc3545 !important;
+    box-shadow: 0 0 0 .1rem rgba(220,53,69,.25) !important;
+}
+
 /*clase para texto de error bajo el campo invalido*/
 .error-message {
     color: #dc3545;
-    font-size: 0.8rem;
+    font-size: 12px;
     position: absolute;
     margin-top: 4px;
     display: block;
     font-weight: 500;
+}
+
+select.is-invalid-custom + span.error-message,
+span.select2-container--default + span.error-message {
+    margin-top: 35px;
+}
+
+div.d-flex + span.error-message {
+    margin-top: -8px !important;
+}
+
+i.file-icon ~ span.error-message {
+    margin-top: 55px !important;
+}
+
+td > span.error-message {
+    position: static !important;
+    display: block;
+    margin-top: 2px !important;
 }
 
 .file-hidden {

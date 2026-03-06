@@ -1,12 +1,9 @@
-﻿import { alertErrorBody, alertBody, alertError, alert } from './constant.js';
+﻿import { alertErrorBody, alertBody, alertError, alert, regexDir, telInst } from './constant.js';
 import { hasValue, checkExclusiones, filePaths } from './ui-handlers.js';
 import { toggleValidInput } from './validators.js';
 
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
-
-//elemento para validacion con parametros
-export const telInst = {};
 
 //funcion para inicializar campos de telefono (por defecto deja Colombia)
 export function initTelInputs(element, required = false) {
@@ -125,7 +122,7 @@ function openDirecForm(input) {
     activeInput = input;
     resetDirForm();
     if (input.value) {
-        parseDirection(input.value);
+        parseDirection(input);
         updatePreview();
     }
     dirEstr.container().style.display = 'flex';
@@ -153,9 +150,11 @@ function closeForm() {
 }
 
 //funcion para dividir la direccion de la DB y mapearla en su respectivo campo
-function parseDirection(dirString) {
-    const regex = /^([a-zA-ZñÑ\s]+)\s+([0-9]+)\s*([a-zA-Z])?\s*#\s*([0-9]+)\s*([a-zA-Z])?\s*-\s*([0-9]+)(?:,\s*(.*))?$/i;
-    const match = dirString.match(regex);
+export function parseDirection(input) {
+    const dirString = input.value;
+    const match = dirString.match(regexDir);
+
+    let isValid = false
 
     if (match) {
         //identifica tipo de via ya este en mayuscula o minuscula
@@ -170,9 +169,8 @@ function parseDirection(dirString) {
         //si no reconoce el tipo de via deja el select en opcion por defecto
         if (selectVia.selectedIndex === -1) {
             selectVia.selectedIndex = 0;
-            //pasa la direccion al campo complemento
-            dirEstr.compleDir().value = dirString;
-            return;
+            toggleValidInput(input, isValid, 'Dirección invalida.');
+            return false;
         }
 
         dirEstr.vPrincipal().value = match[2];
@@ -181,9 +179,13 @@ function parseDirection(dirString) {
         dirEstr.sufSecundaria().value = match[5] || '';
         dirEstr.numPlaca().value = match[6];
         dirEstr.compleDir().value = match[7] || '';
+        isValid = true
+        toggleValidInput(input, isValid);
+        return true;
     } else {
-        //si no la logra mapear la coloca en complemento
-        dirEstr.compleDir().value = dirString;
+        isValid = false;
+        toggleValidInput(input, isValid, 'Dirección invalida.');
+        return false;
     }
 }
 
@@ -227,7 +229,7 @@ export function initDeclAut() {
     document.getElementById('saveAutBtn')?.addEventListener('click', closeFormDA);
 }
 
-function openFormDA() {
+export function openFormDA() {
     authFields.panel().style.display = 'flex';
 }
 
@@ -315,17 +317,55 @@ export function initUploadDocs() {
 
         checkExclusiones();
         panel.style.display = 'none';
+
+        //quita flag de panel abierto y dispara la validacion
+        delete mainInput.dataset.panelOpen;
+        docInputValidation(mainInput);
     });
 
     document.getElementById('cancelDocsBtn').addEventListener('click', () => {
         tempFiles[currentInput] = backupTemp;
         existingFiles[currentInput] = backupExisting;
+        const mainInput = document.getElementById(currentInput);
+        const restoredNames = [
+            ...(existingFiles[currentInput] || []),
+            ...(tempFiles[currentInput] || []).map(f => f.name)
+        ];
+
+        mainInput.value = restoredNames.join(', ');
+        if (restoredNames.length > 0) mainInput.classList.add('file-existing');
+        else mainInput.classList.remove('file-existing');
+
         panel.style.display = 'none';
+
+        //quita flag de panel abierto y dispara la validacion
+        delete mainInput.dataset.panelOpen;
+        docInputValidation(mainInput);
     });
+}
+
+//dispara una validacion visual en el input tras cerrar el panel
+function docInputValidation(input) {
+    if (!input) return;
+
+    //valida si el panel ya fue visitado
+    if (!input.dataset.panelVisited) return;
+    const isEmpty = input.value.trim() === '';
+    if (window.Validator && window.Validator.toggleValidInput) {
+        window.Validator.toggleValidInput(input, !isEmpty, 'Este campo es obligatorio.');
+    } else {
+        //fallback: dispara blur para que initValidationIRT lo recoja
+        input.dispatchEvent(new Event('blur', { bubbles: true }));
+    }
 }
 
 function openUploadPanel(input, label) {
     currentInput = input.id;
+
+    //marca que este input ya abrio el panel (para activar la validacion IRT)
+    input.dataset.panelVisited = 'true';
+    //suprime la validacion 'blur' mientras esta abierto el panel
+    input.dataset.panelOpen = 'true';
 
     backupTemp = tempFiles[input.id] ? [...tempFiles[input.id]] : [];
     backupExisting = existingFiles[input.id] ? [...existingFiles[input.id]] : [];
