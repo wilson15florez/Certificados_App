@@ -472,7 +472,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                 var existingFilesMap = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<string>>>(existingFilesJSON);
 
                 // Eliminar del Servidor y la DB los archivos que el usuario quito en el panel
-                _providerService.DeleteDocument(nit, existingFilesMap, _webHostEnvironment.WebRootPath);
+                _providerService.ActiveDocument(nit, existingFilesMap, _webHostEnvironment.WebRootPath);
 
                 // Verificar que se hayan recibido archivos en la solicitud
                 var files = Request.Form.Files;
@@ -561,6 +561,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
                 // actualizar registro de persona juridica
                 _providerService.UpdateJuridicaInfo(providerData, typePerson, dateProcedure, tipTramite);
+
+                //inactiva el formato que proveedor subio firmado, para que suba el actualizado firmado
+                _providerService.DeactiveJuriFUCP(providerData.Nit);
+
                 return Json(new { message = "Información de persona jurídica actualizada correctamente." });
             }
             catch (Exception ex)

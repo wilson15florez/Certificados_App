@@ -1748,7 +1748,7 @@ export function checkExclusiones() {
     blockExcl('upContingFirmada', magnetic.value.trim() !== "");
     blockExcl('upContingMeMagnetico', firmada.value.trim() !== "");
 }
-function blockExcl(targetId, bloquear) {
+export function blockExcl(targetId, bloquear) {
     const targInput = document.getElementById(targetId);
     if (!targInput) return;
 

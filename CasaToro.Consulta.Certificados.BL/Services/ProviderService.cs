@@ -302,8 +302,10 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         //Metodo para obtener los documentos asociados a un proveedor por su NIT
         public List<Documentos_Proveedores> GetDocumentsByNit(string nit)
         {
+            //trae los documentos activos para cada categoria
             return _context.Documentos_Proveedores
-                .Where(d => d.NitProveedor == nit)
+                .Where(d => d.NitProveedor == nit && d.Estado == "Activo")
+                .OrderByDescending(d => d.fechaCarga)
                 .ToList();
         }
 
@@ -744,23 +746,44 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 CategoriaDOC = categoria,
                 NombreArchivo = nomArchivo,
                 RutaArchivo = ruta,
-                fechaCarga = DateTime.Now
+                fechaCarga = DateTime.Now,
+                Estado = "Activo"
             };
 
             _context.Documentos_Proveedores.Add(newDoc);
             _context.SaveChanges();
         }
 
-        public void DeleteDocument(string Nit, Dictionary<string, List<string>> existingFilesMap, string webRootPath) 
+        public void DeactiveJuriFUCP(string nit)
+        {
+            var fucpActivos = _context.Documentos_Proveedores
+                .Where(d => d.NitProveedor == nit
+                    && d.CategoriaDOC == "upFUCPfirmado"
+                    && d.Estado == "Activo")
+                .ToList();
+
+            foreach (var doc in fucpActivos)
+                doc.Estado = "Inactivo";
+
+            if (fucpActivos.Any())
+                _context.SaveChanges();
+        }
+
+        //metodo para cambiar el estado del documento
+        public void ActiveDocument(string Nit, Dictionary<string, List<string>> existingFilesMap, string webRootPath) 
         { 
-            var docsInDB = _context.Documentos_Proveedores.Where(d => d.NitProveedor == Nit).ToList();
-            foreach (var docDB in docsInDB) {
+            //filtra por documentos actualmente activos
+            var docsActivosDB = _context.Documentos_Proveedores
+                .Where(d => d.NitProveedor == Nit && d.Estado == "Activo")
+                .ToList();
+            foreach (var docDB in docsActivosDB) {
+                
                 bool stayDoc = false;
 
-                //si la categoria existe en la lista del frontend
+                //si la categoria existe en el frontend
                 if (existingFilesMap.ContainsKey(docDB.CategoriaDOC))
                 {
-                    //verifica si el nombre del archivo existe en la lista del frontend para mantenerlo, si no existe se elimina
+                    //verifica si el nombre del archivo existe en la lista del frontend para mantenerlo
                     if (existingFilesMap[docDB.CategoriaDOC].Contains(docDB.NombreArchivo))
                     {
                         stayDoc = true;
@@ -769,15 +792,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                 if (!stayDoc)
                 {
-                    //elimina archivo fisico
-                    string fullPath = Path.Combine(webRootPath, docDB.RutaArchivo);
-                    if (File.Exists(fullPath))
-                    {
-                        File.Delete(fullPath);
-                    }
-
-                    //elimina metadata en DB (registro)
-                    _context.Documentos_Proveedores.Remove(docDB);
+                    //mantiene documento anterior, solo lo marca como inactivo (remplazado o eliminado por usuario)
+                    docDB.Estado = "Inactivo";
                 }
             }
             _context.SaveChanges();

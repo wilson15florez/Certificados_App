@@ -608,6 +608,10 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.idDocProve).HasName("PK__Document__9813F02D1C88408A");
 
             entity.Property(e => e.CategoriaDOC).HasMaxLength(100);
+            entity.Property(e => e.Estado)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasDefaultValue("Activo");
             entity.Property(e => e.NitProveedor).HasMaxLength(20);
             entity.Property(e => e.NombreArchivo).HasMaxLength(255);
             entity.Property(e => e.RutaArchivo).HasMaxLength(500);

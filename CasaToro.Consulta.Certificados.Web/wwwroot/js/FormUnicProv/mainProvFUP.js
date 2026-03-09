@@ -191,7 +191,7 @@ async function checkUser() {
             subNavConteiner.style.display = 'block';
             openFormsBtn.disabled = false;
             printFormatBtn.disabled = true;
-            uploadDocsBtn.disabled = false;
+            uploadDocsBtn.disabled = true;
 
             return;
         }
@@ -205,7 +205,7 @@ async function checkUser() {
             subNavConteiner.style.display = 'block';
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
-            if (typePerson === 'natural') printFormatBtn.disabled = true;
+            typePerson === 'natural' ? printFormatBtn.disabled = true : printFormatBtn.disabled = false;
 
             return;
         }
@@ -312,25 +312,6 @@ openFormsBtn.addEventListener('click', async function (e) {
     }
     
 });
-uploadDocsBtn.addEventListener('click', async function (e) {
-    e.preventDefault();
-
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    provForm.style.display = 'none';
-    printFormatForm.style.display = 'none';
-
-    uploadDocsForm.style.display = 'block';
-
-    try {
-        const result = await API.getProvDocuments(null);
-        UI.loadDocsForm(result.data || [], result.isOEA || null);
-    }
-    catch (err) {
-        console.error("Error cargando archivos guardados: ", err);
-        UI.loadDocsForm([], null);
-    }
-});
 printFormatBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     persNatuForm.style.display = 'none';
@@ -364,6 +345,32 @@ printFormatBtn.addEventListener('click', async function (e) {
         }
     }
 });
+uploadDocsBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const result = await API.getProvDataForms(null);
+    const typePerson = (result.typeperson || result.typePerson || "").toLowerCase().trim();
+
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
+
+    uploadDocsForm.style.display = 'block';
+
+    try {
+        const result = await API.getProvDocuments(null);
+        UI.loadDocsForm(result.data || [], result.isOEA || null);
+        UI.hasValue();
+    }
+    catch (err) {
+        console.error("Error cargando archivos guardados: ", err);
+        UI.loadDocsForm([], null);
+    }
+
+    UI.blockExcl('upFUCPfirmado', typePerson === 'natural');
+
+});
 
 //listener de envio de forms
 submitPrvBtn.addEventListener("click", async (e) => {
@@ -395,14 +402,29 @@ submitPrvBtn.addEventListener("click", async (e) => {
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Proveedor/AddProvFinanceInfo' : '/Proveedor/UpdateProvFinanceInfo');
 
+            uploadDocsBtn.disabled = false;
+
         } else if (typePerson === 'juridica') {
             await API.sendData(dataProNJ, isNewRegister ? `/Proveedor/AddProviderJuridica?typePerson=${typePerson}` : `/Proveedor/UpdateProviderJuridica?typePerson=${typePerson}`);
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Proveedor/AddProvFinanceInfo' : '/Proveedor/UpdateProvFinanceInfo');
+
+            printFormatBtn.disabled = false;
+            uploadDocsBtn.disabled = false;
         }
 
         alertSuccesBody.innerText = 'Proveedor guardado completamente.';
         alertSuccess.show();
+
+        // Si es actualizacion de persona juridica, avisar que debe reimprimir, firmar y volver a subir el FUCP
+        if (!isNewRegister && typePerson === 'juridica') {
+            const alertSuccessEl = document.getElementById('alertSuccess');
+            alertSuccessEl.addEventListener('hidden.bs.modal', function onSuccessHidden() {
+                alertSuccessEl.removeEventListener('hidden.bs.modal', onSuccessHidden);
+                alertBody.innerText = 'El formato ha sido actualizado. Debe imprimir nuevamente el Formato, firmarlo y volver a cargarlo en la sección de documentos.';
+                alert.show();
+            }, { once: true });
+        }
 
     } catch (err) {
         console.log('Error al guardar proveedor: ', +err);

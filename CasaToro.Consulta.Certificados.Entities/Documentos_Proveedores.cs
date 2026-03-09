@@ -16,4 +16,6 @@ public partial class Documentos_Proveedores
     public string RutaArchivo { get; set; } = null!;
 
     public DateTime? fechaCarga { get; set; }
+
+    public string? Estado { get; set; }
 }

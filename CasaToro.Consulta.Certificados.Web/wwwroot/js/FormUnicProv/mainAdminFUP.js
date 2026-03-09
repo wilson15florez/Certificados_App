@@ -171,7 +171,6 @@ function initHandlers() {
     //carga de datos de bancos
     API.loadBancosData();
 
-
     UI.hasValue();
 }
 
@@ -255,7 +254,7 @@ consultBtn.addEventListener('click', async function (e) {
             alertSuccess.show();
             openFormsBtn.disabled = false;
             printFormatBtn.disabled = true;
-            uploadDocsBtn.disabled = false;
+            uploadDocsBtn.disabled = true;
 
             return;
         }
@@ -268,7 +267,7 @@ consultBtn.addEventListener('click', async function (e) {
             }
             openFormsBtn.disabled = false;
             uploadDocsBtn.disabled = false;
-            if (personType === 'natural') printFormatBtn.disabled = true;
+            personType === 'natural' ? printFormatBtn.disabled = true : printFormatBtn.disabled = false;
 
             return;
         }
@@ -379,30 +378,6 @@ openFormsBtn.addEventListener('click', async function (e) {
         console.error('Error de Fetch:', error);
     }
 });
-uploadDocsBtn.addEventListener('click', async function (e) {
-    e.preventDefault();
-
-    persNatuForm.style.display = 'none';
-    persJuriForm.style.display = 'none';
-    provForm.style.display = 'none';
-    printFormatForm.style.display = 'none';
-    
-    uploadDocsForm.style.display = 'block';
-
-    const personTypeSelect = document.getElementById('personType');
-    const personType = personTypeSelect.value;
-    const idNumInput = document.getElementById('idNum');
-    const idNum = idNumInput.value.trim();
-
-    try {
-        const result = await API.getProvDocuments(idNum, personType);
-        UI.loadDocsForm(result.data || [], result.isOEA || null);
-    }
-    catch (err) {
-        console.error("Error cargando archivos guardados: ", err);
-        UI.loadDocsForm([], null);
-    }
-});
 printFormatBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     persNatuForm.style.display = 'none';
@@ -434,6 +409,33 @@ printFormatBtn.addEventListener('click', async function (e) {
             UI.printFormatHandler(null);
         }
     }
+});
+uploadDocsBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    persNatuForm.style.display = 'none';
+    persJuriForm.style.display = 'none';
+    provForm.style.display = 'none';
+    printFormatForm.style.display = 'none';
+    
+    uploadDocsForm.style.display = 'block';
+
+    const personType = document.getElementById('personType').value;
+    const idNum = document.getElementById('idNum').value.trim();
+
+    try {
+        const result = await API.getProvDocuments(idNum, personType);
+        UI.loadDocsForm(result.data || [], result.isOEA || null);
+        UI.hasValue();
+    }
+    catch (err) {
+        console.error("Error cargando archivos guardados: ", err);
+        UI.loadDocsForm([], null);
+    }
+
+
+    UI.blockExcl('upFUCPfirmado', personType === 'natural');
+
 });
 
 //logica para mostrar/ocultar los forms al cambiar el tipo de persona
@@ -482,16 +484,29 @@ submitPrvBtn.addEventListener("click", async (e) => {
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
 
+            uploadDocsBtn.disabled = false;
+
         } else if (personTypeSelect.value === 'juridica') {
             await API.sendData(dataProNJ, isNewRegister ? `/Admin/AddProviderJuridica?typePerson=${personTypeSelect.value}` : `/Admin/UpdateProviderJuridica?typePerson=${personTypeSelect.value}`);
             //Add o Update del provForm(Informacion Financiera)
             await API.sendData(provData, isNewRegister ? '/Admin/AddProvFinanceInfo' : '/Admin/UpdateProvFinanceInfo');
 
             printFormatBtn.disabled = false;
+            uploadDocsBtn.disabled = false;
         }
 
         alertSuccesBody.innerText = 'Proveedor guardado completamente.';
         alertSuccess.show();
+
+        // Si es actualizacion de persona juridica, avisar que debe reimprimir, firmar y volver a subir el FUCP
+        if (!isNewRegister && personTypeSelect.value === 'juridica') {
+            const alertSuccessEl = document.getElementById('alertSuccess');
+            alertSuccessEl.addEventListener('hidden.bs.modal', function onSuccessHidden() {
+                alertSuccessEl.removeEventListener('hidden.bs.modal', onSuccessHidden);
+                alertBody.innerText = 'El formato ha sido actualizado. Debe imprimir nuevamente el Formato, firmarlo y volver a cargarlo en la sección de documentos.';
+                alert.show();
+            }, { once: true });
+        }
 
     } catch (err) {
         console.log('Error al guardar proveedor: ', +err);
