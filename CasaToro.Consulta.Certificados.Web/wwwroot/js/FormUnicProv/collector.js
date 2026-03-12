@@ -1,5 +1,5 @@
-﻿import { existingFiles, tempFiles } from './form-helpers.js';
-import { unformatCurrency } from './ui-handlers.js';
+﻿import { existingFiles, tempFiles } from './helpers-ui.js';
+import { unformatCurrency } from './helpers-ui.js';
 import { telInst } from './constant.js';
 
 //funcion para recopilar los datos del formulario persona natural
@@ -92,7 +92,7 @@ export function collectFormData_Juridica() {
             Departamento: document.getElementById(`pjDepartDirSucursal_${i}`)?.value || null,
             Ciudad: document.getElementById(`pjCiudadDirSucursal_${i}`)?.value || null,
             Email: document.getElementById(`pjEmailDirSucursal_${i}`)?.value.toUpperCase() || null,
-            telefono: telInst[`pjTelDirSucursal_${i}`]?.getNumber() || null
+            Telefono: telInst[`pjTelDirSucursal_${i}`]?.getNumber() || null
         };
     }).filter(s => s.Direccion);
 
@@ -135,7 +135,6 @@ export function collectProvFormData(typePerson) {
         });
 
     //radios
-    //'pvTipEmp', 
     const radioGroups = [
         'pvGrCon', 'pvDeclIndCom',
         'pvAutRet', 'pvPosCuBan',
@@ -186,7 +185,7 @@ export function collectProvFormData(typePerson) {
     ];
     skpCamposDinero.forEach(campo => {
         const el = document.getElementById(campo).value;
-        data[campo] = unformatCurrency(el);
+        data[campo] = el !== '' ? unformatCurrency(el) : null;
     });
 
     return data;

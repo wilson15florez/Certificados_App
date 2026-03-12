@@ -109,8 +109,8 @@ export async function getProvDataForms(idNum, personType = null) {
 }
 
 //funcion para traer la informacion de los documentos de uploadDocsForm
-export async function getProvDocuments(idNum, personType = null) {
-    const url = personType ? `/Admin/GetProviderFiles?idNum=${idNum}` : `/Provider/GetProviderFiles`;
+export async function getProvDocuments(idNum) {
+    const url = idNum ? `/Admin/GetProviderFiles?idNum=${idNum}` : `/Provider/GetProviderFiles`;
     const response = await fetch(url);
 
     if (!response.ok) throw new Error("Error al obtener documentos");
@@ -137,6 +137,7 @@ export function sendData(payload, url) {
         })
         .catch(error => {
             console.error('Error de Fetch:', error);
+            throw error;
         });
 }
 
@@ -171,9 +172,3 @@ export async function getFormat(idNum, personType = null) {
 
     return await response.json();
 }
-
-//export async function getProvPersType() {
-//    const response = await fetch('/Provider/GetProvPersonDetails');
-//    if (!response.ok) throw new Error("Error al obtener tipo de persona");
-//    return await response.json();
-//}

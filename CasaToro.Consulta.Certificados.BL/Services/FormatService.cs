@@ -15,6 +15,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 {
     public class FormatService
     {
+        //metodo que mapea cada campo en el formato pdf
         public string FillFormatoPDF(dynamic datos, string webRootPath)
         {
             var master = datos.master as CasaToro.Consulta.Certificados.Entities.Proveedores_Master;
@@ -349,6 +350,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             return "/GeneratedFiles/" + fileName;
         }
 
+        //metodo para mapear la data en el formato pdf segun el nombre
         private void SetField(IDictionary<string, PdfFormField> fields, string name, string value)
         {
             if (fields.ContainsKey(name))
@@ -357,6 +359,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para mapear los radios/checkbox de la data en el formato pdf
         private void SetCheckBox(PdfAcroForm form, string fieldName, bool state)
         {
             var field = form.GetField(fieldName);
@@ -371,6 +374,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        //metodo para separar las fechas
         private void SetSplitDate(IDictionary<string, iText.Forms.Fields.PdfFormField> fields, object? dataValue, string fileDateYear, string fileDateMonth, string fileDateDay)
         {
             if (fields == null) return;

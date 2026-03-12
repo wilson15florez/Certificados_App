@@ -30,7 +30,7 @@ export const pjRLDocExtr = [
 //elemento para validacion con parametros del email
 export const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-export const regexDir = /^([a-zA-ZñÑ\s]+)\s+([0-9]+)\s*([a-zA-Z])?\s*#\s*([0-9]+)\s*([a-zA-Z])?\s*-\s*([0-9]+)(?:,\s*(.*))?$/i;
+export const regexDir = /^([a-zA-ZñÑ\s]+?)\s+([0-9]+)\s*([a-zA-Z])?\s*((?:BIS\s+)?(?:SUR|NORTE|ESTE|OESTE)|BIS)?\s*#\s*([0-9]+)\s*([a-zA-Z])?\s*-\s*([0-9]+)(?:,\s*(.*))?$/i;
 
 export const telInst = {};
 

@@ -593,6 +593,7 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                     return Json(new { status = "error", message = "El proveedor no está registrado en el sistema." });
 
                 // Actualizar registro de informacion financiera
+                providerData.Nit = nit;
                 _providerService.UpdateFinanceInfo(providerData);
 
                 return Json(new { status = "success", message = "Información Financiera actualizada correctamente." });

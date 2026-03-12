@@ -176,6 +176,23 @@ input.has-value + label.disabled-label[for=dirPreview]{
     left: 30px;
 }
 
+/* Estado idle: truncar si el texto es más largo que el input */
+.custom-file-container .adaptive-label {
+    max-width: calc(100% - 48px) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+}
+ 
+/* Estado flotado: quitar el recorte para que el label sea legible completo */
+input:focus + .adaptive-label,
+input.has-value + .adaptive-label,
+.file-existing ~ .adaptive-label {
+    max-width: none;
+    overflow: visible;
+    white-space: nowrap;
+}
+
 .iti .adaptive-label {
     left: 85px;
 }

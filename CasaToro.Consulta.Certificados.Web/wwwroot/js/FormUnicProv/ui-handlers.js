@@ -1,75 +1,32 @@
-﻿import { docNacionales, docExtranjeros, pjRLDocNaci, pjRLDocExtr, alertBody, alert, regexEmail, dirtyFields, telInst } from './constant.js';
+﻿import * as Constant from './constant.js';
 import * as API from './api-client.js';
-import { waitSafeSetPhone, initTelInputs, existingFiles, tempFiles, parseDirection } from './form-helpers.js';
+import * as HUI from './helpers-ui.js';
+import * as LD from './loader.js';
 import { toggleValidInput, isAdult } from './validators.js';
 
-const controlTableBody = document.querySelector('#control-table tbody');
-const maxSucursales = 2;
+export const controlTableBody = document.querySelector('#control-table tbody');
+export const maxSucursales = 2;
 const maxAccionistas = 4;
-let isAutoFilling = false;
+export let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
 export let filePaths = {};
 
-//funcion para boton de auto scroll
-export function scrollButton() {
-    const btn = document.getElementById('btnScrollAuto');
-    const icon = document.getElementById('scrollIcon');
-    let lastScrollTop = 0;
-    let action = 'down';
+//setters para variables de estado de modulo (ES imports son read-only)
+export function setAutoFilling(value) { isAutoFilling = value; }
+export function setOriginalPEP(types, entidad) {
+    originalPEPTypes = types;
+    originalPEPEntidad = entidad;
+}
 
-    if (!btn) return;
-
-    window.addEventListener('scroll', () => {
-        //calcula la posicion del scroll
-        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        const windowHeight = window.innerHeight;
-        const fullHeight = document.documentElement.scrollHeight;
-
-        //logica de direccion
-        if (scrollPosition + windowHeight >= fullHeight - 10) {
-            //caso: al final de la pagina -> forzar subir
-            action = 'up';
-
-        } else if (scrollPosition <= 10) {
-            //caso: al inicio de la pagina -> forzar bajar
-            action = 'down';
-
-        } else {
-            //caso: entre medio -> definir segun ultima direccion
-            if (scrollPosition > lastScrollTop) {
-                action = 'down';
-            } else {
-                action = 'up';
-            }
-        }
-
-        //cambio visual del icono segun accion
-        if (action === 'up') {
-            icon.classList.replace('bi-arrow-down-circle-fill', 'bi-arrow-up-circle-fill');
-            btn.title = 'Ir al inicio';
-        } else {
-            icon.classList.replace('bi-arrow-up-circle-fill', 'bi-arrow-down-circle-fill');
-            btn.title = 'Ir al final';
-        }
-
-        lastScrollTop = scrollPosition <= 0 ? 0 : scrollPosition;
-    }, { passive: true });
-
-    btn.addEventListener('click', () => {
-        if (action === 'up') {
-            //scroll hacia arriba
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        } else {
-            //scroll hacia abajo
-            window.scrollTo({
-                top: document.documentElement.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
+//funcion para enlazar select2 de departamento con el de ciudad para las ubicaciones colombianas
+function handleDeptChange(depSelect, citySelect, ciudadByDep) {
+    $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
+        const dep = this.value.trim().toUpperCase();
+        const municipios = ciudadByDep[dep] || [];
+        fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+        citySelect.disabled = municipios.length === 0;
+        document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
     });
 }
 
@@ -87,20 +44,39 @@ export function firstBlock() {
     });
 }
 
+//limpia todos los inputs, select y textarea de un form
+export function clearForm(formEl) {
+    formEl.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+        else el.value = '';
+    });
+}
+
+//habilita o deshabilita un select y sincroniza su label
+function setSelectEnable(el, enabled) {
+    el.disabled = !enabled;
+    const label = document.querySelector(`label[for="${el.id}"]`);
+    if (label) label.classList.toggle('disabled-label', !enabled);
+}
+
+//precarga un select de departamento, dispara el chain y espera ciudades
+export async function loadDepCity(depSel, citySel, value, triggerName) {
+    await setSelect2Val(depSel, value);
+    $(depSel).trigger(`change.${triggerName}`);
+    await waitForOptions(citySel);
+}
+
 //funcion que espera a que select2 tenga opciones cargadas
-export function waitForSelec2(select, timeout = 800) {
+export function waitForOptions(select, timeout = 800) {
     return new Promise(r => {
         const start = performance.now();
 
         function check() {
-            const hasOptions = select.options.length > 1;
-
-            if (hasOptions || performance.now() - start > timeout) {
+            if (select.options.length > 1 || performance.now() - start > timeout) {
                 return r();
             }
-            requestAnimationFrame(check);
+            requestAnimationFrame(check)
         }
-
         check();
     });
 }
@@ -151,7 +127,7 @@ export async function setSelect2Val(select, value) {
 
     if (!value) return false;
 
-    await waitForSelec2(select);
+    await waitForOptions(select);
 
     const exists = [...select.options].some(o => o.value == value);
 
@@ -165,19 +141,188 @@ export async function setSelect2Val(select, value) {
 
 }
 
-//espera a que select2 tenga opciones cargadas
-export const awaitOpt = (selectEl) => {
-    return new Promise(resolve => {
-        const check = () => {
-            if ($(selectEl).find('option').length > 0) {
-                resolve();
+//logica para animacion visual de labels
+export function hasValue() {
+    document.querySelectorAll('.form-control').forEach(input => {
+        // Verificar al cargar la página (por si hay valores previos)
+        if (input.value.trim() !== "") {
+            input.classList.add('has-value');
+        } else {
+            input.classList.remove('has-value');
+        }
+
+        // Escuchar cuando el usuario interactúa
+        input.addEventListener('change', () => {
+            if (input.value.trim() !== "") {
+                input.classList.add('has-value');
             } else {
-                setTimeout(check, 50)
+                input.classList.remove('has-value');
+            }
+        });
+    });
+}
+
+//limpia todos los errores visuales de validacion IRT
+export function clearValidationIRT() {
+    document.querySelectorAll('.is-invalid-custom').forEach(el => el.classList.remove('is-invalid-custom'));
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    Constant.dirtyFields.clear();
+}
+
+//logica que asigna la validacion de campos
+export function initValidationIRT() {
+    //validacion de campos simples
+    const requiredFields = [
+        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnTipoNacionalidad', 'pnTipoDoc', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc', 'pnNacionalidad',
+        'pnEstadoNac', 'pnCiudadNac', 'pnFechaNac', 'pnDiResidencia', 'pnDepRes', 'pnCiudadRes', 'pnEmail', 'pnTelefono', 'pnCelular', 'pnActividad',
+        'pnReconoPblSi', 'pnManRePubSi', 'pnPEPSi', 'pnPEP-Nac', 'pnPEP_Entidad', 'pjRazSocial', 'pjDepartDilig', 'pjCiudadDilig', 'pjDirPrincipal',
+        'pjDepartDirPrincipal', 'pjCiudadDirPrincipal', 'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg',
+        'pjRLTipNacionalidad', 'pjRLTipoDoc', 'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLFechaNac', 'pjRLNacionalidad',
+        'pjRLDepartNac', 'pjRLCiudadNac', 'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos', 'pvPatrimonio', 'pvPorNacional', 'pvPorExtranjero', 'pvPorPais',
+        'pvTipEmp', 'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst', 'pvFechVen', 'pvGrConSi', 'pvFechResolGC', 'pvNumResolGC', 'pvDeclIndComSi',
+        'pvDepartDec', 'pvCiudadDec', 'pvAutRetSi', 'pvNumResDIAN', 'pvOpeCExtSi', 'pvForPag', 'pvEntBenef', 'pvPosCuBanSi', 'pvEntidad', 'pvNumCueBanc',
+        'pvClasCueBan', 'pvCeOEASi', 'pvCeCalSi', 'pvCeBASCSi', 'pvCeAmbSi', 'pvCe28000Si', 'pvCeSSTSi', 'pvTDPMotMaqSI', 'pvTDPCasTorSI', 'pvTDPBonapSI',
+        'pvRadAutSI', 'pvDeAuRepresentacion', 'pvFuenteRecur', 'pvCumCSInSI', 'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
+        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias', 'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico',
+        'upContingFirmada', 'upCertifiOEA', 'upAcuerdoSeguridad'
+    ];
+
+    const docsFieldIds = new Set([
+        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
+        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias',
+        'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada', 'upCertifiOEA',
+        'upAcuerdoSeguridad'
+    ]);
+
+    requiredFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const isDocsField = docsFieldIds.has(id);
+
+        //para radios y checkbox valida al hacer change (no al registrar)
+        if (el.type === 'radio' || el.type === 'checkbox') {
+            const elName = el.name;
+            const radios = document.querySelectorAll(`input[name="${elName}"]`);
+            radios.forEach(r => {
+                r.addEventListener('change', function () {
+                    Constant.dirtyFields.add(elName);
+                    const isChecked = document.querySelector(`input[name="${elName}"]:checked`);
+                    toggleValidInput(el, !!isChecked, 'Seleccione una opción.');
+                });
+            });
+            return;
+        }
+
+        //eventos 'blur' y 'change'
+        const validateEvent = () => {
+            if (isAutoFilling) return;
+            if (!Constant.dirtyFields.has(id)) return;
+            if (el.disabled || el.display === 'none') {
+                toggleValidInput(el, true);
+                return;
+            }
+
+            const value = el.value ? el.value.trim() : '';
+
+            //logica especifica por tipo de campo
+            if (id === 'pnFechaNac' || id === 'pjRLFechaNac') {
+                const isValid = value !== '' && isAdult(value);
+                toggleValidInput(el, isValid, value === '' ? 'Este campo es obligatorio.' : 'La persona debe ser mayor de edad.');
+            }
+            else if (id === 'pnEmail' || id === 'pjEmailDirPrincipal') {
+                const isValid = Constant.regexEmail.test(value);
+                toggleValidInput(el, isValid, 'Ingrese un correo valido.');
+            }
+            else if (el.type === 'tel') {
+                const iti = Constant.telInst[id];
+                const isValid = value === '' ? false : iti.isValidNumber();
+                toggleValidInput(el, isValid, 'Ingrese un número de teléfono válido.');
+            }
+            else if (id === 'pnDiResidencia' || id === 'pjDirPrincipal' || id.includes('pjDirSucursal_')) {
+                value === '' ? toggleValidInput(el, false, 'Este campo es obligatorio.') : HUI.parseDirection(el);
+            }
+            else if (id === 'pvPorNacional' || id === 'pvPorExtranjero') {
+                if (!Constant.dirtyFields.has('pvPorNacional') && !Constant.dirtyFields.has('pvPorExtranjero')) return;
+
+                const porcNac = parseFloat(pvPorNacional.value.trim() || 0);
+                const porcExt = parseFloat(pvPorExtranjero.value.trim() || 0);
+
+                //porcentaje nacional vacio o 0: invalido
+                if (porcNac === 0 || porcNac > 100 || pvPorNacional.value.trim() === '') {
+                    toggleValidInput(pvPorNacional, false, 'Porcentaje inválido.');
+                    toggleValidInput(pvPorExtranjero, true);
+                    return;
+                }
+
+                //porcentaje nacional es el 100%, valido y extranjero no aplica
+                if (porcNac === 100) {
+                    toggleValidInput(pvPorNacional, true);
+                    toggleValidInput(pvPorExtranjero, true);
+                    return;
+                }
+
+                // % nacional < 100, se espera porcentaje extranjero
+                if (porcExt === 0 || pvPorExtranjero.value.trim() === '') {
+                    toggleValidInput(pvPorNacional, true);
+                    if (Constant.dirtyFields.has('pvPorExtranjero')) {
+                        toggleValidInput(pvPorExtranjero, false, 'Ingrese el % extranjero.')
+                    }
+                    return;
+                }
+
+                const totalPorc = porcNac + porcExt;
+                if (totalPorc !== 100) {
+                    toggleValidInput(pvPorNacional, false, `Total: ${totalPorc}% (la suma de los dos % debe ser 100%)`);
+                    toggleValidInput(pvPorExtranjero, false, `Total: ${totalPorc}% (la suma de los dos % debe ser 100%)`);
+                } else {
+                    toggleValidInput(pvPorNacional, true);
+                    toggleValidInput(pvPorExtranjero, true);
+                }
+            }
+            else if (id === 'upRefeComerciales' || id === 'upEstadoFinanciero') {
+                const fileNames = value.split(', ').filter(n => n.trim() !== '');
+                toggleValidInput(el,
+                    fileNames.length >= 2,
+                    fileNames.length === 0 ? 'Este campo es obligatorio.' : 'Ingrese los dos (2) archivos.'
+                );
+            }
+            else {
+                toggleValidInput(el, value !== '', 'Este campo es obligatorio.');
             }
         };
-        check();
+
+        //'blur' -> marca como "tocado" y lo valida (excepto los panel de docs que no se han abierto o los que estan abiertos)
+        el.addEventListener('blur', function () {
+            if (isDocsField && !el.dataset.panelVisited) return;
+            if (isDocsField && el.dataset.panelOpen) return;
+            Constant.dirtyFields.add(id);
+            validateEvent();
+        });
+
+        //change (select/select2) -> marca como "tocado" y valida
+        $(el).on('change', function () {
+            if (isAutoFilling) return;
+            if (isDocsField && !el.dataset.panelVisited) return;
+            Constant.dirtyFields.add(id);
+            validateEvent();
+
+            if (id === 'pvAcEconomica' || id === 'pvCodCIIU') {
+                const otherId = id === 'pvAcEconomica' ? 'pvCodCIIU' : 'pvAcEconomica';
+                const otherEl = document.getElementById(otherId);
+                if (el.value !== '') toggleValidInput(otherEl, true);
+            }
+        });
+
+        el.addEventListener('input', function () {
+            if (!Constant.dirtyFields.has(id)) return;
+            validateEvent();
+        });
     });
-};
+
+    //validacion IRT en la fila existente en html
+    controlTableBody.querySelectorAll('.control-row').forEach(row => initAccionistIRT(row));
+}
 
 //funcion que identifica tipo de nacionalidad en form persona natural
 export function tipDocument() {
@@ -186,9 +331,9 @@ export function tipDocument() {
     pnTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? docNacionales
+        ? Constant.docNacionales
         : tipoNac === 'Extranjero'
-            ? docExtranjeros
+            ? Constant.docExtranjeros
             : [];
 
     listTipDoc.forEach(doc => {
@@ -206,9 +351,9 @@ export function pjTipDocument() {
     pjRLTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? pjRLDocNaci
+        ? Constant.pjRLDocNaci
         : tipoNac === 'Extranjero'
-            ? pjRLDocExtr
+            ? Constant.pjRLDocExtr
             : [];
 
     listTipDoc.forEach(doc => {
@@ -216,6 +361,21 @@ export function pjTipDocument() {
         option.value = doc.value;
         option.textContent = doc.text;
         pjRLTipoDoc.appendChild(option);
+    });
+}
+
+//funcion que gestiona los select de persona natural y enlaza los listener de ubi extranjera
+function bindExtrUbi(selPais, selEstado, selCiudad) {
+    $(selPais).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
+        const states = await API.loadStates(this.value);
+        fillSelect2(selEstado, states, 'Seleccione estado', 'id', 'name');
+        setSelectEnabled(selEstado, true);
+
+        $(selEstado).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
+            const cities = await API.loadCities(this.value);
+            fillSelect2(selCiudad, cities, 'Seleccione ciudad', 'id', 'name');
+            setSelectEnabled(selCiudad, true);
+        });
     });
 }
 
@@ -241,8 +401,7 @@ export async function ubicPNaHandler() {
         fillSelect2(pnNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
 
         $(pnNacionalidad).val('COLOMBIA').trigger('change.select2');
-        pnNacionalidad.disabled = true;
-        document.querySelector('label[for="pnNacionalidad"]').classList.add('disabled-label');
+        setSelectEnable(pnNacionalidad, false);
 
         //carga departamentos/ciudades de colombia
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
@@ -250,23 +409,12 @@ export async function ubicPNaHandler() {
         //departamentos de nacimiento, expedicion y residencia
         [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
             fillSelect2(depSelect, departamentos, 'Seleccione departamento');
-            depSelect.disabled = false;
-            document.querySelector(`label[for="${depSelect.id}"]`).classList.remove('disabled-label');
+            setSelectEnable(depSelect, true);
         });
 
-        const handleDeptChange = (depSelect, citySelect) => {
-            $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
-                const dep = this.value.trim().toUpperCase();
-                const municipios = ciudadByDep[dep] || [];
-                fillSelect2(citySelect, municipios, 'Seleccione ciudad');
-                citySelect.disabled = municipios.length === 0;
-                document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
-            });
-        };
-
-        handleDeptChange(pnEstadoNac, pnCiudadNac);
-        handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
-        handleDeptChange(pnDepRes, pnCiudadRes);
+        handleDeptChange(pnEstadoNac, pnCiudadNac, ciudadByDep);
+        handleDeptChange(pnDepExpDoc, pnCiuExpDoc, ciudadByDep);
+        handleDeptChange(pnDepRes, pnCiudadRes, ciudadByDep);
 
     }
     else if (nac === 'Extranjero') {
@@ -275,30 +423,20 @@ export async function ubicPNaHandler() {
         const countries = await API.loadUbiExt();
 
         fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
-        pnNacionalidad.disabled = false;
-        document.querySelector('label[for="pnNacionalidad"]').classList.remove('disabled-label');
+        setSelectEnable(pnNacionalidad, true);
 
         //Departamentos y ciudades colombianas para expedicion y residencia
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
         [pnDepExpDoc, pnDepRes].forEach(depSelect => {
             fillSelect2(depSelect, departamentos, 'Seleccione departamento');
-            depSelect.disabled = false;
-            document.querySelector(`label[for="${depSelect.id}"]`).classList.remove('disabled-label');
+            setSelectEnable(depSelect, true);
         });
 
-        const handleDeptChange = (depSelect, citySelect) => {
-            $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
-                const dep = this.value.trim().toUpperCase();
-                const municipios = ciudadByDep[dep] || [];
-                fillSelect2(citySelect, municipios, 'Seleccione ciudad');
-                citySelect.disabled = municipios.length === 0;
-                document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
-            });
-        };
+        handleDeptChange(pnDepExpDoc, pnCiuExpDoc, ciudadByDep);
+        handleDeptChange(pnDepRes, pnCiudadRes, ciudadByDep);
 
-        handleDeptChange(pnDepExpDoc, pnCiuExpDoc);
-        handleDeptChange(pnDepRes, pnCiudadRes);
+        bindExtrUbi(pnNacionalidad, pnEstadoNac, pnCiudadNac);
 
         //Estados y ciudades para país seleccionado
         $(pnNacionalidad).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
@@ -355,39 +493,24 @@ export async function ubicPJuHandler() {
     //datos de ubicacion colombiana
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
-    const handleDeptChange = (depSelect, citySelect) => {
-        $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
-            const dep = this.value.trim().toUpperCase();
-            const municipios = ciudadByDep[dep] || [];
-            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
-            citySelect.disabled = municipios.length === 0;
-            document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
-        });
-    };
-
     //limpia selects y los deshabilita si no es autorellenado del representante legal
     const selectClear = [pjDepartDilig, pjCiudadDilig, pjDepartDirPrincipal, pjCiudadDirPrincipal];
     selectClear.forEach(sel => {
         const $sel = $(sel);
         $sel.val(null).trigger('change.select2');
         $sel.empty();
-        if (!isAutoFilling) {
-            sel.disabled = true;
-            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
-        }
+        if (!isAutoFilling) setSelectEnable(sel, false);
     });
 
     //departamento y ciudad de diligenciamiento
     fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
-    pjDepartDilig.disabled = false;
-    document.querySelector(`label[for="pjDepartDilig"]`).classList.remove('disabled-label');
-    handleDeptChange(pjDepartDilig, pjCiudadDilig);
+    setSelectEnable(pjDepartDilig, true);
+    handleDeptChange(pjDepartDilig, pjCiudadDilig, ciudadByDep);
 
     //departamento y ciudad direccion principal
     fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
-    pjDepartDirPrincipal.disabled = false;
-    document.querySelector(`label[for="pjDepartDirPrincipal"]`).classList.remove('disabled-label');
-    handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal);
+    setSelectEnable(pjDepartDirPrincipal, true);
+    handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal, ciudadByDep);
 
 }
 
@@ -402,30 +525,16 @@ export async function ubicPJuReLeHandler() {
         const $sel = $(sel);
         $sel.val(null).trigger('change.select2');
         $sel.empty();
-        if (!isAutoFilling) {
-            sel.disabled = true;
-            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
-        }
+        if (!isAutoFilling) setSelectEnable(sel, false);
     });
 
     //datos de ubicacion colombiana
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
-    const handleDeptChange = (depSelect, citySelect) => {
-        $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
-            const dep = this.value.trim().toUpperCase();
-            const municipios = ciudadByDep[dep] || [];
-            fillSelect2(citySelect, municipios, 'Seleccione ciudad');
-            citySelect.disabled = municipios.length === 0;
-            document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
-        });
-    };
-
     //departamento y ciudad expedicion documento representante legal
     fillSelect2(pjRLDepExpDoc, ubi_Departamentos, 'Seleccione departamento');
-    pjRLDepExpDoc.disabled = false;
-    document.querySelector(`label[for="pjRLDepExpDoc"]`).classList.remove('disabled-label');
-    handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc);
+    setSelectEnable(pjRLDepExpDoc, true);
+    handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc, ciudadByDep);
 
     //ubicacion nacimiento de representante legal
     const nac = pjRLTipNacionalidad.value;
@@ -433,856 +542,70 @@ export async function ubicPJuReLeHandler() {
         //pais fijo colombia
         fillSelect2(pjRLNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
         $(pjRLNacionalidad).val('COLOMBIA').trigger('change.select2');
-        pjRLNacionalidad.disabled = true;
-        document.querySelector('label[for="pjRLNacionalidad"]').classList.add('disabled-label');
+        setSelectEnable(pjRLNacionalidad, false);
 
         //depatamento y ciudad colombianos
         fillSelect2(pjRLDepartNac, ubi_Departamentos, 'Seleccione departamento');
-        pjRLDepartNac.disabled = false;
-        document.querySelector(`label[for="pjRLDepartNac"]`).classList.remove('disabled-label');
+        setSelectEnable(pjRLDepartNac, true);
 
-        handleDeptChange(pjRLDepartNac, pjRLCiudadNac);
+        handleDeptChange(pjRLDepartNac, pjRLCiudadNac, ciudadByDep);
     }
     else if (nac === 'Extranjero') {
         //carga paises
         const countries = await API.loadUbiExt();
         fillSelect2(pjRLNacionalidad, countries, 'Seleccione país', 'id', 'name');
-        pjRLNacionalidad.disabled = false;
-        document.querySelector('label[for="pjRLNacionalidad"]').classList.remove('disabled-label');
+        setSelectEnable(pjRLNacionalidad, true);
 
-        //Estados y ciudades para país seleccionado
-        $(pjRLNacionalidad).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
-
-            const countryId = this.value;
-            //estados
-            const states = await API.loadStates(countryId);
-            fillSelect2(pjRLDepartNac, states, 'Seleccione estado', 'id', 'name');
-            pjRLDepartNac.disabled = false;
-            document.querySelector('label[for="pjRLDepartNac"]').classList.remove('disabled-label');
-
-            //ciudades
-            $(pjRLDepartNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
-                const stateId = this.value;
-                const cities = await API.loadCities(stateId);
-                fillSelect2(pjRLCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
-                pjRLCiudadNac.disabled = false;
-                document.querySelector('label[for="pjRLCiudadNac"]').classList.remove('disabled-label');
-            });
-        });
+        bindExtrUbi(pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac);
     }
-}
-
-//logica para animacion visual de labels
-export function hasValue() {
-    document.querySelectorAll('.form-control').forEach(input => {
-        // Verificar al cargar la página (por si hay valores previos)
-        if (input.value.trim() !== "") {
-            input.classList.add('has-value');
-        } else {
-            input.classList.remove('has-value');
-        }
-
-        // Escuchar cuando el usuario interactúa
-        input.addEventListener('change', () => {
-            if (input.value.trim() !== "") {
-                input.classList.add('has-value');
-            } else {
-                input.classList.remove('has-value');
-            }
-        });
-    });
-}
-
-//limpia todos los errores visuales de validacion IRT
-export function clearValidationIRT() {
-    document.querySelectorAll('.is-invalid-custom').forEach(el => el.classList.remove('is-invalid-custom'));
-    document.querySelectorAll('.error-message').forEach(el => el.remove());
-    dirtyFields.clear();
-}
-
-//logica que asigna la validacion de campos
-export function initValidationIRT() {
-    //validacion de campos simples
-    const requiredFields = [
-        'pnPrimerApell', 'pnSegundoApell', 'pnNombres', 'pnTipoNacionalidad', 'pnTipoDoc', 'pnFechaExpDoc', 'pnDepExpDoc', 'pnCiuExpDoc', 'pnNacionalidad',
-        'pnEstadoNac', 'pnCiudadNac', 'pnFechaNac', 'pnDiResidencia', 'pnDepRes', 'pnCiudadRes', 'pnEmail', 'pnTelefono', 'pnCelular', 'pnActividad',
-        'pnReconoPblSi', 'pnManRePubSi', 'pnPEPSi', 'pnPEP-Nac', 'pnPEP_Entidad', 'pjRazSocial', 'pjDepartDilig', 'pjCiudadDilig', 'pjDirPrincipal',
-        'pjDepartDirPrincipal', 'pjCiudadDirPrincipal', 'pjEmailDirPrincipal', 'pjTelDirPrincipal', 'pjPrimApeRL', 'pjSegApeRL', 'pjNomReLeg',
-        'pjRLTipNacionalidad', 'pjRLTipoDoc', 'pjRLDocNum', 'pjRLFechExpDoc', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'pjRLFechaNac', 'pjRLNacionalidad',
-        'pjRLDepartNac', 'pjRLCiudadNac', 'pvIngrMens', 'pvEgrMens', 'pvActivos', 'pvPasivos', 'pvPatrimonio', 'pvOtrIngr', 'pvPorNacional', 'pvPorExtranjero', 'pvPorPais',
-        'pvTipEmp', 'pvAcEconomica', 'pvCodCIIU', 'pvCapSocReg', 'pvFechConst', 'pvFechVen', 'pvGrConSi', 'pvFechResolGC', 'pvNumResolGC', 'pvDeclIndComSi',
-        'pvDepartDec', 'pvCiudadDec', 'pvAutRetSi', 'pvNumResDIAN', 'pvOpeCExtSi', 'pvForPag', 'pvEntBenef', 'pvPosCuBanSi', 'pvEntidad', 'pvNumCueBanc',
-        'pvClasCueBan', 'pvCeOEASi', 'pvCeCalSi', 'pvCeBASCSi', 'pvCeAmbSi', 'pvCe28000Si', 'pvCeSSTSi', 'pvTDPMotMaqSI', 'pvTDPCasTorSI', 'pvTDPBonapSI',
-        'pvRadAutSI', 'pvDeAuRepresentacion', 'pvFuenteRecur', 'pvCumCSInSI', 'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
-        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias', 'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico',
-        'upContingFirmada', 'upCertifiOEA', 'upAcuerdoSeguridad'
-    ];
-
-    const docsFieldIds = new Set ([
-        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
-        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias',
-        'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada', 'upCertifiOEA',
-        'upAcuerdoSeguridad'
-    ]);
-
-    requiredFields.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        const isDocsField = docsFieldIds.has(id);
-
-        //para radios y checkbox valida al hacer change (no al registrar)
-        if (el.type === 'radio' || el.type === 'checkbox') {
-            const elName = el.name;
-            const radios = document.querySelectorAll(`input[name="${elName}"]`);
-            radios.forEach(r => {
-                r.addEventListener('change', function () {
-                    dirtyFields.add(elName);
-                    const isChecked = document.querySelector(`input[name="${elName}"]:checked`);
-                    toggleValidInput(el, !!isChecked, 'Seleccione una opción.');
-                });
-            });
-            return;
-        }
-
-        //eventos 'blur' y 'change'
-        const validateEvent = () => {
-            if (isAutoFilling) return;
-            if (!dirtyFields.has(id)) return;
-            if (el.disabled || el.display === 'none') {
-                toggleValidInput(el, true);
-                return;
-            }
-
-            const value = el.value ? el.value.trim() : '';
-
-            //logica especifica por tipo de campo
-            if (id === 'pnFechaNac' || id === 'pjRLFechaNac') {
-                const isValid = value !== '' && isAdult(value);
-                toggleValidInput(el, isValid, value === '' ? 'Este campo es obligatorio.' : 'La persona debe ser mayor de edad.');
-            }
-            else if (id === 'pnEmail' || id === 'pjEmailDirPrincipal') {
-                const isValid = regexEmail.test(value);
-                toggleValidInput(el, isValid, 'Ingrese un correo valido.');
-            }
-            else if (el.type === 'tel') {
-                const iti = telInst[id];
-                const isValid = value === '' ? false : iti.isValidNumber();
-                toggleValidInput(el, isValid, 'Ingrese un número de teléfono válido.');
-            }
-            else if (id === 'pnDiResidencia' || id === 'pjDirPrincipal' || id.includes('pjDirSucursal_')) {
-                value === '' ? toggleValidInput(el, false, 'Este campo es obligatorio.') : parseDirection(el);
-            }
-            else if (id === 'pvPorNacional' || id === 'pvPorExtranjero') {
-                if (!dirtyFields.has('pvPorNacional') && !dirtyFields.has('pvPorExtranjero')) return;
-
-                const porcNac = parseFloat(pvPorNacional.value.trim() || 0);
-                const porcExt = parseFloat(pvPorExtranjero.value.trim() || 0);
-
-                //porcentaje nacional vacio o 0: invalido
-                if (porcNac === 0 || porcNac > 100 || pvPorNacional.value.trim() === '') {
-                    toggleValidInput(pvPorNacional, false, 'Porcentaje inválido.');
-                    toggleValidInput(pvPorExtranjero, true);
-                    return;
-                }
-
-                //porcentaje nacional es el 100%, valido y extranjero no aplica
-                if (porcNac === 100) {
-                    toggleValidInput(pvPorNacional, true);
-                    toggleValidInput(pvPorExtranjero, true);
-                    return;
-                }
-
-                // % nacional < 100, se espera porcentaje extranjero
-                if (porcExt === 0 || pvPorExtranjero.value.trim() === '') {
-                    toggleValidInput(pvPorNacional, true);
-                    if (dirtyFields.has('pvPorExtranjero')) {
-                        toggleValidInput(pvPorExtranjero, false, 'Ingrese el % extranjero.')
-                    }
-                    return;
-                }
-
-                const totalPorc = porcNac + porcExt;
-                if (totalPorc !== 100) {
-                    toggleValidInput(pvPorNacional, false, `Total: ${totalPorc}% (la suma de los dos % debe ser 100%)`);
-                    toggleValidInput(pvPorExtranjero, false, `Total: ${totalPorc}% (la suma de los dos % debe ser 100%)`);
-                } else {
-                    toggleValidInput(pvPorNacional, true);
-                    toggleValidInput(pvPorExtranjero, true);
-                }
-            }
-            else {
-                toggleValidInput(el, value !== '', 'Este campo es obligatorio.');
-            }
-        };
-
-        //'blur' -> marca como "tocado" y lo valida (excepto los panel de docs que no se han abierto o los que estan abiertos)
-        el.addEventListener('blur', function () {
-            if (isDocsField && !el.dataset.panelVisited) return;
-            if (isDocsField && el.dataset.panelOpen) return;
-            dirtyFields.add(id);
-            validateEvent();
-        });
-
-        //change (select/select2) -> marca como "tocado" y valida
-        $(el).on('change', function () {
-            if (isAutoFilling) return;
-            if (isDocsField && !el.dataset.panelVisited) return;
-            dirtyFields.add(id);
-            validateEvent();
-
-            if (id === 'pvAcEconomica' || id === 'pvCodCIIU') {
-                const otherId = id === 'pvAcEconomica' ? 'pvCodCIIU' : 'pvAcEconomica';
-                const otherEl = document.getElementById(otherId);
-                if (el.value !== '') toggleValidInput(otherEl, true);
-            }
-        });
-
-        el.addEventListener('input', function () {
-            if (!dirtyFields.has(id)) return;
-            validateEvent();
-        });
-    });
 }
 
 //funcion que gestiona los select de ubicacion del provForm (Informacion Financiera)
 export async function ubicProvFormHandler() {
 
-    //si es autorellenado no limpia los selects de ubicacion
+    //si es autorellenado no limpia los selects de ubicacion, actividad economica y codigo CIIU
     if (!isAutoFilling) {
         [pvPorPais, pvDepartDec, pvCiudadDec].forEach(sel => {
-            $(sel).empty().prop("disabled", true);
-            document.querySelector(`label[for="${sel.id}"]`).classList.add('disabled-label');
+            $(sel).empty();
+            setSelectEnable(sel, false);
         });
-    }
-
-    //limpia actividad economica y codigo CIIU si no es autorellenado o si lo es
-    if (!isAutoFilling || isAutoFilling) {
+    } else {
         [pvAcEconomica, pvCodCIIU, pvEntidad].forEach(sel => {
-            dirtyFields.delete(sel.id);
+            Constant.dirtyFields.delete(sel.id);
             $(sel).val(null).trigger('change');
-        })
+        });
     }
 
     //carga pais extranjero de porcentaje origen de capital
     const countries = await API.loadUbiExt();
     fillSelect2(pvPorPais, countries, 'Seleccione país', 'id', 'name');
-    pvPorPais.disabled = false;
-    document.querySelector(`label[for="pvPorPais"]`).classList.remove('disabled-label');
+    setSelectEnable(pvPorPais, true);
 
     //carga departamento y ciudad de declaracion
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
     fillSelect2(pvDepartDec, departamentos, 'Seleccione departamento');
-    pvDepartDec.disabled = false;
-    document.querySelector(`label[for="pvDepartDec"]`).classList.remove('disabled-label');
+    setSelectEnable(pvDepartDec, true);
 
-    if (!pvDepartDec.value) {
-        pvCiudadDec.disabled = true;
-        document.querySelector(`label[for="pvCiudadDec"]`).classList.add('disabled-label');
-    }
+    if (!pvDepartDec.value) setSelectEnable(pvCiudadDec, false);
 
     $(pvDepartDec).off('change.ubiNac').on('change.ubiNac', function () {
         const selectedDep = this.value.trim().toUpperCase();
         const municipios = ciudadByDep[selectedDep] || [];
 
         fillSelect2(pvCiudadDec, municipios, 'Seleccione ciudad');
-        pvCiudadDec.disabled = municipios.length === 0;
-        document.querySelector(`label[for="pvCiudadDec"]`).classList.remove('disabled-label');
+        setSelectEnable(pvCiudadDec, municipios.length > 0);
     });
 
     if (isAutoFilling && pvDepartDec.value) {
         $(pvDepartDec).trigger('change.ubiNac');
     }
-        
+
     togglePvPais();
     togglePvDIC();
 }
 
-//funcion para precargar los datos del formulario persona natural
-export async function loadFormData_Natural(data) {
-    //bloquea los eventos de cambio para evitar conflictos durante el auto llenado
-    isAutoFilling = true;
-
-    const form = document.getElementById('persNatuForm');
-
-    //limpieza inicial
-    form.querySelectorAll('input,select, textarea').forEach(el => {
-        if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
-        else el.value = '';
-    });
-
-    if (!data) {
-        isAutoFilling = false;
-        return;
-    }
-
-    //tipo nacionalidad
-    if (data.pnTipoNacionalidad) {
-        $(pnTipoNacionalidad).val(data.pnTipoNacionalidad);
-
-        //tipo de documento segun nacionalidad
-        tipDocument();
-
-        await ubicPNaHandler();
-
-        if (data.pnTipoDoc) {
-            pnTipoDoc.value = data.pnTipoDoc;
-        }
-    } else {
-        tipDocument();
-        await ubicPNaHandler();
-    }
-    //mapea nit al campo de identificacion
-    if (data.Nit) document.getElementById('pnNumId').value = data.Nit;
-
-    await waitSafeSetPhone('pnCelular', data.pnCelular);
-    await waitSafeSetPhone('pnTelefono', data.pnTelefono);
-
-
-    //ubicaciones
-
-    //nacimiento
-    if (data.pnNacionalidad) {
-        await setSelect2Val(pnNacionalidad, data.pnNacionalidad);
-
-        if (data.pnTipoNacionalidad === 'Nacional') {
-            $(pnNacionalidad).trigger("change.ubiNac");
-        } else if (data.pnTipoNacionalidad === 'Extranjero') {
-            $(pnNacionalidad).trigger("change.ubiExtrPais");
-        }
-
-        await awaitOpt(pnEstadoNac);
-
-        if (data.pnEstadoNac) {
-            await setSelect2Val(pnEstadoNac, data.pnEstadoNac);
-
-            if (data.pnTipoNacionalidad === 'Nacional') {
-                $(pnEstadoNac).trigger("change.ubiNac");
-            } else if (data.pnTipoNacionalidad === 'Extranjero') {
-                $(pnEstadoNac).trigger("change.ubiExtrEstado");
-            }
-
-            await awaitOpt(pnCiudadNac);
-
-            if (data.pnCiudadNac) {
-                await setSelect2Val(pnCiudadNac, data.pnCiudadNac);
-            }
-        }
-    }
-
-    //expedicion
-    if (data.pnDepExpDoc) {
-        await setSelect2Val(pnDepExpDoc, data.pnDepExpDoc);
-        $(pnDepExpDoc).trigger("change.ubiNac");
-        await waitForSelec2(pnCiuExpDoc);
-    }
-    if (data.pnCiuExpDoc) {
-        await setSelect2Val(pnCiuExpDoc, data.pnCiuExpDoc);
-    }
-
-    //residencia
-    if (data.pnDepRes) {
-        await setSelect2Val(pnDepRes, data.pnDepRes);
-        $(pnDepRes).trigger("change.ubiNac");
-        await waitForSelec2(pnCiudadRes);
-    }
-    if (data.pnCiudadRes) {
-        await setSelect2Val(pnCiudadRes, data.pnCiudadRes);
-    }
-
-    //select Actividad
-    if (data.pnActividad) {
-        let pnActivity = data.pnActividad;
-        pnActivity = pnActivity.charAt(0).toUpperCase() + pnActivity.slice(1).toLowerCase();
-        pnActividad.value = pnActivity;
-    }
-
-    //asigna los campos simples excepto los que requieren logica especial
-    const skipCampos = [
-        'pnTipoNacionalidad', 'pnTipoDoc', 'pnNacionalidad',
-        'pnEstadoNac', 'pnCiudadNac', 'pnDepExpDoc',
-        'pnCiuExpDoc', 'pnDepRes', 'pnCiudadRes', 'Nit',
-        'pnCelular', 'pnTelefono', 'pnActividad'
-    ];
-
-    for (const key in data) {
-        if (!skipCampos.includes(key)) {
-            const el = document.getElementById(key);
-            if (el && data[key] != null) el.value = data[key];
-        }
-    }
-
-    //radios, PEP y checkboxes
-    if (data.pnReconoPublic) {
-        const r = form.querySelector(`input[name="pnReconoPublic"][value="${data.pnReconoPublic}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pnManRePub) {
-        const r = form.querySelector(`input[name="pnManRePub"][value="${data.pnManRePub}"]`);
-        if (r) r.checked = true;
-    }
-
-    if (data.pnPEP === 'Si') document.getElementById('pnPEPSi').checked = true;
-    if (data.pnPEP === 'No') document.getElementById('pnPEPNo').checked = true;
-
-    if (Array.isArray(data.PEPTypes)) {
-        data.PEPTypes.forEach(v => {
-            const chk = form.querySelector(`input[name="pnPEPType"][value="${v}"]`);
-            if (chk) chk.checked = true;
-        });
-    }
-
-    originalPEPTypes = Array.isArray(data.PEPTypes) ? [...data.PEPTypes] : [];
-    originalPEPEntidad = data.pnPEP_Entidad || '';
-
-    const entidadInput = document.getElementById('pnPEP_Entidad');
-    if (entidadInput) entidadInput.value = data.pnPEP_Entidad || '';
-
-    handlePEPChange();
-
-    isAutoFilling = false;
-}
-
-//funcion para precargar los datos del formulario persona juridica
-export async function loadFormData_Juridica(data) {
-    //bloquea los eventos de cambio para evitar conflictos durante el auto llenado
-    isAutoFilling = true;
-
-    const form = document.getElementById('persJuriForm');
-
-    //limpieza
-    form.querySelectorAll('input,select, textarea').forEach(el => {
-        if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
-        else el.value = '';
-    });
-
-    if (!data) {
-        isAutoFilling = false;
-        return;
-    }
-
-    //mapea nit
-    if (data.Nit) document.getElementById('pjNIT').value = data.Nit;
-
-    await waitSafeSetPhone('pjTelDirPrincipal', data.pjTelDirPrincipal);
-
-    //precarga las sucursales
-    document.querySelectorAll('.sucursal-item').forEach(item => item.remove());
-    if (data.Sucursales && Array.isArray(data.Sucursales) && data.Sucursales.length > 0) {
-
-        for (let index = 0; index < data.Sucursales.length; index++) {
-            addSucursalBtn.click();
-            const suc = data.Sucursales[index];
-            const i = index + 1;
-
-            //limite de seguridad para el autorellenado
-            if (i > maxSucursales) break;
-
-            if (i > 1) {
-                await awaitOpt(document.getElementById(`pjDepartDirSucursal_${i}`));
-            }
-
-            //llenar campos de texto
-            document.getElementById(`pjDirSucursal_${i}`).value = suc.pjSucursalDir || '';
-            document.getElementById(`pjEmailDirSucursal_${i}`).value = suc.pjSucursalEmail || '';
-            await waitSafeSetPhone(`pjTelDirSucursal_${i}`, suc.pjSucursalTel);
-            
-            //llenar selects de ubicacion de sucursales
-            const depSelect = document.getElementById(`pjDepartDirSucursal_${i}`);
-            const citySelect = document.getElementById(`pjCiudadDirSucursal_${i}`);
-
-            if (suc.pjSucursalDepart) {
-                await setSelect2Val(depSelect, suc.pjSucursalDepart);
-                $(depSelect).trigger("change.ubiSUC");
-                await waitForSelec2(citySelect);
-            }
-            if (suc.pjSucursalCiudad) {
-                await setSelect2Val(citySelect, suc.pjSucursalCiudad);
-            }
-        }
-    }
-
-    //precarga de tabla de accionistas
-    controlTableBody.querySelectorAll('.control-row').forEach(item => item.remove());
-
-    if (data.ControlRow && Array.isArray(data.ControlRow) && data.ControlRow.length > 0) {
-        data.ControlRow.forEach((row) => {
-            addControlRow();
-
-            const currentRow = controlTableBody.lastElementChild;
-
-            currentRow.querySelector('[name="controlRazonSocial[]"]').value = row.razonSocial || '';
-            currentRow.querySelector('[name="controlIdType[]"]').value = row.idType || '';
-            currentRow.querySelector('[name="controlIdNum[]"]').value = row.idNum || '';
-            currentRow.querySelector('[name="controlPorcentaje[]"]').value = row.porcentaje || '';
-        });
-    } else {
-        addControlRow({});
-    }
-
-    //precarga de representante legal
-    //tipo nacionalidad
-    if (data.pjRLTipNacionalidad) {
-        $(pjRLTipNacionalidad).val(data.pjRLTipNacionalidad);
-
-        //tipo documento segun nacionalidad
-        pjTipDocument();
-
-        if (data.pjRLTipoDoc) {
-            pjRLTipoDoc.value = data.pjRLTipoDoc;
-        }
-    } else {
-        pjTipDocument();
-    }
-    await ubicPJuHandler();
-    await ubicPJuReLeHandler();
-
-    //ubicacion
-
-    //diligenciamiento
-    if (data.pjDepartDilig) {
-        await setSelect2Val(pjDepartDilig, data.pjDepartDilig);
-        $(pjDepartDilig).trigger("change.ubiNac");
-        await waitForSelec2(pjCiudadDilig)
-    }
-    if (data.pjCiudadDilig) {
-        await setSelect2Val(pjCiudadDilig, data.pjCiudadDilig);
-    }
-
-    //direccion principal
-    if (data.pjDepartDirPrincipal) {
-        await setSelect2Val(pjDepartDirPrincipal, data.pjDepartDirPrincipal);
-        $(pjDepartDirPrincipal).trigger("change.ubiNac");
-        await waitForSelec2(pjCiudadDirPrincipal);
-    }
-    if (data.pjCiudadDirPrincipal) {
-        await setSelect2Val(pjCiudadDirPrincipal, data.pjCiudadDirPrincipal);
-    }
-
-    //nacimiento
-    if (data.pjRLNacionalidad) {
-        await setSelect2Val(pjRLNacionalidad, data.pjRLNacionalidad);
-
-        if (data.pjRLTipNacionalidad === 'Nacional') {
-            $(pjRLNacionalidad).trigger("change.ubiNac");
-        } else if (data.pjRLTipNacionalidad === 'Extranjero') {
-            $(pjRLNacionalidad).trigger("change.ubiExtrPais");
-        }
-
-        await awaitOpt(pjRLDepartNac);
-
-        if (data.pjRLDepartNac) {
-            await setSelect2Val(pjRLDepartNac, data.pjRLDepartNac);
-
-            if (data.pjRLTipNacionalidad === 'Nacional') {
-                $(pjRLDepartNac).trigger("change.ubiNac");
-            } else if (data.pjRLTipNacionalidad === 'Extranjero') {
-                $(pjRLDepartNac).trigger("change.ubiExtrEstado");
-            }
-
-            await awaitOpt(pjRLCiudadNac);
-
-            if (data.pjRLCiudadNac) {
-                await setSelect2Val(pjRLCiudadNac, data.pjRLCiudadNac);
-            }
-        }
-    }
-
-    //expedicion
-    if (data.pjRLDepExpDoc) {
-        await setSelect2Val(pjRLDepExpDoc, data.pjRLDepExpDoc);
-        $(pjRLDepExpDoc).trigger("change.ubiNac");
-        await waitForSelec2(pjRLCiuExpDoc);
-    }
-    if (data.pjRLCiuExpDoc) {
-        await setSelect2Val(pjRLCiuExpDoc, data.pjRLCiuExpDoc);
-    }
-
-    //asigna los campos simples excepto los que requieren logica especial
-    const skitCampos = [
-        'pjRLTipNacionalidad', 'pjRLTipoDoc', 'pjRLNacionalidad', 'pjRLDepartNac',
-        'pjRLCiudadNac', 'pjRLDepExpDoc', 'pjRLCiuExpDoc', 'Nit', 'pjTelDirPrincipal'
-    ];
-
-    for (const key in data) {
-        if (!skitCampos.includes(key)) {
-            const el = document.getElementById(key);
-            if (el && data[key] != null) el.value = data[key];
-        }
-    }
-
-    isAutoFilling = false;
-}
-
-//funcion para precargar datos en el formulario de informacion financiera (provForm)
-export async function loadProvFormData(data) {
-
-    isAutoFilling = true;
-
-    const form = document.getElementById('provForm');
-
-    //limpieza inicial
-    form.querySelectorAll('input,select, textarea').forEach(el => {
-        if (el.type === 'radio') el.checked = false;
-        else el.value = '';
-    });
-
-    if (!data) {
-        isAutoFilling = false;
-        return;
-    }
-
-    //permite que se cargue selects de ubicacion
-    await ubicProvFormHandler();
-
-    await waitForSelec2(pvDepartDec);
-    await waitForSelec2(pvCiudadDec);
-
-    //ubicacion pais
-    if (data.pvPorPais) {
-        await setSelect2Val(pvPorPais, data.pvPorPais);
-    }
-
-    //ubicaciones departamento y ciudad de declaracion
-    if (data.pvDepartDec) {
-        await setSelect2Val(pvDepartDec, data.pvDepartDec);
-        $(pvDepartDec).trigger("change.ubiNac");
-        await waitForSelec2(pvCiudadDec);
-    }
-    if (data.pvCiudadDec) {
-        await setSelect2Val(pvCiudadDec, data.pvCiudadDec);
-    }
-
-    //actividad economica y codigo CIIU
-    if (data.pvAcEconomica) {
-        await setSelect2Val(pvAcEconomica, data.pvAcEconomica);
-    }
-    if (data.pvCodCIIU) {
-        await setSelect2Val(pvCodCIIU, data.pvCodCIIU);
-    }
-
-    //entidad bancaria
-    if (data.pvEntidad) {
-        await setSelect2Val(pvEntidad, data.pvEntidad);
-    }
-
-    //select tipo de cuenta bancaria
-    if (data.pvClasCueBan) {
-        let pvCCB = data.pvClasCueBan;
-        pvCCB = pvCCB.charAt(0).toUpperCase() + pvCCB.slice(1).toLowerCase();
-        pvClasCueBan.value = pvCCB;
-    }
-
-    //asigna los campos simples excepto los que requieren logica especial
-    const skipCampos = [
-        'pvPorPais', 'pvDepartDec', 'pvCiudadDec',
-        'pvAcEconomica', 'pvCodCIIU', 'pvEntidad',
-        'pvClasCueBan'
-    ];
-
-    for (const key in data) {
-        if (!skipCampos.includes(key)) {
-            const el = document.getElementById(key);
-            if (el && data[key] != null) el.value = data[key];
-        }
-    }
-
-    //campos numericos con formato dinero
-    const skpCamposDinero = [
-        'pvIngrMens', 'pvEgrMens', 'pvActivos',
-        'pvPasivos', 'pvPatrimonio', 'pvOtrIngr',
-        'pvCapSocReg'
-    ];
-    skpCamposDinero.forEach(campo => {
-        const el = document.getElementById(campo);
-        if (el && data[campo]) {
-            el.value = formatCurrency(data[campo]);
-        }
-    });
-
-    //select tipo empresa
-    if (data.pvTipEmp) {
-        let pvTipoEmpr = data.pvTipEmp;
-        pvTipoEmpr = pvTipoEmpr.charAt(0).toUpperCase() + pvTipoEmpr.slice(1).toLowerCase();
-        pvTipEmp.value = pvTipoEmpr;
-    }
-
-    //radios
-    //if (data.pvTipEmp) {
-    //    const r = form.querySelector(`input[name="pvTipEmp"][value="${data.pvTipEmp}"]`);
-    //    if (r) r.checked = true;
-    //}
-    if (data.pvGrCon) {
-        const r = form.querySelector(`input[name="pvGrCon"][value="${data.pvGrCon}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvDeclIndCom) {
-        const r = form.querySelector(`input[name="pvDeclIndCom"][value="${data.pvDeclIndCom}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvAutRet) {
-        const r = form.querySelector(`input[name="pvAutRet"][value="${data.pvAutRet}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvPosCuBan) {
-        const r = form.querySelector(`input[name="pvPosCuBan"][value="${data.pvPosCuBan}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvOpeCExt) {
-        const r = form.querySelector(`input[name="pvOpeCExt"][value="${data.pvOpeCExt}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCeOEA) {
-        const r = form.querySelector(`input[name="pvCeOEA"][value="${data.pvCeOEA}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCeCal) {
-        const r = form.querySelector(`input[name="pvCeCal"][value="${data.pvCeCal}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCeBASC) {
-        const r = form.querySelector(`input[name="pvCeBASC"][value="${data.pvCeBASC}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCeAmb) {
-        const r = form.querySelector(`input[name="pvCeAmb"][value="${data.pvCeAmb}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCe28000) {
-        const r = form.querySelector(`input[name="pvCe28000"][value="${data.pvCe28000}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCeSST) {
-        const r = document.querySelector(`input[name="pvCeSST"][value="${data.pvCeSST}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvTDPMotMaq) {
-        const r = document.querySelector(`input[name="pvTDPMotMaq"][value="${data.pvTDPMotMaq}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvTDPCasTor) {
-        const r = document.querySelector(`input[name="pvTDPCasTor"][value="${data.pvTDPCasTor}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvTDPBonap) {
-        const r = document.querySelector(`input[name="pvTDPBonap"][value="${data.pvTDPBonap}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvCumCSIn) {
-        const r = document.querySelector(`input[name="pvCumCSIn"][value="${data.pvCumCSIn}"]`);
-        if (r) r.checked = true;
-    }
-    if (data.pvRadAut) {
-        const r = document.querySelector(`input[name="pvRadAut"][value="${data.pvRadAut}"]`);
-        if (r) r.checked = true;
-    }
-
-    //togglePvTE();
-    togglePvPais();
-    togglePvGC();
-    togglePvDIC();
-    togglePvAR();
-    togglePvCB();
-    togglePvCoEx();
-
-    isAutoFilling = false;
-}
-
-//funcion para precargar datos de proveedores_Master
-export async function loadMasterData(masterData, formId, idNum, suggest) {
-
-    const cleanTel = masterData.telefono ? masterData.telefono.replace(/\s+/g, '') : "";
-
-    if (formId === 'persNatuForm') {
-        //precarga los campos que coincida con la data de master
-        document.getElementById('pnPrimerApell').value = suggest.firstSurname || '';
-        document.getElementById('pnSegundoApell').value = suggest.secondSurname || '';
-        document.getElementById('pnNombres').value = suggest.names || '';
-        //document.getElementById('pnDiResidencia').value = masterData.direccion || '';
-        document.getElementById('pnEmail').value = masterData.correo || '';
-
-        const pnInpNumId = document.getElementById('pnNumId');
-        if (pnInpNumId) {
-            document.getElementById('pnNumId').value = idNum;
-        }
-
-        const inputDir = document.getElementById('pnDiResidencia');
-        if (inputDir && masterData.direccion) {
-            inputDir.value = masterData.direccion;
-
-            // LLAMADA CLAVE: Validar apenas se pone el valor
-            parseDirection(inputDir);
-        }
-
-        const isFijo = cleanTel.startsWith('60') || cleanTel.startsWith('+5760');
-
-        //asigna el telefono al campo correspondiente
-        if (isFijo) {
-            await waitSafeSetPhone('pnTelefono', cleanTel);
-            await waitSafeSetPhone('pnCelular', '');
-        } else {
-            await waitSafeSetPhone('pnCelular', cleanTel);
-            await waitSafeSetPhone('pnTelefono', '');
-        }
-
-        document.getElementById('pvDeAuRepresentacion').value = masterData.nombre || '';
-    }
-    else if (formId === 'persJuriForm') {
-        //precarga los campos que coincida con la data de master
-        document.getElementById('pjRazSocial').value = masterData.nombre || '';
-        //document.getElementById('pjDirPrincipal').value = masterData.direccion || '';
-        document.getElementById('pjEmailDirPrincipal').value = masterData.correo || '';
-
-        await waitSafeSetPhone('pjTelDirPrincipal', cleanTel);
-
-        const pjInpNumId = document.getElementById('pjNIT');
-        if (pjInpNumId) {
-            document.getElementById('pjNIT').value = idNum;
-        }
-
-        const inputDir = document.getElementById('pjDirPrincipal');
-        if (inputDir && masterData.direccion) {
-            inputDir.value = masterData.direccion;
-
-            // LLAMADA CLAVE: Validar apenas se pone el valor
-            parseDirection(inputDir);
-        }
-
-        document.getElementById('pvDeAuRepresentacion').value = masterData.nombre || '';
-    }
-}
-
-
-//logica para campos form Informacion Financiera (provForm)
-export const formatCurrency = (value) => {
-    if (!value) return '';
-
-    const cleanValue = value.toString().replace(/\D/g, '');
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0
-    }).format(cleanValue);
-};
-export const unformatCurrency = (value) => {
-    return value.replace(/\D/g, '');
-};
-//export function togglePvTE() {
-//    const siOtra = document.getElementById('pvEmOtra').checked;
-//    const inpTE = document.getElementById('pvOtrTipEmp');
-//    const labTE = document.querySelector('label[for="pvOtrTipEmp"]');
-//    if (siOtra) {
-//        inpTE.classList.remove('no-edit');
-//        labTE.classList.remove('disabled-label');
-//        inpTE.required = true;
-//    } else {
-//        pvOtrTipEmp.value = '';
-//        inpTE.classList.add('no-edit');
-//        labTE.classList.add('disabled-label');
-//        inpTE.required = false;
-//    }
-//}
+//logica que habilita porcentaje extranjero y pais del form Informacion Financiera (provForm)
 export function togglePvPais() {
     const hasNaVal = parseFloat(pvPorNacional.value.trim() || 0);
     const needExt = hasNaVal > 0 && hasNaVal < 100;
@@ -1293,7 +616,7 @@ export function togglePvPais() {
     if (!needExt) {
         pvPorExtranjero.value = '';
         hasValue();
-        dirtyFields.delete('pvPorExtranjero');
+        Constant.dirtyFields.delete('pvPorExtranjero');
         toggleValidInput(pvPorExtranjero, true);
     } 
 
@@ -1301,141 +624,82 @@ export function togglePvPais() {
     $(pvPorPais).prop('disabled', !hasVal).trigger('change.select2');
     document.querySelector(`label[for="pvPorPais"]`).classList.toggle('disabled-label', !hasVal);
     if (!hasVal) {
-        dirtyFields.delete('pvPorPais');
+        Constant.dirtyFields.delete('pvPorPais');
         $(pvPorPais).val(null).trigger('change.select2');
         toggleValidInput(pvPorPais, true);
     }
 }
-export function togglePvGC() {
-    const si = document.getElementById('pvGrConSi').checked;
-    const inpGC = [document.getElementById('pvFechResolGC'), document.getElementById('pvNumResolGC')];
-    const labGC = [document.querySelector('label[for="pvFechResolGC"]'), document.querySelector('label[for="pvNumResolGC"]')];
-    if (si) {
-        inpGC.forEach(el => el.classList.remove('no-edit'));
-        labGC.forEach(el => el.classList.remove('disabled-label'));
-        inpGC.forEach(el => el.required = true);
-    } else {
-        pvFechResolGC.value = '';
-        pvNumResolGC.value = '';
-        hasValue();
-        inpGC.forEach(el => el.classList.add('no-edit'));
-        labGC.forEach(el => el.classList.add('disabled-label'));
-        inpGC.forEach(el => {
-            el.required = false
-            toggleValidInput(el, true)
-        });
-    }
-}
-export function togglePvDIC() {
-    const si = document.getElementById('pvDeclIndComSi').checked;
-    const selDIC = [document.getElementById('pvDepartDec'), document.getElementById('pvCiudadDec')];
-    if (si) {
-        selDIC[0].disabled = false;
-        document.querySelector(`label[for="pvDepartDec"]`).classList.remove('disabled-label');
-        //.trigger('change.select2');
 
-        selDIC.forEach(el => el.required = true);
-    } else {
-        selDIC.forEach(el => {
-            $(el).prop('disabled', true).trigger('change.select2')
-            document.querySelector(`label[for="${el.id}"]`).classList.add('disabled-label');
+//funcion generica para habilitar o deshabilitar campos dependientes (provForm)
+function tDependentFields(show, fields) {
+    fields.forEach(({ id, type = 'input' }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const label = document.querySelector(`label[for="${id}"]`);
+
+        if (show) {
+            if (type === 'select') {
+                $(el).prop('disabled', false).trigger('change.select2');
+            } else {
+                el.classList.remove('no-edit');
+            }
+            label?.classList.remove('disabled-label');
+            el.required = true;
+            Constant.dirtyFields.delete(id);
             toggleValidInput(el, true);
-        });
-        selDIC.forEach(el => $(el).val(null).trigger('change.select2'));
-        selDIC.forEach(el => el.required = false);
-    }
+        } else {
+            if (type === 'select') {
+                $(el).prop('disabled', true).val(null).trigger('change.select2');
+            } else {
+                el.value = '';
+                el.classList.add('no-edit');
+            }
+            label?.classList.add('disabled-label');
+            el.required = false;
+            Constant.dirtyFields.delete(id);
+            toggleValidInput(el, true);
+        }
+    });
+    hasValue();
 }
+//Gran Contribuyente -> campos de resolucion (provForm)
+export function togglePvGC() {
+    tDependentFields(
+        document.getElementById('pvGrConSi').checked,
+        [{ id: 'pvFechResolGC' }, { id: 'pvNumResolGC' }]
+    );
+}
+//Declarante industria y comercio -> departamento y ciudad (provForm)
+export function togglePvDIC() {
+    tDependentFields(
+        document.getElementById('pvDeclIndComSi').checked,
+        [{ id: 'pvDepartDec', type: 'select' }, { id: 'pvCiudadDec', type: 'select' }]
+    );
+}
+//Auto retenedor -> numero de resolucion (provForm)
 export function togglePvAR() {
-    const si = document.getElementById('pvAutRetSi').checked;
-    const inpAR = document.getElementById('pvNumResDIAN');
-    const labAR = document.querySelector('label[for="pvNumResDIAN"]');
-    if (si) {
-        inpAR.classList.remove('no-edit');
-        labAR.classList.remove('disabled-label');
-        inpAR.required = true;
-    } else {
-        pvNumResDIAN.value = '';
-        hasValue();
-        inpAR.classList.add('no-edit');
-        labAR.classList.add('disabled-label');
-        inpAR.required = false;
-        toggleValidInput(inpAR, true);
-    }
+    tDependentFields(
+        document.getElementById('pvAutRetSi').checked,
+        [{ id: 'pvNumResDIAN' }]
+    );
 }
-export function togglePvCB() {
-    const si = document.getElementById('pvPosCuBanSi').checked;
-    const inpCB = document.getElementById('pvNumCueBanc');
-    const labCB = document.querySelector('label[for="pvNumCueBanc"]');
-
-    if (si) {
-        inpCB.classList.remove('no-edit');
-        labCB.classList.remove('disabled-label');
-        inpCB.required = true;
-
-        dirtyFields.delete('pvEntidad');
-        dirtyFields.delete('pvClasCueBan');
-
-        $(pvEntidad).prop('disabled', false).trigger('change.select2');
-        document.querySelector(`label[for="pvEntidad"]`).classList.remove('disabled-label');
-        pvEntidad.required = true;
-        toggleValidInput(pvEntidad, true);
-
-        $(pvClasCueBan).prop('disabled', false);
-        document.querySelector(`label[for="pvClasCueBan"]`).classList.remove('disabled-label');
-        pvClasCueBan.required = true;
-        toggleValidInput(pvClasCueBan, true);
-    } else {
-        pvNumCueBanc.value = '';
-        hasValue();
-        inpCB.classList.add('no-edit');
-        labCB.classList.add('disabled-label');
-        inpCB.required = false;
-        toggleValidInput(inpCB, true);
-
-        dirtyFields.add('pvEntidad');
-        dirtyFields.add('pvClasCueBan');
-
-        $(pvEntidad).prop('disabled', true).trigger('change.select2');
-        document.querySelector(`label[for="pvEntidad"]`).classList.add('disabled-label');
-        $(pvEntidad).val(null).trigger('change.select2');
-        pvEntidad.required = false;
-        toggleValidInput(pvEntidad, true);
-
-        $(pvClasCueBan).prop('disabled', true);
-        document.querySelector(`label[for="pvClasCueBan"]`).classList.add('disabled-label');
-        $(pvClasCueBan).val(null);
-        pvClasCueBan.required = false;
-        toggleValidInput(pvClasCueBan, true);
-    }
-}
+//Comercio exterior -> forma de pago y benficiados (provform)
 export function togglePvCoEx() {
-    const si = document.getElementById('pvOpeCExtSi').checked;
-    const inpFPCoEx = document.getElementById('pvForPag');
-    const labFPCoEx = document.querySelector('label[for="pvForPag"]');
-    const inpBenCoEx = document.getElementById('pvEntBenef');
-    const labBenCoEx = document.querySelector('label[for="pvEntBenef"]');
-
-    if (si) {
-        inpFPCoEx.classList.remove('no-edit');
-        labFPCoEx.classList.remove('disabled-label');
-        inpFPCoEx.required = true;
-        inpBenCoEx.classList.remove('no-edit');
-        labBenCoEx.classList.remove('disabled-label');
-        inpBenCoEx.required = true;
-    } else {
-        pvForPag.value = '';
-        inpFPCoEx.classList.add('no-edit');
-        labFPCoEx.classList.add('disabled-label');
-        inpFPCoEx.required = false;
-        toggleValidInput(inpFPCoEx, true);
-        pvEntBenef.value = '';
-        inpBenCoEx.classList.add('no-edit');
-        labBenCoEx.classList.add('disabled-label');
-        inpBenCoEx.required = false;
-        toggleValidInput(inpBenCoEx, true);
-
-        hasValue();
-    }
+    tDependentFields(
+        document.getElementById('pvOpeCExtSi').checked,
+        [{ id: 'pvForPag' }, { id: 'pvEntBenef' }]
+    );
+}
+//Posee cuenta bancaria -> entidad bancaria, numero de cuenta, clase de cuenta (provForm)
+export function togglePvCB() {
+    tDependentFields(
+        document.getElementById('pvPosCuBanSi').checked,
+        [
+            { id: 'pvNumCueBanc' },
+            { id: 'pvEntidad', type: 'select' },
+            { id: 'pvClasCueBan', type: 'select' }
+        ]
+    );
 }
 
 //logica para crear select dinamico a sucursal y agregar sucursal (usada por el click y loadFormData)
@@ -1463,8 +727,8 @@ export function addSucursalInternal(newIndex) {
     newIndex = currentSucursales + 1;
 
     if (newIndex > maxSucursales) {
-        alertBody.innerText = `Máximo ${maxSucursales} sucursales permitidas.`;
-        alert.show();
+        Constant.alertBody.innerText = `Máximo ${maxSucursales} sucursales permitidas.`;
+        Constant.alert.show();
         return;
     }
 
@@ -1505,10 +769,10 @@ export function addSucursalInternal(newIndex) {
     sucursalesContainer.appendChild(newSucursalDiv);
 
     const newTelInput = document.getElementById(`pjTelDirSucursal_${newIndex}`);
-    initTelInputs(newTelInput, false);
+    HUI.initTelInputs(newTelInput, false);
 
     if (newIndex && newIndex.telefono) {
-        telInst[`pjTelDirSucursal_${newIndex}`].setNumber(newIndex.telefono);
+        Constant.telInst[`pjTelDirSucursal_${newIndex}`].setNumber(newIndex.telefono);
     }
 
     //inicializa los selects de ubicacion para la nueva sucursal
@@ -1521,18 +785,18 @@ function initSucursalIRT(index) {
     const textFields = [
         {
             id: `pjDirSucursal_${index}`, validate: (el, val) => {
-                val === '' ? toggleValidInput(el, false, 'Este campo es obligatorio.') : parseDirection(el);
+                val === '' ? toggleValidInput(el, false, 'Este campo es obligatorio.') : HUI.parseDirection(el);
             }
         },
         {
             id: `pjEmailDirSucursal_${index}`, validate: (el, val) => {
-                const ok = val !== '' && regexEmail.test(val);
+                const ok = val !== '' && Constant.regexEmail.test(val);
                 toggleValidInput(el, ok, val === '' ? 'Este campo es obligatorio.' : 'Ingrese un correo válido.');
             }
         },
         {
             id: `pjTelDirSucursal_${index}`, validate: (el, val) => {
-                const iti = telInst[`pjTelDirSucursal_${index}`];
+                const iti = Constant.telInst[`pjTelDirSucursal_${index}`];
                 const ok = val !== '' && iti && iti.isValidNumber();
                 toggleValidInput(el, ok, val === '' ? 'Este campo es obligatorio.' : 'Ingrese un teléfono válido.')
             }
@@ -1578,8 +842,8 @@ export function addControlRow(newIndex) {
     newIndex = currencyAccionistas + 1;
 
     if (newIndex > maxAccionistas) {
-        alertBody.innerText = `Máximo ${maxAccionistas} accionistas permitidos.`;
-        alert.show();
+        Constant.alertBody.innerText = `Máximo ${maxAccionistas} accionistas permitidos.`;
+        Constant.alert.show();
         return;
     }
 
@@ -1667,9 +931,9 @@ function initAccionistIRT(row) {
         const validate = () => {
             const val = parseFloat(elPorc.value.trim() || 0);
             if (elPorc.value.trim() === '' || isNaN(val) || val <= 0) {
-                toggleValidInput(elPorc, false, 'Ingrese un porcentaje v\u00e1lido.');
+                toggleValidInput(elPorc, false, 'Ingrese un porcentaje válido.');
             } else if (val < 5) {
-                toggleValidInput(elPorc, false, 'El porcentaje m\u00ednimo es 5%.');
+                toggleValidInput(elPorc, false, 'El porcentaje mínimo es 5%.');
             } else {
                 toggleValidInput(elPorc, true);
                 validateTotalPorcentaje();
@@ -1678,64 +942,6 @@ function initAccionistIRT(row) {
         elPorc.addEventListener('blur', () => { dirty = true; validate(); });
         elPorc.addEventListener('input', () => { if (dirty) validate(); });
     }
-}
-
-//funcion para precargar nombres de los docs de uploadDocsForm
-export function loadDocsForm(data, isOEAValue) {
-    const form = document.getElementById('uploadDocsForm');
-    if (!form) return
-
-    //limpieza de arrays para evitar duplicacion al re-consultar
-    for (let key in existingFiles) delete existingFiles[key];
-    for (let key in tempFiles) delete tempFiles[key];
-    for (let key in filePaths) delete filePaths[key];
-
-    //limpieza inicial
-    form.querySelectorAll('input').forEach(el => {
-        if (el.type === 'radio' || el.type === 'checkbox') {
-            el.checked = false;
-        } else {
-            el.value = '';
-        }
-
-        el.classList.remove('file-existing', 'no-edit');
-    });
-
-    //carga de datos
-    if (isOEAValue) {
-        const r = form.querySelector(`input[name="upOEA"][value="${isOEAValue}"]`);
-        if (r) {
-            r.checked = true;
-            toggleOEA();
-        }
-    }
-
-    if (data && data.length > 0) {
-        data.forEach(doc => {
-            const categoria = doc.categoriaDOC || doc.CategoriaDOC;
-            const nombre = doc.nombreArchivo || doc.NombreArchivo;
-            const ruta = doc.rutaArchivo || doc.RutaArchivo;
-
-            if (categoria) {
-                if (!existingFiles[categoria]) existingFiles[categoria] = [];
-                existingFiles[categoria].push(nombre);
-
-                //se guarda la ruta asociada al nombre del archivo
-                if (!filePaths[categoria]) filePaths[categoria] = {};
-                filePaths[categoria][nombre] = ruta;
-            }
-        });
-
-        Object.keys(existingFiles).forEach(categoria => {
-            const input = document.getElementById(categoria);
-            if (input) {
-                input.value = existingFiles[categoria].join(', ');
-                input.classList.add('file-existing');
-            }
-        });
-    }
-
-    checkExclusiones();
 }
 
 //logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
@@ -1760,6 +966,7 @@ export function blockExcl(targetId, bloquear) {
         targInput.required = false;
         targInput.style.pointerEvents = 'none';
         if (label) label.classList.add('disabled-label')
+        toggleValidInput(targInput, true);
     } else {
         targInput.classList.remove('no-edit');
         targInput.required = true;
@@ -1772,40 +979,24 @@ export function toggleOEA() {
     const si = document.getElementById('upOEAsi').checked;
     const no = document.getElementById('upOEAno').checked;
     const containerYesOEA = document.getElementById('sectionYesOEA');
-    /*const containerNoOEA = document.getElementById('sectionNoOEA');*/
     if (si) {
-        //containerNoOEA.style.display = 'none';
-        //containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
-        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
 
         containerYesOEA.style.display = 'block';
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else if (no) {
         containerYesOEA.style.display = 'none';
-        //containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
-        //containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
         containerYesOEA.querySelectorAll('input').forEach(i => {
             i.value = '';
             i.required = false;
             i.classList.remove('file-existing');
         });
-        
-
-        //containerNoOEA.style.display = 'block';
-        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = true);
     } else {
         containerYesOEA.style.display = 'none';
-        //containerYesOEA.querySelectorAll('input').forEach(i => i.value = '');
-        //containerYesOEA.querySelectorAll('input').forEach(i => i.required = false);
         containerYesOEA.querySelectorAll('input').forEach(i => {
             i.value = '';
             i.required = false;
             i.classList.remove('file-existing');
         });
-
-        //containerNoOEA.style.display = 'none';
-        //containerNoOEA.querySelectorAll('input').forEach(i => i.value = '');
-        //containerNoOEA.querySelectorAll('input').forEach(i => i.required = false);
     }
 
 

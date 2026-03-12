@@ -105,7 +105,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     { "pvPorExtranjero", finanInfData.pvPorExtranjero },
                     { "pvPorPais", finanInfData.pvPorPais },
                     { "pvTipEmp", finanInfData.pvTipEmp },
-                    { "pvOtrTipEmp", finanInfData.pvOtrTipEmp },
                     { "pvAcEconomica", finanInfData.pvAcEconomica },
                     { "pvCodCIIU", finanInfData.pvCodCIIU },
                     { "pvCapSocReg", finanInfData.pvCapSocReg },
@@ -324,13 +323,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Nombre = fullname.ToUpper();
                         existingMaster.Direccion = providerData.pnDiResidencia;
                         existingMaster.Correo = providerData.pnEmail;
-                        existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnCelular) ? providerData.pnTelefono : providerData.pnCelular;
+                        existingMaster.Telefono = !string.IsNullOrWhiteSpace(providerData.pnCelular) ? providerData.pnCelular : providerData.pnTelefono;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
                         existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
                         existingMaster.TipoTramite_Formato = tipTramite;
                     }
 
                     var existingNatural = _context.Proveedores_Natural.FirstOrDefault(p => p.Nit == providerNit);
+
                     if (existingNatural != null)
                     {
                         existingNatural.pnPrimerApell = providerData.pnPrimerApell;
@@ -376,9 +376,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         var validPEPIds = _context.PEPtipos.Where(t => providerData.PEPTypes.Contains(t.IdPEP))
                                                              .Select(t => t.IdPEP)
                                                              .ToList();
-                        var old = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
-                        _context.PEPtipos_ProveedoresNatural.RemoveRange(old);
-
+                        
                         foreach (var id in validPEPIds)
                         {
                             _context.PEPtipos_ProveedoresNatural.Add(new PEPtipos_ProveedoresNatural
@@ -387,11 +385,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                                 TipoPEPid = id
                             });
                         }
-                    }
-                    else
-                    {
-                        var old = _context.PEPtipos_ProveedoresNatural.Where(p => p.NitProveedor == providerNit);
-                        _context.PEPtipos_ProveedoresNatural.RemoveRange(old);
                     }
                     _context.SaveChanges();
                     transaction.Commit();
@@ -455,41 +448,32 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     existingJuridica.pjRLCiudadNac = providerData.pjRLCiudadNac;
 
                     _context.Proveedores_Juridica.Update(existingJuridica);
-                    _context.SaveChanges();
 
                     var oldSucursales = _context.Sucursales_PJuridica.Where(s => s.NitProveedor == providerNit).ToList();
                     if (oldSucursales.Any())
                     {
                         _context.Sucursales_PJuridica.RemoveRange(oldSucursales);
-                        _context.SaveChanges();
                     }
                     if (providerData.Sucursales_PJuridica != null && providerData.Sucursales_PJuridica.Any())
                     {
-                        providerData.Sucursales_PJuridica = providerData.Sucursales_PJuridica.Select(s => new Sucursales_PJuridica
+                        foreach (var s in providerData.Sucursales_PJuridica) 
                         {
-                            NitProveedor = providerNit,
-                            Direccion = s.Direccion,
-                            Departamento = s.Departamento,
-                            Ciudad = s.Ciudad,
-                            Email = s.Email,
-                            Telefono = s.Telefono
-                        }).ToList();
-                    }
-                    if (providerData.Sucursales_PJuridica != null && providerData.Sucursales_PJuridica.Any())
-                    {
-                        foreach (var sucursal in providerData.Sucursales_PJuridica)
-                        {
-                            sucursal.NitProveedor = providerNit;
-                            _context.Sucursales_PJuridica.Add(sucursal);
+                            _context.Sucursales_PJuridica.Add(new Sucursales_PJuridica
+                            {
+                                NitProveedor = providerNit,
+                                Direccion = s.Direccion,
+                                Departamento = s.Departamento,
+                                Ciudad = s.Ciudad,
+                                Email = s.Email,
+                                Telefono = s.Telefono
+                            });
                         }
-                        _context.SaveChanges();
                     }
 
                     var oldAccionistas = _context.AccionistasControlPJuridica.Where(a => a.NitProveedor == providerNit).ToList();
                     if (oldAccionistas.Any())
                     {
                         _context.AccionistasControlPJuridica.RemoveRange(oldAccionistas);
-                        _context.SaveChanges();
                     }
 
                     if (providerData.AccionistasControlPJuridica != null && providerData.AccionistasControlPJuridica.Any())
@@ -506,8 +490,8 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                             };
                             _context.AccionistasControlPJuridica.Add(newAccionista);
                         }
-                        _context.SaveChanges();
                     }
+                    _context.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -540,7 +524,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingFinanInf.pvPorExtranjero = providerData.pvPorExtranjero;
                         existingFinanInf.pvPorPais = providerData.pvPorPais;
                         existingFinanInf.pvTipEmp = providerData.pvTipEmp;
-                        existingFinanInf.pvOtrTipEmp = providerData.pvOtrTipEmp;
                         existingFinanInf.pvAcEconomica = providerData.pvAcEconomica;
                         existingFinanInf.pvCodCIIU = providerData.pvCodCIIU;
                         existingFinanInf.pvCapSocReg = providerData.pvCapSocReg;
@@ -580,6 +563,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     {
                         throw new Exception($"Registro de Información Financiera para NIT {providerNit} no encontrado.");
                     }
+
                     _context.SaveChanges();
                     transaction.Commit();
                 }
@@ -629,7 +613,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         existingMaster.Nombre = fullname.ToUpper();
                         existingMaster.Direccion = proveedor.pnDiResidencia;
                         existingMaster.Correo = proveedor.pnEmail;
-                        existingMaster.Telefono = !string.IsNullOrWhiteSpace(proveedor.pnCelular) ? proveedor.pnTelefono : proveedor.pnCelular;
+                        existingMaster.Telefono = !string.IsNullOrWhiteSpace(proveedor.pnCelular) ? proveedor.pnCelular : proveedor.pnTelefono;
                         existingMaster.TipoPersona = tipPersona.ToUpper();
                         existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
                         existingMaster.TipoTramite_Formato = tipTramite;
@@ -660,28 +644,33 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         //metodo para agregar proveedor a la tabla de p. juridica a partir de la t. master
         public void AddProveedorJuridica(Proveedores_Juridica proveedor, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
-            try
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                _context.Proveedores_Juridica.Add(proveedor);
-
-                string providerNit = proveedor.Nit;
-
-                var existingMaster = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == providerNit);
-                if (existingMaster != null)
+                try
                 {
-                    existingMaster.Nombre = proveedor.pjRazSocial.ToUpper();
-                    existingMaster.Direccion = proveedor.pjDirPrincipal;
-                    existingMaster.Correo = proveedor.pjEmailDirPrincipal;
-                    existingMaster.Telefono = proveedor.pjTelDirPrincipal;
-                    existingMaster.TipoPersona = tipPersona.ToUpper();
-                    existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
-                    existingMaster.TipoTramite_Formato = tipTramite;
+                    _context.Proveedores_Juridica.Add(proveedor);
+
+                    string providerNit = proveedor.Nit;
+
+                    var existingMaster = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == providerNit);
+                    if (existingMaster != null)
+                    {
+                        existingMaster.Nombre = proveedor.pjRazSocial.ToUpper();
+                        existingMaster.Direccion = proveedor.pjDirPrincipal;
+                        existingMaster.Correo = proveedor.pjEmailDirPrincipal;
+                        existingMaster.Telefono = proveedor.pjTelDirPrincipal;
+                        existingMaster.TipoPersona = tipPersona.ToUpper();
+                        existingMaster.FechaDiligencia_Formato = DateOnly.FromDateTime(dateProcedure);
+                        existingMaster.TipoTramite_Formato = tipTramite;
+                    }
+                    _context.SaveChanges();
+                    transaction.Commit();
                 }
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al agregar el proveedor juridico", ex);
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception("Error al agregar el proveedor juridico", ex);
+                }
             }
         }
 

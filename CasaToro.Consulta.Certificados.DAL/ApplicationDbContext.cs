@@ -460,7 +460,6 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.pvOtrIngr).HasMaxLength(50);
-            entity.Property(e => e.pvOtrTipEmp).HasMaxLength(255);
             entity.Property(e => e.pvPasivos).HasMaxLength(50);
             entity.Property(e => e.pvPatrimonio).HasMaxLength(50);
             entity.Property(e => e.pvPorExtranjero).HasMaxLength(3);

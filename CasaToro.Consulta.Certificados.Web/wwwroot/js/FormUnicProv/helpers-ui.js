@@ -1,7 +1,83 @@
-﻿import { alertErrorBody, alertBody, alertError, alert, regexDir, telInst } from './constant.js';
+﻿import * as Constant from './constant.js';
 import { hasValue, checkExclusiones, filePaths } from './ui-handlers.js';
 import { toggleValidInput } from './validators.js';
 
+//funcion para boton de auto scroll
+export function scrollButton() {
+    const btn = document.getElementById('btnScrollAuto');
+    const icon = document.getElementById('scrollIcon');
+    let lastScrollTop = 0;
+    let action = 'down';
+
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        //calcula la posicion del scroll
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const fullHeight = document.documentElement.scrollHeight;
+
+        //logica de direccion
+        if (scrollPosition + windowHeight >= fullHeight - 10) {
+            //caso: al final de la pagina -> forzar subir
+            action = 'up';
+
+        } else if (scrollPosition <= 10) {
+            //caso: al inicio de la pagina -> forzar bajar
+            action = 'down';
+
+        } else {
+            //caso: entre medio -> definir segun ultima direccion
+            if (scrollPosition > lastScrollTop) {
+                action = 'down';
+            } else {
+                action = 'up';
+            }
+        }
+
+        //cambio visual del icono segun accion
+        if (action === 'up') {
+            icon.classList.replace('bi-arrow-down-circle-fill', 'bi-arrow-up-circle-fill');
+            btn.title = 'Ir al inicio';
+        } else {
+            icon.classList.replace('bi-arrow-up-circle-fill', 'bi-arrow-down-circle-fill');
+            btn.title = 'Ir al final';
+        }
+
+        lastScrollTop = scrollPosition <= 0 ? 0 : scrollPosition;
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        if (action === 'up') {
+            //scroll hacia arriba
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            //scroll hacia abajo
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    });
+}
+
+//logica para dar formato de dinero a campos del form Informacion Financiera (provForm)
+export const formatCurrency = (value) => {
+    if (!value) return '';
+
+    const cleanValue = value.toString().replace(/\D/g, '');
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    }).format(cleanValue);
+};
+export const unformatCurrency = (value) => {
+    return value.replace(/\D/g, '');
+};
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
 
@@ -23,13 +99,13 @@ export function initTelInputs(element, required = false) {
         element.parentNode.insertBefore(label, element.nextSibling);
     }
 
-    telInst[element.id] = iti;
+    Constant.telInst[element.id] = iti;
     return iti;
 }
 
 //funcion que da espera a que se inicialice el input e identifique el pais del numero
 export async function waitSafeSetPhone(inputId, fullNumber) {
-    const iti = telInst[inputId];
+    const iti = Constant.telInst[inputId];
     const input = document.getElementById(inputId);
 
     if (!iti || !input) return;
@@ -152,7 +228,7 @@ function closeForm() {
 //funcion para dividir la direccion de la DB y mapearla en su respectivo campo
 export function parseDirection(input) {
     const dirString = input.value;
-    const match = dirString.match(regexDir);
+    const match = dirString.match(Constant.regexDir);
 
     let isValid = false
 
@@ -174,11 +250,13 @@ export function parseDirection(input) {
         }
 
         dirEstr.vPrincipal().value = match[2];
-        dirEstr.sufPrincipal().value = match[3] || '';
-        dirEstr.vSecundaria().value = match[4];
-        dirEstr.sufSecundaria().value = match[5] || '';
-        dirEstr.numPlaca().value = match[6];
-        dirEstr.compleDir().value = match[7] || '';
+        const sufLetra = match[3] || '';
+        const sufPalabra = match[4] || '';
+        dirEstr.sufPrincipal().value = sufLetra + (sufPalabra ? (sufLetra ? ' ' : '') + sufPalabra : '');
+        dirEstr.vSecundaria().value = match[5];
+        dirEstr.sufSecundaria().value = match[6] || '';
+        dirEstr.numPlaca().value = match[7];
+        dirEstr.compleDir().value = match[8] || '';
         isValid = true
         toggleValidInput(input, isValid);
         return true;
@@ -193,8 +271,8 @@ export function parseDirection(input) {
 function saveDirection() {
     const via = (id) => document.getElementById(id).value.trim();
     if (!via('tipoVia') || !via('vPrincipal') || !via('vSecundaria') || !via('numPlaca')) {
-        alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
-        alertError.show();
+        Constant.alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
+        Constant.alertError.show();
         return
     }
 
@@ -314,7 +392,7 @@ export function initUploadDocs() {
 
         if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-
+        hasValue();
         checkExclusiones();
         panel.style.display = 'none';
 
@@ -335,7 +413,7 @@ export function initUploadDocs() {
         mainInput.value = restoredNames.join(', ');
         if (restoredNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-
+        hasValue();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
@@ -401,15 +479,15 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            alertErrorBody.innerText = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine una para cargar una nueva.`;
-            alertError.show();
+            Constant.alertErrorBody.innerText = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine una para cargar una nueva.`;
+            Constant.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            alert.show();
+            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            Constant.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
@@ -419,15 +497,15 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
-            alertError.show();
+            Constant.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            Constant.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            alert.show();
+            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            Constant.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
@@ -437,23 +515,23 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
-            alertError.show();
+            Constant.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            Constant.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            alert.show();
+            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            Constant.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
     }
     else {
         if (totalFiles >= 1) {
-            alertBody.innerText = `Ya hay un archivo cargado para este campo. Elimine el archivo existente para cargar uno nuevo.`;
-            alert.show();
+            Constant.alertBody.innerText = `Ya hay un archivo cargado para este campo. Elimine el archivo existente para cargar uno nuevo.`;
+            Constant.alert.show();
             return;
         }
         tempFiles[currentInput] = [...currentTemp, files[0]];

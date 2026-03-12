@@ -63,7 +63,7 @@
             </div>
 
             <!-- Sub nav de acciones-->
-            <div id="subNavConteiner" class="form-section" style="display:none;">
+                <div id="subNavContainer" class="form-section" style="display:none;">
                 <div class="border field-group">
 
                     <button id="openFormsBtn" type="button" class="btn btn-primary">Diligenciar Formato</button>
@@ -1058,6 +1058,16 @@
 
 
 
+            @* Contenido de printFormat *@
+            <div id="printFormatForm" class="certificates-content-body" style="display:none">
+                <div class="pdf-viewer">
+                    <iframe id="printFrame" src=""></iframe>
+                </div>
+
+            </div>
+
+
+
             @* Contenido de uploadDocs *@
             <!-- form para subir documentos-->
             <form id="uploadDocsForm" enctype="multipart/form-data" class="form-section card flex-row" style="display:none;">
@@ -1250,14 +1260,6 @@
                     </div>
                 </div>
             </form>
-
-            @* Contenido de printFormat *@
-            <div id="printFormatForm" class="certificates-content-body" style="display:none">
-                <div class="pdf-viewer">
-                    <iframe id="printFrame" src=""></iframe>
-                </div>
-
-            </div>
 
         </section>
 

@@ -29,8 +29,6 @@ public partial class Proveedores_InfoFinanciera
 
     public string? pvTipEmp { get; set; }
 
-    public string? pvOtrTipEmp { get; set; }
-
     public string? pvAcEconomica { get; set; }
 
     public string? pvCodCIIU { get; set; }
