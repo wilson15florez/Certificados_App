@@ -411,7 +411,7 @@ export function loadDocsForm(data, isOEAValue) {
     //limpieza de arrays para evitar duplicacion al re-consultar
     for (let key in HUI.existingFiles) delete HUI.existingFiles[key];
     for (let key in HUI.tempFiles) delete HUI.tempFiles[key];
-    for (let key in Constant.filePaths) delete Constant.filePaths[key];
+    for (let key in CNS.filePaths) delete CNS.filePaths[key];
 
     //limpieza inicial
     form.querySelectorAll('input').forEach(el => {
@@ -444,8 +444,8 @@ export function loadDocsForm(data, isOEAValue) {
                 HUI.existingFiles[categoria].push(nombre);
 
                 //se guarda la ruta asociada al nombre del archivo
-                if (!Constant.filePaths[categoria]) Constant.filePaths[categoria] = {};
-                Constant.filePaths[categoria][nombre] = ruta;
+                if (!CNS.filePaths[categoria]) CNS.filePaths[categoria] = {};
+                CNS.filePaths[categoria][nombre] = ruta;
             }
         });
 
@@ -458,5 +458,5 @@ export function loadDocsForm(data, isOEAValue) {
         });
     }
 
-    Constant.checkExclusiones();
+    CNS.checkExclusiones();
 }

@@ -39,7 +39,7 @@ function initAdmin() {
         FHS.hideForms();
         FHS.subNavContainer.style.display = 'none';
         idNumInp.value = '';
-        UI.hasValue();
+        CNS.hasValue();
     });
     idNumInp.addEventListener('input', function () {
         FHS.hideForms();

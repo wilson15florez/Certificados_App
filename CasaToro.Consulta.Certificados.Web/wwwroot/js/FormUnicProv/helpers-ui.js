@@ -1,4 +1,4 @@
-﻿import * as Constant from './constant.js';
+﻿import * as CNS from './constant.js';
 import { toggleValidInput } from './validators.js';
 
 //funcion para boton de auto scroll
@@ -139,13 +139,13 @@ export function initTelInputs(element, required = false) {
         element.parentNode.insertBefore(label, element.nextSibling);
     }
 
-    Constant.telInst[element.id] = iti;
+    CNS.telInst[element.id] = iti;
     return iti;
 }
 
 //funcion que da espera a que se inicialice el input e identifique el pais del numero
 export async function waitSafeSetPhone(inputId, fullNumber) {
-    const iti = Constant.telInst[inputId];
+    const iti = CNS.telInst[inputId];
     const input = document.getElementById(inputId);
 
     if (!iti || !input) return;
@@ -230,7 +230,7 @@ function updatePreview() {
     }
 
     dirEstr.preview().value = previewText.toUpperCase();
-    Constant.hasValue();
+    CNS.hasValue();
 }
 
 //funcion para abrir el subform
@@ -242,7 +242,7 @@ function openDirecForm(input) {
         updatePreview();
     }
     dirEstr.container().style.display = 'flex';
-    Constant.hasValue();
+    CNS.hasValue();
 }
 
 //funcion que limpia los campos antes de llenarlos
@@ -268,7 +268,7 @@ function closeForm() {
 //funcion para dividir la direccion de la DB y mapearla en su respectivo campo
 export function parseDirection(input) {
     const dirString = input.value;
-    const match = dirString.match(Constant.regexDir);
+    const match = dirString.match(CNS.regexDir);
 
     let isValid = false
 
@@ -311,8 +311,8 @@ export function parseDirection(input) {
 function saveDirection() {
     const via = (id) => document.getElementById(id).value.trim();
     if (!via('tipoVia') || !via('vPrincipal') || !via('vSecundaria') || !via('numPlaca')) {
-        Constant.alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
-        Constant.alertError.show();
+        CNS.alertErrorBody.innerText = 'Por favor complete los campos obligatorios de la dirección.';
+        CNS.alertError.show();
         return
     }
 
@@ -432,8 +432,8 @@ export function initUploadDocs() {
 
         if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-        Constant.hasValue();
-        Constant.checkExclusiones();
+        CNS.hasValue();
+        CNS.checkExclusiones();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
@@ -453,7 +453,7 @@ export function initUploadDocs() {
         mainInput.value = restoredNames.join(', ');
         if (restoredNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-        Constant.hasValue();
+        CNS.hasValue();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
@@ -519,15 +519,15 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            Constant.alertErrorBody.innerText = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine una para cargar una nueva.`;
-            Constant.alertError.show();
+            CNS.alertErrorBody.innerText = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine una para cargar una nueva.`;
+            CNS.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            Constant.alert.show();
+            CNS.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            CNS.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
@@ -537,15 +537,15 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            Constant.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
-            Constant.alertError.show();
+            CNS.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            CNS.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            Constant.alert.show();
+            CNS.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            CNS.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
@@ -555,23 +555,23 @@ function addFilesToTemp(files) {
         slotsLeft = maxAllowed - totalFiles;
 
         if (slotsLeft <= 0) {
-            Constant.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
-            Constant.alertError.show();
+            CNS.alertErrorBody.innerHTML = `Ya ha alcanzado el límite de ${maxAllowed} archivos para este campo. Elimine uno para cargar uno nueva.`;
+            CNS.alertError.show();
             return;
         }
 
         const filesToAdd = files.slice(0, slotsLeft);
         if (files.length > slotsLeft) {
-            Constant.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
-            Constant.alert.show();
+            CNS.alertBody.innerText = `Solo se agregaron ${slotsLeft} archivo(s). El limite es de ${maxAllowed} archivos.`;
+            CNS.alert.show();
         }
         tempFiles[currentInput] = [...currentTemp, ...filesToAdd];
 
     }
     else {
         if (totalFiles >= 1) {
-            Constant.alertBody.innerText = `Ya hay un archivo cargado para este campo. Elimine el archivo existente para cargar uno nuevo.`;
-            Constant.alert.show();
+            CNS.alertBody.innerText = `Ya hay un archivo cargado para este campo. Elimine el archivo existente para cargar uno nuevo.`;
+            CNS.alert.show();
             return;
         }
         tempFiles[currentInput] = [...currentTemp, files[0]];
@@ -647,8 +647,8 @@ function createFileItem(container, name, index, isExisting) {
 
 function previewExistPDF(categoria, fileName) {
     //buscamos la ruta en el mapa de rutas cargadas desde la DB
-    if (Constant.filePaths[categoria] && Constant.filePaths[categoria][fileName]) {
-        const relativePath = Constant.filePaths[categoria][fileName];
+    if (CNS.filePaths[categoria] && CNS.filePaths[categoria][fileName]) {
+        const relativePath = CNS.filePaths[categoria][fileName];
 
         const url = relativePath.startsWith('/') ? relativePath : '/' + relativePath;
 

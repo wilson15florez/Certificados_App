@@ -1,4 +1,4 @@
-﻿import * as Constant from './constant.js';
+﻿import * as CNS from './constant.js';
 import * as API from './api-client.js';
 import * as HUI from './helpers-ui.js';
 import { toggleValidInput, isAdult } from './validators.js';
@@ -102,7 +102,7 @@ export async function setSelect2Val(select, value) {
 export function clearValidationIRT() {
     document.querySelectorAll('.is-invalid-custom').forEach(el => el.classList.remove('is-invalid-custom'));
     document.querySelectorAll('.error-message').forEach(el => el.remove());
-    Constant.dirtyFields.clear();
+    CNS.dirtyFields.clear();
 }
 
 //logica que asigna la validacion de campos
@@ -142,7 +142,7 @@ export function initValidationIRT() {
             const radios = document.querySelectorAll(`input[name="${elName}"]`);
             radios.forEach(r => {
                 r.addEventListener('change', function () {
-                    Constant.dirtyFields.add(elName);
+                    CNS.dirtyFields.add(elName);
                     const isChecked = document.querySelector(`input[name="${elName}"]:checked`);
                     toggleValidInput(el, !!isChecked, 'Seleccione una opción.');
                 });
@@ -153,7 +153,7 @@ export function initValidationIRT() {
         //eventos 'blur' y 'change'
         const validateEvent = () => {
             if (isAutoFilling) return;
-            if (!Constant.dirtyFields.has(id)) return;
+            if (!CNS.dirtyFields.has(id)) return;
             if (el.disabled || el.display === 'none') {
                 toggleValidInput(el, true);
                 return;
@@ -167,11 +167,11 @@ export function initValidationIRT() {
                 toggleValidInput(el, isValid, value === '' ? 'Este campo es obligatorio.' : 'La persona debe ser mayor de edad.');
             }
             else if (id === 'pnEmail' || id === 'pjEmailDirPrincipal') {
-                const isValid = Constant.regexEmail.test(value);
+                const isValid = CNS.regexEmail.test(value);
                 toggleValidInput(el, isValid, 'Ingrese un correo valido.');
             }
             else if (el.type === 'tel') {
-                const iti = Constant.telInst[id];
+                const iti = CNS.telInst[id];
                 const isValid = value === '' ? false : iti.isValidNumber();
                 toggleValidInput(el, isValid, 'Ingrese un número de teléfono válido.');
             }
@@ -179,7 +179,7 @@ export function initValidationIRT() {
                 value === '' ? toggleValidInput(el, false, 'Este campo es obligatorio.') : HUI.parseDirection(el);
             }
             else if (id === 'pvPorNacional' || id === 'pvPorExtranjero') {
-                if (!Constant.dirtyFields.has('pvPorNacional') && !Constant.dirtyFields.has('pvPorExtranjero')) return;
+                if (!CNS.dirtyFields.has('pvPorNacional') && !CNS.dirtyFields.has('pvPorExtranjero')) return;
 
                 const porcNac = parseFloat(pvPorNacional.value.trim() || 0);
                 const porcExt = parseFloat(pvPorExtranjero.value.trim() || 0);
@@ -201,7 +201,7 @@ export function initValidationIRT() {
                 // % nacional < 100, se espera porcentaje extranjero
                 if (porcExt === 0 || pvPorExtranjero.value.trim() === '') {
                     toggleValidInput(pvPorNacional, true);
-                    if (Constant.dirtyFields.has('pvPorExtranjero')) {
+                    if (CNS.dirtyFields.has('pvPorExtranjero')) {
                         toggleValidInput(pvPorExtranjero, false, 'Ingrese el % extranjero.')
                     }
                     return;
@@ -233,7 +233,7 @@ export function initValidationIRT() {
         el.addEventListener('blur', function () {
             if (isDocsField && !el.dataset.panelVisited) return;
             if (isDocsField && el.dataset.panelOpen) return;
-            Constant.dirtyFields.add(id);
+            CNS.dirtyFields.add(id);
             validateEvent();
         });
 
@@ -241,7 +241,7 @@ export function initValidationIRT() {
         $(el).on('change', function () {
             if (isAutoFilling) return;
             if (isDocsField && !el.dataset.panelVisited) return;
-            Constant.dirtyFields.add(id);
+            CNS.dirtyFields.add(id);
             validateEvent();
 
             if (id === 'pvAcEconomica' || id === 'pvCodCIIU') {
@@ -252,7 +252,7 @@ export function initValidationIRT() {
         });
 
         el.addEventListener('input', function () {
-            if (!Constant.dirtyFields.has(id)) return;
+            if (!CNS.dirtyFields.has(id)) return;
             validateEvent();
         });
     });
@@ -268,9 +268,9 @@ export function tipDocument() {
     pnTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? Constant.docNacionales
+        ? CNS.docNacionales
         : tipoNac === 'Extranjero'
-            ? Constant.docExtranjeros
+            ? CNS.docExtranjeros
             : [];
 
     listTipDoc.forEach(doc => {
@@ -288,9 +288,9 @@ export function pjTipDocument() {
     pjRLTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? Constant.pjRLDocNaci
+        ? CNS.pjRLDocNaci
         : tipoNac === 'Extranjero'
-            ? Constant.pjRLDocExtr
+            ? CNS.pjRLDocExtr
             : [];
 
     listTipDoc.forEach(doc => {
@@ -508,7 +508,7 @@ export async function ubicProvFormHandler() {
         });
     } else {
         [pvAcEconomica, pvCodCIIU, pvEntidad].forEach(sel => {
-            Constant.dirtyFields.delete(sel.id);
+            CNS.dirtyFields.delete(sel.id);
             $(sel).val(null).trigger('change');
         });
     }
@@ -552,8 +552,8 @@ export function togglePvPais() {
 
     if (!needExt) {
         pvPorExtranjero.value = '';
-        Constant.hasValue();
-        Constant.dirtyFields.delete('pvPorExtranjero');
+        CNS.hasValue();
+        CNS.dirtyFields.delete('pvPorExtranjero');
         toggleValidInput(pvPorExtranjero, true);
     } 
 
@@ -561,7 +561,7 @@ export function togglePvPais() {
     $(pvPorPais).prop('disabled', !hasVal).trigger('change.select2');
     document.querySelector(`label[for="pvPorPais"]`).classList.toggle('disabled-label', !hasVal);
     if (!hasVal) {
-        Constant.dirtyFields.delete('pvPorPais');
+        CNS.dirtyFields.delete('pvPorPais');
         $(pvPorPais).val(null).trigger('change.select2');
         toggleValidInput(pvPorPais, true);
     }
@@ -582,7 +582,7 @@ function tDependentFields(show, fields) {
             }
             label?.classList.remove('disabled-label');
             el.required = true;
-            Constant.dirtyFields.delete(id);
+            CNS.dirtyFields.delete(id);
             toggleValidInput(el, true);
         } else {
             if (type === 'select') {
@@ -593,11 +593,11 @@ function tDependentFields(show, fields) {
             }
             label?.classList.add('disabled-label');
             el.required = false;
-            Constant.dirtyFields.delete(id);
+            CNS.dirtyFields.delete(id);
             toggleValidInput(el, true);
         }
     });
-    Constant.hasValue();
+    CNS.hasValue();
 }
 //Gran Contribuyente -> campos de resolucion (provForm)
 export function togglePvGC() {
@@ -664,8 +664,8 @@ export function addSucursalInternal(newIndex) {
     newIndex = currentSucursales + 1;
 
     if (newIndex > maxSucursales) {
-        Constant.alertBody.innerText = `Máximo ${maxSucursales} sucursales permitidas.`;
-        Constant.alert.show();
+        CNS.alertBody.innerText = `Máximo ${maxSucursales} sucursales permitidas.`;
+        CNS.alert.show();
         return;
     }
 
@@ -709,7 +709,7 @@ export function addSucursalInternal(newIndex) {
     HUI.initTelInputs(newTelInput, false);
 
     if (newIndex && newIndex.telefono) {
-        Constant.telInst[`pjTelDirSucursal_${newIndex}`].setNumber(newIndex.telefono);
+        CNS.telInst[`pjTelDirSucursal_${newIndex}`].setNumber(newIndex.telefono);
     }
 
     //inicializa los selects de ubicacion para la nueva sucursal
@@ -727,13 +727,13 @@ function initSucursalIRT(index) {
         },
         {
             id: `pjEmailDirSucursal_${index}`, validate: (el, val) => {
-                const ok = val !== '' && Constant.regexEmail.test(val);
+                const ok = val !== '' && CNS.regexEmail.test(val);
                 toggleValidInput(el, ok, val === '' ? 'Este campo es obligatorio.' : 'Ingrese un correo válido.');
             }
         },
         {
             id: `pjTelDirSucursal_${index}`, validate: (el, val) => {
-                const iti = Constant.telInst[`pjTelDirSucursal_${index}`];
+                const iti = CNS.telInst[`pjTelDirSucursal_${index}`];
                 const ok = val !== '' && iti && iti.isValidNumber();
                 toggleValidInput(el, ok, val === '' ? 'Este campo es obligatorio.' : 'Ingrese un teléfono válido.')
             }
@@ -779,8 +779,8 @@ export function addControlRow(newIndex) {
     newIndex = currencyAccionistas + 1;
 
     if (newIndex > maxAccionistas) {
-        Constant.alertBody.innerText = `Máximo ${maxAccionistas} accionistas permitidos.`;
-        Constant.alert.show();
+        CNS.alertBody.innerText = `Máximo ${maxAccionistas} accionistas permitidos.`;
+        CNS.alert.show();
         return;
     }
 

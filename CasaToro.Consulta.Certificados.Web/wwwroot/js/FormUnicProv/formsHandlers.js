@@ -1,8 +1,8 @@
-﻿import * as Constant from './constant.js';
+﻿import * as CNS from './constant.js';
 import * as API from './api-client.js';
 import * as UI from './ui-handlers.js';
-import * as Collector from './collector.js';
-import * as Validator from './validators.js';
+import * as CLT from './collector.js';
+import * as VLD from './validators.js';
 import * as HUI from './helpers-ui.js';
 import * as LD from './loader.js';
 
@@ -60,7 +60,7 @@ export function initSharedHandlers() {
     HUI.scrollButton();
     UI.firstBlock();
     HUI.initUploadDocs();
-    Validator.dateLimits();
+    VLD.dateLimits();
     UI.ubicPJuHandler();
     UI.initValidationIRT();
 
@@ -108,8 +108,8 @@ export function initSharedHandlers() {
         if (controlTableBody.querySelectorAll('.control-row').length > 1) {
             e.target.closest('.control-row').remove();
         } else {
-            Constant.alertBody.innerText = 'Debe haber al menos una fila de control en la tabla de accionistas.';
-            Constant.alert.show();
+            CNS.alertBody.innerText = 'Debe haber al menos una fila de control en la tabla de accionistas.';
+            CNS.alert.show();
         }
     });
 
@@ -171,7 +171,7 @@ export function initSharedHandlers() {
     document.querySelectorAll('input[name="upOEA"]').forEach(r => r.addEventListener('change', UI.toggleOEA));
 
     API.loadBancosData();
-    UI.hasValue();
+    CNS.hasValue();
 }
 
 //abre y carga los forms segun el resultado de API
@@ -190,12 +190,12 @@ export async function openForms(result, getTypePerson, idNum, isNewRegisterRef) 
         if (typePerson === 'natural') {
             setTimeout(async () => {
                 await LD.loadMasterData(masterData, 'persNatuForm', idNum, suggest);
-                UI.hasValue();
+                CNS.hasValue();
             }, 100);
         } else {
             setTimeout(async () => {
                 await LD.loadMasterData(masterData, 'persJuriForm', idNum);
-                UI.hasValue();
+                CNS.hasValue();
             }, 100);
         }
         return;
@@ -215,12 +215,12 @@ export async function openForms(result, getTypePerson, idNum, isNewRegisterRef) 
         }
 
         if (formData.finanInf) await LD.loadProvFormData(formData.finanInf);
-        UI.hasValue();
+        CNS.hasValue();
         return;
     }
 
-    Constant.alertErrorBody.innerText = 'No se pudo determinar el estado del proveedor.';
-    Constant.alertError.show();
+    CNS.alertErrorBody.innerText = 'No se pudo determinar el estado del proveedor.';
+    CNS.alertError.show();
 }
 
 //valida, recopila y envia los formularios de persona e informacion financiera
@@ -229,14 +229,14 @@ export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
     let dataProNJ = null;
 
     if (typePerson === 'natural') {
-        if (!Validator.validateNaturalForm()) return;
-        dataProNJ = Collector.collectFormData_Natural();
+        if (!VLD.validateNaturalForm()) return;
+        dataProNJ = CLT.collectFormData_Natural();
     } else if (typePerson === 'juridica') {
-        if (!Validator.validateJuridicaForm()) return;
-        dataProNJ = Collector.collectFormData_Juridica();
+        if (!VLD.validateJuridicaForm()) return;
+        dataProNJ = CLT.collectFormData_Juridica();
     }
-    if (!Validator.validateProvForm(typePerson)) return;
-    const provData = Collector.collectProvFormData(typePerson);
+    if (!VLD.validateProvForm(typePerson)) return;
+    const provData = CLT.collectProvFormData(typePerson);
 
     const isNew = isNewRegisterRef.value;
 
@@ -260,15 +260,15 @@ export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
         uploadDocsBtn.disabled = false;
     }
 
-    Constant.alertSuccesBody.innerText = 'Proveedor guardado completamente.';
-    Constant.alertSuccess.show();
+    CNS.alertSuccesBody.innerText = 'Proveedor guardado completamente.';
+    CNS.alertSuccess.show();
 
     // Aviso especial al actualizar persona jurídica
     if (!isNew && typePerson === 'juridica') {
         document.getElementById('alertSuccess').addEventListener('hidden.bs.modal', function onDone() {
             this.removeEventListener('hidden.bs.modal', onDone);
-            Constant.alertBody.innerText = 'El formato ha sido actualizado. Debe imprimir nuevamente el Formato, firmarlo y volver a cargarlo en la sección de documentos.';
-            Constant.alert.show();
+            CNS.alertBody.innerText = 'El formato ha sido actualizado. Debe imprimir nuevamente el Formato, firmarlo y volver a cargarlo en la sección de documentos.';
+            CNS.alert.show();
         }, { once: true });
     }
 }
@@ -284,13 +284,13 @@ export async function uploadDocsPanel(getIdNum, getTypePerson) {
     try {
         const result = await API.getProvDocuments(idNum);
         LD.loadDocsForm(result.data || [], result.isOEA || null);
-        UI.hasValue();
+        CNS.hasValue();
     } catch (err) {
         console.error('Error cargando archivos guardados:', err);
         LD.loadDocsForm([], null);
     }
 
-    Constant.blockExcl('upFUCPfirmado', typePerson === 'natural');
+    CNS.blockExcl('upFUCPfirmado', typePerson === 'natural');
 }
 
 //valida, recolecta y envia documentos
@@ -302,13 +302,13 @@ export async function submitDocs(urlDocs, getTypePerson, markVisited = false) {
         });
     }
 
-    if (!Validator.validateDocsForm()) return;
+    if (!VLD.validateDocsForm()) return;
 
     const typePerson = getTypePerson();
 
-    const docFormData = Collector.collectDocsForm(typePerson);
+    const docFormData = CLT.collectDocsForm(typePerson);
     await API.sendFiles(docFormData, urlDocs);
 
-    Constant.alertSuccesBody.innerText = 'Documentos cargados correctamente.';
-    Constant.alertSuccess.show();
+    CNS.alertSuccesBody.innerText = 'Documentos cargados correctamente.';
+    CNS.alertSuccess.show();
 }
