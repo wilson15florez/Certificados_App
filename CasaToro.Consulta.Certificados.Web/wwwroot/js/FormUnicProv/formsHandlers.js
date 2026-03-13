@@ -82,7 +82,7 @@ export function initSharedHandlers() {
     sucursalesContainer.addEventListener('click', function (e) {
         if (!e.target.classList.contains('remove-sucursal-btn')) return;
         const sucursalItem = e.target.closest('.sucursal-item');
-        if (sucursalItem) return;
+        if (!sucursalItem) return;
         sucursalItem.remove();
 
         sucursalesContainer.querySelectorAll('.sucursal-item').forEach((sucursal, index) => {
@@ -290,7 +290,7 @@ export async function uploadDocsPanel(getIdNum, getTypePerson) {
         LD.loadDocsForm([], null);
     }
 
-    UI.blockExcl('upFUCPfirmado', typePerson === 'natural');
+    Constant.blockExcl('upFUCPfirmado', typePerson === 'natural');
 }
 
 //valida, recolecta y envia documentos

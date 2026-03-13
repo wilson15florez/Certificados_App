@@ -1,5 +1,4 @@
 ﻿import * as Constant from './constant.js';
-import { hasValue, checkExclusiones, filePaths } from './ui-handlers.js';
 import { toggleValidInput } from './validators.js';
 
 //funcion para boton de auto scroll
@@ -78,6 +77,47 @@ export const formatCurrency = (value) => {
 export const unformatCurrency = (value) => {
     return value.replace(/\D/g, '');
 };
+
+//funcion para llenar select2
+export function fillSelect2(select, data, placeholder = 'Seleccione', valueField = 'id', textField = 'name') {
+    const $select = $(select);
+
+    //limpia opciones previas
+    $select.empty();
+
+    //agrega el placeholder
+    $select.append(new Option(placeholder, '', false, false));
+
+    //llena las opciones
+    if (Array.isArray(data)) {
+        data.forEach(item => {
+            let value, text;
+
+            if (typeof item === 'string') {
+                value = text = item;
+            } else {
+                value = item[valueField] ?? item.Código ?? item.id ?? '';
+                text = item[textField] ?? item.Nombre ?? item.name ?? '';
+            }
+
+            $select.append(new Option(text, value, false, false));
+        });
+    }
+
+    //Si ya tiene Select2, NO reiniciar completamente
+    if ($select.hasClass('select2-hidden-accessible')) {
+        //reflesca UI sin resetear el valor
+        $select.trigger('change.select2')
+    } else {
+        //inicializar solo la primera vez
+        $select.select2({
+            placeholder,
+            allowClear: true,
+            width: '100%',
+            language: { noResults: () => "No se encontraron resultados" }
+        });
+    }
+}
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
 
@@ -190,7 +230,7 @@ function updatePreview() {
     }
 
     dirEstr.preview().value = previewText.toUpperCase();
-    hasValue();
+    Constant.hasValue();
 }
 
 //funcion para abrir el subform
@@ -202,7 +242,7 @@ function openDirecForm(input) {
         updatePreview();
     }
     dirEstr.container().style.display = 'flex';
-    hasValue();
+    Constant.hasValue();
 }
 
 //funcion que limpia los campos antes de llenarlos
@@ -392,8 +432,8 @@ export function initUploadDocs() {
 
         if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-        hasValue();
-        checkExclusiones();
+        Constant.hasValue();
+        Constant.checkExclusiones();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
@@ -413,7 +453,7 @@ export function initUploadDocs() {
         mainInput.value = restoredNames.join(', ');
         if (restoredNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
-        hasValue();
+        Constant.hasValue();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
@@ -607,8 +647,8 @@ function createFileItem(container, name, index, isExisting) {
 
 function previewExistPDF(categoria, fileName) {
     //buscamos la ruta en el mapa de rutas cargadas desde la DB
-    if (filePaths[categoria] && filePaths[categoria][fileName]) {
-        const relativePath = filePaths[categoria][fileName];
+    if (Constant.filePaths[categoria] && Constant.filePaths[categoria][fileName]) {
+        const relativePath = Constant.filePaths[categoria][fileName];
 
         const url = relativePath.startsWith('/') ? relativePath : '/' + relativePath;
 

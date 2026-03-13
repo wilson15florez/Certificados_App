@@ -1,5 +1,4 @@
-﻿import { existingFiles, tempFiles } from './helpers-ui.js';
-import { unformatCurrency } from './helpers-ui.js';
+﻿import { existingFiles, tempFiles, unformatCurrency } from './helpers-ui.js';
 import { telInst } from './constant.js';
 
 //funcion para recopilar los datos del formulario persona natural

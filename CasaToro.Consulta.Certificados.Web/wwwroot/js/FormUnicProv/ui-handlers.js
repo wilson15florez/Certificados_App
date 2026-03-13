@@ -1,7 +1,6 @@
 ﻿import * as Constant from './constant.js';
 import * as API from './api-client.js';
 import * as HUI from './helpers-ui.js';
-import * as LD from './loader.js';
 import { toggleValidInput, isAdult } from './validators.js';
 
 export const controlTableBody = document.querySelector('#control-table tbody');
@@ -10,9 +9,8 @@ const maxAccionistas = 4;
 export let isAutoFilling = false;
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
-export let filePaths = {};
 
-//setters para variables de estado de modulo (ES imports son read-only)
+//setters para variables de estado
 export function setAutoFilling(value) { isAutoFilling = value; }
 export function setOriginalPEP(types, entidad) {
     originalPEPTypes = types;
@@ -24,7 +22,7 @@ function handleDeptChange(depSelect, citySelect, ciudadByDep) {
     $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
         const dep = this.value.trim().toUpperCase();
         const municipios = ciudadByDep[dep] || [];
-        fillSelect2(citySelect, municipios, 'Seleccione ciudad');
+        HUI.fillSelect2(citySelect, municipios, 'Seleccione ciudad');
         citySelect.disabled = municipios.length === 0;
         document.querySelector(`label[for="${citySelect.id}"]`).classList.remove('disabled-label');
     });
@@ -81,47 +79,6 @@ export function waitForOptions(select, timeout = 800) {
     });
 }
 
-//funcion para llenar select2
-export function fillSelect2(select, data, placeholder = 'Seleccione', valueField = 'id', textField = 'name') {
-    const $select = $(select);
-
-    //limpia opciones previas
-    $select.empty();
-
-    //agrega el placeholder
-    $select.append(new Option(placeholder, '', false, false));
-
-    //llena las opciones
-    if (Array.isArray(data)) {
-        data.forEach(item => {
-            let value, text;
-
-            if (typeof item === 'string') {
-                value = text = item;
-            } else {
-                value = item[valueField] ?? item.Código ?? item.id ?? '';
-                text = item[textField] ?? item.Nombre ?? item.name ?? '';
-            }
-
-            $select.append(new Option(text, value, false, false));
-        });
-    }
-
-    //Si ya tiene Select2, NO reiniciar completamente
-    if ($select.hasClass('select2-hidden-accessible')) {
-        //reflesca UI sin resetear el valor
-        $select.trigger('change.select2')
-    } else {
-        //inicializar solo la primera vez
-        $select.select2({
-            placeholder,
-            allowClear: true,
-            width: '100%',
-            language: { noResults: () => "No se encontraron resultados" }
-        });
-    }
-}
-
 //funcion para setear valores con select2
 export async function setSelect2Val(select, value) {
 
@@ -139,27 +96,6 @@ export async function setSelect2Val(select, value) {
     $(select).val(value).trigger('change.select2');
     return true;
 
-}
-
-//logica para animacion visual de labels
-export function hasValue() {
-    document.querySelectorAll('.form-control').forEach(input => {
-        // Verificar al cargar la página (por si hay valores previos)
-        if (input.value.trim() !== "") {
-            input.classList.add('has-value');
-        } else {
-            input.classList.remove('has-value');
-        }
-
-        // Escuchar cuando el usuario interactúa
-        input.addEventListener('change', () => {
-            if (input.value.trim() !== "") {
-                input.classList.add('has-value');
-            } else {
-                input.classList.remove('has-value');
-            }
-        });
-    });
 }
 
 //limpia todos los errores visuales de validacion IRT
@@ -280,6 +216,7 @@ export function initValidationIRT() {
                     toggleValidInput(pvPorExtranjero, true);
                 }
             }
+            //verifica si falta docs en referencias comerciales y/o en estados finacieros
             else if (id === 'upRefeComerciales' || id === 'upEstadoFinanciero') {
                 const fileNames = value.split(', ').filter(n => n.trim() !== '');
                 toggleValidInput(el,
@@ -368,12 +305,12 @@ export function pjTipDocument() {
 function bindExtrUbi(selPais, selEstado, selCiudad) {
     $(selPais).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
         const states = await API.loadStates(this.value);
-        fillSelect2(selEstado, states, 'Seleccione estado', 'id', 'name');
+        HUI.fillSelect2(selEstado, states, 'Seleccione estado', 'id', 'name');
         setSelectEnabled(selEstado, true);
 
         $(selEstado).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
             const cities = await API.loadCities(this.value);
-            fillSelect2(selCiudad, cities, 'Seleccione ciudad', 'id', 'name');
+            HUI.fillSelect2(selCiudad, cities, 'Seleccione ciudad', 'id', 'name');
             setSelectEnabled(selCiudad, true);
         });
     });
@@ -398,7 +335,7 @@ export async function ubicPNaHandler() {
 
     if (nac === 'Nacional') {
         //pais fijo colombia
-        fillSelect2(pnNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
+        HUI.fillSelect2(pnNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
 
         $(pnNacionalidad).val('COLOMBIA').trigger('change.select2');
         setSelectEnable(pnNacionalidad, false);
@@ -408,7 +345,7 @@ export async function ubicPNaHandler() {
 
         //departamentos de nacimiento, expedicion y residencia
         [pnEstadoNac, pnDepExpDoc, pnDepRes].forEach(depSelect => {
-            fillSelect2(depSelect, departamentos, 'Seleccione departamento');
+            HUI.fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             setSelectEnable(depSelect, true);
         });
 
@@ -422,14 +359,14 @@ export async function ubicPNaHandler() {
         //carga paises
         const countries = await API.loadUbiExt();
 
-        fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
+        HUI.fillSelect2(pnNacionalidad, countries, 'Seleccione país', 'id', 'name');
         setSelectEnable(pnNacionalidad, true);
 
         //Departamentos y ciudades colombianas para expedicion y residencia
         const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
         [pnDepExpDoc, pnDepRes].forEach(depSelect => {
-            fillSelect2(depSelect, departamentos, 'Seleccione departamento');
+            HUI.fillSelect2(depSelect, departamentos, 'Seleccione departamento');
             setSelectEnable(depSelect, true);
         });
 
@@ -444,7 +381,7 @@ export async function ubicPNaHandler() {
 
             //estados
             const states = await API.loadStates(countryId);
-            fillSelect2(pnEstadoNac, states, 'Seleccione estado', 'id', 'name');
+            HUI.fillSelect2(pnEstadoNac, states, 'Seleccione estado', 'id', 'name');
             pnEstadoNac.disabled = false;
             document.querySelector('label[for="pnEstadoNac"]').classList.remove('disabled-label');
 
@@ -452,7 +389,7 @@ export async function ubicPNaHandler() {
             $(pnEstadoNac).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
                 const stateId = this.value;
                 const cities = await API.loadCities(stateId);
-                fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
+                HUI.fillSelect2(pnCiudadNac, cities, 'Seleccione ciudad', 'id', 'name');
                 pnCiudadNac.disabled = false;
                 document.querySelector('label[for="pnCiudadNac"]').classList.remove('disabled-label');
             });
@@ -503,12 +440,12 @@ export async function ubicPJuHandler() {
     });
 
     //departamento y ciudad de diligenciamiento
-    fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
+    HUI.fillSelect2(pjDepartDilig, ubi_Departamentos, 'Seleccione departamento');
     setSelectEnable(pjDepartDilig, true);
     handleDeptChange(pjDepartDilig, pjCiudadDilig, ciudadByDep);
 
     //departamento y ciudad direccion principal
-    fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
+    HUI.fillSelect2(pjDepartDirPrincipal, ubi_Departamentos, 'Seleccione departamento');
     setSelectEnable(pjDepartDirPrincipal, true);
     handleDeptChange(pjDepartDirPrincipal, pjCiudadDirPrincipal, ciudadByDep);
 
@@ -532,7 +469,7 @@ export async function ubicPJuReLeHandler() {
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
     //departamento y ciudad expedicion documento representante legal
-    fillSelect2(pjRLDepExpDoc, ubi_Departamentos, 'Seleccione departamento');
+    HUI.fillSelect2(pjRLDepExpDoc, ubi_Departamentos, 'Seleccione departamento');
     setSelectEnable(pjRLDepExpDoc, true);
     handleDeptChange(pjRLDepExpDoc, pjRLCiuExpDoc, ciudadByDep);
 
@@ -540,12 +477,12 @@ export async function ubicPJuReLeHandler() {
     const nac = pjRLTipNacionalidad.value;
     if (nac === 'Nacional') {
         //pais fijo colombia
-        fillSelect2(pjRLNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
+        HUI.fillSelect2(pjRLNacionalidad, [{ id: 'COLOMBIA', name: 'COLOMBIA' }]);
         $(pjRLNacionalidad).val('COLOMBIA').trigger('change.select2');
         setSelectEnable(pjRLNacionalidad, false);
 
         //depatamento y ciudad colombianos
-        fillSelect2(pjRLDepartNac, ubi_Departamentos, 'Seleccione departamento');
+        HUI.fillSelect2(pjRLDepartNac, ubi_Departamentos, 'Seleccione departamento');
         setSelectEnable(pjRLDepartNac, true);
 
         handleDeptChange(pjRLDepartNac, pjRLCiudadNac, ciudadByDep);
@@ -553,7 +490,7 @@ export async function ubicPJuReLeHandler() {
     else if (nac === 'Extranjero') {
         //carga paises
         const countries = await API.loadUbiExt();
-        fillSelect2(pjRLNacionalidad, countries, 'Seleccione país', 'id', 'name');
+        HUI.fillSelect2(pjRLNacionalidad, countries, 'Seleccione país', 'id', 'name');
         setSelectEnable(pjRLNacionalidad, true);
 
         bindExtrUbi(pjRLNacionalidad, pjRLDepartNac, pjRLCiudadNac);
@@ -578,13 +515,13 @@ export async function ubicProvFormHandler() {
 
     //carga pais extranjero de porcentaje origen de capital
     const countries = await API.loadUbiExt();
-    fillSelect2(pvPorPais, countries, 'Seleccione país', 'id', 'name');
+    HUI.fillSelect2(pvPorPais, countries, 'Seleccione país', 'id', 'name');
     setSelectEnable(pvPorPais, true);
 
     //carga departamento y ciudad de declaracion
     const { departamentos, ciudadByDep } = await API.loadUbiNac();
 
-    fillSelect2(pvDepartDec, departamentos, 'Seleccione departamento');
+    HUI.fillSelect2(pvDepartDec, departamentos, 'Seleccione departamento');
     setSelectEnable(pvDepartDec, true);
 
     if (!pvDepartDec.value) setSelectEnable(pvCiudadDec, false);
@@ -593,7 +530,7 @@ export async function ubicProvFormHandler() {
         const selectedDep = this.value.trim().toUpperCase();
         const municipios = ciudadByDep[selectedDep] || [];
 
-        fillSelect2(pvCiudadDec, municipios, 'Seleccione ciudad');
+        HUI.fillSelect2(pvCiudadDec, municipios, 'Seleccione ciudad');
         setSelectEnable(pvCiudadDec, municipios.length > 0);
     });
 
@@ -615,7 +552,7 @@ export function togglePvPais() {
 
     if (!needExt) {
         pvPorExtranjero.value = '';
-        hasValue();
+        Constant.hasValue();
         Constant.dirtyFields.delete('pvPorExtranjero');
         toggleValidInput(pvPorExtranjero, true);
     } 
@@ -660,7 +597,7 @@ function tDependentFields(show, fields) {
             toggleValidInput(el, true);
         }
     });
-    hasValue();
+    Constant.hasValue();
 }
 //Gran Contribuyente -> campos de resolucion (provForm)
 export function togglePvGC() {
@@ -711,13 +648,13 @@ window.initSucursalUbic = async function (index) {
     const citySelect = document.getElementById(`pjCiudadDirSucursal_${index}`);
     if (!depSelect || !citySelect) return;
 
-    fillSelect2(depSelect, ubi_Departamentos, 'Seleccione departamento');
+    HUI.fillSelect2(depSelect, ubi_Departamentos, 'Seleccione departamento');
     depSelect.disabled = false;
 
     $(depSelect).off('change.ubiSUC').on('change.ubiSUC', function () {
         const dep = this.value.trim().toUpperCase();
         const municipios = ubi_CiudadByDep[dep] || [];
-        fillSelect2(citySelect, municipios);
+        HUI.fillSelect2(citySelect, municipios);
         citySelect.disabled = municipios.length === 0;
     });
 };
@@ -941,37 +878,6 @@ function initAccionistIRT(row) {
         };
         elPorc.addEventListener('blur', () => { dirty = true; validate(); });
         elPorc.addEventListener('input', () => { if (dirty) validate(); });
-    }
-}
-
-//logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
-export function checkExclusiones() {
-    const magnetic = document.getElementById('upContingMeMagnetico');
-    const firmada = document.getElementById('upContingFirmada');
-
-    if (!magnetic || !firmada) return;
-
-    blockExcl('upContingFirmada', magnetic.value.trim() !== "");
-    blockExcl('upContingMeMagnetico', firmada.value.trim() !== "");
-}
-export function blockExcl(targetId, bloquear) {
-    const targInput = document.getElementById(targetId);
-    if (!targInput) return;
-
-    const container = targInput.closest('.custom-file-container');
-    const label = container?.querySelector('label');
-
-    if (bloquear) {
-        targInput.classList.add('no-edit');
-        targInput.required = false;
-        targInput.style.pointerEvents = 'none';
-        if (label) label.classList.add('disabled-label')
-        toggleValidInput(targInput, true);
-    } else {
-        targInput.classList.remove('no-edit');
-        targInput.required = true;
-        targInput.style.pointerEvents = 'auto';
-        if (label) label.classList.remove('disabled-label');
     }
 }
 

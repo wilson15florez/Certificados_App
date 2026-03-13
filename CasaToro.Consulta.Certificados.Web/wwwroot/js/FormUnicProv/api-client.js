@@ -1,4 +1,4 @@
-﻿import { fillSelect2 } from './ui-handlers.js'; 
+﻿import { fillSelect2 } from './helpers-ui.js'; 
 
 //JSON local Colombia
 const colDMJSON = '/data/ubiNacional/ColombiaDepMun.json'
@@ -119,7 +119,7 @@ export async function getProvDocuments(idNum) {
 
 //funcion para enviar la info de informacion de p. natural/juridica y la informacion financiera a la DB 
 export function sendData(payload, url) {
-    console.log("Enviando datos a:", url, payload);
+    console.log("Enviando datos");
 
     return fetch(url, {
         method: 'POST',
@@ -143,7 +143,7 @@ export function sendData(payload, url) {
 
 //funcion para enviar docs del form documentos del proveedor a la DB
 export function sendFiles(formData, url) {
-    console.log("Enviando datos a:", url)
+    console.log("Enviando datos")
 
     return fetch(url, {
         method: 'POST',
