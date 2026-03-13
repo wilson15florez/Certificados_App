@@ -1,6 +1,5 @@
 ﻿import { fillSelect2 } from './helpers-ui.js'; 
 
-
 //JSON local Colombia
 const colDMJSON = '/data/ubiNacional/ColombiaDepMun.json'
 
