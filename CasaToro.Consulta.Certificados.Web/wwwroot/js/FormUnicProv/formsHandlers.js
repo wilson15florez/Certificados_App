@@ -290,7 +290,7 @@ export async function uploadDocsPanel(getIdNum, getTypePerson) {
         LD.loadDocsForm([], null);
     }
 
-    CNS.blockExcl('upFUCPfirmado', typePerson === 'natural');
+    HUI.blockExcl('upFUCPfirmado', typePerson === 'natural');
 }
 
 //valida, recolecta y envia documentos

@@ -458,5 +458,5 @@ export function loadDocsForm(data, isOEAValue) {
         });
     }
 
-    CNS.checkExclusiones();
+    HUI.checkExclusiones();
 }

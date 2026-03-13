@@ -124,7 +124,7 @@ FHS.submitPrvBtn.addEventListener('click', async (e) => {
     await consultTypePerson();
 
     try {
-        await FHS.submitForms('/Proveedor', () => null, isNewRegister);
+        await FHS.submitForms('/Proveedor', getTypePerson, isNewRegister);
     }
     catch (err) {
         console.error('Error al guardar proveedor:', err);

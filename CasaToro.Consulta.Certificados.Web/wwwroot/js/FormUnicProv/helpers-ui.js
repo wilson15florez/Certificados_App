@@ -63,6 +63,37 @@ export function scrollButton() {
     });
 }
 
+//logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
+export function checkExclusiones() {
+    const magnetic = document.getElementById('upContingMeMagnetico');
+    const firmada = document.getElementById('upContingFirmada');
+
+    if (!magnetic || !firmada) return;
+
+    blockExcl('upContingFirmada', magnetic.value.trim() !== "");
+    blockExcl('upContingMeMagnetico', firmada.value.trim() !== "");
+}
+export function blockExcl(targetId, bloquear) {
+    const targInput = document.getElementById(targetId);
+    if (!targInput) return;
+
+    const container = targInput.closest('.custom-file-container');
+    const label = container?.querySelector('label');
+
+    if (bloquear) {
+        targInput.classList.add('no-edit');
+        targInput.required = false;
+        targInput.style.pointerEvents = 'none';
+        if (label) label.classList.add('disabled-label')
+        toggleValidInput(targInput, true);
+    } else {
+        targInput.classList.remove('no-edit');
+        targInput.required = true;
+        targInput.style.pointerEvents = 'auto';
+        if (label) label.classList.remove('disabled-label');
+    }
+}
+
 //logica para dar formato de dinero a campos del form Informacion Financiera (provForm)
 export const formatCurrency = (value) => {
     if (!value) return '';
@@ -433,7 +464,7 @@ export function initUploadDocs() {
         if (allNames.length > 0) mainInput.classList.add('file-existing');
         else mainInput.classList.remove('file-existing');
         CNS.hasValue();
-        CNS.checkExclusiones();
+        checkExclusiones();
         panel.style.display = 'none';
 
         //quita flag de panel abierto y dispara la validacion
