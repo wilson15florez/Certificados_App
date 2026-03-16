@@ -1044,124 +1044,24 @@
 
 
             @* Contenido de uploadDocs *@
-            <!-- form para subir documentos-->
-            <form id="uploadDocsForm" enctype="multipart/form-data" class="form-section card flex-row" style="display:none;">
-                <div class="flex-row header-form">
-                    <h3 class="title-form"> Documentos Anexos </h3>
-                </div>
-                <div class="field-group">
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upCamaraComercio" required>
-                            <label for="upCamaraComercio" class="form-label adaptive-label" placeholder="Certificado de Cámara y Comercio (no mayor a 30 días) *" alt="Certificado de Cámara y Comercio (no mayor a 30 días) *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
+                <!-- form para subir documentos-->
+                <form id="uploadDocsForm" enctype="multipart/form-data" class="form-section card flex-row" style="display:none;">
+                    <div class="flex-row header-form">
+                        <h3 class="title-form"> Documentos Anexos </h3>
                     </div>
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upCertifiBancaria" required>
-                            <label for="upCertifiBancaria" class="form-label adaptive-label" placeholder="Certificación Bancaria *" alt="Certificación Bancaria *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                </div>
-                <div class="field-group">
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upRUTActualizado" required>
-                            <label for="upRUTActualizado" class="form-label adaptive-label" placeholder="RUT Actualizado *" alt="RUT Actualizado *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upComposicionAccionaria">
-                            <label for="upComposicionAccionaria" class="form-label adaptive-label" placeholder="Certificado Composición Accionaria *" alt="Certificado Composición Accionaria *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                </div>
-                <div class="field-group">
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upFotocopiaCC" title="Fotocopia C.C. del Representante Legal o Persona Natural" required>
-                            <label for="upFotocopiaCC" class="form-label adaptive-label" placeholder="Fotocopia C.C. del Representante Legal o Persona Natural *" alt="Fotocopia C.C. del Representante Legal o Persona Natural *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upRefeComerciales" required>
-                            <label for="upRefeComerciales" class="form-label adaptive-label" placeholder="Dos (2) Referencias Comerciales (no mayor a 90 días) *" alt="Dos (2) Referencias Comerciales (no mayor a 90 días) *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                </div>
-                <div class="field-group">
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upEstadoFinanciero" required>
-                            <label for="upEstadoFinanciero" class="form-label adaptive-label" placeholder="Estados Financieros de los dos Últimos Años *" alt="Estados Financieros de los dos Últimos Años *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                    <div class="col-md-5.5 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upCertificacionesVarias">
-                            <label for="upCertificacionesVarias" class="form-label adaptive-label" placeholder="Certificaciones (ISO, BASC, ...) *" alt="Certificaciones (ISO, BASC, ...) *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                </div>
-                <div class="m-2 p-2">
-                    <div class="col-md-6 input-wrapper">
-                        <div class="custom-file-container">
-                            <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                            <input class="form-control doc-trigger" type="text" id="upFUCPfirmado" required>
-                            <label for="upFUCPfirmado" class="form-label adaptive-label" placeholder="Formato Único de Conocimiento Firmado *" alt="Formato Único de Conocimiento Firmado *"></label>
-                            @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group input-wrapper form-check">
-                    <label>¿Es Proveedor OEA? *</label>
-                    <div class="d-flex">
-                        <div class="form-check m-2">
-                            <input type="radio" id="upOEAsi" name="upOEA" value="Si" class="form-check-input" /><label for="upOEAsi" class="form-check-label">Sí</label>
-                        </div>
-                        <div class="form-check m-2">
-                            <input type="radio" id="upOEAno" name="upOEA" value="No" class="form-check-input" /><label for="upOEAno" class="form-check-label">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="sectionYesOEA" style="display: none;">
-                    <h5 class="m-2 p-2"> Únicamente para proveedores de la cadena de suministro internacional (OEA)**</h5>
-
                     <div class="field-group">
                         <div class="col-md-5.5 input-wrapper">
                             <div class="custom-file-container">
                                 <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                                <input class="form-control doc-trigger" type="text" id="upContingMeMagnetico">
-                                <label for="upContingMeMagnetico" class="form-label adaptive-label" placeholder="Plan de Contingencia en Medio Magnético" alt="Plan de Contingencia en Medio Magnético"></label>
-                                @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
+                                <input class="form-control doc-trigger" type="text" id="upCamaraComercio" title="Certificado de Cámara y Comercio (no mayor a 30 días)" required>
+                                <label for="upCamaraComercio" class="form-label adaptive-label" placeholder="Certificado de Cámara y Comercio (no mayor a 30 días) *" alt="Certificado de Cámara y Comercio (no mayor a 30 días) *"></label>
                             </div>
                         </div>
                         <div class="col-md-5.5 input-wrapper">
                             <div class="custom-file-container">
                                 <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                                <input class="form-control doc-trigger" type="text" id="upContingFirmada">
-                                <label for="upContingFirmada" class="form-label adaptive-label" placeholder="Plan de Contingencia Firmado (proveedores sin plan)" alt="Plan de Contingencia Firmado (proveedores sin plan)"></label>
-                                @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
+                                <input class="form-control doc-trigger" type="text" id="upCertifiBancaria" title="Certificación Bancaria" required>
+                                <label for="upCertifiBancaria" class="form-label adaptive-label" placeholder="Certificación Bancaria *" alt="Certificación Bancaria *"></label>
                             </div>
                         </div>
                     </div>
@@ -1169,38 +1069,112 @@
                         <div class="col-md-5.5 input-wrapper">
                             <div class="custom-file-container">
                                 <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                                <input class="form-control doc-trigger" type="text" id="upCertifiOEA">
-                                <label for="upCertifiOEA" class="form-label adaptive-label" placeholder="Certificado de Operador Económico Autorizado - OEA" alt="Certificado de Operador Económico Autorizado - OEA"></label>
-                                @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
+                                <input class="form-control doc-trigger" type="text" id="upRUTActualizado" title="RUT Actualizado" required>
+                                <label for="upRUTActualizado" class="form-label adaptive-label" placeholder="RUT Actualizado *" alt="RUT Actualizado *"></label>
                             </div>
                         </div>
                         <div class="col-md-5.5 input-wrapper">
                             <div class="custom-file-container">
                                 <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                                <input class="form-control doc-trigger" type="text" id="upAcuerdoSeguridad">
-                                <label for="upAcuerdoSeguridad" class="form-label adaptive-label" placeholder="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad" alt="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad"></label>
-                                @* <button type="button" class="btn-clear-file" style="display:none;">&times;</button> *@
+                                <input class="form-control doc-trigger" type="text" id="upComposicionAccionaria" title="Certificado Composición Accionaria">
+                                <label for="upComposicionAccionaria" class="form-label adaptive-label" placeholder="Certificado Composición Accionaria *" alt="Certificado Composición Accionaria *"></label>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                @* <div id="sectionNoOEA" style="display: none;">
                     <div class="field-group">
+                        <div class="col-md-5.5 input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control doc-trigger" type="text" id="upFotocopiaCC" title="Fotocopia C.C. del Representante Legal o Persona Natural" required>
+                                <label for="upFotocopiaCC" class="form-label adaptive-label" placeholder="Fotocopia C.C. del Representante Legal o Persona Natural *" alt="Fotocopia C.C. del Representante Legal o Persona Natural *"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-5.5 input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control doc-trigger" type="text" id="upRefeComerciales" title="Dos (2) Referencias Comerciales (no mayor a 90 días)" required>
+                                <label for="upRefeComerciales" class="form-label adaptive-label" placeholder="Dos (2) Referencias Comerciales (no mayor a 90 días) *" alt="Dos (2) Referencias Comerciales (no mayor a 90 días) *"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="col-md-5.5 input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control doc-trigger" type="text" id="upEstadoFinanciero" title="Estados Financieros de los dos Últimos Años" required>
+                                <label for="upEstadoFinanciero" class="form-label adaptive-label" placeholder="Estados Financieros de los dos Últimos Años *" alt="Estados Financieros de los dos Últimos Años *"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-5.5 input-wrapper">
+                            <div class="custom-file-container">
+                                <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                <input class="form-control doc-trigger" type="text" id="upCertificacionesVarias" title="Certificaciones (ISO, BASC, ...)">
+                                <label for="upCertificacionesVarias" class="form-label adaptive-label" placeholder="Certificaciones (ISO, BASC, ...) *" alt="Certificaciones (ISO, BASC, ...) *"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-2 p-2">
                         <div class="col-md-6 input-wrapper">
                             <div class="custom-file-container">
                                 <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
-                                <input class="form-control file-hidden" type="file" id="upManifestacionSeguridad" accept=".pdf">
-                                <label for="upManifestacionSeguridad" class="form-label adaptive-label" placeholder="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)" alt="Manifestación Suscrita de Seguridad Firmada (proveedores sin calificación OEA)"></label>
-                                <button type="button" class="btn-clear-file" style="display:none;">&times;</button>
+                                <input class="form-control doc-trigger" type="text" id="upFUCPfirmado" title="Formato Único de Conocimiento Firmado" required>
+                                <label for="upFUCPfirmado" class="form-label adaptive-label" placeholder="Formato Único de Conocimiento Firmado *" alt="Formato Único de Conocimiento Firmado *"></label>
                             </div>
                         </div>
                     </div>
-                </div> *@
-                <div class="button-group justify-content-around align-items-center m-2 p-2">
-                    <button type="button" id="submitDocsBtn" class="btn btn-primary">Subir Documentos</button>
-                </div>
-            </form>
+
+                    <div class="form-group input-wrapper form-check">
+                        <label>¿Es Proveedor OEA? *</label>
+                        <div class="d-flex">
+                            <div class="form-check m-2">
+                                <input type="radio" id="upOEAsi" name="upOEA" value="Si" class="form-check-input" /><label for="upOEAsi" class="form-check-label">Sí</label>
+                            </div>
+                            <div class="form-check m-2">
+                                <input type="radio" id="upOEAno" name="upOEA" value="No" class="form-check-input" /><label for="upOEAno" class="form-check-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sectionYesOEA" style="display: none;">
+                        <h5 class="m-2 p-2"> Únicamente para proveedores de la cadena de suministro internacional (OEA)**</h5>
+
+                        <div class="field-group">
+                            <div class="col-md-5.5 input-wrapper">
+                                <div class="custom-file-container">
+                                    <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                    <input class="form-control doc-trigger" type="text" id="upContingMeMagnetico" title="Plan de Contingencia en Medio Magnético">
+                                    <label for="upContingMeMagnetico" class="form-label adaptive-label" placeholder="Plan de Contingencia en Medio Magnético" alt="Plan de Contingencia en Medio Magnético"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-5.5 input-wrapper">
+                                <div class="custom-file-container">
+                                    <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                    <input class="form-control doc-trigger" type="text" id="upContingFirmada" title="Plan de Contingencia Firmado (proveedores sin plan)">
+                                    <label for="upContingFirmada" class="form-label adaptive-label" placeholder="Plan de Contingencia Firmado (proveedores sin plan)" alt="Plan de Contingencia Firmado (proveedores sin plan)"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <div class="col-md-5.5 input-wrapper">
+                                <div class="custom-file-container">
+                                    <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                    <input class="form-control doc-trigger" type="text" id="upCertifiOEA" title="Certificado de Operador Económico Autorizado - OEA">
+                                    <label for="upCertifiOEA" class="form-label adaptive-label" placeholder="Certificado de Operador Económico Autorizado - OEA" alt="Certificado de Operador Económico Autorizado - OEA"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-5.5 input-wrapper">
+                                <div class="custom-file-container">
+                                    <i class="bi bi-file-earmark-pdf-fill file-icon"></i>
+                                    <input class="form-control doc-trigger" type="text" id="upAcuerdoSeguridad" title="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad">
+                                    <label for="upAcuerdoSeguridad" class="form-label adaptive-label" placeholder="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad" alt="Acuerdo de Seguridad o Contrato con Lineamientos de Seguridad"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-group justify-content-around align-items-center m-2 p-2">
+                        <button type="button" id="submitDocsBtn" class="btn btn-primary">Subir Documentos</button>
+                    </div>
+                </form>
 
             <!-- subForm recuadro emergente cargue de documentos-->
             <form id="uploadFilesPanel" class="files-panel">
