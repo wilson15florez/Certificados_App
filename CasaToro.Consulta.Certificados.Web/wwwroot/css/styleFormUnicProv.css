@@ -1,4 +1,10 @@
-﻿label.disabled-label[for=pnNumId],
+﻿.btn:disabled {
+    color: #3f4246 !important;
+    background-color: #e9ecef !important;
+    border-color: #cfcfcf !important;
+}
+
+label.disabled-label[for=pnNumId],
 label.disabled-label[for=pjNIT],
 .custom-input-group label.disabled-label,
 input.has-value + label.disabled-label[for=dirPreview]{

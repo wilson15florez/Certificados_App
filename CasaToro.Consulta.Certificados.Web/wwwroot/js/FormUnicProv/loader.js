@@ -110,7 +110,7 @@ export async function loadFormData_Natural(data) {
     const entidadInput = document.getElementById('pnPEP_Entidad');
     if (entidadInput) entidadInput.value = data.pnPEP_Entidad || '';
 
-    UI.handlePEPChange();
+    UI.togglePEP();
 
     UI.setAutoFilling(false);
 }

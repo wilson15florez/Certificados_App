@@ -111,7 +111,7 @@ consultBtn.addEventListener('click', async function (e) {
             //valida si el formato esta vigente o debe actualizar
             if (result.dataValityFUCP) await VLD.validityFUCP(result.dataValityFUCP);
             FHS.openFormsBtn.disabled = false;
-            FHS.printFormatBtn.disabled = (personType === 'natural');
+            FHS.printFormatBtn.disabled = false;
             FHS.uploadDocsBtn.disabled = false;
             return;
         }

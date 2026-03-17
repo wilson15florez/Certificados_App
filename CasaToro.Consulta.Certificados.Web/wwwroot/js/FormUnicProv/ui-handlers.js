@@ -398,9 +398,8 @@ export async function ubicPNaHandler() {
 }
 
 //logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
-export function handlePEPChange() {
+export function togglePEP() {
     const pnPEPYes = document.getElementById('pnPEPSi');
-    const pnPEPNo = document.getElementById('pnPEPNo');
     const pnPEPtypeGroup = document.getElementById('pnPEPtypeGroup');
     const pnPEP_Entidad_Cont = document.getElementById('pnPEP_Entidad_Container');
     const pnPEP_Entidad = document.getElementById('pnPEP_Entidad');
@@ -413,7 +412,7 @@ export function handlePEPChange() {
         pnPEPChk.forEach(chk => chk.checked = originalPEPTypes.includes(parseInt(chk.value)));
         pnPEP_Entidad.value = originalPEPEntidad || '';
 
-    } else if (pnPEPNo.checked) {
+    } else {
         pnPEPtypeGroup.style.display = 'none';
         pnPEP_Entidad_Cont.style.display = 'none';
 
@@ -881,21 +880,13 @@ function initAccionistIRT(row) {
     }
 }
 
+//logica que muestra u oculta los campos de docs a subir para proveedor perteneciente a la OEA
 export function toggleOEA() {
     const si = document.getElementById('upOEAsi').checked;
-    const no = document.getElementById('upOEAno').checked;
     const containerYesOEA = document.getElementById('sectionYesOEA');
     if (si) {
-
         containerYesOEA.style.display = 'block';
         containerYesOEA.querySelectorAll('input').forEach(i => i.required = true);
-    } else if (no) {
-        containerYesOEA.style.display = 'none';
-        containerYesOEA.querySelectorAll('input').forEach(i => {
-            i.value = '';
-            i.required = false;
-            i.classList.remove('file-existing');
-        });
     } else {
         containerYesOEA.style.display = 'none';
         containerYesOEA.querySelectorAll('input').forEach(i => {
@@ -904,8 +895,6 @@ export function toggleOEA() {
             i.classList.remove('file-existing');
         });
     }
-
-
 }
 
 //visualizacion de formato para imprimir

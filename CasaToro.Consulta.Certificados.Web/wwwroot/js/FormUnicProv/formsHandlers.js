@@ -47,7 +47,7 @@ export function showForms(typePerson) {
         persJuriForm.style.display = 'none';
         provForm.style.display = 'block';
         certSection.style.display = 'none';
-    } else {
+    } else if (typePerson === 'juridica') {
         persNatuForm.style.display = 'none';
         persJuriForm.style.display = 'block';
         provForm.style.display = 'block';
@@ -164,7 +164,7 @@ export function initSharedHandlers() {
     //PEP
     ['pnPEPSi', 'pnPEPNo'].forEach(id => {
         const input = document.getElementById(id);
-        if (input) input.addEventListener('change', UI.handlePEPChange);
+        if (input) input.addEventListener('change', UI.togglePEP);
     });
 
     //OEA
@@ -247,7 +247,6 @@ export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
         await API.sendData(provData, isNew
             ? `${urlBase}/AddProvFinanceInfo`
             : `${urlBase}/UpdateProvFinanceInfo`);
-        uploadDocsBtn.disabled = false;
 
     } else if (typePerson === 'juridica') {
         await API.sendData(dataProNJ, isNew
@@ -256,9 +255,9 @@ export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
         await API.sendData(provData, isNew
             ? `${urlBase}/AddProvFinanceInfo`
             : `${urlBase}/UpdateProvFinanceInfo`);
-        printFormatBtn.disabled = false;
-        uploadDocsBtn.disabled = false;
     }
+    printFormatBtn.disabled = false;
+    uploadDocsBtn.disabled = false;
 
     CNS.alertSuccesBody.innerText = 'Proveedor guardado completamente.';
     CNS.alertSuccess.show();

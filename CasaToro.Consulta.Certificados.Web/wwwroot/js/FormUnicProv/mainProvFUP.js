@@ -36,13 +36,18 @@ async function consultProv() {
 
         //id solo encontrado en proveedores_master (sin registro como persona natural/juridica ni de informacion financiera)
         if (result.status === 'foundMasterOnly') {
-            const nit = result.data?.nit ?? result.data?.Nit ?? '';
-            CNS.alertSuccesBody.innerText = `Proveedor con ID: ${nit} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
-            CNS.alertSuccess.show();
-            FHS.subNavContainer.style.display = 'block';
-            FHS.openFormsBtn.disabled = false;
-            FHS.printFormatBtn.disabled = true;
-            FHS.uploadDocsBtn.disabled = true;
+            if (typePerson === ('natural' || 'juridica')) {
+                const nit = result.data?.nit ?? result.data?.Nit ?? '';
+                CNS.alertSuccesBody.innerText = `Proveedor con ID: ${nit} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
+                CNS.alertSuccess.show();
+                FHS.subNavContainer.style.display = 'block';
+                FHS.openFormsBtn.disabled = false;
+                FHS.printFormatBtn.disabled = true;
+                FHS.uploadDocsBtn.disabled = true;
+            } else {
+                CNS.alertBody.innerText = 'Tipo de persona no ha sido seleccionado. \n Por favor registre que tipo de persona es en la pestaña "Editar Perfil"';
+                CNS.alert.show();
+            }
             return;
         }
 
@@ -52,7 +57,7 @@ async function consultProv() {
             if (result.dateValityFUCP) await VLD.validityFUCP(result.dateValityFUCP);
             FHS.subNavContainer.style.display = 'block';
             FHS.openFormsBtn.disabled = false;
-            FHS.printFormatBtn.disabled = (typePerson === 'natural');
+            FHS.printFormatBtn.disabled = false;
             FHS.uploadDocsBtn.disabled = false;
             return;
         }
