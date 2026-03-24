@@ -2,7 +2,12 @@
 import { openFormDA } from './helpers-ui.js';
 
 
-//validacion para una fecha de un mayor de 18 años
+/**
+ * Verifica si una fecha de nacimiento corresponde a una persona mayor de edad (>=18 años).
+ * Ajusta correctamente si el cumpleaños aún no ha ocurrido en el año actual.
+ * @param {string} dateString - Fecha en formato 'YYYY-MM-DD'.
+ * @returns {boolean} true si tiene 18 o más años.
+ */
 export function isAdult(dateString) {
     if (!dateString) return;
 
@@ -21,7 +26,12 @@ export function isAdult(dateString) {
     return age >= 18;
 }
 
-//valida si proveedor debe actualizar el Formato Unico de Conocimiento de Proveedores, en base a la fecha de diligenciamiento del formato en la tabla proveedores_master
+/**
+ * Determina si el Formato Único de Conocimiento de Proveedores (FUCP) está desactualizado.
+ * El FUCP se considera vencido si fue diligenciado en un año anterior al actual.
+ * @param {string|null} FechaDiligencia_Formato - Fecha de diligenciamiento del FUCP en Proveedores_Master.
+ * @returns {boolean} true si debe actualizarse, false si está vigente.
+ */
 function shouldUpdateFUCP(FechaDiligencia_Formato) {
     if (!FechaDiligencia_Formato) return true;
 
@@ -34,6 +44,12 @@ function shouldUpdateFUCP(FechaDiligencia_Formato) {
     // si el año del ultimo diligenciamiento es menor al año actual, se debe actualizar el formato
     return yearDoc < currentDate;
 }
+/**
+ * Verifica la vigencia del FUCP y muestra alerta si debe actualizarse.
+ * Se llama al cargar la vista de formularios cuando el proveedor tiene foundDetail.
+ * @param {string} fechaMaster - Valor de FechaDiligencia_Formato de Proveedores_Master.
+ * @returns {Promise<boolean>} true si el formato está desactualizado.
+ */
 export async function validityFUCP(fechaMaster) {
     const isInvalid = shouldUpdateFUCP(fechaMaster);
 
@@ -45,7 +61,11 @@ export async function validityFUCP(fechaMaster) {
     return false;
 }
 
-//configuracion de los limites del calendario para los inputs date
+/**
+ * Configura la fecha máxima de todos los inputs de tipo date al día de hoy,
+ * excepto pvFechVen (fecha de vencimiento) que puede ser futura.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function dateLimits() {
     const today = new Date().toISOString().split('T')[0];
 
@@ -60,14 +80,31 @@ export function dateLimits() {
     });
 }
 
-//scroll para radio/checkbox invalidos
+/**
+ * Aplica el estado visual de error al primer radio del grupo y hace scroll hacia él.
+ * Se usa en validateNaturalForm, validateJuridicaForm y validateProvForm para
+ * señalizar grupos de radios no seleccionados.
+ * @param {string} name - Atributo name del grupo de radios.
+ * @param {string} [message='Seleccione una opción.'] - Mensaje de error a mostrar.
+ */
 function scrollToRadio(name, message = 'Seleccione una opción.') {
     const firstRadio = document.querySelector(`input[name="${name}"]`);
     if (!firstRadio) return;
     toggleValidInput(firstRadio, false, message);
 }
 
-//muestra u oculta el error visual en un campo
+/**
+ * Muestra u oculta el estado visual de validación en un campo del formulario.
+ * Maneja tres casos especiales:
+ * - Select2: aplica la clase al elemento .select2-selection (no al select oculto).
+ * - Radio/checkbox: busca el contenedor .check-group o el padre directo.
+ * - Normal: aplica directamente al elemento.
+ * Elimina mensajes de error previos antes de agregar uno nuevo.
+ * Hace scroll suave hacia el campo inválido.
+ * @param {HTMLElement} el - Elemento a validar.
+ * @param {boolean} isValid - true para marcar como válido, false para inválido.
+ * @param {string} [message='Este campo es obligatorio.'] - Mensaje de error.
+ */
 export function toggleValidInput(el, isValid, message = 'Este campo es obligatorio.') {
     if (!el) return;
 
@@ -106,7 +143,20 @@ export function toggleValidInput(el, isValid, message = 'Este campo es obligator
     }
 }
 
-//Validacion de campos del form Persona natural
+/**
+ * Valida todos los campos del formulario de persona natural (persNatuForm)
+ * antes de enviarlo al backend.
+ * Validaciones incluidas:
+ * - Tipo de nacionalidad y tipo de documento seleccionados.
+ * - Campos de texto obligatorios no vacíos.
+ * - Fecha de nacimiento: mayor de edad (≥18).
+ * - Email: formato válido.
+ * - Teléfono fijo (si se ingresó): válido según intl-tel-input.
+ * - Celular: obligatorio y válido.
+ * - Reconocimiento público, manejo de recursos públicos y PEP: radios seleccionados.
+ * - Si es PEP: al menos un tipo seleccionado y entidad informada.
+ * @returns {boolean} true si el formulario es válido, false si hay errores.
+ */
 export function validateNaturalForm() {
     const form = document.getElementById('persNatuForm');
 
@@ -233,7 +283,18 @@ export function validateNaturalForm() {
     return true;
 }
 
-//validacion de campos del form persona juridica
+/**
+ * Valida todos los campos del formulario de persona jurídica (persJuriForm).
+ * Validaciones incluidas:
+ * - Campos de texto obligatorios de la empresa y del representante legal.
+ * - Teléfono principal válido.
+ * - Email de dirección principal válido.
+ * - Sucursales: todos los campos completos, email y teléfono válidos por sucursal.
+ * - Accionistas: todos los campos completos, porcentaje mínimo 5%, suma total = 100%.
+ * - Tipo de nacionalidad y tipo de documento del representante legal seleccionados.
+ * - Fecha de nacimiento del representante legal: mayor de edad.
+ * @returns {boolean} true si el formulario es válido, false si hay errores.
+ */
 export function validateJuridicaForm() {
     const form = document.getElementById('persJuriForm');
 
@@ -374,7 +435,21 @@ export function validateJuridicaForm() {
     return true;
 }
 
-//validacion de campos del provForm (informacion financiera)
+/**
+ * Valida todos los campos del formulario de información financiera (provForm).
+ * Validaciones incluidas:
+ * - Campos de texto/select obligatorios habilitados.
+ * - Porcentaje de capital: nacional no puede ser 0, si hay extranjero la suma debe ser 100%.
+ * - Radios obligatorios: gran contribuyente, declarante ICA, autoretenedor,
+ *   comercio exterior, posee cuenta bancaria.
+ * - Certificaciones (solo para persona jurídica): OEA, Calidad, BASC, Ambiental,
+ *   ISO 28000, SST.
+ * - Declaraciones y autorizaciones: los cuatro radios de tratamiento de datos,
+ *   campos pvDeAuRepresentacion, pvFuenteRecur y pvCumCSIn.
+ *   Si alguno de estos falta, abre automáticamente el subform de declaraciones.
+ * @param {'natural'|'juridica'} personType - Las certificaciones solo aplican para jurídica.
+ * @returns {boolean} true si el formulario es válido, false si hay errores.
+ */
 export function validateProvForm(personType) {
 
     const form = document.getElementById('provForm');
@@ -602,7 +677,18 @@ export function validateProvForm(personType) {
     return true;
 }
 
-//validacion de documentos cargados en form documentos
+/**
+ * Valida los documentos cargados en el formulario de documentos (uploadDocsForm).
+ * Validaciones incluidas:
+ * - Campos de documentos obligatorios no vacíos.
+ * - Referencias comerciales: requiere exactamente 2 archivos.
+ * - Estados financieros: requiere exactamente 2 archivos.
+ * - OEA: radio seleccionado.
+ * - Si es OEA: documentos adicionales (upContingMeMagnetico o upContingFirmada,
+ *   upManifestacionSeguridad, upCertifiOEA, upAcuerdoSeguridad) completos.
+ * - Archivos nuevos en tempFiles: extensión .pdf y tamaño máximo 4MB.
+ * @returns {boolean} true si el formulario es válido, false si hay errores.
+ */
 export function validateDocsForm() {
     const form = document.getElementById('uploadDocsForm');
     //const files = form.querySelectorAll('input[type="file"]');

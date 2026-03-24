@@ -43,6 +43,11 @@ thead {
     grid-template-columns: 1fr 1fr;
 }
 
+input:valid + .adaptive-label {
+    top: 0%;
+    font-size: 12px;
+    color: #00bafa;
+}
 
 @media (min-width: 1920px) {
     .table-responsive {

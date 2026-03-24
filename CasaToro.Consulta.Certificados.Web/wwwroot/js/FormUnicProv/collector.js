@@ -1,7 +1,15 @@
 ﻿import { existingFiles, tempFiles, unformatCurrency } from './helpers-ui.js';
 import { telInst } from './constant.js';
 
-//funcion para recopilar los datos del formulario persona natural
+/**
+ * Recopila todos los datos del formulario de persona natural (persNatuForm)
+ * y los estructura en un objeto listo para enviar al backend.
+ * Campos con valor vacío se mapean a null para evitar enviar strings vacíos a la DB.
+ * Teléfonos se obtienen con getNumber() de intl-tel-input (formato E.164).
+ * PEP: si pnPEP !== 'Si', fuerza PEPTypes=[] y pnPEP_Entidad=null.
+ * Ubicaciones: fuerza null si el valor está vacío (select no seleccionado).
+ * @returns {Object} Datos del formulario listos para el endpoint AddProviderNatural/UpdateProviderNatural.
+ */
 export function collectFormData_Natural() {
     const form = document.getElementById('persNatuForm');
     const data = {};
@@ -64,7 +72,14 @@ export function collectFormData_Natural() {
     return data;
 }
 
-//funcion para recopilar los datos del formulario persona juridica
+/**
+ * Recopila todos los datos del formulario de persona jurídica (persJuriForm)
+ * incluyendo sucursales y accionistas, y los estructura para el backend.
+ * Sucursales: solo se incluyen las que tienen Dirección informada (filter).
+ * Accionistas: solo se incluyen los que tienen razonSocial informada (filter).
+ * Teléfonos usan intl-tel-input. Ubicaciones vacías se fuerzan a null.
+ * @returns {Object} Datos listos para AddProviderJuridica/UpdateProviderJuridica.
+ */
 export function collectFormData_Juridica() {
     const form = document.getElementById('persJuriForm');
     const data = {};
@@ -121,7 +136,16 @@ export function collectFormData_Juridica() {
     return data;
 }
 
-//funcion para recopilar los datos del formulario de informacion financiera
+/**
+ * Recopila los datos del formulario de información financiera (provForm).
+ * Los campos de dinero (pvIngrMens, pvActivos, etc.) se desformatean a número puro
+ * usando unformatCurrency antes de enviar.
+ * Los radios del subform de declaraciones y autorizaciones se recogen aparte
+ * porque viven fuera del form principal.
+ * El NIT se toma del formulario de persona correspondiente según typePerson.
+ * @param {'natural'|'juridica'} typePerson - Determina de qué form tomar el NIT.
+ * @returns {Object} Datos listos para AddProvFinanceInfo/UpdateProvFinanceInfo.
+ */
 export function collectProvFormData(typePerson) {
     const form = document.getElementById('provForm');
     const data = {};
@@ -190,7 +214,16 @@ export function collectProvFormData(typePerson) {
     return data;
 }
 
-//funcion para recopilar los documentos cargados en el formulario de documentos
+/**
+ * Recopila los datos del formulario de documentos (uploadDocsForm) y los
+ * estructura en un FormData para envío multipart al backend.
+ * - Archivos nuevos: se toman de tempFiles (archivos seleccionados pero aún no guardados).
+ * - Archivos existentes: se envía existingFilesJSON con el mapa de archivos a conservar
+ *   (el backend marca como Inactivo los que no aparezcan en esta lista).
+ * - Si personType es null (flujo proveedor), el backend obtiene el NIT del claim de sesión.
+ * @param {string|null} [personType=null] - Tipo de persona. Si tiene valor, agrega Nit y personType al FormData.
+ * @returns {FormData} FormData listo para sendFiles.
+ */
 export function collectDocsForm(personType = null) {
     const form = document.getElementById('uploadDocsForm');
     const formData = new FormData();

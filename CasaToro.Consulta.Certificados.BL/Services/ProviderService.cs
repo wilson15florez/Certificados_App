@@ -7,34 +7,52 @@ using System.Linq;
 using System.Dynamic;
 using Microsoft.AspNetCore.Http;
 
-
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
+    /// <summary>
+    /// Servicio principal para la gestión de proveedores.
+    /// Maneja lectura, creación y actualización en las tablas:
+    /// Proveedores_Master, Proveedores_Natural, Proveedores_Juridica,
+    /// Proveedores_InfoFinanciera y Documentos_Proveedores.
+    /// </summary>
     public class ProviderService
     {
-        
         private readonly ApplicationDbContext _context;
-        // Constructor de la clase que recibe una instancia de ApplicationDbContext (db)
+
+        /// <summary>
+        /// Constructor. Recibe el contexto de base de datos por inyección de dependencias.
+        /// </summary>
         public ProviderService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        //Método que obtiene un proveedor por su NIT
+        /// <summary>
+        /// Obtiene un proveedor de Proveedores_Master por su NIT.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor.</param>
+        /// <returns><see cref="Proveedores_Master"/> si existe, de lo contrario <c>null</c>.</returns>
         public Proveedores_Master getProviderByNit(string nit)
         {
             return _context.Proveedores_Master.FirstOrDefault(p => p.Nit != null && p.Nit.Equals(nit));
         }
 
-        //Método que obtiene a un proveedor en la tabla proveedores_InfoFinanciera por su NIT
+        /// <summary>
+        /// Obtiene el registro de información financiera de un proveedor por su NIT.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor.</param>
+        /// <returns><see cref="Proveedores_InfoFinanciera"/> si existe, de lo contrario <c>null</c>.</returns>
         public Proveedores_InfoFinanciera? getProvFinanceInfByNit(string nit)
         {
             return _context.Proveedores_InfoFinanciera.FirstOrDefault(f => f.Nit == nit);
         }
 
-        // Método que obtiene las empresas asociadas a un proveedor
+        /// <summary>
+        /// Obtiene la lista de empresas asociadas a un proveedor.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor.</param>
+        /// <returns>Lista de <see cref="EmpresasMaster"/> asociadas.</returns>
         public List<EmpresasMaster> GetCompaniesForProvider(string nit)
-
         {
             return _context.EmpresasProveedores
                            .Include(c => c.IdEmpresaNavigation)
@@ -43,7 +61,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                            .ToList();
         }
 
-        //Metodo para actualizar la información de un proveedor en la tabla master
+        /// <summary>
+        /// Actualiza los datos básicos de un proveedor en Proveedores_Master
+        /// usando <c>SetValues</c> para copiar todos los campos del objeto recibido.
+        /// </summary>
+        /// <param name="provider">Objeto con los nuevos valores a persistir.</param>
+        /// <exception cref="Exception">Si ocurre un error al actualizar.</exception>
         public void UpdateProvider(Proveedores_Master provider)
         {
             try
@@ -51,7 +74,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 var existingProvider = _context.Proveedores_Master.FirstOrDefault(p => p.Nit == provider.Nit);
                 if (existingProvider != null)
                 {
-                    // Actualizar la entidad existente
                     _context.Entry(existingProvider).CurrentValues.SetValues(provider);
                     _context.SaveChanges();
                     Console.WriteLine("proovedor actualizado");
@@ -63,31 +85,30 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //Metodo que obtiene la información detallada de un proveedor ya sea persona natural o jurídica y la informacion financiera
+        /// <summary>
+        /// Obtiene el detalle completo de un proveedor: datos personales (natural o jurídica),
+        /// información financiera, sucursales, accionistas y tipos PEP.
+        /// Retorna un objeto dinámico con flags de existencia para cada sección.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor.</param>
+        /// <param name="personType">Tipo de persona: "natural" o "juridica".</param>
+        /// <returns>
+        /// Objeto dinámico con: <c>existNatu</c>, <c>existJuri</c>, <c>existFinanInf</c>,
+        /// <c>natural</c>, <c>juridica</c>, <c>finanInf</c>.
+        /// </returns>
         public async Task<dynamic> getProviderDetails(string nit, string personType)
         {
             ExpandoObject MakeDynamic(
-                bool existNatu,
-                bool existJuri,
-                bool existFinanInf,
-                object? natural,
-                object? juridica,
-                object? finanInf
-            )
+                bool existNatu, bool existJuri, bool existFinanInf,
+                object? natural, object? juridica, object? finanInf)
             {
                 dynamic d = new ExpandoObject();
-                d.existNatu = existNatu;
-                d.existJuri = existJuri;
-                d.existFinanInf = existFinanInf;
-                d.natural = natural;
-                d.juridica = juridica;
-                d.finanInf = finanInf;
+                d.existNatu = existNatu; d.existJuri = existJuri; d.existFinanInf = existFinanInf;
+                d.natural = natural; d.juridica = juridica; d.finanInf = finanInf;
                 return d;
             }
 
-            var finanInfData = await _context.Proveedores_InfoFinanciera
-                                        .FirstOrDefaultAsync(f => f.Nit == nit);
-
+            var finanInfData = await _context.Proveedores_InfoFinanciera.FirstOrDefaultAsync(f => f.Nit == nit);
             Dictionary<string, object>? mapFinanInfData = null;
 
             if (finanInfData != null)
@@ -145,26 +166,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
             if (personType.Equals("natural", StringComparison.OrdinalIgnoreCase))
             {
-                var naturalData = await _context.Proveedores_Natural
-                                                    .FirstOrDefaultAsync(p => p.Nit == nit);
+                var naturalData = await _context.Proveedores_Natural.FirstOrDefaultAsync(p => p.Nit == nit);
                 if (naturalData == null)
                 {
-                    return MakeDynamic
-                    (
-                        existNatu: false,
-                        existJuri: false,
-                        existFinanInf: (mapFinanInfData != null),
-                        natural: null,
-                        juridica: null,
-                        finanInf: mapFinanInfData
-
-                        );
+                    return MakeDynamic(existNatu: false, existJuri: false, existFinanInf: (mapFinanInfData != null), natural: null, juridica: null, finanInf: mapFinanInfData);
                 }
 
                 var pepTipos = await _context.PEPtipos_ProveedoresNatural
-                                                .Where(t => t.NitProveedor == nit)
-                                                .Select(t => t.TipoPEPid)
-                                                .ToListAsync();
+                                                .Where(t => t.NitProveedor == nit).Select(t => t.TipoPEPid).ToListAsync();
 
                 var mapNaturalData = new Dictionary<string, object>
                     {
@@ -203,40 +212,19 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         { "FinanInf", mapFinanInfData }
                     };
 
-                return MakeDynamic
-                (
-                    existNatu: true,
-                    existJuri: false,
-                    existFinanInf: (mapFinanInfData != null),
-                    natural: mapNaturalData,
-                    juridica: null,
-                    finanInf: mapFinanInfData
-                );
+                return MakeDynamic(existNatu: true, existJuri: false, existFinanInf: (mapFinanInfData != null), natural: mapNaturalData, juridica: null, finanInf: mapFinanInfData);
             }
 
             if (personType.Equals("juridica", StringComparison.OrdinalIgnoreCase))
             {
-                var juridicaData = await _context.Proveedores_Juridica
-                                                    .FirstOrDefaultAsync(p => p.Nit == nit);
+                var juridicaData = await _context.Proveedores_Juridica.FirstOrDefaultAsync(p => p.Nit == nit);
                 if (juridicaData == null)
                 {
-                    return MakeDynamic
-                    (
-                        existNatu: false,
-                        existJuri: false,
-                        existFinanInf: (mapFinanInfData != null),
-                        natural: null,
-                        juridica: null,
-                        finanInf: mapFinanInfData
-                    );
+                    return MakeDynamic(existNatu: false, existJuri: false, existFinanInf: (mapFinanInfData != null), natural: null, juridica: null, finanInf: mapFinanInfData);
                 }
 
-                var sucursales = await _context.Sucursales_PJuridica
-                                            .Where(s => s.NitProveedor == nit)
-                                            .ToListAsync();
-                var accionistas = await _context.AccionistasControlPJuridica
-                                            .Where(a => a.NitProveedor == nit)
-                                            .ToListAsync();
+                var sucursales = await _context.Sucursales_PJuridica.Where(s => s.NitProveedor == nit).ToListAsync();
+                var accionistas = await _context.AccionistasControlPJuridica.Where(a => a.NitProveedor == nit).ToListAsync();
 
                 //mapea los datos
                 var mapJuridicaData = new Dictionary<string, object>
@@ -284,31 +272,35 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                         {  "FinanInf", mapFinanInfData   }
                     };
 
-                return MakeDynamic
-                (
-                    existNatu: false,
-                    existJuri: true,
-                    existFinanInf: (mapFinanInfData != null),
-                    natural: null,
-                    juridica: mapJuridicaData,
-                    finanInf: mapFinanInfData
-                );
+                return MakeDynamic(existNatu: false, existJuri: true, existFinanInf: (mapFinanInfData != null), natural: null, juridica: mapJuridicaData, finanInf: mapFinanInfData);
             }
 
             return MakeDynamic(false, false, false, null, null, null);
         }
 
-        //Metodo para obtener los documentos asociados a un proveedor por su NIT
+        /// <summary>
+        /// Obtiene los documentos activos de un proveedor, ordenados por fecha de carga descendente.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor.</param>
+        /// <returns>Lista de <see cref="Documentos_Proveedores"/> con estado "Activo".</returns>
         public List<Documentos_Proveedores> GetDocumentsByNit(string nit)
         {
             //trae los documentos activos para cada categoria
             return _context.Documentos_Proveedores
-                .Where(d => d.NitProveedor == nit && d.Estado == "Activo")
-                .OrderByDescending(d => d.fechaCarga)
-                .ToList();
+                .Where(d => d.NitProveedor == nit && d.Estado == "Activo").OrderByDescending(d => d.fechaCarga).ToList();
         }
 
-        //metodo para actualizar proveedor natural
+        /// <summary>
+        /// Actualiza la información de un proveedor persona natural en una sola transacción.
+        /// Actualiza: Proveedores_Master, Proveedores_Natural y PEPtipos_ProveedoresNatural
+        /// (replace completo de tipos PEP — elimina los anteriores e inserta los nuevos).
+        /// </summary>
+        /// <param name="providerData">Datos del proveedor natural incluyendo <c>PEPTypes</c>.</param>
+        /// <param name="fullname">Nombre completo para Proveedores_Master.</param>
+        /// <param name="tipPersona">Tipo de persona ("natural").</param>
+        /// <param name="dateProcedure">Fecha de diligenciamiento del formato.</param>
+        /// <param name="tipTramite">"VINCULACION" o "ACTUALIZACION".</param>
+        /// <exception cref="Exception">Si el registro no existe o hay error de DB. Hace rollback automático.</exception>
         public void UpdateNaturalInfo(Proveedores_Natural providerData, string fullname, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -374,8 +366,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                     if (providerData.PEPTypes != null && providerData.PEPTypes.Any())
                     {
                         var validPEPIds = _context.PEPtipos.Where(t => providerData.PEPTypes.Contains(t.IdPEP))
-                                                             .Select(t => t.IdPEP)
-                                                             .ToList();
+                                                             .Select(t => t.IdPEP).ToList();
                         
                         foreach (var id in validPEPIds)
                         {
@@ -398,7 +389,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para actualizar proveedor juridico
+        /// <summary>
+        /// Actualiza la información de un proveedor persona jurídica en una sola transacción.
+        /// Actualiza: Proveedores_Master, Proveedores_Juridica, Sucursales_PJuridica
+        /// y AccionistasControlPJuridica (replace completo de sucursales y accionistas).
+        /// </summary>
+        /// <param name="providerData">Datos del proveedor jurídico, incluyendo sucursales y accionistas.</param>
+        /// <param name="tipPersona">Tipo de persona ("juridica").</param>
+        /// <param name="dateProcedure">Fecha de diligenciamiento del formato.</param>
+        /// <param name="tipTramite">"VINCULACION" o "ACTUALIZACION".</param>
+        /// <exception cref="Exception">Si el registro no existe o hay error de DB. Hace rollback automático.</exception>
         public void UpdateJuridicaInfo(Proveedores_Juridica providerData, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             string providerNit = providerData.Nit;
@@ -502,7 +502,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para actualizar la información financiera del proveedor
+        /// <summary>
+        /// Actualiza todos los campos de información financiera de un proveedor.
+        /// Opera en transacción. Lanza excepción si el registro no existe.
+        /// </summary>
+        /// <param name="providerData">Objeto con los nuevos valores financieros.</param>
+        /// <exception cref="Exception">Si el registro no existe o hay error de DB. Hace rollback automático.</exception>
         public void UpdateFinanceInfo(Proveedores_InfoFinanciera providerData)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -576,7 +581,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para actualizar contraseña
+        /// <summary>
+        /// Actualiza la contraseña de un proveedor en Proveedores_Master.
+        /// La contraseña debe llegar ya hasheada desde el llamador.
+        /// </summary>
+        /// <param name="provider">Objeto con el NIT y la nueva contraseña hasheada.</param>
+        /// <exception cref="Exception">Si ocurre un error al actualizar.</exception>
         public void UpdatePassword(Proveedores_Master provider)
         {
             try
@@ -595,7 +605,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para agregar proveedor a la tabla de p. natural a partir de la t. master
+        /// <summary>
+        /// Inserta un nuevo registro en Proveedores_Natural, actualiza Proveedores_Master
+        /// y registra los tipos PEP. Todo en una sola transacción.
+        /// </summary>
+        /// <param name="proveedor">Datos del proveedor natural incluyendo <c>PEPTypes</c>.</param>
+        /// <param name="fullname">Nombre completo para Proveedores_Master.</param>
+        /// <param name="tipPersona">Tipo de persona ("natural").</param>
+        /// <param name="dateProcedure">Fecha de diligenciamiento del formato.</param>
+        /// <param name="tipTramite">"VINCULACION" o "ACTUALIZACION".</param>
+        /// <exception cref="Exception">Si ocurre un error de DB.</exception>
         public void AddProveedorNatural(Proveedores_Natural proveedor, string fullname, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -641,7 +660,15 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para agregar proveedor a la tabla de p. juridica a partir de la t. master
+        /// <summary>
+        /// Inserta un nuevo registro en Proveedores_Juridica y actualiza Proveedores_Master.
+        /// Todo en una sola transacción.
+        /// </summary>
+        /// <param name="proveedor">Datos del proveedor jurídico.</param>
+        /// <param name="tipPersona">Tipo de persona ("juridica").</param>
+        /// <param name="dateProcedure">Fecha de diligenciamiento del formato.</param>
+        /// <param name="tipTramite">"VINCULACION" o "ACTUALIZACION".</param>
+        /// <exception cref="Exception">Si ocurre un error de DB. Hace rollback automático.</exception>
         public void AddProveedorJuridica(Proveedores_Juridica proveedor, string tipPersona, DateTime dateProcedure, string tipTramite)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -674,7 +701,11 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para agregar proveedor a la tabla de proveedores_InfoFinanciera a partir de la t. master
+        /// <summary>
+        /// Inserta un nuevo registro en Proveedores_InfoFinanciera. Opera en transacción.
+        /// </summary>
+        /// <param name="proveedor">Datos de información financiera.</param>
+        /// <exception cref="Exception">Si ocurre un error de DB.</exception>
         public void AddProvFinanceInf(Proveedores_InfoFinanciera proveedor)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -692,7 +723,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //Metodo para actualizar OEA en Proveedores_InfFinanciera
+        /// <summary>
+        /// Actualiza el campo <c>upIsOEA</c> en Proveedores_InfoFinanciera.
+        /// Se llama al guardar los documentos del proveedor.
+        /// </summary>
+        /// <param name="Nit">NIT del proveedor.</param>
+        /// <param name="isOEA">Valor del estado OEA ("Si" o "No").</param>
         public void UpdateStatusOEA(string Nit, string isOEA)
         {
             var finanInf = _context.Proveedores_InfoFinanciera.FirstOrDefault(f => f.Nit == Nit);
@@ -703,7 +739,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para guardar y generar la ruta de ubicacion de los documentos del proveedor
+        /// <summary>
+        /// Guarda un archivo en el servidor bajo la ruta estructurada:
+        /// <c>wwwroot/docAnexa/Proveedores/{personType}/{Nit}/{categoriaDoc}/</c>.
+        /// Agrega timestamp al nombre del archivo para versionamiento.
+        /// </summary>
+        /// <param name="file">Archivo recibido desde el formulario.</param>
+        /// <param name="Nit">NIT del proveedor.</param>
+        /// <param name="personType">Tipo de persona ("PersonaNatural" o "PersonaJuridica").</param>
+        /// <param name="categoriaDoc">Categoría del documento (ej: "upFUCPfirmado").</param>
+        /// <param name="nomArch">Nombre base del archivo sin extensión ni timestamp.</param>
+        /// <param name="webRootPath">Ruta raíz del servidor web (wwwroot).</param>
+        /// <returns>Ruta relativa del archivo guardado, o <c>null</c> si el archivo es nulo o vacío.</returns>
         public async Task<string> SaveDocuments(IFormFile file, string Nit, string personType, string categoriaDoc, string nomArch, string webRootPath)
         {
             if (file == null || file.Length == 0) return null;
@@ -726,7 +773,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             return Path.Combine(subPath, fileName).Replace("\\", "/");
         }
 
-        //metodo para guardar la ruta y metadata en DB
+        /// <summary>
+        /// Persiste los metadatos de un documento en Documentos_Proveedores con estado "Activo".
+        /// Debe llamarse después de <see cref="SaveDocuments"/> para registrar la ruta en DB.
+        /// </summary>
+        /// <param name="Nit">NIT del proveedor.</param>
+        /// <param name="categoria">Categoría del documento.</param>
+        /// <param name="nomArchivo">Nombre del archivo (con timestamp).</param>
+        /// <param name="ruta">Ruta relativa devuelta por <see cref="SaveDocuments"/>.</param>
         public void SaveDocumentMD(string Nit, string categoria, string nomArchivo, string ruta)
         {
             var newDoc = new Documentos_Proveedores
@@ -743,6 +797,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Marca como "Inactivo" todos los documentos FUCP firmados activos de una persona jurídica.
+        /// Se invoca al actualizar el formato jurídico, ya que el FUCP anterior queda desactualizado
+        /// y el proveedor debe cargar uno nuevo.
+        /// </summary>
+        /// <param name="nit">NIT del proveedor jurídico.</param>
         public void DeactiveJuriFUCP(string nit)
         {
             var fucpActivos = _context.Documentos_Proveedores
@@ -758,13 +818,22 @@ namespace CasaToro.Consulta.Certificados.BL.Services
                 _context.SaveChanges();
         }
 
-        //metodo para cambiar el estado del documento
+        /// <summary>
+        /// Sincroniza el estado de los documentos activos en DB contra la lista del frontend.
+        /// Cualquier documento activo en DB que no aparezca en <paramref name="existingFilesMap"/>
+        /// se marca como "Inactivo" (soft delete — el archivo físico se conserva).
+        /// </summary>
+        /// <param name="Nit">NIT del proveedor.</param>
+        /// <param name="existingFilesMap">
+        /// Diccionario donde la clave es la categoría y el valor es la lista de nombres
+        /// de archivo que el usuario decidió conservar.
+        /// </param>
+        /// <param name="webRootPath">Ruta raíz del servidor (reservado para uso futuro).</param>
         public void ActiveDocument(string Nit, Dictionary<string, List<string>> existingFilesMap, string webRootPath) 
         { 
             //filtra por documentos actualmente activos
             var docsActivosDB = _context.Documentos_Proveedores
-                .Where(d => d.NitProveedor == Nit && d.Estado == "Activo")
-                .ToList();
+                .Where(d => d.NitProveedor == Nit && d.Estado == "Activo").ToList();
             foreach (var docDB in docsActivosDB) {
                 
                 bool stayDoc = false;

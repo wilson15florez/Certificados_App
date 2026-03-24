@@ -12,17 +12,41 @@ using Microsoft.AspNetCore.Http;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
+    /// <summary>
+    /// Servicio para la carga masiva de datos de certificados
+    /// desde archivos Excel (.xlsx) usando OpenXML.
+    /// Soporta tres tipos: IVA, ICA y RTF (Retención en la Fuente).
+    /// Valida la estructura del archivo antes de procesar y retorna mensajes
+    /// descriptivos en caso de error de duplicado, FK inválida o datos incompletos.
+    /// </summary>
     public class CertificateServiceExcel
     {
         private readonly ApplicationDbContext _context;
 
-        //Constructor del servicio que recibe una instancia de ApplicationDbContext (bd)
+        /// <summary>
+        /// Constructor. Recibe el contexto de base de datos por inyección de dependencias.
+        /// </summary>
         public CertificateServiceExcel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        //Método que agrega información de certificados de IVA desde un archivo Excel
+        /// <summary>
+        /// Procesa un archivo Excel con datos de certificados IVA
+        /// e inserta los registros en la tabla CertificadosIvas.
+        /// Si el proveedor (NIT) no existe en Proveedores_Master, lo crea automáticamente.
+        /// Valida la estructura del archivo antes de procesar.
+        /// </summary>
+        /// <param name="file">Archivo Excel (.xlsx) con los datos de IVA.</param>
+        /// <returns>
+        /// Tupla con:
+        /// <list type="bullet">
+        ///   <item><c>message</c>: mensaje descriptivo del resultado o del error.</item>
+        ///   <item><c>success</c>: <c>true</c> si la carga fue exitosa, <c>false</c> si hubo error.</item>
+        /// </list>
+        /// Formato esperado de columnas: nit | id_empresa | nombre | concepto | porcentaje_iva |
+        /// porcentaje | base | iva | retenido | ano | periodo | ciudad_Pago | ciudad_Expedido | fecha_expedicion
+        /// </returns>
         public (string message, bool success) AddInfoIvaFromExcel(IFormFile file)
         {
             try
@@ -154,7 +178,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
         }
 
-        //Método que agrega información de certificados de ICA desde un archivo Excel
+        /// <summary>
+        /// Procesa un archivo Excel con datos de certificados ICA
+        /// e inserta los registros en la tabla CertificadosIcas.
+        /// Si el proveedor (NIT) no existe en Proveedores_Master, lo crea automáticamente.
+        /// Valida la estructura del archivo antes de procesar.
+        /// </summary>
+        /// <param name="file">Archivo Excel (.xlsx) con los datos de ICA.</param>
+        /// <returns>
+        /// Tupla con <c>message</c> y <c>success</c>.
+        /// Formato esperado: nit | id_empresa | nombre | concepto | porcentaje | base |
+        /// retenido | ano | periodo | ciudad_Pago | ciudad_Expedido | fecha_expedicion
+        /// </returns>
         public (string message, bool success) AddInfoIcaFromExcel(IFormFile file)
         {
             try
@@ -280,7 +315,19 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //Método que agrega información de certificados de RTF desde un archivo Excel
+        /// <summary>
+        /// Procesa un archivo Excel con datos de certificados de Retención en la Fuente (RTF)
+        /// e inserta los registros en la tabla CertificadosRteftes.
+        /// A diferencia de IVA e ICA, RTF usa columna <c>Mes</c> en lugar de <c>Periodo</c>.
+        /// Si el proveedor (NIT) no existe en Proveedores_Master, lo crea automáticamente.
+        /// Valida la estructura del archivo antes de procesar.
+        /// </summary>
+        /// <param name="file">Archivo Excel (.xlsx) con los datos de RTF.</param>
+        /// <returns>
+        /// Tupla con <c>message</c> y <c>success</c>.
+        /// Formato esperado: Nit | Id_empresa | Nombre | Concepto | Porcentaje | Base |
+        /// Retenido | Ano | Mes | Ciudad_Pago | Ciudad_Expedido | Fecha_expedicion
+        /// </returns>
         public (string message, bool success) AddInfoRtfFromExcel(IFormFile file)
         {
             try
@@ -405,7 +452,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //Método que extrae el valor de una celda en un archivo Excel con OpenXML retornando el valor como string
+        /// <summary>
+        /// Extrae el valor de texto de una celda de Excel usando OpenXML.
+        /// Resuelve referencias a la tabla de cadenas compartidas (SharedStringTable)
+        /// cuando el tipo de celda es <c>SharedString</c>.
+        /// </summary>
+        /// <param name="workbookPart">Parte del libro que contiene la tabla de cadenas.</param>
+        /// <param name="cell">Celda cuyo valor se quiere extraer.</param>
+        /// <returns>Valor de texto de la celda, o <c>null</c> si la celda es nula.</returns>
         private string GetCellValue(WorkbookPart workbookPart, Cell cell)
         {
             if (cell == null) return null;
@@ -420,8 +474,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             return value;
         }
 
-
-        //Método que extrae los valores de la clave duplicada desde un mensaje de error de SQL
+        /// <summary>
+        /// Extrae los valores de la clave duplicada desde el mensaje de error de SQL Server (código 2627).
+        /// Usa regex para parsear el patrón: <c>The duplicate key value is (nit, periodo, ano, retenido, descripcion, idEmpresa)</c>.
+        /// </summary>
+        /// <param name="errorMessage">Mensaje de error de la excepción SQL.</param>
+        /// <returns>Tupla con los valores extraídos: Nit, Periodo, Ano, Retenido, Descripcion, IdEmpresa.</returns>
+        /// <exception cref="InvalidOperationException">Si el mensaje no coincide con el patrón esperado.</exception>
         private (string Nit, int Periodo, int Ano, decimal Retenido, string Descripcion, int IdEmpresa) ExtractDuplicateKeyValues(string errorMessage)
         {
             var match = Regex.Match(errorMessage, @"The duplicate key value is \((\d+), (\d+), (\d+), ([\d.]+), (.+), (\d+)\)");
@@ -438,7 +497,16 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
             throw new InvalidOperationException("No se pudieron extraer los valores de la clave duplicada desde el mensaje de error.");
         }
-        //Método que verifica si los encabezados del archivo Excel son correctos dependiendo del tipo de certificado
+
+        /// <summary>
+        /// Verifica que los encabezados de la primera fila del Excel coincidan exactamente
+        /// con los esperados para el tipo de certificado indicado (IVA, ICA o RTF).
+        /// La comparación es case-insensitive.
+        /// </summary>
+        /// <param name="headers">Fila de encabezados del archivo Excel.</param>
+        /// <param name="type">Tipo de certificado: "IVA", "ICA" o "RTF".</param>
+        /// <param name="workbookPart">Parte del libro para resolver SharedStrings.</param>
+        /// <returns><c>true</c> si los encabezados son correctos, <c>false</c> si no coinciden.</returns>
         private bool IsHeadersRight(Row headers,string type,WorkbookPart workbookPart)
         {
             if (type.Equals("IVA"))
@@ -503,13 +571,18 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
              return true;
         }
-
-
     }
 
-    //Excepción personalizada para manejar errores de formato en archivos Excel
+    /// <summary>
+    /// Excepción personalizada para errores de formato o estructura en archivos Excel.
+    /// Se lanza cuando el archivo no contiene encabezados o estos no coinciden con el formato esperado.
+    /// </summary>
     public class InvalidExcelFormatException : Exception
     {
+        /// <summary>
+        /// Inicializa la excepción con el mensaje de error descriptivo.
+        /// </summary>
+        /// <param name="message">Descripción del problema de formato detectado.</param>
         public InvalidExcelFormatException(string message) : base(message)
         {
         }

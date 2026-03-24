@@ -22,7 +22,11 @@ export const uploadDocsForm = document.getElementById('uploadDocsForm');
 export const submitPrvBtn = document.getElementById('submitPrvBtn');
 export const submitDocsBtn = document.getElementById('submitDocsBtn');
 
-//IDs de los paneles de documentos
+/**
+ * IDs de todos los paneles de documentos del uploadDocsForm.
+ * Se usan para marcar panelVisited al enviar y para limpiar el estado entre consultas.
+ * @type {string[]}
+ */
 export const docPanels = [
     'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado',
     'upComposicionAccionaria', 'upFotocopiaCC', 'upRefeComerciales',
@@ -31,7 +35,10 @@ export const docPanels = [
     'upManifestacionSeguridad', 'upCertifiOEA', 'upAcuerdoSeguridad'
 ];
 
-//Oculta los forms
+/**
+ * Oculta todos los formularios del FUCP.
+ * Se llama al iniciar una nueva consulta o al navegar entre secciones.
+ */
 export function hideForms() {
     persNatuForm.style.display = 'none';
     persJuriForm.style.display = 'none';
@@ -40,7 +47,12 @@ export function hideForms() {
     printFormatForm.style.display = 'none';
 }
 
-//Muestra los forms segun tipo de persona
+/**
+ * Muestra los formularios correspondientes al tipo de persona.
+ * Para 'natural' muestra persNatuForm + provForm y oculta certSection.
+ * Para 'juridica' muestra persJuriForm + provForm + certSection.
+ * @param {'natural'|'juridica'} typePerson - Tipo de persona del proveedor.
+ */
 export function showForms(typePerson) {
     if (typePerson === 'natural') {
         persNatuForm.style.display = 'block';
@@ -55,7 +67,12 @@ export function showForms(typePerson) {
     }
 }
 
-//Inicializa los handlers compartidos
+/**
+ * Inicializa todos los handlers compartidos entre la vista de admin y la de proveedor.
+ * Debe llamarse una sola vez al cargar la página (desde initAdmin o initProveedor).
+ * Registra: validación IRT, ubicaciones, sucursales, accionistas, radios dependientes,
+ * sincronización CIIU, campos monetarios, teléfonos, dirección, declaraciones, PEP y OEA.
+ */
 export function initSharedHandlers() {
     HUI.scrollButton();
     UI.firstBlock();
@@ -174,7 +191,16 @@ export function initSharedHandlers() {
     CNS.hasValue();
 }
 
-//abre y carga los forms segun el resultado de API
+/**
+ * Abre y precarga los formularios del FUCP según el resultado de la API.
+ * - foundMasterOnly: limpia los forms, muestra el form del tipo correcto y carga solo
+ *   los datos del Master (con sugerencia de nombre separado para persona natural).
+ * - foundDetail: carga los datos completos de persona e información financiera.
+ * @param {Object} result - Respuesta de la API (getProvDataForms o getProvPersonDetails).
+ * @param {Function} getTypePerson - Callback que retorna el tipo de persona ('natural'|'juridica').
+ * @param {string|null} idNum - NIT del proveedor (solo en flujo admin).
+ * @param {{value: boolean}} isNewRegisterRef - Referencia mutable para rastrear si es registro nuevo.
+ */
 export async function openForms(result, getTypePerson, idNum, isNewRegisterRef) {
     if (result.status === 'foundMasterOnly') {
         isNewRegisterRef.value = true;
@@ -223,7 +249,16 @@ export async function openForms(result, getTypePerson, idNum, isNewRegisterRef) 
     CNS.alertError.show();
 }
 
-//valida, recopila y envia los formularios de persona e informacion financiera
+/**
+ * Valida, recopila y envía los formularios de persona (natural o jurídica)
+ * e información financiera al backend.
+ * Determina si es inserción o actualización según isNewRegisterRef.
+ * Al finalizar habilita los botones de formato e impresión, y muestra alerta de éxito.
+ * Si es actualización de persona jurídica, muestra aviso adicional para reimprimir el FUCP.
+ * @param {string} urlBase - URL base del controlador ('/Admin' o '/Proveedor').
+ * @param {Function} getTypePerson - Callback que retorna el tipo de persona actual.
+ * @param {{value: boolean}} isNewRegisterRef - Si es true, inserta; si es false, actualiza.
+ */
 export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
     const typePerson = getTypePerson();
     let dataProNJ = null;
@@ -272,7 +307,14 @@ export async function submitForms(urlBase, getTypePerson, isNewRegisterRef) {
     }
 }
 
-//carga el panel de documentos
+/**
+ * Carga el panel de documentos del proveedor.
+ * Oculta los demás forms, muestra uploadDocsForm, obtiene los documentos guardados
+ * y aplica el bloqueo del campo upFUCPfirmado para persona natural
+ * (ya que el FUCP no aplica para naturales).
+ * @param {Function} getIdNum - Callback que retorna el NIT del proveedor (null en flujo proveedor).
+ * @param {Function} getTypePerson - Callback que retorna el tipo de persona actual.
+ */
 export async function uploadDocsPanel(getIdNum, getTypePerson) {
     hideForms();
     uploadDocsForm.style.display = 'block';
@@ -292,7 +334,14 @@ export async function uploadDocsPanel(getIdNum, getTypePerson) {
     HUI.blockExcl('upFUCPfirmado', typePerson === 'natural');
 }
 
-//valida, recolecta y envia documentos
+/**
+ * Valida, recopila y envía los documentos del proveedor al backend.
+ * Si markVisited es true, marca todos los paneles como visitados antes de validar
+ * (comportamiento del flujo admin donde el admin puede no haber abierto todos los paneles).
+ * @param {string} urlDocs - URL del endpoint de carga de documentos.
+ * @param {Function} getTypePerson - Callback que retorna el tipo de persona actual.
+ * @param {boolean} [markVisited=false] - Si true, fuerza la validación de todos los paneles.
+ */
 export async function submitDocs(urlDocs, getTypePerson, markVisited = false) {
     if (markVisited) {
         docPanels.forEach(id => {

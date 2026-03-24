@@ -4,13 +4,26 @@ import * as UI from './ui-handlers.js';
 import * as VLD from './validators.js';
 import * as FHS from './formsHandlers.js';
 
-//estado del registro actual
+/**
+ * Referencia mutable al estado del registro actual.
+ * true = registro nuevo (solo está en Master), false = ya tiene datos completos.
+ * @type {{value: boolean}}
+ */
 const isNewRegister = { value: false };
 
-//agarra el typePerson
+/**
+ * Tipo de persona del proveedor autenticado ('natural' o 'juridica').
+ * Se asigna en consultProv y se reutiliza en los callbacks de los botones.
+ * @type {string|null}
+ */
 let typePerson = null;
 
-//consulta una sola vez el tipo de persona del proveedor y lo asigna
+/**
+ * Consulta el tipo de persona del proveedor y lo asigna al módulo.
+ * Usa caché — si typePerson ya está asignado, no hace otra llamada a la API.
+ * Se llama antes de submitForms y submitDocs para garantizar que typePerson esté actualizado.
+ * @returns {Promise<string>} Tipo de persona ('natural' o 'juridica').
+ */
 async function consultTypePerson() {
     if (typePerson) return typePerson;
     const result = await API.getProvDataForms(null);
@@ -18,17 +31,32 @@ async function consultTypePerson() {
     return typePerson;
 }
 
-//funcion sincrona para usar como callback en submitForms y submitDocs
+/**
+ * Retorna el tipo de persona actual de forma síncrona.
+ * Se usa como callback en submitForms y submitDocs que esperan una función, no un valor.
+ * @returns {string} Tipo de persona o cadena vacía si aún no se ha consultado.
+ */
 function getTypePerson() {
     return typePerson ?? '';
 }
 
-//funcion que inicializa los handlers
+/**
+ * Inicializa la vista del proveedor: registra los handlers compartidos
+ * y consulta el estado del registro del proveedor autenticado.
+ */
 async function initProveedor() {
     FHS.initSharedHandlers();
     await consultProv();
 }
 
+/**
+ * Consulta el estado del registro del proveedor autenticado y actualiza la UI.
+ * - foundMasterOnly: el proveedor existe en Master pero no tiene formulario completo.
+ *   Si TipoPersona está asignado, muestra los botones de navegación.
+ *   Si no, solicita que se configure el tipo en "Editar Perfil".
+ * - foundDetail: el proveedor tiene registro completo. Valida vigencia del FUCP
+ *   y habilita todos los botones de navegación.
+ */
 async function consultProv() {
     try {
         const result = await API.getProvDataForms(null);
@@ -36,7 +64,7 @@ async function consultProv() {
 
         //id solo encontrado en proveedores_master (sin registro como persona natural/juridica ni de informacion financiera)
         if (result.status === 'foundMasterOnly') {
-            if (typePerson === ('natural' || 'juridica')) {
+            if (typePerson === 'natural' || typePerson === 'juridica') {
                 const nit = result.data?.nit ?? result.data?.Nit ?? '';
                 CNS.alertSuccesBody.innerText = `Proveedor con ID: ${nit} encontrado sin Formato diligenciado y/o actualizado. Complete la informacion.`;
                 CNS.alertSuccess.show();
@@ -92,7 +120,7 @@ FHS.openFormsBtn.addEventListener('click', async function (e) {
     }
 });
 
-//visualizar formato para impresion
+//visualizar formato para impresion (solo disponible para persona juridica)
 FHS.printFormatBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     FHS.hideForms();
@@ -118,6 +146,7 @@ FHS.printFormatBtn.addEventListener('click', async function (e) {
 //cargue de documentos
 FHS.uploadDocsBtn.addEventListener('click', async function (e) {
     e.preventDefault();
+    //pasa null porque el backend obtiene getIdNum del claim de inicio de sesion
     await FHS.uploadDocsPanel(() => null, getTypePerson);
 });
 
@@ -146,6 +175,7 @@ FHS.submitDocsBtn.addEventListener('click', async (e) => {
     await consultTypePerson();
 
     try {
+        //pasa null porque el backend obtiene getTypePerson del claim de inicio de sesion
         await FHS.submitDocs('/Proveedor/UploadDocuments', () => null, false);
     }
     catch (err) {

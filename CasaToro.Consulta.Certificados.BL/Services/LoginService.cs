@@ -9,6 +9,11 @@ using System.Security.Policy;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
+    /// <summary>
+    /// Servicio de autenticación. Verifica credenciales de administradores y proveedores,
+    /// crea el <see cref="System.Security.Claims.ClaimsPrincipal"/> de sesión y registra
+    /// el evento de login en las tablas de auditoría.
+    /// </summary>
     public class LoginService
     {
         private readonly ProviderService _providerService;
@@ -35,7 +40,6 @@ namespace CasaToro.Consulta.Certificados.BL.Services
         /// <param name="user">Nombre de usuario o NIT del usuario.</param>
         /// <param name="pass">Contraseña del usuario.</param>
         /// <returns>Una tupla que indica si la autenticación fue exitosa, el ClaimsPrincipal del usuario, un mensaje de error si lo hay, y si el usuario es un administrador.</returns>
-
         public (bool IsAuthenticated, ClaimsPrincipal Principal, string ErrorMessage, bool isAdmin) Authenticate(string user, string pass)
         {
             try

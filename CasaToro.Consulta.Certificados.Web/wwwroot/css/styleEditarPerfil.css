@@ -70,27 +70,13 @@
     height: 2rem;
 }
 
-.adaptive-label {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #898989;
-    background: white;
-    padding: 0 5px;
-    transition: 0.3s ease-in-out;
-    pointer-events: none;
-}
-
 label.disabled-label[for=nit-input],
 label.disabled-label[for=tipo_Persona] {
     background: linear-gradient(#ffffff,#e9ecef) !important
 }
 
-input:focus + .adaptive-label,
 input:valid + .adaptive-label {
-    top: -5%;
+    top: 0%;
     font-size: 12px;
     color: #00bafa;
 }

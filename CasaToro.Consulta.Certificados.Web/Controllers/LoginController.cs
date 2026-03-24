@@ -7,23 +7,42 @@ using CasaToro.Consulta.Certificados.BL.Services;
 
 namespace CasaToro.Consulta.Certificados.Web.Controllers
 {
+    /// <summary>
+    /// Controlador de autenticación del sistema.
+    /// Gestiona el inicio de sesión de proveedores y administradores,
+    /// y el cierre de sesión. No requiere autorización previa.
+    /// </summary>
     public class LoginController : Controller
     {
         private readonly LoginService _loginService;
 
-        // Constructor del controlador que recibe una instancia de LoginService
+        /// <summary>
+        /// Constructor. Recibe el servicio de autenticación por inyección de dependencias.
+        /// </summary>
         public LoginController(LoginService loginService)
         {
             _loginService = loginService;
         }
 
-        // Acción que muestra la vista de inicio de sesión
+        /// <summary>
+        /// Muestra la vista de inicio de sesión.
+        /// </summary>
+        /// <returns>Vista del formulario de login.</returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        // Acción que maneja el envío del formulario de inicio de sesión
+        /// <summary>
+        /// Procesa el formulario de inicio de sesión.
+        /// Autentica al usuario, crea la cookie de sesión y redirige según el rol:
+        /// proveedores van a <c>Provider/Certificates</c>, administradores a <c>Admin/UpdateInfo</c>.
+        /// </summary>
+        /// <param name="model">Modelo con <c>UserName</c> y <c>Password</c>.</param>
+        /// <returns>
+        /// Redirección a la vista principal del rol correspondiente si la autenticación es exitosa,
+        /// o vista de login con mensaje de error si falla.
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
@@ -60,7 +79,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que maneja el cierre de sesión
+        /// <summary>
+        /// Cierra la sesión del usuario autenticado y redirige a la página de login.
+        /// </summary>
+        /// <returns>Redirección a <c>Login/Index</c>.</returns>
         public ActionResult Logout()
         {
             // Cerrar sesión y redirigir a la página de inicio de sesión

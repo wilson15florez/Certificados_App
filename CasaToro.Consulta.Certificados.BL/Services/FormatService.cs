@@ -13,9 +13,30 @@ using System.Globalization;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
+    /// <summary>
+    /// Servicio encargado de generar el Formato Único de Conocimiento de Proveedores (FUCP)
+    /// en formato PDF, mapeando los datos del proveedor jurídico sobre una plantilla AcroForm
+    /// (ADM-FO-0002 V8).
+    /// Solo aplica para personas jurídicas.
+    /// </summary>
     public class FormatService
     {
-        //metodo que mapea cada campo en el formato pdf
+        /// <summary>
+        /// Rellena la plantilla PDF del formato FUCP con los datos del proveedor jurídico
+        /// y su información financiera. Genera el archivo en <c>wwwroot/GeneratedFiles/</c>
+        /// y retorna la ruta relativa para descarga.
+        /// </summary>
+        /// <param name="datos">
+        /// Objeto dinámico con tres propiedades:
+        /// <list type="bullet">
+        ///   <item><c>master</c>: instancia de <see cref="Proveedores_Master"/>.</item>
+        ///   <item><c>juridica</c>: diccionario con los campos de persona jurídica.</item>
+        ///   <item><c>finanInf</c>: diccionario con los campos de información financiera.</item>
+        /// </list>
+        /// </param>
+        /// <param name="webRootPath">Ruta raíz del servidor web (wwwroot).</param>
+        /// <returns>Ruta relativa del PDF generado (ej: <c>/GeneratedFiles/Formato_..._{nit}.pdf</c>).</returns>
+        /// <exception cref="Exception">Si no se puede obtener la información jurídica del objeto <paramref name="datos"/>.</exception>
         public string FillFormatoPDF(dynamic datos, string webRootPath)
         {
             var master = datos.master as CasaToro.Consulta.Certificados.Entities.Proveedores_Master;
@@ -350,7 +371,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             return "/GeneratedFiles/" + fileName;
         }
 
-        //metodo para mapear la data en el formato pdf segun el nombre
+        /// <summary>
+        /// Asigna un valor de texto a un campo del formulario PDF por nombre.
+        /// Si el campo no existe en la plantilla, no lanza excepción — lo ignora silenciosamente.
+        /// </summary>
+        /// <param name="fields">Diccionario de campos del AcroForm.</param>
+        /// <param name="name">Nombre del campo en la plantilla PDF.</param>
+        /// <param name="value">Valor a asignar. Si es <c>null</c>, asigna cadena vacía.</param>
         private void SetField(IDictionary<string, PdfFormField> fields, string name, string value)
         {
             if (fields.ContainsKey(name))
@@ -359,7 +386,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para mapear los radios/checkbox de la data en el formato pdf
+        /// <summary>
+        /// Activa un checkbox o radio button en el formulario PDF.
+        /// Usa el segundo estado disponible del campo como valor "marcado" (índice 1),
+        /// o el primero si solo hay uno.
+        /// </summary>
+        /// <param name="form">Instancia del AcroForm del documento PDF.</param>
+        /// <param name="fieldName">Nombre del campo checkbox/radio en la plantilla.</param>
+        /// <param name="state"><c>true</c> para marcar el campo.</param>
         private void SetCheckBox(PdfAcroForm form, string fieldName, bool state)
         {
             var field = form.GetField(fieldName);
@@ -374,7 +408,15 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para separar las fechas
+        /// <summary>
+        /// Divide una fecha en tres campos separados (año, mes, día) del formulario PDF.
+        /// Si el valor es nulo o no parseable como fecha, deja los tres campos vacíos.
+        /// </summary>
+        /// <param name="fields">Diccionario de campos del AcroForm.</param>
+        /// <param name="dataValue">Valor de fecha (string o DateOnly/DateTime).</param>
+        /// <param name="fileDateYear">Nombre del campo año en la plantilla.</param>
+        /// <param name="fileDateMonth">Nombre del campo mes en la plantilla.</param>
+        /// <param name="fileDateDay">Nombre del campo día en la plantilla.</param>
         private void SetSplitDate(IDictionary<string, iText.Forms.Fields.PdfFormField> fields, object? dataValue, string fileDateYear, string fileDateMonth, string fileDateDay)
         {
             if (fields == null) return;
@@ -393,7 +435,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
-        //metodo para dar formato de dinero a los campos del informacion financiera en el pdf
+        /// <summary>
+        /// Convierte un valor numérico a formato de moneda colombiana (COP).
+        /// Retorna <c>"$ 0"</c> si el valor es nulo, vacío o no parseable como decimal.
+        /// </summary>
+        /// <param name="value">Valor numérico como objeto (puede ser string o número).</param>
+        /// <returns>String formateado con símbolo de pesos colombianos (ej: <c>"$ 1.500.000"</c>).</returns>
         private string FormatMoney(object value)
         {
             if (value == null || string.IsNullOrEmpty(value.ToString())) 

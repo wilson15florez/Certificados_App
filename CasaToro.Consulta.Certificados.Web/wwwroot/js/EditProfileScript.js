@@ -142,7 +142,7 @@ function appendAlert(message, type, container) {
 function selectTypePerson() {
     const tipPers = document.getElementById('tipo_Persona');
     const lblTipPers = document.querySelector('label[for="tipo_Persona"]')
-    if (tipPers.value === ('NATURAL' || 'JURIDICA')) {
+    if (tipPers.value === 'NATURAL' || tipPers.value === 'JURIDICA') {
         tipPers.disabled = true;
         lblTipPers.classList.add('disabled-label');
     } else {

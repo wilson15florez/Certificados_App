@@ -3,7 +3,15 @@ import * as HUI from './helpers-ui.js';
 import * as UI from './ui-handlers.js';
 import * as CNS from './constant.js';
 
-//funcion para precargar los datos del formulario persona natural
+/**
+ * Precarga los datos de un proveedor persona natural en persNatuForm.
+ * Activa isAutoFilling durante toda la operación para suprimir la validación IRT.
+ * Secuencia: limpia el form → configura nacionalidad/tipo doc → carga ubicaciones
+ * (con el chain depSelect→trigger→waitForOptions) → asigna campos simples →
+ * marca radios/checkboxes → restaura PEP → llama togglePEP.
+ * @param {Object} data - Datos del proveedor natural .
+ * @returns {Promise<void>}
+ */
 export async function loadFormData_Natural(data) {
     //bloquea los eventos de cambio para evitar conflictos durante el auto llenado
     UI.setAutoFilling(true);
@@ -115,7 +123,18 @@ export async function loadFormData_Natural(data) {
     UI.setAutoFilling(false);
 }
 
-//funcion para precargar los datos del formulario persona juridica
+/**
+ * Precarga los datos de un proveedor persona jurídica en persJuriForm,
+ * incluyendo sucursales, accionistas y datos del representante legal.
+ * Activa isAutoFilling durante todo el proceso.
+ * Secuencia: limpieza del form y NIT → Teléfono principal → Sucursales: elimina las existentes, 
+ * recrea y llena cada una (click en addSucursalBtn). → Accionistas: elimina filas existentes, 
+ * agrega y llena por addControlRow. → Representante legal: tipo de nacionalidad → tipo de documento → ubicaciones.
+ * → Ubicaciones de diligenciamiento, dirección principal, nacimiento y expedición del RL. → Campos 
+ * simples restantes por iteración.
+ * @param {Object} data - Datos del proveedor jurídico incluyendo Sucursales y ControlRow.
+ * @returns {Promise<void>}
+ */
 export async function loadFormData_Juridica(data) {
     //bloquea los eventos de cambio para evitar conflictos durante el auto llenado
     UI.setAutoFilling(true);
@@ -248,7 +267,17 @@ export async function loadFormData_Juridica(data) {
     UI.setAutoFilling(false);
 }
 
-//funcion para precargar datos en el formulario de informacion financiera (provForm)
+/**
+ * Precarga los datos de información financiera en provForm.
+ * Activa isAutoFilling durante el proceso.
+ * Secuencia: Limpieza del form. → Inicialización de selects de ubicación con ubicProvFormHandler. →
+ * Ubicaciones: país, departamento y ciudad de declaración. → Select2 especiales: actividad económica, 
+ * CIIU, entidad bancaria. → Tipo de cuenta bancaria (capitaliza primera letra). → Campos simples 
+ * restantes. → Campos de dinero con formato de moneda colombiana. → Tipo de empresa (capitaliza 
+ * primera letra). → Radios. → Dispara todos los toggles de campos dependientes.
+ * @param {Object} data - Datos de Proveedores_InfoFinanciera devueltos por getProviderDetails.
+ * @returns {Promise<void>}
+ */
 export async function loadProvFormData(data) {
 
     UI.setAutoFilling(true);
@@ -347,7 +376,19 @@ export async function loadProvFormData(data) {
     UI.setAutoFilling(false);
 }
 
-//funcion para precargar datos de proveedores_Master
+/**
+ * Precarga los campos del formulario a partir de los datos de Proveedores_Master
+ * (flujo foundMasterOnly — el proveedor existe en Master pero no tiene formulario).
+ * Para persona natural: usa la sugerencia de separación de nombre (suggest) y
+ * determina si el teléfono es fijo o celular según el prefijo.
+ * Para persona jurídica: usa el nombre directamente como razón social.
+ * En ambos casos precarga pvDeAuRepresentacion con el nombre del proveedor.
+ * @param {Object} masterData - Datos de Proveedores_Master.
+ * @param {'persNatuForm'|'persJuriForm'} formId - ID del formulario destino.
+ * @param {string} idNum - NIT del proveedor para el campo de identificación.
+ * @param {{firstSurname: string, secondSurname: string, names: string}} [suggest] - Sugerencia de separación del nombre (solo para natural).
+ * @returns {Promise<void>}
+ */
 export async function loadMasterData(masterData, formId, idNum, suggest) {
 
     const cleanTel = masterData.telefono ? masterData.telefono.replace(/\s+/g, '') : "";
@@ -403,7 +444,16 @@ export async function loadMasterData(masterData, formId, idNum, suggest) {
     }
 }
 
-//funcion para precargar nombres de los docs de uploadDocsForm
+/**
+ * Precarga el formulario de documentos (uploadDocsForm) con los documentos
+ * guardados en DB para el proveedor.
+ * Limpia los arrays existingFiles, tempFiles y filePaths antes de cargar
+ * para evitar duplicación al re-consultar.
+ * Aplica checkExclusiones después de cargar para bloquear los campos mutuamente
+ * excluyentes (upContingMeMagnetico ↔ upContingFirmada).
+ * @param {Array<Object>} data - Array de documentos activos del proveedor (Documentos_Proveedores).
+ * @param {string|null} isOEAValue - Valor del campo upOEA ('Si'/'No'/null).
+ */
 export function loadDocsForm(data, isOEAValue) {
     const form = document.getElementById('uploadDocsForm');
     if (!form) return

@@ -1,7 +1,12 @@
 ﻿import * as CNS from './constant.js';
 import { toggleValidInput } from './validators.js';
 
-//funcion para boton de auto scroll
+/**
+ * Inicializa el botón de scroll automático (#btnScrollAuto).
+ * El botón alterna entre "ir al final" e "ir al inicio" según la posición actual
+ * y la dirección de scroll del usuario. Actualiza el ícono visualmente.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function scrollButton() {
     const btn = document.getElementById('btnScrollAuto');
     const icon = document.getElementById('scrollIcon');
@@ -63,7 +68,11 @@ export function scrollButton() {
     });
 }
 
-//logica para campos excluyentes de uploadDocsForm (upContingMeMagnetico y upContingFirmada)
+/**
+ * Evalúa los campos excluyentes upContingMeMagnetico y upContingFirmada.
+ * Si uno tiene valor, bloquea al otro (solo uno de los dos puede usarse).
+ * Se llama en loadDocsForm y en el handler de guardado del panel de documentos.
+ */
 export function checkExclusiones() {
     const magnetic = document.getElementById('upContingMeMagnetico');
     const firmada = document.getElementById('upContingFirmada');
@@ -73,6 +82,14 @@ export function checkExclusiones() {
     blockExcl('upContingFirmada', magnetic.value.trim() !== "");
     blockExcl('upContingMeMagnetico', firmada.value.trim() !== "");
 }
+/**
+ * Bloquea o desbloquea un campo de tipo archivo en uploadDocsForm.
+ * Al bloquear: agrega clase no-edit, desactiva pointerEvents, quita required
+ * y marca el campo como válido para no bloquear el submit.
+ * Al desbloquear: revierte todo lo anterior.
+ * @param {string} targetId - ID del campo a bloquear/desbloquear.
+ * @param {boolean} bloquear - true para bloquear, false para desbloquear.
+ */
 export function blockExcl(targetId, bloquear) {
     const targInput = document.getElementById(targetId);
     if (!targInput) return;
@@ -94,7 +111,12 @@ export function blockExcl(targetId, bloquear) {
     }
 }
 
-//logica para dar formato de dinero a campos del form Informacion Financiera (provForm)
+/**
+ * Formatea un valor numérico como moneda colombiana (COP) para visualización.
+ * Elimina todos los caracteres no numéricos antes de formatear.
+ * @param {string|number} value - Valor a formatear.
+ * @returns {string} Valor formateado (ej: "$ 1.500.000"), o '' si es falsy.
+ */
 export const formatCurrency = (value) => {
     if (!value) return '';
 
@@ -105,11 +127,28 @@ export const formatCurrency = (value) => {
         minimumFractionDigits: 0
     }).format(cleanValue);
 };
+/**
+ * Elimina el formato de moneda de un string y retorna solo los dígitos.
+ * Se usa en collectProvFormData antes de enviar al backend.
+ * @param {string} value - Valor formateado (ej: "$ 1.500.000").
+ * @returns {string} Solo dígitos (ej: "1500000").
+ */
 export const unformatCurrency = (value) => {
     return value.replace(/\D/g, '');
 };
 
-//funcion para llenar select2
+/**
+ * Llena un elemento select con opciones usando jQuery Select2.
+ * Si el select ya fue inicializado con Select2, refresca la UI sin reiniciar
+ * (para preservar el valor seleccionado).
+ * Si es la primera vez, inicializa Select2 con placeholder y allowClear.
+ * Soporta arrays de strings, objetos genéricos, o arrays con claves custom.
+ * @param {HTMLSelectElement} select - Select a llenar.
+ * @param {Array} data - Array de datos (strings u objetos).
+ * @param {string} [placeholder='Seleccione'] - Texto del placeholder.
+ * @param {string} [valueField='id'] - Campo del objeto a usar como value.
+ * @param {string} [textField='name'] - Campo del objeto a usar como texto visible.
+ */
 export function fillSelect2(select, data, placeholder = 'Seleccione', valueField = 'id', textField = 'name') {
     const $select = $(select);
 
@@ -152,7 +191,14 @@ export function fillSelect2(select, data, placeholder = 'Seleccione', valueField
 
 //LOGICA DE INICIALIZACION DE INSTANCIAS DE INTL-TEL-INPUT
 
-//funcion para inicializar campos de telefono (por defecto deja Colombia)
+/**
+ * Inicializa un campo de teléfono con el plugin intl-tel-input.
+ * País por defecto: Colombia (co). Almacena la instancia en CNS.telInst[element.id]
+ * para uso posterior en validators y collector.
+ * @param {HTMLInputElement} element - Input de tipo tel a inicializar.
+ * @param {boolean} [required=false] - No se usa actualmente, reservado para uso futuro.
+ * @returns {Object|null} Instancia de intl-tel-input, o null si el elemento es nulo.
+ */
 export function initTelInputs(element, required = false) {
     if (!element) return null;
 
@@ -174,7 +220,15 @@ export function initTelInputs(element, required = false) {
     return iti;
 }
 
-//funcion que da espera a que se inicialice el input e identifique el pais del numero
+/**
+ * Espera a que el plugin intlTelInputUtils esté cargado y luego asigna
+ * un número de teléfono internacional al campo indicado.
+ * Necesario porque utils.js se carga asíncronamente y setNumber requiere que esté listo.
+ * Si fullNumber es falsy, limpia el campo.
+ * @param {string} inputId - ID del campo de teléfono.
+ * @param {string|null} fullNumber - Número en formato internacional (E.164 o con código de país).
+ * @returns {Promise<void>}
+ */
 export async function waitSafeSetPhone(inputId, fullNumber) {
     const iti = CNS.telInst[inputId];
     const input = document.getElementById(inputId);
@@ -203,10 +257,11 @@ export async function waitSafeSetPhone(inputId, fullNumber) {
 }
 
 
-//LOGICA PARA EL SUBFORM DE LOS CAMPOS DE DIRECCIONES
+//LOGICA PARA EL PANEL(SUBFORM) DE LOS CAMPOS DE DIRECCIONES
 
 let activeInput = null;
 
+/** Referencias a los campos del subformulario de dirección. */
 const dirEstr = {
     tipoVia: () => document.getElementById('tipoVia'),
     vPrincipal: () => document.getElementById('vPrincipal'),
@@ -219,7 +274,13 @@ const dirEstr = {
     container: () => document.getElementById('directionStructure')
 };
 
-//funcion para inicializar el subform a raiz de los inputs de direcciones
+/**
+ * Inicializa el subformulario de dirección.
+ * Se abre automáticamente cuando el usuario hace focus en los inputs de dirección
+ * (pnDiResidencia, pjDirPrincipal o cualquier pjDirSucursal_*).
+ * Registra los listeners de vista previa, cancelar y guardar.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function initDirection() {
     document.addEventListener('focusin', (e) => {
         const targetIds = ['pnDiResidencia', 'pjDirPrincipal'];
@@ -238,6 +299,7 @@ export function initDirection() {
     document.getElementById('saveDirBtn')?.addEventListener('click', saveDirection);
 }
 
+/** Actualiza la vista previa de la dirección en tiempo real. */
 function updatePreview() {
     const via = (id) => document.getElementById(id).value.trim();
 
@@ -264,7 +326,7 @@ function updatePreview() {
     CNS.hasValue();
 }
 
-//funcion para abrir el subform
+/** Abre el subformulario de dirección para el input indicado y precarga si tiene valor. */
 function openDirecForm(input) {
     activeInput = input;
     resetDirForm();
@@ -276,7 +338,7 @@ function openDirecForm(input) {
     CNS.hasValue();
 }
 
-//funcion que limpia los campos antes de llenarlos
+/** Limpia todos los campos del subformulario de dirección. */
 function resetDirForm() {
     const fields = dirEstr;
     Object.keys(fields).forEach(key => {
@@ -290,13 +352,21 @@ function resetDirForm() {
     if (dirEstr.preview()) dirEstr.preview().value = '';
 }
 
-//funcion para cerrar el subform
+/** Cierra el subformulario de dirección sin guardar. */
 function closeForm() {
     dirEstr.container().style.display = 'none';
     activeInput = null;
 }
 
-//funcion para dividir la direccion de la DB y mapearla en su respectivo campo
+/**
+ * Parsea una dirección colombiana usando regexDir y la mapea en los campos del subformulario.
+ * Si la dirección es válida: marca el campo como válido y retorna true.
+ * Si no coincide con el regex o el tipo de vía no se reconoce: marca inválido y retorna false.
+ * Se llama en initDirection (al abrir el subform con dirección existente),
+ * en loadMasterData (al precargar dirección desde Master) y en initValidationIRT.
+ * @param {HTMLInputElement} input - Campo de dirección a parsear.
+ * @returns {boolean} true si la dirección es válida, false si no.
+ */
 export function parseDirection(input) {
     const dirString = input.value;
     const match = dirString.match(CNS.regexDir);
@@ -338,7 +408,7 @@ export function parseDirection(input) {
     }
 }
 
-//funcion para armar la direccion con la informacion ingresada
+/** Construye la dirección completa desde el subformulario y la asigna al input activo. */
 function saveDirection() {
     const via = (id) => document.getElementById(id).value.trim();
     if (!via('tipoVia') || !via('vPrincipal') || !via('vSecundaria') || !via('numPlaca')) {
@@ -363,14 +433,18 @@ function saveDirection() {
 }
 
 
-//LOGICA PARA SUBFORMULARIO DECLARACIONES Y AUTORIZACIONES
+//LOGICA PARA PANEL(SUBFORMULARIO) DECLARACIONES Y AUTORIZACIONES
 
 const authFields = {
     panel: () => document.getElementById('declAutorPanel'),
     inputs: () => document.querySelectorAll('#declAutorPanel input')
 };
 
-//funcion para inicializar el subform de declaraciones y autorizaciones
+/**
+ * Inicializa el subformulario de declaraciones y autorizaciones.
+ * Registra los listeners del botón disparador, cancelar y guardar.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function initDeclAut() {
     document.getElementById('declAutTrigger')?.addEventListener('click', openFormDA);
 
@@ -378,14 +452,24 @@ export function initDeclAut() {
     document.getElementById('saveAutBtn')?.addEventListener('click', closeFormDA);
 }
 
+/**
+ * Abre el subformulario de declaraciones y autorizaciones.
+ * También se llama desde validateProvForm cuando un campo del subform es inválido,
+ * para que el usuario pueda ver y corregir el error.
+ */
 export function openFormDA() {
     authFields.panel().style.display = 'flex';
 }
 
+/** Cierra el subformulario de direccion */
 function closeFormDA() {
     authFields.panel().style.display = 'none';
 }
 
+/**
+ * Limpia todos los inputs del subformulario de declaraciones y autorizaciones.
+ * Se llama en openForms (foundMasterOnly) para resetear el estado entre consultas.
+ */
 export function resetFormDA() {
 
     const inputs = authFields.inputs();
@@ -399,14 +483,39 @@ export function resetFormDA() {
 }
 
 
-//LOGICA PARA SUBFORM DE CARGA DE DOCUMENTOS
+//LOGICA PARA PANEL(SUBFORM) DE CARGA DE DOCUMENTOS
 
+/**
+ * Mapa de archivos nuevos (aún no guardados) por categoría de documento.
+ * Clave: ID del input de la categoría. Valor: array de File.
+ * Se llena en addFilesToTemp y se consume en collectDocsForm.
+ * @type {Object.<string, File[]>}
+ */
 export let tempFiles = {};
+
 let currentInput = null;
+
+/**
+ * Mapa de archivos que ya existen en DB por categoría.
+ * Clave: ID del input. Valor: array de nombres de archivo.
+ * Se llena en loadDocsForm y se actualiza cuando el usuario elimina un archivo existente.
+ * @type {Object.<string, string[]>}
+ */
 export let existingFiles = {};
+
 let backupTemp = null;
 let backupExisting = null;
 
+/**
+ * Inicializa el panel de carga de documentos del uploadDocsForm.
+ * Registra los listeners para:
+ * - Clic en inputs .doc-trigger: abre el panel con la categoría correspondiente.
+ * - Selección de archivos en el input oculto: agrega al temp.
+ * - Drag & drop: acepta solo PDFs.
+ * - Botón guardar: consolida tempFiles + existingFiles en el input visible y cierra.
+ * - Botón cancelar: restaura backups y cierra sin guardar.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function initUploadDocs() {
     const docsForm = document.getElementById('uploadDocsForm');
     const panel = document.getElementById('uploadFilesPanel');
@@ -493,7 +602,13 @@ export function initUploadDocs() {
     });
 }
 
-//dispara una validacion visual en el input tras cerrar el panel
+/**
+ * Dispara la validación visual del input de documento tras cerrar el panel.
+ * Solo actúa si el panel ya fue visitado (panelVisited) para no mostrar errores prematuros.
+ * Si el Validator global está disponible lo usa; si no, dispara blur como fallback
+ * para que initValidationIRT lo recoja.
+ * @param {HTMLInputElement} input - Input de categoría de documento.
+ */
 function docInputValidation(input) {
     if (!input) return;
 
@@ -508,6 +623,15 @@ function docInputValidation(input) {
     }
 }
 
+/**
+ * Abre el panel de carga de documentos para una categoría específica.
+ * Guarda backups de tempFiles y existingFiles para restaurar si el usuario cancela.
+ * Marca panelVisited=true y panelOpen=true en el input para el sistema IRT.
+ * Configura si acepta múltiples archivos según el campo (refeComerciales,
+ * certificacionesVarias y estadoFinanciero aceptan múltiples).
+ * @param {HTMLInputElement} input - Input de la categoría de documento.
+ * @param {string} label - Texto del label para mostrar en el panel.
+ */
 function openUploadPanel(input, label) {
     currentInput = input.id;
 
@@ -536,6 +660,15 @@ function openUploadPanel(input, label) {
     panel.style.display = 'flex';
 }
 
+/**
+ * Agrega archivos al array temporal de la categoría actual.
+ * Respeta límites por categoría:
+ * - upCertificacionesVarias: máximo 10 archivos.
+ * - upRefeComerciales: máximo 2 archivos.
+ * - upEstadoFinanciero: máximo 2 archivos.
+ * - Resto: máximo 1 archivo (reemplaza si ya hay uno).
+ * @param {File[]} files - Archivos a agregar.
+ */
 function addFilesToTemp(files) {
     if (!tempFiles[currentInput]) tempFiles[currentInput] = [];
 
@@ -611,6 +744,7 @@ function addFilesToTemp(files) {
     renderFilePreview();
 }
 
+/** Re-renderiza la lista de archivos del panel (existentes en verde + nuevos en negro). */
 function renderFilePreview() {
     const container = document.getElementById('fileList');
     container.innerHTML = '';
@@ -627,6 +761,17 @@ function renderFilePreview() {
     });
 }
 
+/**
+ * Crea un elemento visual para un archivo en el panel de carga.
+ * Los archivos existentes (DB) se muestran en verde; los nuevos en negro.
+ * Al hacer clic en el nombre: si es existente abre la URL de la DB,
+ * si es nuevo crea un URL de objeto temporal para preview.
+ * El botón × elimina el archivo del array correspondiente.
+ * @param {HTMLElement} container - Contenedor donde agregar el elemento.
+ * @param {string} name - Nombre del archivo.
+ * @param {number} index - Índice en el array correspondiente.
+ * @param {boolean} isExisting - true si viene de la DB, false si es nuevo.
+ */
 function createFileItem(container, name, index, isExisting) {
     const rect = document.createElement('div');
     rect.className = 'file-rect';
@@ -676,6 +821,12 @@ function createFileItem(container, name, index, isExisting) {
     container.appendChild(rect);
 }
 
+/**
+ * Abre en una nueva pestaña un documento existente en DB
+ * usando la ruta almacenada en CNS.filePaths.
+ * @param {string} categoria - Categoría del documento (ID del input).
+ * @param {string} fileName - Nombre del archivo a previsualizar.
+ */
 function previewExistPDF(categoria, fileName) {
     //buscamos la ruta en el mapa de rutas cargadas desde la DB
     if (CNS.filePaths[categoria] && CNS.filePaths[categoria][fileName]) {
@@ -690,6 +841,10 @@ function previewExistPDF(categoria, fileName) {
     }
 }
 
+/**
+ * Elimina un archivo del array temporal de la categoría actual y actualiza el preview.
+ * @param {number} index - Índice del archivo a eliminar en tempFiles[currentInput].
+ */
 export function removeTempFile(index) {
     if (tempFiles[currentInput]) {
         tempFiles[currentInput].splice(index, 1);

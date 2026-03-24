@@ -12,18 +12,31 @@ using System.Globalization;
 
 namespace CasaToro.Consulta.Certificados.BL.Services
 {
+    /// <summary>
+    /// Servicio para la generación de certificados de retención en formato PDF.
+    /// Soporta tres tipos: IVA, ICA y Retención en la Fuente (RTF).
+    /// Cada certificado se genera a partir de los datos almacenados en DB y se guarda
+    /// en <c>wwwroot/Certificados/Generados/</c>.
+    /// </summary>
     public class CertificatesService
     {
         private readonly ApplicationDbContext _context;
         private readonly string[] periods;
-        
 
+        /// <summary>
+        /// Constructor. Inicializa el contexto de DB y el arreglo de periodos bimestrales.
+        /// </summary>
         public CertificatesService(ApplicationDbContext context)
         {
             _context = context;
             periods = ["", "ENERO-FEBRERO", "MARZO-ABRIL", "MAYO-JUNIO", "JULIO-AGOSTO", "SEPTIEMBRE-OCTUBRE", "NOVIEMBRE-DICIEMBRE"];
         }
 
+        /// <summary>
+        /// Obtiene los años disponibles para consulta de certificados.
+        /// Unifica los años presentes en las tablas de ICA, IVA y RTF.
+        /// </summary>
+        /// <returns>Conjunto de años ordenados ascendentemente.</returns>
         public HashSet<int> GetAvalibleYears()
         {
             HashSet<int> years = new HashSet<int>();
@@ -35,6 +48,12 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
         }
 
+        /// <summary>
+        /// Obtiene los periodos bimestrales disponibles para consulta de certificados.
+        /// Unifica los periodos de ICA e IVA y los convierte a su nombre legible
+        /// usando el arreglo <c>periods</c>.
+        /// </summary>
+        /// <returns>Conjunto de nombres de periodos ordenados cronológicamente.</returns>
         public HashSet<string> GetAvalibleMonths()
         {
             HashSet<string> months = new HashSet<string>();
@@ -50,6 +69,17 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
         }
 
+        /// <summary>
+        /// Punto de entrada unificado para generar cualquier tipo de certificado.
+        /// Filtra los registros según los parámetros, carga las navegaciones y delega
+        /// la generación del PDF al método correspondiente según el tipo.
+        /// </summary>
+        /// <param name="certificateType">Tipo de certificado: "1" = IVA, "2" = ICA, "3" = RTF.</param>
+        /// <param name="companyId">ID de la empresa retenedora.</param>
+        /// <param name="year">Año del certificado.</param>
+        /// <param name="period">Nombre del periodo bimestral (ej: "ENERO-FEBRERO"). No aplica para RTF.</param>
+        /// <param name="nit">NIT del proveedor al que se le practicó la retención.</param>
+        /// <returns>Ruta relativa del PDF generado, o cadena vacía si no hay registros o hay error.</returns>
         public string GenerateCertificate(string certificateType, string companyId, string year, string period, string nit)
         {
             try
@@ -112,6 +142,14 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
         }
 
+        /// <summary>
+        /// Genera el PDF del certificado IVA usando iText7.
+        /// El archivo se guarda en <c>wwwroot/Certificados/Generados/</c> con nombre
+        /// <c>{NIT}_{Empresa}_CertificadoIVA.pdf</c>.
+        /// Incluye logo de la empresa si existe en <c>wwwroot/images/Logos_Empresas/</c>.
+        /// </summary>
+        /// <param name="certificates">Lista de registros IVA para el mismo NIT, empresa y periodo.</param>
+        /// <returns>Ruta relativa del PDF (sin "wwwroot"), o cadena vacía si hay error.</returns>
         private string GenerateIvaCertificate(List<CertificadosIva> certificates)
         {
             try
@@ -268,6 +306,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
         }
 
+        /// <summary>
+        /// Genera el PDF del certificado ICA.
+        /// Misma estructura que IVA pero con columna "Base" en lugar de "Monto de IVA generado".
+        /// Archivo guardado como <c>{NIT}_{Empresa}_CertificadoICA.pdf</c>.
+        /// </summary>
+        /// <param name="certificates">Lista de registros ICA para el mismo NIT, empresa y periodo.</param>
+        /// <returns>Ruta relativa del PDF, o cadena vacía si hay error.</returns>
         private string GenerateIcaCertificate(List<CertificadosIca> certificates)
         {
             try
@@ -423,6 +468,13 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             }
         }
 
+        /// <summary>
+        /// Genera el PDF del certificado de Retención en la Fuente (RTF).
+        /// A diferencia de IVA e ICA, RTF no tiene periodo bimestral — filtra solo por año.
+        /// Archivo guardado como <c>{NIT}_{Empresa}_CertificadoRTF.pdf</c>.
+        /// </summary>
+        /// <param name="certificates">Lista de registros RTF para el mismo NIT, empresa y año.</param>
+        /// <returns>Ruta relativa del PDF, o cadena vacía si hay error.</returns>
         private string GenerateRtfCertificate(List<CertificadosRtefte> certificates)
         {
             try

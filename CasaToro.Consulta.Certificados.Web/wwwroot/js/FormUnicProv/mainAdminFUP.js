@@ -9,20 +9,38 @@ const personTypeSel = document.getElementById('personType');
 const idNumInp = document.getElementById('idNum');
 const consultBtn = document.getElementById('consultBtn');
 
-
-//estado del registro actual
+/**
+ * Referencia mutable al estado del registro actual del proveedor consultado.
+ * true = registro nuevo (solo en Master), false = registro completo existente.
+ * @type {{value: boolean}}
+ */
 const isNewRegister = { value: false };
 
-//obtener tipo persona y id desde bloque de consulta
+/**
+ * Retorna el tipo de persona del proveedor consultado.
+ * Si se pasa un resultado de API con typePerson, lo usa; si no, lee el select del DOM.
+ * @param {Object|null} [result=null] - Resultado de la API con propiedad typePerson opcional.
+ * @returns {'natural'|'juridica'|string} Tipo de persona en minúsculas.
+ */
 function getTypePerson(result = null) {
     if (result?.typePerson) return result.typePerson.toLowerCase().trim();
     return personTypeSel.value;
 }
+
+/**
+ * Retorna el NIT ingresado en el campo de consulta, sin espacios.
+ * @returns {string} NIT del proveedor a consultar.
+ */
 function getIdNum() {
     return idNumInp.value.trim();
 }
 
-//funcion que inicializa los handlers
+/**
+ * Inicializa los handlers de la vista de admin.
+ * Registra los handlers compartidos del FUCP y agrega comportamientos
+ * específicos del admin: atajo Enter para consultar, y limpieza de forms
+ * al cambiar el tipo de persona o editar el NIT.
+ */
 function initAdmin() {
     FHS.initSharedHandlers();
 
@@ -47,7 +65,12 @@ function initAdmin() {
     });
 }
 
-//consulta de informacion
+/**
+ * Consulta el estado del proveedor por NIT y tipo de persona.
+ * Limpia el estado de validación IRT y los datos de panelVisited antes de cada consulta.
+ * Maneja los estados: notFound, misMatch, foundMasterOnly y foundDetail.
+ * Para foundDetail valida la vigencia del FUCP antes de habilitar los botones.
+ */
 consultBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     const personType = getTypePerson();
@@ -144,7 +167,7 @@ FHS.openFormsBtn.addEventListener('click', async function (e) {
     }
 });
 
-//visualizar formato para impresion
+//visualizar formato para impresion (solo disponible para persona juridica)
 FHS.printFormatBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     FHS.hideForms();
@@ -190,6 +213,7 @@ FHS.submitPrvBtn.addEventListener('click', async (e) => {
 FHS.submitDocsBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     try {
+        // markVisited = true porque el admin puede no haber abierto todos los paneles
         await FHS.submitDocs('/Admin/UploadDocuments', getTypePerson, true);
     }
     catch (err) {

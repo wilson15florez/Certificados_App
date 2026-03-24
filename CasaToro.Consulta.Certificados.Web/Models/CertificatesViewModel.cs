@@ -2,6 +2,9 @@
 
 namespace CasaToro.Consulta.Certificados.Web.Models
 {
+    /// <summary>
+    /// Representa el modelo de informacion para certificados, incluyendo empresas asociadas, años y meses.
+    /// </summary>
     public class CertificatesViewModel
     {
         public List<EmpresasMaster> companies ;

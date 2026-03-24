@@ -3,21 +3,49 @@ import * as API from './api-client.js';
 import * as HUI from './helpers-ui.js';
 import { toggleValidInput, isAdult } from './validators.js';
 
+//tabla accionistas
 export const controlTableBody = document.querySelector('#control-table tbody');
+
+/** Máximo de sucursales y accionistas permitidos en persJuriForm. */
 export const maxSucursales = 2;
 const maxAccionistas = 4;
+
+/**
+ * Flag que indica si los formularios están siendo rellenados automáticamente
+ * (loadFormData). Cuando es true, la validación IRT no actúa para evitar
+ * errores falsos durante el autorellenado.
+ * @type {boolean}
+ */
 export let isAutoFilling = false;
+
+/** Tipos PEP del proveedor cargado, para restaurarlos al volver a marcar PEP=Sí. */
 let originalPEPTypes = [];
 let originalPEPEntidad = '';
 
-//setters para variables de estado
+/**
+ * Setter para isAutoFilling. Necesario porque los ES modules exportan
+ * valores por referencia solo para objetos — los primitivos requieren setter.
+ * @param {boolean} value
+ */
 export function setAutoFilling(value) { isAutoFilling = value; }
+/**
+ * Guarda los tipos PEP y entidad originales del proveedor cargado.
+ * Se restauran cuando el usuario vuelve a marcar pnPEP = 'Sí' después de haberlo desmarcado.
+ * @param {number[]} types - Array de IDs de tipos PEP.
+ * @param {string} entidad - Nombre de la entidad PEP.
+ */
 export function setOriginalPEP(types, entidad) {
     originalPEPTypes = types;
     originalPEPEntidad = entidad;
 }
 
-//funcion para enlazar select2 de departamento con el de ciudad para las ubicaciones colombianas
+/**
+ * Enlaza el select de departamento con el de ciudad para ubicaciones colombianas.
+ * Al cambiar el departamento, llena las ciudades correspondientes y habilita el select.
+ * @param {HTMLSelectElement} depSelect - Select de departamento.
+ * @param {HTMLSelectElement} citySelect - Select de ciudad a llenar.
+ * @param {Object.<string, string[]>} ciudadByDep - Diccionario dep→municipios.
+ */
 function handleDeptChange(depSelect, citySelect, ciudadByDep) {
     $(depSelect).off('change.ubiNac').on('change.ubiNac', function () {
         const dep = this.value.trim().toUpperCase();
@@ -28,7 +56,22 @@ function handleDeptChange(depSelect, citySelect, ciudadByDep) {
     });
 }
 
-//funcion para bloquear los selects al iniciar la carga de la pagina (forms persona natural, juridica e informacion financiera)
+/**
+ * Habilita o deshabilita un select y sincroniza el estado visual de su label.
+ * @param {HTMLSelectElement} el - Select a modificar.
+ * @param {boolean} enabled - true para habilitar, false para deshabilitar.
+ */
+function setSelectEnable(el, enabled) {
+    el.disabled = !enabled;
+    const label = document.querySelector(`label[for="${el.id}"]`);
+    if (label) label.classList.toggle('disabled-label', !enabled);
+}
+
+/**
+ * Deshabilita los selects que dependen de otros (ubicaciones, cuenta bancaria)
+ * al iniciar la carga de la página para evitar selecciones inválidas.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function firstBlock() {
     const selectFields = [
         pnDepExpDoc, pnCiuExpDoc, pnNacionalidad, pnEstadoNac, pnCiudadNac, pnDepRes, pnCiudadRes,
@@ -42,7 +85,11 @@ export function firstBlock() {
     });
 }
 
-//limpia todos los inputs, select y textarea de un form
+/**
+ * Limpia todos los inputs, selects y textareas de un formulario,
+ * incluyendo radios y checkboxes. No dispara eventos de change.
+ * @param {HTMLFormElement} formEl - Formulario a limpiar.
+ */
 export function clearForm(formEl) {
     formEl.querySelectorAll('input, select, textarea').forEach(el => {
         if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
@@ -50,21 +97,31 @@ export function clearForm(formEl) {
     });
 }
 
-//habilita o deshabilita un select y sincroniza su label
-function setSelectEnable(el, enabled) {
-    el.disabled = !enabled;
-    const label = document.querySelector(`label[for="${el.id}"]`);
-    if (label) label.classList.toggle('disabled-label', !enabled);
-}
-
-//precarga un select de departamento, dispara el chain y espera ciudades
+/**
+ * Precarga un select de departamento con un valor, dispara el chain de ciudad
+ * y espera a que las opciones del select de ciudad estén disponibles.
+ * Se usa en loadFormData_Natural, loadFormData_Juridica y loadProvFormData
+ * para restaurar ubicaciones guardadas en DB.
+ * @param {HTMLSelectElement} depSel - Select de departamento a precargar.
+ * @param {HTMLSelectElement} citySel - Select de ciudad que se llenará.
+ * @param {string} value - Valor del departamento a seleccionar.
+ * @param {string} triggerName - Sufijo del evento a disparar (ej: 'ubiNac').
+ * @returns {Promise<void>}
+ */
 export async function loadDepCity(depSel, citySel, value, triggerName) {
     await setSelect2Val(depSel, value);
     $(depSel).trigger(`change.${triggerName}`);
     await waitForOptions(citySel);
 }
 
-//funcion que espera a que select2 tenga opciones cargadas
+/**
+ * Espera a que un select tenga más de una opción cargada (la opción placeholder no cuenta).
+ * Usa requestAnimationFrame para no bloquear el hilo principal.
+ * Tiene un timeout máximo para no quedarse esperando indefinidamente.
+ * @param {HTMLSelectElement} select - Select a monitorear.
+ * @param {number} [timeout=800] - Tiempo máximo de espera en ms.
+ * @returns {Promise<void>}
+ */
 export function waitForOptions(select, timeout = 800) {
     return new Promise(r => {
         const start = performance.now();
@@ -79,7 +136,13 @@ export function waitForOptions(select, timeout = 800) {
     });
 }
 
-//funcion para setear valores con select2
+/**
+ * Espera a que el select tenga opciones y luego selecciona el valor indicado con select2.
+ * Si el valor no existe entre las opciones, emite un warning y retorna false.
+ * @param {HTMLSelectElement} select - Select donde asignar el valor.
+ * @param {string} value - Valor a seleccionar.
+ * @returns {Promise<boolean>} true si se asignó, false si el valor no existe.
+ */
 export async function setSelect2Val(select, value) {
 
     if (!value) return false;
@@ -98,14 +161,30 @@ export async function setSelect2Val(select, value) {
 
 }
 
-//limpia todos los errores visuales de validacion IRT
+/**
+ * Limpia todos los errores visuales de la validación IRT:
+ * remueve clases is-invalid-custom, elementos .error-message
+ * y vacía el set dirtyFields para empezar una nueva sesión de validación.
+ */
 export function clearValidationIRT() {
     document.querySelectorAll('.is-invalid-custom').forEach(el => el.classList.remove('is-invalid-custom'));
     document.querySelectorAll('.error-message').forEach(el => el.remove());
     CNS.dirtyFields.clear();
 }
 
-//logica que asigna la validacion de campos
+/**
+ * Inicializa la validación en tiempo real (IRT) para todos los campos requeridos
+ * del FUCP (persNatuForm, persJuriForm, provForm y uploadDocsForm).
+ * Comportamiento por tipo de campo:
+ * - Radio/checkbox: valida al 'change', marca dirtyFields con el nombre del grupo.
+ * - Text/select/date: valida al 'blur' (marca dirty) y al 'input' (si ya es dirty).
+ * - Campos de documentos (isDocsField): no validan hasta que el panel fue visitado.
+ * - Lógica especial: fechas de nacimiento (mayoría de edad), email (regex),
+ *   teléfonos (intl-tel-input), direcciones (parseDirection), porcentajes (suma=100%),
+ *   upRefeComerciales y upEstadoFinanciero (requieren 2 archivos).
+ * - CIIU: al validar pvAcEconomica también marca válido pvCodCIIU y viceversa.
+ * Se llama una sola vez desde initSharedHandlers.
+ */
 export function initValidationIRT() {
     //validacion de campos simples
     const requiredFields = [
@@ -124,10 +203,8 @@ export function initValidationIRT() {
     ];
 
     const docsFieldIds = new Set([
-        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria',
-        'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero', 'upCertificacionesVarias',
-        'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada', 'upCertifiOEA',
-        'upAcuerdoSeguridad'
+        'upCamaraComercio', 'upCertifiBancaria', 'upRUTActualizado', 'upComposicionAccionaria', 'upFotocopiaCC', 'upRefeComerciales', 'upEstadoFinanciero',
+        'upCertificacionesVarias', 'upFUCPfirmado', 'upOEAsi', 'upContingMeMagnetico', 'upContingFirmada', 'upCertifiOEA', 'upAcuerdoSeguridad'
     ]);
 
     requiredFields.forEach(id => {
@@ -261,17 +338,17 @@ export function initValidationIRT() {
     controlTableBody.querySelectorAll('.control-row').forEach(row => initAccionistIRT(row));
 }
 
-//funcion que identifica tipo de nacionalidad en form persona natural
+/**
+ * Llena el select de tipo de documento del form persona natural
+ * según la nacionalidad seleccionada (Nacional → CC/NIT, Extranjero → CE/PAS/CAR).
+ */
 export function tipDocument() {
     const tipoNac = pnTipoNacionalidad.value;
 
     pnTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? CNS.docNacionales
-        : tipoNac === 'Extranjero'
-            ? CNS.docExtranjeros
-            : [];
+        ? CNS.docNacionales : tipoNac === 'Extranjero' ? CNS.docExtranjeros : [];
 
     listTipDoc.forEach(doc => {
         const option = document.createElement('option');
@@ -281,17 +358,17 @@ export function tipDocument() {
     });
 }
 
-//funcion que identifica tipo de nacionalidad en representante legal de form persona juridica
+/**
+ * Llena el select de tipo de documento del representante legal en persJuriForm
+ * según su nacionalidad (Nacional → CC, Extranjero → CE/PAS/CAR).
+ */
 export function pjTipDocument() {
     const tipoNac = pjRLTipNacionalidad.value;
 
     pjRLTipoDoc.innerHTML = '<option value="" disabled selected>Seleccione un documento</option>';
 
     let listTipDoc = tipoNac === 'Nacional'
-        ? CNS.pjRLDocNaci
-        : tipoNac === 'Extranjero'
-            ? CNS.pjRLDocExtr
-            : [];
+        ? CNS.pjRLDocNaci : tipoNac === 'Extranjero' ? CNS.pjRLDocExtr : [];
 
     listTipDoc.forEach(doc => {
         const option = document.createElement('option');
@@ -301,7 +378,13 @@ export function pjTipDocument() {
     });
 }
 
-//funcion que gestiona los select de persona natural y enlaza los listener de ubi extranjera
+/**
+ * Registra los listeners de cascada para selects de ubicación extranjera
+ * (país → estado → ciudad). Se reutiliza en ubicPNaHandler y ubicPJuReLeHandler.
+ * @param {HTMLSelectElement} selPais - Select de país.
+ * @param {HTMLSelectElement} selEstado - Select de estado/departamento.
+ * @param {HTMLSelectElement} selCiudad - Select de ciudad.
+ */
 function bindExtrUbi(selPais, selEstado, selCiudad) {
     $(selPais).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
         const states = await API.loadStates(this.value);
@@ -316,7 +399,15 @@ function bindExtrUbi(selPais, selEstado, selCiudad) {
     });
 }
 
-//funcion que gestiona los select de ubicacion de persona natural
+/**
+ * Configura los selects de ubicación del form persona natural según la nacionalidad.
+ * - Nacional: país fijo Colombia, departamentos/ciudades colombianas para nacimiento,
+ *   expedición de documento y residencia.
+ * - Extranjero: lista de países extranjeros para nacimiento (con cascada estado→ciudad),
+ *   departamentos/ciudades colombianas para expedición y residencia.
+ * Limpia y deshabilita todos los selects dependientes antes de reconfigurar.
+ * @returns {Promise<void>}
+ */
 export async function ubicPNaHandler() {
 
     const nac = pnTipoNacionalidad.value;
@@ -397,7 +488,11 @@ export async function ubicPNaHandler() {
     }
 }
 
-//logica para mostrar/ocultar campos relacionados con PEP en el form de persona natural
+/**
+ * Muestra u oculta los campos PEP (tipos y entidad) del form persona natural.
+ * Al mostrar, restaura los tipos y entidad originales cargados desde DB.
+ * Al ocultar (o cuando ningún radio está marcado), limpia los campos.
+ */
 export function togglePEP() {
     const pnPEPYes = document.getElementById('pnPEPSi');
     const pnPEPtypeGroup = document.getElementById('pnPEPtypeGroup');
@@ -421,7 +516,11 @@ export function togglePEP() {
     }
 }
 
-//funcion que gestiona los select de ubicacion de persona juridica (diligenciamiento, direccion principal)
+/**
+ * Configura los selects de diligenciamiento y dirección principal de persJuriForm.
+ * Siempre usa ubicaciones colombianas (departamento → ciudad).
+ * @returns {Promise<void>}
+ */
 export async function ubicPJuHandler() {
     //asegura que los datos de ubicacion colombiana esten cargados
     await API.loadUbiData();
@@ -450,7 +549,12 @@ export async function ubicPJuHandler() {
 
 }
 
-//funcion que gestiona los select de ubicacion del representante legal de persona juridica
+/**
+ * Configura los selects de ubicación del representante legal en persJuriForm.
+ * - Expedición de documento: siempre colombiana.
+ * - Nacimiento: colombiana si Nacional, extranjera con cascada si Extranjero.
+ * @returns {Promise<void>}
+ */
 export async function ubicPJuReLeHandler() {
     //asegura que los datos de ubicacion colombiana esten cargados
     await API.loadUbiData();
@@ -496,7 +600,13 @@ export async function ubicPJuReLeHandler() {
     }
 }
 
-//funcion que gestiona los select de ubicacion del provForm (Informacion Financiera)
+/**
+ * Configura los selects de ubicación del provForm (Información Financiera).
+ * - País de porcentaje extranjero: lista de países sin Colombia.
+ * - Departamento y ciudad de declaración: ubicación colombiana.
+ * Si es autorellenado, no limpia los selects de actividad económica, CIIU y entidad.
+ * @returns {Promise<void>}
+ */
 export async function ubicProvFormHandler() {
 
     //si es autorellenado no limpia los selects de ubicacion, actividad economica y codigo CIIU
@@ -541,7 +651,13 @@ export async function ubicProvFormHandler() {
     togglePvDIC();
 }
 
-//logica que habilita porcentaje extranjero y pais del form Informacion Financiera (provForm)
+/**
+ * Habilita/deshabilita los campos de porcentaje extranjero y país de origen de capital
+ * según el valor de pvPorNacional.
+ * - Si pvPorNacional < 100: habilita pvPorExtranjero.
+ * - Si pvPorExtranjero tiene valor: habilita pvPorPais.
+ * - Si no: limpia y deshabilita los campos dependientes.
+ */
 export function togglePvPais() {
     const hasNaVal = parseFloat(pvPorNacional.value.trim() || 0);
     const needExt = hasNaVal > 0 && hasNaVal < 100;
@@ -566,7 +682,14 @@ export function togglePvPais() {
     }
 }
 
-//funcion generica para habilitar o deshabilitar campos dependientes (provForm)
+/**
+ * Helper genérico que habilita o deshabilita un grupo de campos dependientes en provForm.
+ * Al deshabilitar: limpia el valor, agrega clase no-edit/disabled-label, quita required
+ * y marca el campo como válido (para no bloquear el submit).
+ * Al habilitar: revierte todo lo anterior.
+ * @param {boolean} show - true para habilitar, false para deshabilitar.
+ * @param {Array<{id: string, type?: 'input'|'select'}>} fields - Campos a gestionar.
+ */
 function tDependentFields(show, fields) {
     fields.forEach(({ id, type = 'input' }) => {
         const el = document.getElementById(id);
@@ -598,35 +721,35 @@ function tDependentFields(show, fields) {
     });
     CNS.hasValue();
 }
-//Gran Contribuyente -> campos de resolucion (provForm)
+/** Habilita/deshabilita campos de resolución Gran Contribuyente en provForm. */
 export function togglePvGC() {
     tDependentFields(
         document.getElementById('pvGrConSi').checked,
         [{ id: 'pvFechResolGC' }, { id: 'pvNumResolGC' }]
     );
 }
-//Declarante industria y comercio -> departamento y ciudad (provForm)
+/** Habilita/deshabilita campos de departamento y ciudad de declaración ICA en provForm. */
 export function togglePvDIC() {
     tDependentFields(
         document.getElementById('pvDeclIndComSi').checked,
         [{ id: 'pvDepartDec', type: 'select' }, { id: 'pvCiudadDec', type: 'select' }]
     );
 }
-//Auto retenedor -> numero de resolucion (provForm)
+/** Habilita/deshabilita campo de número de resolución DIAN (autoretenedor) en provForm. */
 export function togglePvAR() {
     tDependentFields(
         document.getElementById('pvAutRetSi').checked,
         [{ id: 'pvNumResDIAN' }]
     );
 }
-//Comercio exterior -> forma de pago y benficiados (provform)
+/** Habilita/deshabilita campos de forma de pago y beneficiados de comercio exterior en provForm. */
 export function togglePvCoEx() {
     tDependentFields(
         document.getElementById('pvOpeCExtSi').checked,
         [{ id: 'pvForPag' }, { id: 'pvEntBenef' }]
     );
 }
-//Posee cuenta bancaria -> entidad bancaria, numero de cuenta, clase de cuenta (provForm)
+/** Habilita/deshabilita campos de cuenta bancaria (entidad, número, clase) en provForm. */
 export function togglePvCB() {
     tDependentFields(
         document.getElementById('pvPosCuBanSi').checked,
@@ -638,7 +761,12 @@ export function togglePvCB() {
     );
 }
 
-//logica para crear select dinamico a sucursal y agregar sucursal (usada por el click y loadFormData)
+/**
+ * Inicializa los selects de departamento y ciudad de una sucursal específica.
+ * Se expone en window para ser llamada desde addSucursalInternal y loadFormData_Juridica.
+ * Requiere que loadUbiData haya sido llamada previamente (datos en window.ubi_*).
+ * @param {number} index - Índice de la sucursal (1-based).
+ */
 window.initSucursalUbic = async function (index) {
     //asegura que los datos de ubicacion colombiana esten cargados
     await API.loadUbiData();
@@ -657,6 +785,12 @@ window.initSucursalUbic = async function (index) {
         citySelect.disabled = municipios.length === 0;
     });
 };
+/**
+ * Agrega una nueva sucursal al contenedor de sucursales de persJuriForm.
+ * Respeta el límite de maxSucursales. Inicializa el teléfono con intl-tel-input,
+ * los selects de ubicación y la validación IRT para los campos de la nueva sucursal.
+ * @param {number} [newIndex] - No se usa como parámetro real; se calcula internamente.
+ */
 export function addSucursalInternal(newIndex) {
     const sucursalesContainer = document.getElementById('sucursales-container');
     const currentSucursales = sucursalesContainer.querySelectorAll('.sucursal-item').length;
@@ -716,7 +850,11 @@ export function addSucursalInternal(newIndex) {
 
     initSucursalIRT(newIndex);
 }
-//validacion en tiempo real de sucursales
+/**
+ * Registra la validación IRT para los campos de una sucursal específica.
+ * Usa sets dirty locales por sucursal para no interferir con el set global.
+ * @param {number} index - Índice de la sucursal.
+ */
 function initSucursalIRT(index) {
     const textFields = [
         {
@@ -772,7 +910,11 @@ function initSucursalIRT(index) {
     });
 }
 
-//logica para agregar y remover filas a la tabla de control Persona Juridica
+/**
+ * Agrega una nueva fila a la tabla de accionistas de persJuriForm.
+ * Respeta el límite de maxAccionistas. Registra la validación IRT para la nueva fila.
+ * @param {number} [newIndex] - No se usa como parámetro real; se calcula internamente.
+ */
 export function addControlRow(newIndex) {
     const currencyAccionistas = controlTableBody.querySelectorAll('.control-row').length;
     newIndex = currencyAccionistas + 1;
@@ -802,7 +944,13 @@ export function addControlRow(newIndex) {
 
     initAccionistIRT(newRow);
 }
-//validacion en tiempo real para tabla de accionistas
+/**
+ * Registra la validación IRT para una fila de accionistas.
+ * Valida razón social, tipo de ID, número de ID y porcentaje.
+ * El porcentaje valida mínimo 5% individual y suma global = 100%
+ * solo cuando todas las filas tienen valor ingresado.
+ * @param {HTMLTableRowElement} row - Fila de la tabla de accionistas.
+ */
 function initAccionistIRT(row) {
     //validacion en tiempo real para tabla de accionistas
     function validateTotalPorcentaje() {
@@ -880,7 +1028,10 @@ function initAccionistIRT(row) {
     }
 }
 
-//logica que muestra u oculta los campos de docs a subir para proveedor perteneciente a la OEA
+/**
+ * Muestra u oculta la sección de documentos adicionales OEA (Operador Económico Autorizado).
+ * Al ocultar, limpia y desmarca los inputs del panel OEA.
+ */
 export function toggleOEA() {
     const si = document.getElementById('upOEAsi').checked;
     const containerYesOEA = document.getElementById('sectionYesOEA');
@@ -897,7 +1048,11 @@ export function toggleOEA() {
     }
 }
 
-//visualizacion de formato para imprimir
+/**
+ * Muestra el iframe de visualización del FUCP en PDF o lo oculta.
+ * Agrega un timestamp a la URL para forzar recarga y evitar caché del navegador.
+ * @param {string|null} url - URL relativa del PDF generado, o null para ocultar el panel.
+ */
 export function printFormatHandler(url) {
     const printFormatForm = document.getElementById('printFormatForm');
     const iframe = document.getElementById('printFrame');

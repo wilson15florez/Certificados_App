@@ -11,6 +11,12 @@ using System.Security.Claims;
 
 namespace CasaToro.Consulta.Certificados.Web.Controllers
 {
+    /// <summary>
+    /// Controlador para las operaciones del proveedor autenticado.
+    /// Requiere autenticación (<c>[Authorize]</c>). Gestiona certificados, facturas,
+    /// perfil, formato único de conocimiento (FUCP) y documentos del proveedor.
+    /// El NIT del proveedor se obtiene del claim de sesión en cada acción.
+    /// </summary>
     [Authorize]
     public class ProviderController : Controller
     {
@@ -22,7 +28,9 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly FormatService _formatService = new FormatService();
 
-        // Constructor del controlador que recibe instancias de los servicios necesarios
+        /// <summary>
+        /// Constructor. Recibe los servicios necesarios por inyección de dependencias.
+        /// </summary>
         public ProviderController(BillService billService, ProviderService providerService, CertificatesService certificatesServices, LogService logService, IWebHostEnvironment webHostEnvironment, FormatService formatService, UsersService usersService)
         {
             _billService = billService;
@@ -34,7 +42,11 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             _usersService = usersService;
         }
 
-        // Acción que muestra la vista de certificados para el proveedor autenticado
+        /// <summary>
+        /// Muestra la vista de certificados disponibles para el proveedor autenticado.
+        /// Carga las empresas asociadas, años y periodos disponibles.
+        /// </summary>
+        /// <returns>Vista con <see cref="CertificatesViewModel"/>.</returns>
         public ActionResult Certificates()
         {
             // Obtener las empresas asociadas al proveedor autenticado
@@ -53,7 +65,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             return View(model);
         }
 
-        // Acción que muestra la vista de facturas para el proveedor autenticado
+        /// <summary>
+        /// Muestra la vista de facturas asociadas al proveedor autenticado.
+        /// </summary>
+        /// <returns>Vista con <see cref="BillsViewModel"/>.</returns>
         public ActionResult Bill()
         {
             // Obtener el NIT del proveedor autenticado
@@ -70,7 +85,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             return View(model);
         }
 
-        // Acción que muestra la vista de editar perfil para el proveedor
+        /// <summary>
+        /// Muestra la vista de edición de perfil con los datos actuales del proveedor autenticado.
+        /// </summary>
+        /// <returns>Vista con <see cref="ProfileViewModel"/>, o vista de error si falla.</returns>
         public ActionResult editProfile()
         {
             try
@@ -93,7 +111,11 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
 
         }
 
-        // Acción que muestra la vista de Formulario unico de conocmiento para el proveedor
+        /// <summary>
+        /// Muestra la vista del Formato Único de Conocimiento de Proveedores (FUCP).
+        /// El formulario se llena desde el frontend con los datos del proveedor.
+        /// </summary>
+        /// <returns>Vista del FUCP, o vista de error si falla.</returns>
         public ActionResult PV_FormUnicPro()
         {
             try
@@ -107,7 +129,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que genera un certificado basado en los parámetros proporcionados
+        /// <summary>
+        /// Genera un certificado (IVA, ICA o RTF) para el proveedor autenticado.
+        /// </summary>
+        /// <param name="certificateType">Tipo: "1" = IVA, "2" = ICA, "3" = RTF.</param>
+        /// <param name="companyId">ID de la empresa retenedora.</param>
+        /// <param name="year">Año del certificado.</param>
+        /// <param name="period">Periodo bimestral (ej: "ENERO-FEBRERO"). No aplica para RTF.</param>
+        /// <returns>JSON con <c>url</c> del PDF generado, o <c>error</c> si falla.</returns>
         [HttpPost]
         public IActionResult GenerateCertificate(string certificateType, string companyId, string year, string period)
         {
@@ -127,7 +156,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que elimina un certificado basado en la URL proporcionada
+        /// <summary>
+        /// Elimina el PDF de un certificado del servidor después de registrar la descarga en el log.
+        /// Se llama desde el frontend tras mostrar el certificado al proveedor.
+        /// </summary>
+        /// <param name="url">URL completa del archivo a eliminar.</param>
+        /// <returns>JSON con <c>success: true</c> si se eliminó, o mensaje de error.</returns>
         [HttpPost]
         public IActionResult DeleteCertificate([FromBody] string url)
         {
@@ -168,7 +202,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que actualiza la informacion del proveedor en la tabla proveedores_master
+        /// <summary>
+        /// Actualiza los datos básicos del proveedor autenticado en Proveedores_Master
+        /// (Nombre, Dirección, Correo, Teléfono, TipoPersona).
+        /// </summary>
+        /// <param name="provider">Objeto con los nuevos valores.</param>
+        /// <returns>JSON con mensaje de éxito, o vista de error si falla.</returns>
         public IActionResult UpdateProvider([FromBody] Proveedores_Master provider)
         {
             try
@@ -196,7 +235,20 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que permite obtener la informacion de un proveedor
+        /// <summary>
+        /// Consulta el estado del registro del proveedor autenticado y retorna sus datos.
+        /// Determina si el proveedor tiene registro completo (foundDetail), solo en Master
+        /// (foundMasterOnly) o no tiene información.
+        /// Para persona natural con foundMasterOnly, incluye sugerencia de separación del nombre.
+        /// </summary>
+        /// <returns>
+        /// JSON con <c>status</c>:
+        /// <list type="bullet">
+        ///   <item><c>foundDetail</c>: datos completos de persona + financiero.</item>
+        ///   <item><c>foundMasterOnly</c>: solo datos de Proveedores_Master.</item>
+        ///   <item><c>error</c>: mensaje de error.</item>
+        /// </list>
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetProvPersonDetails()
         {
@@ -254,7 +306,10 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción para consultar y traer los documentos cargados del proveedor
+        /// <summary>
+        /// Obtiene los documentos activos del proveedor autenticado y su estado OEA.
+        /// </summary>
+        /// <returns>JSON con <c>data</c> (lista de documentos) e <c>isOEA</c> (estado OEA).</returns>
         [HttpGet]
         public IActionResult GetProviderFiles()
         {
@@ -278,7 +333,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que permite obtener la informacion del proveedor en el formato para imprimir
+        /// <summary>
+        /// Genera el Formato Único de Conocimiento de Proveedores (FUCP) en PDF
+        /// para el proveedor autenticado (solo persona jurídica).
+        /// Resuelve los IDs de país, estado, ciudad, CIIU y entidad bancaria a nombres legibles
+        /// antes de llenar el formato.
+        /// </summary>
+        /// <returns>JSON con <c>url</c> relativa al PDF generado, o <c>error</c> si falta información jurídica.</returns>
         [HttpGet]
         public async Task<IActionResult> printFormat()
         {
@@ -339,7 +400,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para agregar proveedor natural
+        /// <summary>
+        /// Inserta el primer registro de persona natural para el proveedor autenticado.
+        /// Valida que el proveedor exista en Master y que no tenga ya un registro natural.
+        /// </summary>
+        /// <param name="provider">Datos del proveedor natural con tipos PEP.</param>
+        /// <param name="typePerson">Tipo de persona ("natural").</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c>.</returns>
         [HttpPost]
         [Route("/Proveedor/AddProviderNatural")]
         public async Task<IActionResult> AddProviderNatural([FromBody] Proveedores_Natural provider, string typePerson)
@@ -380,7 +447,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para agregar proveedor juridico
+        /// <summary>
+        /// Inserta el primer registro de persona jurídica para el proveedor autenticado.
+        /// Valida que el proveedor exista en Master y que no tenga ya un registro jurídico.
+        /// </summary>
+        /// <param name="provider">Datos del proveedor jurídico.</param>
+        /// <param name="typePerson">Tipo de persona ("juridica").</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c>.</returns>
         [HttpPost]
         [Route("/Proveedor/AddProviderJuridica")]
         public async Task<IActionResult> AddProviderJuridica([FromBody] Proveedores_Juridica provider, string typePerson)
@@ -418,7 +491,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para agregar la informcion financiera del proveedor
+        /// <summary>
+        /// Inserta el primer registro de información financiera para el proveedor autenticado.
+        /// Valida que el proveedor exista en Master y que no tenga ya información financiera registrada.
+        /// </summary>
+        /// <param name="provider">Datos de información financiera.</param>
+        /// <returns>JSON con <c>status</c> y mensaje.</returns>
         [HttpPost]
         [Route("/Proveedor/AddProvFinanceInfo")]
         public IActionResult AddProvFinanceInfo([FromBody] Proveedores_InfoFinanciera provider)
@@ -450,7 +528,15 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción para subir los documentos del proveedor
+        /// <summary>
+        /// Procesa la carga de documentos del proveedor autenticado.
+        /// Sincroniza los archivos existentes (soft delete de los removidos),
+        /// guarda los nuevos archivos en el servidor y registra sus metadatos en DB.
+        /// Actualiza el estado OEA del proveedor.
+        /// </summary>
+        /// <param name="isOEA">Estado OEA del proveedor ("Si" o "No").</param>
+        /// <param name="existingFilesJSON">JSON con mapa de archivos que el usuario decidió conservar.</param>
+        /// <returns>JSON con <c>status</c> y mensaje.</returns>
         [HttpPost]
         [Route("/Proveedor/UploadDocuments")]
         public async Task<IActionResult> UploadDocuments(string isOEA, string existingFilesJSON)
@@ -502,7 +588,13 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //Accion para actualizar persona natural
+        /// <summary>
+        /// Actualiza la información de persona natural del proveedor autenticado.
+        /// Siempre establece <c>TipoTramite = "ACTUALIZACION"</c>.
+        /// </summary>
+        /// <param name="providerData">Datos actualizados del proveedor natural.</param>
+        /// <param name="typePerson">Tipo de persona ("natural").</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c>.</returns>
         [HttpPost]
         [Route("/Proveedor/UpdateProviderNatural")]
         public IActionResult UpdateProviderNatural([FromBody] Proveedores_Natural providerData, string typePerson)
@@ -515,7 +607,6 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
                     Console.WriteLine("UpdateProviderNatural: Provider data is null");
                     return Json(new { error = "Datos del proveedor no recibidos." });
                 }
-                Console.WriteLine("UpdateProviderNatural payload: " + Newtonsoft.Json.JsonConvert.SerializeObject(providerData));
 
                 // concatenar el nombre completo para actualizarlo en proveedores_master
                 string fullName = providerData.pnNombres + " " + providerData.pnPrimerApell + " " + providerData.pnSegundoApell;
@@ -537,7 +628,14 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para actualizar persona juridica
+        /// <summary>
+        /// Actualiza la información de persona jurídica del proveedor autenticado.
+        /// Siempre establece <c>TipoTramite = "ACTUALIZACION"</c>.
+        /// Además inactiva el FUCP firmado anterior, ya que el formato queda desactualizado.
+        /// </summary>
+        /// <param name="providerData">Datos actualizados del proveedor jurídico.</param>
+        /// <param name="typePerson">Tipo de persona ("juridica").</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c>.</returns>
         [HttpPost]
         [Route("/Proveedor/UpdateProviderJuridica")]
         public IActionResult UpdateProviderJuridica([FromBody] Proveedores_Juridica providerData, string typePerson)
@@ -573,7 +671,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        //accion para actualizar informacion financiera del proveedor
+        /// <summary>
+        /// Actualiza la información financiera del proveedor autenticado.
+        /// Valida que el registro de información financiera exista antes de actualizar.
+        /// </summary>
+        /// <param name="providerData">Datos financieros actualizados.</param>
+        /// <returns>JSON con <c>status</c> y mensaje.</returns>
         [HttpPost]
         [Route("/Proveedor/UpdateProvFinanceInfo")]
         public IActionResult UpdateProvFinanceInfo([FromBody] Proveedores_InfoFinanciera providerData)
@@ -604,7 +707,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que permite actualizar la contraseña del proveedor
+        /// <summary>
+        /// Actualiza la contraseña del proveedor autenticado.
+        /// La contraseña debe llegar ya hasheada desde el frontend.
+        /// </summary>
+        /// <param name="password">Nueva contraseña hasheada.</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c>.</returns>
         [HttpPost]
         public IActionResult UpdatePassword([FromBody] string password)
         {
@@ -625,7 +733,12 @@ namespace CasaToro.Consulta.Certificados.Web.Controllers
             }
         }
 
-        // Acción que permite verificar la contraseña al inicio de sesion 
+        /// <summary>
+        /// Verifica que la contraseña actual ingresada por el proveedor sea correcta.
+        /// Se usa como paso previo al cambio de contraseña.
+        /// </summary>
+        /// <param name="currentPassword">Contraseña actual en texto plano (se hashea internamente para comparar).</param>
+        /// <returns>JSON con mensaje de éxito o <c>error</c> si la contraseña no coincide.</returns>
         [HttpPost]
         public IActionResult VerifyPassword([FromBody] string currentPassword)
         {
