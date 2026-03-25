@@ -46,7 +46,7 @@ namespace CasaToro.Consulta.Certificados.BL.Services
             if (juridica == null) throw new Exception("No se pudo obtener la información Jurídica del objeto datos.");
 
             string nit = juridica["Nit"]?.ToString() ?? "S_N";
-            string templatePath = Path.Combine(webRootPath, "data", "ADM-FO-0002 V8", "ADM-FO-0002 V8-0602.pdf");
+            string templatePath = Path.Combine(webRootPath, "data", "ADM-FO-0002 V8", "ADM-FO-0002 V8-2503.pdf");
             string fileName = $"Formato_Unico_de_Conocimiento_de_Proveedores_{nit}.pdf";
             string outputPath = Path.Combine(webRootPath, "GeneratedFiles", fileName);
 
@@ -346,21 +346,25 @@ namespace CasaToro.Consulta.Certificados.BL.Services
 
                         if (finanInf["pvRadAut"]?.ToString() == "SI")
                         {
-                            SetCheckBox(form, "pvAutGeneralSi", true);
+                            //SetCheckBox(form, "pvAutGeneralSi", true);
+                            SetField(fields, "pvAutGeneralSi", "X");
                         }
                         else
                         {
-                            SetCheckBox(form, "pvAutGeneralNo", true);
+                            //SetCheckBox(form, "pvAutGeneralNo", true);
+                            SetField(fields, "pvAutGeneralNo", "X");
                         }
                         SetField(fields, "pvRepleRazSocial", finanInf["pvDeAuRepresentacion"]?.ToString());
                         SetField(fields, "pvOrigenFuentes", finanInf["pvFuenteRecur"]?.ToString());
                         if (finanInf["pvCumCSIn"]?.ToString() == "SI")
                         {
-                            SetCheckBox(form, "pvCumplSi", true);
+                            //SetCheckBox(form, "pvCumplSi", true);
+                            SetField(fields, "pvCumplSi", "X");
                         }
                         else
                         {
-                            SetCheckBox(form, "pvCumplNo", true);
+                            //SetCheckBox(form, "pvCumplNo", true);
+                            SetField(fields, "pvCumplNo", "X");
                         }
 
                             form.FlattenFields();

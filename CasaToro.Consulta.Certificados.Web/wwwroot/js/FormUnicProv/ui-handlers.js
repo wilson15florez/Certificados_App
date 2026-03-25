@@ -389,12 +389,12 @@ function bindExtrUbi(selPais, selEstado, selCiudad) {
     $(selPais).off('change.ubiExtrPais').on('change.ubiExtrPais', async function () {
         const states = await API.loadStates(this.value);
         HUI.fillSelect2(selEstado, states, 'Seleccione estado', 'id', 'name');
-        setSelectEnabled(selEstado, true);
+        setSelectEnable(selEstado, true);
 
         $(selEstado).off('change.ubiExtrEstado').on('change.ubiExtrEstado', async function () {
             const cities = await API.loadCities(this.value);
             HUI.fillSelect2(selCiudad, cities, 'Seleccione ciudad', 'id', 'name');
-            setSelectEnabled(selCiudad, true);
+            setSelectEnable(selCiudad, true);
         });
     });
 }
